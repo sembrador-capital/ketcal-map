@@ -1,0 +1,22 @@
+# ── Credenciales ──────────────────────────────────────────────────────────
+# Los tokens de DropControl y Ceres se leen de variables de entorno
+# (DROPCONTROL_TOKEN / CERES_TOKEN) y de secrets en CI. Nunca de un archivo
+# versionado.
+.dropcontrol_token
+.ceres_token
+.env
+
+# ── Intermedios del build ─────────────────────────────────────────────────
+tools/_*
+tools/__pycache__/
+
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ── Sistema operativo ─────────────────────────────────────────────────────
+Thumbs.db
+desktop.ini
+.DS_Store
