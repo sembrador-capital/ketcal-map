@@ -291,6 +291,34 @@ que hay que ir a mirar— y era justo lo que el volcado genérico enterraba entr
 las otras ocho claves. Va con color de estado y sólo se nombra cuando **no** es
 `Executed OK`, para que el ojo caiga en la excepción.
 
+### Tooltip y modal de detalle
+
+Replican los de San Gerardo, que es lo que se pidió:
+
+- **Tooltip** — el valor grande en **m³/ha** (que es lo comparable entre sectores
+  de superficie distinta), una retícula de cuatro métricas (superficie, volumen
+  total, frecuencia, duración promedio), el botón *Ver detalle* y la línea de
+  procedencia al pie.
+- **Modal** — siete tarjetas KPI en dos filas, gráfico de barras de **volumen por
+  evento** con el último en navy, y la tabla completa de eventos: `#`, fecha,
+  inicio, fin, duración, m³, mm y días hasta el siguiente. El evento más reciente
+  encabeza la tabla y va destacado: contesta "¿cuándo se regó por última vez?".
+
+Dos cosas que **no** se copiaron tal cual:
+
+1. El tooltip tenía que quedar **vivo al pasarle el mouse por encima**, o el botón
+   *Ver detalle* no se podía clickear nunca: se ocultaba en el `mouseleave` del
+   polígono. Ahora se oculta con un retardo corto que pasar por encima cancela.
+2. **A nivel equipo no hay eventos propios**: los eventos son por sector.
+   Fusionar los de cinco sectores haría que "días hasta el siguiente" deje de
+   significar algo, así que el modal del equipo muestra sus KPI y el **desglose
+   por sector**, con cada sector clickeable para saltar a su detalle.
+
+> El contenido del tooltip va envuelto en un `<div id="ttRiegoBlock">` porque las
+> reglas `.rt-*` del CSS copiado están *scoped* por ese ancestro. Reusar el id es
+> lo que hace que se vea idéntico al de San Gerardo sin duplicar una línea de
+> CSS.
+
 ---
 
 ## Antes de publicar

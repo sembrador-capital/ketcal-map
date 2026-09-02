@@ -2678,6 +2678,20 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     </div>
 </div>
 
+<!-- Detalle de riego de una unidad -->
+<div class="riego-modal" id="riegoModal" onclick="if(event.target===this)closeRiegoModal()">
+    <div class="riego-modal-content">
+        <div class="riego-modal-head">
+            <div>
+                <h2 id="riegoModalTitle" data-i18n="Detalle de riego">Detalle de riego</h2>
+                <div class="rm-sub" id="riegoModalSubtitle"></div>
+            </div>
+            <button class="riego-modal-close" onclick="closeRiegoModal()" aria-label="Cerrar" data-i18n-aria="Cerrar"><svg viewBox="0 0 18 18"><use href="#ic-cerrar"/></svg></button>
+        </div>
+        <div id="riegoModalBody"></div>
+    </div>
+</div>
+
 <!-- Lista completa de vuelos, para saltar a uno lejano sin 20 clics del stepper -->
 <div class="nut-evo-over" id="vuelosOver" onclick="if(event.target===this)closeVuelos()">
     <div class="nut-evo-card" style="width:min(560px, calc(100% - 40px))">
@@ -2863,6 +2877,18 @@ const I18N = {
 'Agrupación temporal':'Time grouping',
 'Periodo anterior':'Previous period', 'Periodo siguiente':'Next period',
 'Cargar periodo':'Load period', 'sectores con riego':'sectors irrigated',
+'Ver detalle':'View detail', 'Detalle de riego':'Irrigation detail',
+'Vol. total':'Total vol.', 'Vol. por hectárea':'Volume per hectare',
+'Frec. riego':'Irrig. freq.', 'Duración prom.':'Avg. duration',
+'cada':'every', 'Nº eventos':'No. of events', 'Frecuencia':'Frequency',
+'Duración promedio':'Average duration', 'hrs/riego':'hrs/irrigation',
+'Tiempo total':'Total time', 'horas':'hours', 'Horas':'Hours',
+'Volumen por evento':'Volume per event', 'Detalle de eventos':'Event detail',
+'Fecha':'Date', 'Inicio':'Start', 'Fin':'End', 'Duración':'Duration',
+'Vol.':'Vol.', 'Días hasta sig.':'Days to next',
+'Desglose por sector':'Breakdown by sector',
+'Sin registros.':'No records.',
+'No hay eventos de riego registrados en el periodo seleccionado.':'No irrigation events recorded in the selected period.',
 'Ejecutado':'Executed', 'Detenido por el usuario':'Stopped by user',
 'Ejecutado con falla':'Executed with failure',
 'Eventos con problema':'Events with problems',
@@ -3350,22 +3376,9 @@ function tooltipUnidad(nivel, id){
 
     if(currentMode === 'riego'){
         const d = (window._valsRiego || new Map()).get(id);
-        const m = metricaRiego();
         if(!d) return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`]],
                          t(riegoEstado === 'listo' ? 'Sin respuesta de la caseta' : 'Consultando DropControl…'));
-        const x = d.s;
-        return tt(
-            `${esc(p.name || p.id)} · <strong>${fmtRiego(d.v)}</strong> <span class="sem-muted-xs">${esc(m.unidad)}</span>`,
-            d.n ? `${d.n} ${d.n === 1 ? t('evento') : t('eventos')}` : t('Sin eventos'),
-            [
-                [t('Volumen aplicado'), x.total_m3 != null ? `${fmt(x.total_m3,0)} m³` : null],
-                [t('Volumen por hectárea'), x.total_m3_ha != null ? `${fmtDec(x.total_m3_ha,1)} m³/ha` : null],
-                [t('Lámina aplicada'), x.total_mm != null ? `${fmtDec(x.total_mm,1)} mm` : null],
-                [t('Horas de riego'), x.total_horas != null ? `${fmtDec(x.total_horas,1)} h` : null],
-                [t('Último evento'), x.ultimo_evento ? esc(String(x.ultimo_evento).slice(0,16).replace('T',' ')) : null],
-                [t('Días sin riego'), x.dias_sin_riego != null ? fmt(x.dias_sin_riego,0) : null],
-                [t('Superficie'), `${fmtVal(p.ha)} ha`]
-            ]);
+        return tooltipRiegoHTML(p, d);
     }
 
     const par = paramActual();
@@ -3397,7 +3410,20 @@ function tt(titulo, badge, filas, pie){
         + (pie ? `<div class="ket-note">${pie}</div>` : '');
 }
 
+/* El tooltip tiene que seguir vivo mientras el cursor esté ENCIMA de él, o el
+   botón "Ver detalle" no se puede clickear nunca: al salir del polígono se
+   ocultaba de inmediato. Se oculta con un retardo corto, y pasar por encima lo
+   cancela. */
+let ttTimer = null;
+function programarOcultarTooltip(){
+    if(ttTimer) clearTimeout(ttTimer);
+    ttTimer = setTimeout(() => { tooltip.classList.remove('visible'); }, 260);
+}
+tooltip.addEventListener('mouseenter', () => { if(ttTimer){ clearTimeout(ttTimer); ttTimer = null; } });
+tooltip.addEventListener('mouseleave', programarOcultarTooltip);
+
 function mostrarTooltip(html, pt){
+    if(ttTimer){ clearTimeout(ttTimer); ttTimer = null; }
     tooltip.innerHTML = html;
     tooltip.classList.add('visible');
     const w = tooltip.offsetWidth, h = tooltip.offsetHeight;
@@ -3408,7 +3434,13 @@ function mostrarTooltip(html, pt){
     tooltip.style.left = x + 'px';
     tooltip.style.top = y + 'px';
 }
-function ocultarTooltip(){ tooltip.classList.remove('visible'); }
+function ocultarTooltip(){ programarOcultarTooltip(); }
+/* Ocultado inmediato, para cuando el tooltip no debe sobrevivir (cambio de
+   pestaña, apertura de un modal). */
+function ocultarTooltipYa(){
+    if(ttTimer){ clearTimeout(ttTimer); ttTimer = null; }
+    tooltip.classList.remove('visible');
+}
 
 /* ── Selección ──────────────────────────────────────────────────────────── */
 function seleccionar(nivel, id, zoom){
@@ -5596,6 +5628,193 @@ function statsRiego(activo){
     ].join(div);
 }
 
+/* ── Tooltip de riego ────────────────────────────────────────────────────
+   El valor grande en m³/ha, la retícula de cuatro métricas y el botón que abre
+   el detalle, como en San Gerardo. El m³/ha va primero porque es lo comparable
+   entre sectores de superficie distinta; el volumen total, que es el número que
+   uno mira después, va en la retícula. */
+function tooltipRiegoHTML(p, d){
+    const x = d.s;
+    const nivel = S.riego.nivel;
+    const eq = p.equipo_id || p.id;
+    const periodo = (RIEGO && RIEGO.consulta) ? RIEGO.consulta : '';
+    const freq = x.frecuencia_dias > 0 ? `${t('cada')} ${fmtDec(x.frecuencia_dias,1)} d` : '—';
+    const dur = x.duracion_promedio_hrs > 0 ? `${fmtDec(x.duracion_promedio_hrs,1)} hrs` : '—';
+
+    // El contenido va envuelto en #ttRiegoBlock porque las reglas .rt-* del CSS
+    // copiado de San Gerardo están scoped por ese ancestro. Reusar el id es lo
+    // que hace que el tooltip se vea EXACTAMENTE igual que allá sin duplicar
+    // una línea de CSS; es único en el documento porque sólo existe acá dentro.
+    return `<div id="ttRiegoBlock">`
+        + `<div class="ht-head">`
+        + `<div class="ht-title-wrap"><div class="ht-name">${esc(p.name || p.id)}</div></div>`
+        + `<div class="ht-badge">${esc(nivel === 'equipos' ? periodo : [eq && ('Equipo ' + String(eq).replace(/^E/,'')), periodo].filter(Boolean).join(' · '))}</div>`
+        + `</div>`
+        + `<div class="rt-metric"><span class="rt-value">${x.total_m3_ha != null ? fmt(x.total_m3_ha,0) : '—'}</span>`
+        + `<span class="rt-unit">m³/ha</span></div>`
+        + `<div class="rt-details">`
+        + `<div class="rt-detail"><div class="k">${t('Superficie')}</div><div class="v">${fmtDec(x.area_ha || p.ha, 2)} ha</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Vol. total')}</div><div class="v">${x.total_m3 != null ? fmt(x.total_m3,0) : '—'} m³</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Frec. riego')}</div><div class="v">${esc(freq)}</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Duración prom.')}</div><div class="v">${esc(dur)}</div></div>`
+        + `</div>`
+        + `<button class="rt-cta" onclick="abrirRiegoModal('${esc(p.id)}')">${t('Ver detalle')}</button>`
+        + `<div class="rt-source">DropControl · ${esc(periodo)}</div>`
+        + `</div>`;
+}
+
+/* ── Modal de detalle de riego ───────────────────────────────────────────── */
+let riegoChart = null;
+
+function fmtDuracion(hrs){
+    if(hrs == null) return '—';
+    if(hrs >= 1) return `${Math.floor(hrs)}h ${Math.round((hrs % 1) * 60)}m`;
+    return `${Math.round(hrs * 60)}m`;
+}
+
+function abrirRiegoModal(id){
+    const vals = window._valsRiego || valoresRiego(S.riego.nivel);
+    const d = vals.get(id);
+    if(!d) return;
+    ocultarTooltipYa();
+    const p = props(S.riego.nivel, id) || {};
+    const x = d.s;
+    const esEquipo = S.riego.nivel === 'equipos';
+
+    document.getElementById('riegoModalTitle').textContent = esEquipo
+        ? (p.name || id)
+        : `${x.equipo || id.split('-')[0]} · ${t('Sector')} ${String(x.sector || '').replace(/^S/,'')}`;
+    document.getElementById('riegoModalSubtitle').textContent =
+        (RIEGO && RIEGO.consulta) ? RIEGO.consulta : '';
+
+    const ev = Array.isArray(x.eventos) ? x.eventos : [];
+    const nEv = esEquipo ? d.n : (x.n_eventos || ev.length);
+    const kpi = (k, v, u) => `<div class="rm-kpi"><div class="k">${k}</div>`
+        + `<div class="v">${v}${u ? `<span class="u">${u}</span>` : ''}</div></div>`;
+
+    let html = `<div class="riego-modal-kpis">`
+        + kpi(t('Superficie'), fmtDec(x.area_ha || p.ha, 2), 'ha')
+        + kpi(t('Vol. total'), x.total_m3 != null ? fmt(x.total_m3,0) : '—', 'm³')
+        + kpi(t('Vol. por hectárea'), x.total_m3_ha != null ? fmt(x.total_m3_ha,0) : '—', 'm³/ha')
+        + kpi(t('Nº eventos'), fmt(nEv || 0, 0))
+        + `</div>`
+        + `<div class="riego-modal-kpis" style="grid-template-columns:repeat(3,1fr);margin-top:-8px">`
+        + kpi(t('Frecuencia'), x.frecuencia_dias > 0 ? fmtDec(x.frecuencia_dias,1) : '—',
+              x.frecuencia_dias > 0 ? t('días') : '')
+        + kpi(t('Duración promedio'), x.duracion_promedio_hrs > 0 ? fmtDec(x.duracion_promedio_hrs,1) : '—',
+              x.duracion_promedio_hrs > 0 ? t('hrs/riego') : '')
+        + kpi(t('Tiempo total'), x.total_horas != null ? fmtDec(x.total_horas,1) : '—', t('horas'))
+        + `</div>`;
+
+    if(esEquipo){
+        // A nivel equipo no hay eventos propios: los eventos son por sector.
+        // Fusionarlos haría que "días hasta el siguiente" deje de significar
+        // algo, así que se muestra el desglose, que sí es útil.
+        const secs = (x.sectores || []).slice()
+            .sort((a,b) => (b.total_m3 || 0) - (a.total_m3 || 0));
+        html += `<div class="rm-section-title">${t('Desglose por sector')}</div>`
+            + `<div class="rm-events">` + (secs.length ? `<table class="rm-events-table"><thead><tr>`
+            + `<th>${t('Sector')}</th><th>${t('Superficie')}</th><th>${t('Vol.')} (m³)</th>`
+            + `<th>m³/ha</th><th>mm</th><th>${t('Nº eventos')}</th><th>${t('Horas')}</th>`
+            + `</tr></thead><tbody>` + secs.map(sc => `<tr>`
+                + `<td><a href="#" onclick="cerrarYVerSector('${esc(sc.key)}');return false;">${esc(sc.key)}</a></td>`
+                + `<td>${fmtDec(sc.area_ha,2)}</td>`
+                + `<td>${sc.total_m3 != null ? fmt(sc.total_m3,0) : '—'}</td>`
+                + `<td>${sc.total_m3_ha != null ? fmt(sc.total_m3_ha,0) : '—'}</td>`
+                + `<td>${sc.total_mm != null ? fmtDec(sc.total_mm,1) : '—'}</td>`
+                + `<td>${fmt(sc.n_eventos || 0,0)}</td>`
+                + `<td>${sc.total_horas != null ? fmtDec(sc.total_horas,1) : '—'}</td>`
+                + `</tr>`).join('') + `</tbody></table>`
+            : `<div class="rm-empty">${t('Sin registros.')}</div>`) + `</div>`;
+    }else{
+        html += `<div class="rm-section-title">${t('Volumen por evento')} (m³)</div>`
+            + `<div class="rm-chart-wrap">` + (ev.length
+                ? `<canvas id="riegoEventChart" height="200"></canvas>`
+                : `<div class="rm-empty">${t('No hay eventos de riego registrados en el periodo seleccionado.')}</div>`)
+            + `</div>`
+            + `<div class="rm-section-title">${t('Detalle de eventos')} `
+            + `<span class="sem-muted" style="font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px">`
+            + `(${ev.length} ${ev.length === 1 ? t('evento') : t('eventos')})</span></div>`
+            + `<div class="rm-events">` + (ev.length ? `<table class="rm-events-table"><thead><tr>`
+            + `<th>#</th><th>${t('Fecha')}</th><th>${t('Inicio')}</th><th>${t('Fin')}</th>`
+            + `<th>${t('Duración')}</th><th>${t('Vol.')} (m³)</th><th>mm</th>`
+            + `<th>${t('Días hasta sig.')}</th></tr></thead><tbody>`
+            + ev.slice().reverse().map((e, i) => {
+                const ultimo = i === 0;
+                // El último evento se destaca: es el que contesta "cuándo se
+                // regó por última vez", que es la pregunta frecuente.
+                return `<tr>`
+                    + `<td style="color:${ultimo ? SEM('--sem-navy') : SEM('--sem-text-2')};font-weight:${ultimo ? '700' : '500'}">${ev.length - i}</td>`
+                    + `<td>${esc(e.fecha || '—')}</td><td>${esc(e.hora_inicio || '—')}</td>`
+                    + `<td>${esc(e.hora_fin || '—')}</td><td>${esc(fmtDuracion(e.duracion_hrs))}</td>`
+                    + `<td>${e.m3 != null ? fmt(e.m3,0) : '—'}</td>`
+                    + `<td>${e.mm != null ? fmtDec(e.mm,1) : '—'}</td>`
+                    + `<td class="sem-muted">${e.dias_hasta_siguiente != null ? `+${e.dias_hasta_siguiente} d` : '—'}</td>`
+                    + `</tr>`;
+            }).join('') + `</tbody></table>`
+            : `<div class="rm-empty">${t('Sin registros.')}</div>`) + `</div>`;
+    }
+
+    document.getElementById('riegoModalBody').innerHTML = html;
+    document.getElementById('riegoModal').classList.add('visible');
+
+    if(!esEquipo && ev.length && typeof Chart !== 'undefined'){
+        const ctx = document.getElementById('riegoEventChart');
+        if(riegoChart){ riegoChart.destroy(); riegoChart = null; }
+        riegoChart = new Chart(ctx, {
+            type:'bar',
+            data:{
+                labels: ev.map(e => e.fecha),
+                datasets:[{
+                    data: ev.map(e => e.m3),
+                    // El último evento en navy: se encuentra sin buscarlo.
+                    backgroundColor: ev.map((e,i) => i === ev.length-1
+                        ? SEM('--sem-navy') : SEM('--sem-celeste')),
+                    borderRadius: 4
+                }]
+            },
+            options:{
+                responsive:true, maintainAspectRatio:false,
+                plugins:{
+                    legend:{display:false},
+                    tooltip:{callbacks:{
+                        title: it => {
+                            const e = ev[it[0].dataIndex];
+                            return `${e.fecha} · ${e.hora_inicio} → ${e.hora_fin}`;
+                        },
+                        label: c => {
+                            const e = ev[c.dataIndex];
+                            return [`${fmt(e.m3,0)} m³`, `${fmtDec(e.mm,1)} mm`,
+                                    `${t('Duración')}: ${fmtDuracion(e.duracion_hrs)}`]
+                                 .concat(e.status && e.status !== 'Executed OK'
+                                    ? [riegoStatusTexto(e.status)] : []);
+                        }
+                    }}
+                },
+                scales:{
+                    y:{title:{display:true, text:'m³'}, beginAtZero:true,
+                       ticks:{font:{size:10}}},
+                    x:{ticks:{maxRotation:45, autoSkip:true, font:{size:9},
+                       maxTicksLimit: ev.length > 40 ? 20 : ev.length}}
+                }
+            }
+        });
+    }
+}
+
+function closeRiegoModal(){
+    document.getElementById('riegoModal').classList.remove('visible');
+    if(riegoChart){ riegoChart.destroy(); riegoChart = null; }
+}
+/* Del desglose del equipo se puede saltar al sector: cambia el nivel, lo
+   selecciona y reabre el modal ya en el sector. */
+function cerrarYVerSector(key){
+    closeRiegoModal();
+    setNivelRiego('sectores', true);
+    seleccionar('sectores', key, true);
+    setTimeout(() => abrirRiegoModal(key), 60);
+}
+
 /* Los tres `status` que devuelve DropControl, verificados sobre un mes de
    eventos: "Executed OK", "Stopped by User" y "Executed with failure". Se
    pintan con los tokens de estado, que es lo que son. Un status desconocido cae
@@ -6146,6 +6365,8 @@ function switchMode(modo){
     document.body.classList.toggle('foliar-active', modo === 'foliares');
     document.body.classList.toggle('soil-active', modo === 'suelo');
     document.body.classList.toggle('riego-active', modo === 'riego');
+    if(modo !== 'riego') closeRiegoModal();
+    ocultarTooltipYa();
     document.body.classList.toggle('ceres-active', modo === 'ceres');
     // El comparador es de Ceres: salir de la pestaña lo apaga en vez de dejar
     // medio mapa pintado con un vuelo que ya no se está mirando.
@@ -6397,7 +6618,8 @@ function inicializarMapa(){
 
 document.addEventListener('keydown', e => {
     if(e.key !== 'Escape') return;
-    if(document.getElementById('vuelosOver').classList.contains('visible')) closeVuelos();
+    if(document.getElementById('riegoModal').classList.contains('visible')) closeRiegoModal();
+    else if(document.getElementById('vuelosOver').classList.contains('visible')) closeVuelos();
     else if(document.getElementById('evoOver').classList.contains('visible')) closeEvo();
     else if(S.sel) cerrarPanel();
 });
