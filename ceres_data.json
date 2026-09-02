@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T20:17:35Z",
+  "generated_at": "2026-09-02T22:22:49Z",
   "source": "Ceres Imaging",
   "farm": {
     "name": "Ketcal",
@@ -832,7 +832,7 @@
     {
       "week_key": "2022.50.A",
       "date": "2022-12-13",
-      "season": "2022-23",
+      "season": "2022",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.4169,
@@ -1500,7 +1500,7 @@
     {
       "week_key": "2023.1.A",
       "date": "2023-01-03",
-      "season": "2022-23",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.419,
@@ -2362,7 +2362,7 @@
     {
       "week_key": "2023.4.A",
       "date": "2023-01-23",
-      "season": "2022-23",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.419,
@@ -3312,7 +3312,7 @@
     {
       "week_key": "2023.11.A",
       "date": "2023-03-15",
-      "season": "2022-23",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.4119,
@@ -4301,7 +4301,7 @@
     {
       "week_key": "2023.32.A",
       "date": "2023-08-11",
-      "season": "2023-24",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3845,
@@ -5433,7 +5433,7 @@
     {
       "week_key": "2023.36.A",
       "date": "2023-09-07",
-      "season": "2023-24",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3664,
@@ -6503,7 +6503,7 @@
     {
       "week_key": "2023.44.A",
       "date": "2023-10-31",
-      "season": "2023-24",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.365,
@@ -7654,7 +7654,7 @@
     {
       "week_key": "2023.48.A",
       "date": "2023-11-29",
-      "season": "2023-24",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3634,
@@ -8903,7 +8903,7 @@
     {
       "week_key": "2023.52.A",
       "date": "2023-12-29",
-      "season": "2023-24",
+      "season": "2023",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3623,
@@ -10152,7 +10152,7 @@
     {
       "week_key": "2024.6.A",
       "date": "2024-02-05",
-      "season": "2023-24",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3604,
@@ -11401,7 +11401,7 @@
     {
       "week_key": "2024.10.A",
       "date": "2024-03-08",
-      "season": "2023-24",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.359,
@@ -12650,7 +12650,7 @@
     {
       "week_key": "2024.14.A",
       "date": "2024-04-01",
-      "season": "2023-24",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3582,
@@ -13899,7 +13899,7 @@
     {
       "week_key": "2024.34.A",
       "date": "2024-08-22",
-      "season": "2024-25",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3761,
@@ -15148,7 +15148,7 @@
     {
       "week_key": "2024.39.A",
       "date": "2024-09-25",
-      "season": "2024-25",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3709,
@@ -16397,7 +16397,7 @@
     {
       "week_key": "2024.43.A",
       "date": "2024-10-21",
-      "season": "2024-25",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3636,
@@ -17646,7 +17646,7 @@
     {
       "week_key": "2024.47.A",
       "date": "2024-11-23",
-      "season": "2024-25",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3666,
@@ -18895,7 +18895,7 @@
     {
       "week_key": "2024.51.A",
       "date": "2024-12-20",
-      "season": "2024-25",
+      "season": "2024",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3636,
@@ -20144,7 +20144,7 @@
     {
       "week_key": "2025.4.A",
       "date": "2025-01-23",
-      "season": "2024-25",
+      "season": "2025",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3603,
@@ -21458,7 +21458,7 @@
     {
       "week_key": "2025.9.A",
       "date": "2025-02-28",
-      "season": "2024-25",
+      "season": "2025",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3625,
@@ -22846,7 +22846,7 @@
     {
       "week_key": "2025.13.A",
       "date": "2025-03-26",
-      "season": "2024-25",
+      "season": "2025",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3636,
@@ -24264,7 +24264,7 @@
     {
       "week_key": "2025.38.A",
       "date": "2025-09-18",
-      "season": "2025-26",
+      "season": "2025",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3599,
@@ -25692,7 +25692,7 @@
     {
       "week_key": "2025.42.A",
       "date": "2025-10-15",
-      "season": "2025-26",
+      "season": "2025",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3535,
@@ -27120,7 +27120,7 @@
     {
       "week_key": "2025.46.A",
       "date": "2025-11-10",
-      "season": "2025-26",
+      "season": "2025",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3583,
@@ -28548,7 +28548,7 @@
     {
       "week_key": "2025.51.A",
       "date": "2025-12-15",
-      "season": "2025-26",
+      "season": "2025",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3594,
@@ -29976,7 +29976,7 @@
     {
       "week_key": "2026.3.A",
       "date": "2026-01-16",
-      "season": "2025-26",
+      "season": "2026",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3628,
@@ -31404,7 +31404,7 @@
     {
       "week_key": "2026.7.A",
       "date": "2026-02-13",
-      "season": "2025-26",
+      "season": "2026",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3655,
@@ -32868,7 +32868,7 @@
     {
       "week_key": "2026.11.A",
       "date": "2026-03-09",
-      "season": "2025-26",
+      "season": "2026",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3647,
@@ -34332,7 +34332,7 @@
     {
       "week_key": "2026.16.A",
       "date": "2026-04-15",
-      "season": "2025-26",
+      "season": "2026",
       "equipos": {
         "E1": {
           "cumulative_thermal_stress": 0.3615,
@@ -36105,14 +36105,17 @@
       "2024.47.A": {
         "water_stress": {
           "E1": "c73bfb9c-90d3-491d-815e-755f65a2827c",
+          "E3": "3b014869-fcd1-4168-b372-3865abfbe610",
           "E5": "8c4d6842-069b-41e0-a402-44d8d2dfcd62"
         },
         "absolute_ndvi": {
           "E1": "832f350d-a3a7-4027-91f7-531cfb93a730",
+          "E3": "2e3fc196-18ef-4ab2-aaba-59c8a659b963",
           "E5": "7542adfe-6990-406e-af30-491a1b083094"
         },
         "chlorophyll_class": {
           "E1": "0fb6d13d-a4cb-4f8d-a2fd-4603178e14c4",
+          "E3": "b292d174-70d7-476d-97f3-0103c32ef37b",
           "E5": "c3e1d3fb-8416-412e-aa3a-d504286171e5"
         }
       },
@@ -36147,7 +36150,6 @@
         "absolute_ndvi": {
           "E1": "771a8c73-2aea-4671-b359-9dfdb6d79732",
           "E2": "7f288562-bdbc-4477-8c90-22613b445400",
-          "E3": "54edb720-7ea1-4cee-aeae-cbfd139ca4d7",
           "E4": "4773bb65-3e96-473a-a713-1a5d8201aaba",
           "E5": "d50abc43-4c26-4fd3-bc43-c16ed16c65ae"
         },
@@ -36183,24 +36185,22 @@
       },
       "2025.13.A": {
         "water_stress": {
+          "E1": "18ff801b-c203-42a3-b71f-27c0cb684376",
           "E2": "e847b104-d991-4f9d-80ab-8d8a23affd76",
           "E3": "fb55dc9a-82b0-4afe-b1aa-d2383067cd72",
-          "E4": "554937e7-5ccb-405c-afdc-dd650b504fa8",
-          "E5": "a8f6a022-d263-4c72-977b-8c5489439617"
+          "E4": "554937e7-5ccb-405c-afdc-dd650b504fa8"
         },
         "absolute_ndvi": {
           "E1": "7afd9806-1872-430c-b9dd-2e1a7ac41392",
           "E2": "f86aa60f-bb38-48ba-a61e-cf758b4ad199",
           "E3": "12645cd8-c7af-4fa2-8f34-8ca12070eb65",
-          "E4": "bfeb2da0-2886-4b28-a891-8ae8ce7164dc",
-          "E5": "78050c58-b63f-401c-ab18-b455dadd0e83"
+          "E4": "bfeb2da0-2886-4b28-a891-8ae8ce7164dc"
         },
         "chlorophyll_class": {
           "E1": "89709593-afda-42f9-9e38-157a2fa58eed",
           "E2": "3d066a04-5c95-4386-b1c4-8ca8f76df840",
           "E3": "bfcd1307-eb5e-46e0-b031-31737fcee447",
-          "E4": "c0468f1c-f53d-4277-bf11-e08a345165c5",
-          "E5": "3907a001-a7c9-4827-ab80-be553c44be3b"
+          "E4": "c0468f1c-f53d-4277-bf11-e08a345165c5"
         }
       },
       "2025.38.A": {
@@ -36252,21 +36252,15 @@
       "2025.46.A": {
         "water_stress": {
           "E1": "c600feeb-9c91-451b-95b3-3114cf3c46bb",
-          "E2": "8065cd1f-8bda-455e-ac12-a671cbac293f",
           "E3": "52f1893b-aeff-45c8-b8db-0701cd65be47",
           "E4": "8cbed3f8-46f0-4ad6-99b5-1f2e77c864bf",
           "E5": "fb3c2111-bfd6-4316-bdc6-7dab859878f1"
         },
         "absolute_ndvi": {
-          "E1": "12769d6a-bfc2-44d9-acc1-8e83333c7e99",
-          "E2": "4074882a-3b33-410e-a5e2-52c41005a0fc",
           "E3": "3d73a7a6-dce0-4558-9bed-618b0dd0e6d9",
-          "E4": "8d2f57e4-bf32-443d-aa4c-5da48b81fdbf",
-          "E5": "f48c4e9a-9a4b-45b7-83d3-d894e5cb5eed"
+          "E4": "8d2f57e4-bf32-443d-aa4c-5da48b81fdbf"
         },
         "chlorophyll_class": {
-          "E1": "ee31ec73-1705-4549-baf1-40bbfc995ad4",
-          "E2": "7b04b29a-b99d-4dbf-a67e-01970e2fabf5",
           "E3": "371f29a9-369e-4b26-998b-28f624e0f33f",
           "E4": "3a8429bc-7758-4ee5-ac49-08157569953b"
         }
@@ -36298,20 +36292,21 @@
         "water_stress": {
           "E1": "cecf6c2d-7a2f-4dff-99ac-49f0cecf7dd7",
           "E2": "75473f36-8655-4556-85a0-a0261517bf82",
-          "E3": "0ccc2842-8cc7-4fcd-9a4f-b69e2e494ad1",
-          "E4": "c90c0d41-e2c1-4463-839c-f25c45999f04"
+          "E4": "c90c0d41-e2c1-4463-839c-f25c45999f04",
+          "E5": "207271e0-7801-4473-bf47-7f6bf69a4e2d"
         },
         "absolute_ndvi": {
           "E1": "391ae1be-bbe9-46a3-b4fa-79c7a3be5252",
-          "E2": "fbaf3587-8291-431b-8d61-d7b3c298a894",
           "E3": "a0068653-7827-40b3-9921-25a618992ebe",
-          "E4": "5f49d46d-4332-4216-ac41-6b3c5e247385"
+          "E4": "5f49d46d-4332-4216-ac41-6b3c5e247385",
+          "E5": "9d2c7be1-dd9b-4756-b149-424102a73d3c"
         },
         "chlorophyll_class": {
           "E1": "7afc754d-d138-4285-bafe-0466120cd5dc",
           "E2": "713870e4-ccff-4215-8e7d-e6369e069324",
           "E3": "f88d33de-d94e-4f3a-b9b3-2b43f2d3f29a",
-          "E4": "3a30f51c-42a9-4b80-b760-7c8c05b2cfb4"
+          "E4": "3a30f51c-42a9-4b80-b760-7c8c05b2cfb4",
+          "E5": "922c97a9-b3a9-4145-95bb-0db621093bab"
         }
       },
       "2026.7.A": {
@@ -36339,23 +36334,22 @@
       },
       "2026.11.A": {
         "water_stress": {
+          "E1": "7cf81823-9629-4be1-90cc-284d3aa94c37",
           "E2": "1277e1ee-0b10-4c16-9f13-159382c7c887",
           "E3": "30d5ca7d-cdd1-4a26-9f59-753e70da0ba3",
-          "E4": "c2f3bfff-01a6-4681-98f5-b4132f5b5d89",
-          "E5": "ecafb663-c990-4ef5-a925-3c7424cb9007"
+          "E4": "c2f3bfff-01a6-4681-98f5-b4132f5b5d89"
         },
         "absolute_ndvi": {
           "E1": "da4cd6b7-885e-4d27-bfa0-dfcb834cb76b",
           "E2": "6b63eed2-4ed6-4c77-8b44-637383909a47",
           "E3": "290227d3-eb58-471a-af9c-7276eb1b9968",
-          "E4": "f5982b42-292c-4db7-b8de-d8f852ecf3e1",
-          "E5": "8e201e15-9be7-4192-9ffa-e785f2e62c8c"
+          "E4": "f5982b42-292c-4db7-b8de-d8f852ecf3e1"
         },
         "chlorophyll_class": {
+          "E1": "f87cb2b7-6493-410a-896f-d18b066dca4b",
           "E2": "9dcbc6b6-23dc-44fc-aad0-f3b1d7ea91aa",
           "E3": "4ebc5d37-b425-4c46-ad8d-1d376b647674",
-          "E4": "6f97b738-373f-4bc5-8dcf-c5c7802d1fbd",
-          "E5": "b81f9f33-414b-4a60-ba2c-4f62cf503234"
+          "E4": "6f97b738-373f-4bc5-8dcf-c5c7802d1fbd"
         }
       },
       "2026.16.A": {
@@ -36612,6 +36606,73 @@
           }
         ]
       },
+      "2023.4.A": {
+        "cells": 918,
+        "area_ha": 104.66,
+        "plants": 83720,
+        "hist": [
+          {
+            "band": 0,
+            "cells": 0,
+            "area_m2": 0,
+            "color": "#160B39"
+          },
+          {
+            "band": 1,
+            "cells": 7,
+            "area_m2": 8743,
+            "color": "#3B1050"
+          },
+          {
+            "band": 2,
+            "cells": 101,
+            "area_m2": 117254,
+            "color": "#601665"
+          },
+          {
+            "band": 3,
+            "cells": 259,
+            "area_m2": 310852,
+            "color": "#842166"
+          },
+          {
+            "band": 4,
+            "cells": 319,
+            "area_m2": 369292,
+            "color": "#A82F5B"
+          },
+          {
+            "band": 5,
+            "cells": 158,
+            "area_m2": 178384,
+            "color": "#C64448"
+          },
+          {
+            "band": 6,
+            "cells": 55,
+            "area_m2": 51739,
+            "color": "#E0602E"
+          },
+          {
+            "band": 7,
+            "cells": 15,
+            "area_m2": 8897,
+            "color": "#F18223"
+          },
+          {
+            "band": 8,
+            "cells": 3,
+            "area_m2": 1212,
+            "color": "#F5AC32"
+          },
+          {
+            "band": 9,
+            "cells": 1,
+            "area_m2": 226,
+            "color": "#F6D746"
+          }
+        ]
+      },
       "2023.11.A": {
         "cells": 972,
         "area_ha": 110.56,
@@ -36813,73 +36874,6 @@
           }
         ]
       },
-      "2023.4.A": {
-        "cells": 918,
-        "area_ha": 104.66,
-        "plants": 83720,
-        "hist": [
-          {
-            "band": 0,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#160B39"
-          },
-          {
-            "band": 1,
-            "cells": 7,
-            "area_m2": 8743,
-            "color": "#3B1050"
-          },
-          {
-            "band": 2,
-            "cells": 101,
-            "area_m2": 117254,
-            "color": "#601665"
-          },
-          {
-            "band": 3,
-            "cells": 259,
-            "area_m2": 310852,
-            "color": "#842166"
-          },
-          {
-            "band": 4,
-            "cells": 319,
-            "area_m2": 369292,
-            "color": "#A82F5B"
-          },
-          {
-            "band": 5,
-            "cells": 158,
-            "area_m2": 178384,
-            "color": "#C64448"
-          },
-          {
-            "band": 6,
-            "cells": 55,
-            "area_m2": 51739,
-            "color": "#E0602E"
-          },
-          {
-            "band": 7,
-            "cells": 15,
-            "area_m2": 8897,
-            "color": "#F18223"
-          },
-          {
-            "band": 8,
-            "cells": 3,
-            "area_m2": 1212,
-            "color": "#F5AC32"
-          },
-          {
-            "band": 9,
-            "cells": 1,
-            "area_m2": 226,
-            "color": "#F6D746"
-          }
-        ]
-      },
       "2023.44.A": {
         "cells": 1401,
         "area_ha": 158.5,
@@ -37059,6 +37053,73 @@
             "band": 6,
             "cells": 14,
             "area_m2": 11819,
+            "color": "#E0602E"
+          },
+          {
+            "band": 7,
+            "cells": 4,
+            "area_m2": 1596,
+            "color": "#F18223"
+          },
+          {
+            "band": 8,
+            "cells": 1,
+            "area_m2": 41,
+            "color": "#F5AC32"
+          },
+          {
+            "band": 9,
+            "cells": 0,
+            "area_m2": 0,
+            "color": "#F6D746"
+          }
+        ]
+      },
+      "2024.6.A": {
+        "cells": 1401,
+        "area_ha": 158.5,
+        "plants": 93322,
+        "hist": [
+          {
+            "band": 0,
+            "cells": 1,
+            "area_m2": 172,
+            "color": "#160B39"
+          },
+          {
+            "band": 1,
+            "cells": 14,
+            "area_m2": 13135,
+            "color": "#3B1050"
+          },
+          {
+            "band": 2,
+            "cells": 227,
+            "area_m2": 251224,
+            "color": "#601665"
+          },
+          {
+            "band": 3,
+            "cells": 541,
+            "area_m2": 631218,
+            "color": "#842166"
+          },
+          {
+            "band": 4,
+            "cells": 428,
+            "area_m2": 489337,
+            "color": "#A82F5B"
+          },
+          {
+            "band": 5,
+            "cells": 169,
+            "area_m2": 185488,
+            "color": "#C64448"
+          },
+          {
+            "band": 6,
+            "cells": 16,
+            "area_m2": 12821,
             "color": "#E0602E"
           },
           {
@@ -37550,69 +37611,136 @@
           }
         ]
       },
-      "2024.6.A": {
-        "cells": 1401,
-        "area_ha": 158.5,
-        "plants": 93322,
+      "2025.4.A": {
+        "cells": 1191,
+        "area_ha": 135.63,
+        "plants": 162820,
         "hist": [
           {
             "band": 0,
-            "cells": 1,
-            "area_m2": 172,
+            "cells": 0,
+            "area_m2": 0,
             "color": "#160B39"
           },
           {
             "band": 1,
-            "cells": 14,
-            "area_m2": 13135,
+            "cells": 19,
+            "area_m2": 17340,
             "color": "#3B1050"
           },
           {
             "band": 2,
-            "cells": 227,
-            "area_m2": 251224,
+            "cells": 169,
+            "area_m2": 184153,
             "color": "#601665"
           },
           {
             "band": 3,
-            "cells": 541,
-            "area_m2": 631218,
+            "cells": 469,
+            "area_m2": 537814,
             "color": "#842166"
           },
           {
             "band": 4,
-            "cells": 428,
-            "area_m2": 489337,
+            "cells": 359,
+            "area_m2": 415385,
             "color": "#A82F5B"
           },
           {
             "band": 5,
-            "cells": 169,
-            "area_m2": 185488,
+            "cells": 146,
+            "area_m2": 167991,
             "color": "#C64448"
           },
           {
             "band": 6,
-            "cells": 16,
-            "area_m2": 12821,
+            "cells": 26,
+            "area_m2": 30344,
             "color": "#E0602E"
           },
           {
             "band": 7,
-            "cells": 4,
-            "area_m2": 1596,
+            "cells": 3,
+            "area_m2": 3318,
             "color": "#F18223"
           },
           {
             "band": 8,
-            "cells": 1,
-            "area_m2": 41,
+            "cells": 0,
+            "area_m2": 0,
             "color": "#F5AC32"
           },
           {
             "band": 9,
             "cells": 0,
             "area_m2": 0,
+            "color": "#F6D746"
+          }
+        ]
+      },
+      "2025.9.A": {
+        "cells": 1702,
+        "area_ha": 195.11,
+        "plants": 221017,
+        "hist": [
+          {
+            "band": 0,
+            "cells": 0,
+            "area_m2": 0,
+            "color": "#160B39"
+          },
+          {
+            "band": 1,
+            "cells": 13,
+            "area_m2": 12147,
+            "color": "#3B1050"
+          },
+          {
+            "band": 2,
+            "cells": 272,
+            "area_m2": 311839,
+            "color": "#601665"
+          },
+          {
+            "band": 3,
+            "cells": 674,
+            "area_m2": 774547,
+            "color": "#842166"
+          },
+          {
+            "band": 4,
+            "cells": 493,
+            "area_m2": 567142,
+            "color": "#A82F5B"
+          },
+          {
+            "band": 5,
+            "cells": 195,
+            "area_m2": 224424,
+            "color": "#C64448"
+          },
+          {
+            "band": 6,
+            "cells": 34,
+            "area_m2": 38241,
+            "color": "#E0602E"
+          },
+          {
+            "band": 7,
+            "cells": 17,
+            "area_m2": 18845,
+            "color": "#F18223"
+          },
+          {
+            "band": 8,
+            "cells": 3,
+            "area_m2": 3180,
+            "color": "#F5AC32"
+          },
+          {
+            "band": 9,
+            "cells": 1,
+            "area_m2": 696,
             "color": "#F6D746"
           }
         ]
@@ -37741,73 +37869,6 @@
             "band": 8,
             "cells": 10,
             "area_m2": 9335,
-            "color": "#F5AC32"
-          },
-          {
-            "band": 9,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#F6D746"
-          }
-        ]
-      },
-      "2025.4.A": {
-        "cells": 1191,
-        "area_ha": 135.63,
-        "plants": 162820,
-        "hist": [
-          {
-            "band": 0,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#160B39"
-          },
-          {
-            "band": 1,
-            "cells": 19,
-            "area_m2": 17340,
-            "color": "#3B1050"
-          },
-          {
-            "band": 2,
-            "cells": 169,
-            "area_m2": 184153,
-            "color": "#601665"
-          },
-          {
-            "band": 3,
-            "cells": 469,
-            "area_m2": 537814,
-            "color": "#842166"
-          },
-          {
-            "band": 4,
-            "cells": 359,
-            "area_m2": 415385,
-            "color": "#A82F5B"
-          },
-          {
-            "band": 5,
-            "cells": 146,
-            "area_m2": 167991,
-            "color": "#C64448"
-          },
-          {
-            "band": 6,
-            "cells": 26,
-            "area_m2": 30344,
-            "color": "#E0602E"
-          },
-          {
-            "band": 7,
-            "cells": 3,
-            "area_m2": 3318,
-            "color": "#F18223"
-          },
-          {
-            "band": 8,
-            "cells": 0,
-            "area_m2": 0,
             "color": "#F5AC32"
           },
           {
@@ -38019,10 +38080,10 @@
           }
         ]
       },
-      "2025.9.A": {
-        "cells": 1702,
-        "area_ha": 195.11,
-        "plants": 221017,
+      "2026.3.A": {
+        "cells": 1766,
+        "area_ha": 202.46,
+        "plants": 233532,
         "hist": [
           {
             "band": 0,
@@ -38032,56 +38093,123 @@
           },
           {
             "band": 1,
-            "cells": 13,
-            "area_m2": 12147,
+            "cells": 43,
+            "area_m2": 46004,
             "color": "#3B1050"
           },
           {
             "band": 2,
-            "cells": 272,
-            "area_m2": 311839,
+            "cells": 303,
+            "area_m2": 350292,
             "color": "#601665"
           },
           {
             "band": 3,
-            "cells": 674,
-            "area_m2": 774547,
+            "cells": 726,
+            "area_m2": 836475,
             "color": "#842166"
           },
           {
             "band": 4,
-            "cells": 493,
-            "area_m2": 567142,
+            "cells": 522,
+            "area_m2": 600479,
             "color": "#A82F5B"
           },
           {
             "band": 5,
-            "cells": 195,
-            "area_m2": 224424,
+            "cells": 161,
+            "area_m2": 182453,
             "color": "#C64448"
           },
           {
             "band": 6,
-            "cells": 34,
-            "area_m2": 38241,
+            "cells": 11,
+            "area_m2": 8942,
             "color": "#E0602E"
           },
           {
             "band": 7,
-            "cells": 17,
-            "area_m2": 18845,
+            "cells": 0,
+            "area_m2": 0,
             "color": "#F18223"
           },
           {
             "band": 8,
-            "cells": 3,
-            "area_m2": 3180,
+            "cells": 0,
+            "area_m2": 0,
             "color": "#F5AC32"
           },
           {
             "band": 9,
-            "cells": 1,
-            "area_m2": 696,
+            "cells": 0,
+            "area_m2": 0,
+            "color": "#F6D746"
+          }
+        ]
+      },
+      "2026.7.A": {
+        "cells": 1766,
+        "area_ha": 202.46,
+        "plants": 233532,
+        "hist": [
+          {
+            "band": 0,
+            "cells": 0,
+            "area_m2": 0,
+            "color": "#160B39"
+          },
+          {
+            "band": 1,
+            "cells": 31,
+            "area_m2": 34027,
+            "color": "#3B1050"
+          },
+          {
+            "band": 2,
+            "cells": 302,
+            "area_m2": 346558,
+            "color": "#601665"
+          },
+          {
+            "band": 3,
+            "cells": 745,
+            "area_m2": 860945,
+            "color": "#842166"
+          },
+          {
+            "band": 4,
+            "cells": 541,
+            "area_m2": 620862,
+            "color": "#A82F5B"
+          },
+          {
+            "band": 5,
+            "cells": 138,
+            "area_m2": 154737,
+            "color": "#C64448"
+          },
+          {
+            "band": 6,
+            "cells": 9,
+            "area_m2": 7516,
+            "color": "#E0602E"
+          },
+          {
+            "band": 7,
+            "cells": 0,
+            "area_m2": 0,
+            "color": "#F18223"
+          },
+          {
+            "band": 8,
+            "cells": 0,
+            "area_m2": 0,
+            "color": "#F5AC32"
+          },
+          {
+            "band": 9,
+            "cells": 0,
+            "area_m2": 0,
             "color": "#F6D746"
           }
         ]
@@ -38219,140 +38347,6 @@
             "color": "#F6D746"
           }
         ]
-      },
-      "2026.3.A": {
-        "cells": 1766,
-        "area_ha": 202.46,
-        "plants": 233532,
-        "hist": [
-          {
-            "band": 0,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#160B39"
-          },
-          {
-            "band": 1,
-            "cells": 43,
-            "area_m2": 46004,
-            "color": "#3B1050"
-          },
-          {
-            "band": 2,
-            "cells": 303,
-            "area_m2": 350292,
-            "color": "#601665"
-          },
-          {
-            "band": 3,
-            "cells": 726,
-            "area_m2": 836475,
-            "color": "#842166"
-          },
-          {
-            "band": 4,
-            "cells": 522,
-            "area_m2": 600479,
-            "color": "#A82F5B"
-          },
-          {
-            "band": 5,
-            "cells": 161,
-            "area_m2": 182453,
-            "color": "#C64448"
-          },
-          {
-            "band": 6,
-            "cells": 11,
-            "area_m2": 8942,
-            "color": "#E0602E"
-          },
-          {
-            "band": 7,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#F18223"
-          },
-          {
-            "band": 8,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#F5AC32"
-          },
-          {
-            "band": 9,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#F6D746"
-          }
-        ]
-      },
-      "2026.7.A": {
-        "cells": 1766,
-        "area_ha": 202.46,
-        "plants": 233532,
-        "hist": [
-          {
-            "band": 0,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#160B39"
-          },
-          {
-            "band": 1,
-            "cells": 31,
-            "area_m2": 34027,
-            "color": "#3B1050"
-          },
-          {
-            "band": 2,
-            "cells": 302,
-            "area_m2": 346558,
-            "color": "#601665"
-          },
-          {
-            "band": 3,
-            "cells": 745,
-            "area_m2": 860945,
-            "color": "#842166"
-          },
-          {
-            "band": 4,
-            "cells": 541,
-            "area_m2": 620862,
-            "color": "#A82F5B"
-          },
-          {
-            "band": 5,
-            "cells": 138,
-            "area_m2": 154737,
-            "color": "#C64448"
-          },
-          {
-            "band": 6,
-            "cells": 9,
-            "area_m2": 7516,
-            "color": "#E0602E"
-          },
-          {
-            "band": 7,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#F18223"
-          },
-          {
-            "band": 8,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#F5AC32"
-          },
-          {
-            "band": 9,
-            "cells": 0,
-            "area_m2": 0,
-            "color": "#F6D746"
-          }
-        ]
       }
     },
     "by_flight": {
@@ -38441,6 +38435,7 @@
       },
       "2024.47.A": {
         "E1": "59dc9876-21de-4a17-8f4d-379f39c26032",
+        "E3": "537278fe-1f08-4b72-ae95-562d4136d6a1",
         "E5": "96285b57-9628-427c-9fe0-554a654d98ea"
       },
       "2024.51.A": {
@@ -38450,6 +38445,7 @@
         "E5": "c8a969d2-7f26-4848-aa61-f58467a73fca"
       },
       "2025.4.A": {
+        "E1": "2fc9a9e7-5661-41d5-a330-b42eb4c6e1cf",
         "E2": "08ed6bec-161c-4727-a790-f870ff04b2a6",
         "E3": "69d6ade1-0f5d-4711-b247-b72e20d81694",
         "E4": "0e967846-4ea6-405e-84d0-75d2075ab657",
@@ -38463,6 +38459,7 @@
         "E5": "063fcddd-9519-430a-91f8-e51f1f1c5d9b"
       },
       "2025.13.A": {
+        "E1": "f32cb9e4-fc2b-48cc-b5ea-8f08d74a2222",
         "E2": "ee3dcbfe-54ae-4ac0-8093-92a6fec4e9c0",
         "E3": "82c7bb1b-86b7-4a5d-bd69-4f702a8b71a6",
         "E4": "95f6e852-4be0-4612-8d4f-e39d07c791b1",
@@ -38497,9 +38494,7 @@
         "E5": "f4491c7e-ba80-4190-ae77-4bde10a73118"
       },
       "2026.3.A": {
-        "E1": "50e6bd58-8b1e-4eaa-8fef-89ffb82f8cb6",
         "E2": "c7c435ff-e292-4743-9701-1a40ccfcf5e9",
-        "E3": "3e91b955-118f-462f-8b42-23362f72899a",
         "E4": "f0d4f8c6-e07f-491a-9b34-2bb1eb064a0b",
         "E5": "d547329f-608c-4638-82ef-ae4eb30a74c5"
       },
@@ -38511,10 +38506,10 @@
         "E5": "e75fb875-bc5f-4f8d-8912-dfee5b5e12cc"
       },
       "2026.11.A": {
+        "E1": "36fb0c3e-5702-403a-8e8c-a37d9851151e",
         "E2": "d768e192-51d8-4410-8fd7-e1247666219e",
         "E3": "b55a68d1-4ba5-4a3f-be01-c736a1851752",
-        "E4": "d119327e-7a7a-4977-8971-8c5c3af7795c",
-        "E5": "a63986c6-c0f9-44df-b9b9-54ed800d78ca"
+        "E4": "d119327e-7a7a-4977-8971-8c5c3af7795c"
       },
       "2026.16.A": {
         "E1": "3d6ca9b3-0312-493d-a681-a11233f8fe0a",
@@ -38816,18 +38811,20 @@
       "2024.47.A": {
         "cir": {
           "E1": "0c71965a-13bb-45f2-98c6-42b949fdf812",
+          "E2": "66380d04-52e1-4094-ae05-b71f7243834b",
           "E3": "effcad9f-1498-4e92-bb21-2e14f3fc3704",
           "E4": "980735d2-fd6b-40a5-abfd-0657c3302d60",
           "E5": "b886d3b0-d729-4cac-a2fd-ed0430bc51de"
         },
         "core_thermal": {
           "E1": "09f75c65-c496-4d81-893a-5cc28462eafc",
-          "E3": "cb4e7efc-7436-43a6-b5f0-794c9747366d",
+          "E2": "b5d1869b-2212-4731-b61f-6a63de316892",
           "E4": "00b8ddfc-4fb9-4381-a662-13250074e6c6",
           "E5": "49ef5380-87cc-44e1-ae83-9c3c43b137b7"
         },
         "rgb": {
           "E1": "874ac3b9-3e9d-4999-b7cb-b3a606b82dfa",
+          "E2": "af6b0c1a-84e7-4ddc-ab7b-76a59a92a3a2",
           "E3": "99c55d17-eb2c-41ca-9e79-56f58eb13335",
           "E4": "efbc56c0-bc1a-4403-913e-2a7440d39c7b",
           "E5": "228cdd6b-2f1a-4ac9-8640-267e4e9a6473"
@@ -38858,22 +38855,21 @@
       },
       "2025.4.A": {
         "cir": {
+          "E1": "4ef0f469-4770-4825-af17-623959ecffaf",
           "E2": "990a212e-2e69-46f6-870c-b2f5ee9247ca",
           "E3": "93a607df-e9bc-4394-867d-649b7d234f01",
-          "E5": "e714ee6a-12b4-40ab-994e-e47fa8f75713"
+          "E4": "00fd4517-ccfb-4905-822e-94558c7b7c40"
         },
         "core_thermal": {
           "E1": "ebbd47c8-0b42-46b1-8c20-ed37a12a23af",
           "E2": "214f8709-c697-49df-9bf4-b29dd2fb3fe0",
           "E3": "9b403f0a-4be3-4614-92ce-198051f2a5bf",
-          "E4": "2991dd9b-662e-413c-91d6-c4dc312c31f6",
-          "E5": "5544033c-a896-47ca-98ae-7711ae2ea72c"
+          "E4": "2991dd9b-662e-413c-91d6-c4dc312c31f6"
         },
         "rgb": {
           "E1": "57e79715-966e-4904-9fde-af1ab2a39921",
           "E2": "4187bdab-168e-4e34-83ea-421e49722626",
-          "E3": "340622f3-ec72-49d0-a60c-e25bbe73baba",
-          "E5": "4503851c-0aa4-48a3-9e38-83668e34932d"
+          "E3": "340622f3-ec72-49d0-a60c-e25bbe73baba"
         }
       },
       "2025.9.A": {
@@ -38901,18 +38897,21 @@
       },
       "2025.13.A": {
         "cir": {
+          "E1": "6b1a1763-929d-4af7-91dc-dfaff7403779",
           "E2": "7ef071df-bd30-4f4c-a08e-e41cb81a2e87",
           "E3": "f43ff9bf-c7b6-491a-b5a3-2682fc1bfb35",
           "E4": "3d052c0d-f0a8-4449-b1f8-f1f72bbc8e36",
           "E5": "a57ea225-0182-4866-a838-dc2b954af5f2"
         },
         "core_thermal": {
+          "E1": "a044af5f-7751-4819-b414-80fa1a80a59a",
           "E2": "97a27cee-e703-4930-8675-c45e55d17c4b",
           "E3": "8ae58dbb-1e6e-4b2e-842b-7eb286c1ac4c",
           "E4": "1d390eb7-a4cc-4e6c-90ce-d80c7d2c0fb8",
           "E5": "9c0641a6-5147-4aa4-a8ba-72ef52e3d77a"
         },
         "rgb": {
+          "E1": "7a842533-aa16-498f-870c-0223d62a0e4d",
           "E2": "878c2f3c-92c1-4000-bab8-b4e1cb3ae387",
           "E3": "bdc69871-703b-4d84-a26e-1133db6f9b36",
           "E4": "ac20159b-0cd9-43e1-8820-a432d8c23e74",
@@ -38921,12 +38920,14 @@
       },
       "2025.38.A": {
         "cir": {
+          "E1": "e2ccc3e5-2197-4df3-b031-4df64acc940b",
           "E2": "8a06863c-004b-45b4-ab9c-5a27dc460643",
           "E3": "6d4aa426-1fdf-4c95-876f-af949340d3a8",
           "E4": "b1c2c5c7-b91e-4cbe-95a2-5bedf02870ce",
           "E5": "4fc2518e-44c1-4fef-bf65-1143e1724ba7"
         },
         "core_thermal": {
+          "E1": "566653aa-1436-42ed-a87c-13c2e65f3d28",
           "E2": "d71fb889-0489-4ef7-abbe-c0b53dfe58e0",
           "E3": "6c37fa71-2f41-4b99-a520-bed9cbb4b6c1",
           "E4": "cfbbcce4-7120-4e0f-be74-84cd84f9202c",
@@ -38951,14 +38952,18 @@
       },
       "2025.46.A": {
         "cir": {
+          "E1": "900b42f1-fc80-4d77-b1c8-68de56b0bab7",
           "E2": "41b71b6c-3e2a-41f2-abf0-c96df5736225",
           "E3": "bb6d081a-dcde-4054-8d48-aef44b724300",
-          "E4": "45e2f64d-8bce-409f-8617-2c97e40b0714"
+          "E4": "45e2f64d-8bce-409f-8617-2c97e40b0714",
+          "E5": "e74c9a49-9ad2-486b-8123-62327b28bfe6"
         },
         "core_thermal": {
+          "E1": "d6ddb222-12e7-477d-a15c-f33a241b1f12",
           "E2": "50853e55-e9db-4a3a-8db1-9437c2e11576",
           "E3": "e3380996-af55-4b24-b41f-c4932334d80d",
-          "E4": "9b51958c-88bd-4a1b-88a2-c50d61f27653"
+          "E4": "9b51958c-88bd-4a1b-88a2-c50d61f27653",
+          "E5": "76faf79f-608a-4318-835d-0755a42df238"
         }
       },
       "2025.51.A": {
@@ -38979,12 +38984,16 @@
       },
       "2026.3.A": {
         "cir": {
+          "E1": "9122fe2f-329c-4a51-b858-580fd92633a2",
           "E2": "aad5b55f-c5c6-4de8-87a4-895a7e42b573",
-          "E4": "13d829ed-2104-40b0-b8d6-0053b0206c4b"
+          "E3": "fe466ac5-400e-470c-acfe-13791244ea13",
+          "E4": "13d829ed-2104-40b0-b8d6-0053b0206c4b",
+          "E5": "b62d09a2-6263-4038-bd80-a0a5fb7a54c5"
         },
         "core_thermal": {
           "E1": "0015bcf7-ac12-447e-856c-50182349a9df",
           "E2": "e762eb94-e55f-4146-a79f-31775af8dc5d",
+          "E3": "883edcb9-08af-4d7d-8506-59e4e6763d1b",
           "E4": "25c0e3fe-027b-4fe9-84b0-b59b9316dc95",
           "E5": "86696397-43c8-4179-b619-817e54bf7279"
         }
@@ -39007,6 +39016,7 @@
       },
       "2026.11.A": {
         "cir": {
+          "E1": "be730524-f005-4ef2-9478-021b3e29090f",
           "E2": "0d15b704-f899-4780-bb22-808af4acda69",
           "E3": "afcdeffa-da18-495b-93be-d70862f04df4",
           "E4": "cea91e70-4f77-467b-8508-155a97904907",

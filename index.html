@@ -976,8 +976,8 @@ body:not(.compare-mode) #riegoLabelASlot { display:none !important; }
 .ceres-period-b { border-top:var(--sem-border-soft); padding-top:12px; }
 .ceres-period-label { margin-bottom:7px; }
 
-/* Los vuelos se agrupan por temporada: con 14 fechas en 5 temporadas y nada
-   entre abril y octubre, la temporada es la única agrupación que se lee. */
+/* Los vuelos se agrupan por temporada —en Ketcal, el año calendario—: con 28
+   fechas en 5 temporadas, una lista plana no se lee. */
 .ceres-flights { margin-top:5px; }
 .ceres-season-group { margin-bottom:9px; }
 .ceres-season-label {
@@ -2830,6 +2830,7 @@ const I18N = {
 'Último evento':'Last event', 'Sin eventos':'No events',
 'Sin respuesta de la caseta':'No response from the pump house',
 'Datos en vivo desde DropControl':'Live data from DropControl',
+'Temporada (año calendario)':'Season (calendar year)',
 // ── Ceres Imaging ──
 'Imágenes aéreas · Ceres Imaging':'Aerial imagery · Ceres Imaging',
 'Indicador':'Indicator', 'Vuelo':'Flight', 'Vuelos':'Flights',
@@ -2862,8 +2863,11 @@ const I18N = {
 'Agrupación temporal':'Time grouping',
 'Periodo anterior':'Previous period', 'Periodo siguiente':'Next period',
 'Cargar periodo':'Load period', 'sectores con riego':'sectors irrigated',
-'El Web App devuelve siempre la misma ventana: ignora desde/hasta. El calendario queda listo y se activa solo cuando el Apps Script acepte el rango.':'The Web App always returns the same window: it ignores desde/hasta. The calendar is ready and activates on its own once the Apps Script accepts the range.',
-'El rango se aplicó bien, pero DropControl no devuelve ningún evento para este periodo. Si tampoco aparecen en una temporada completa, lo que hay que revisar es la consulta del Apps Script a DropControl, no el mapa.':'The range was applied correctly, but DropControl returns no events for this period. If none appear for a full season either, what needs checking is the Apps Script query to DropControl, not the map.',
+'Ejecutado':'Executed', 'Detenido por el usuario':'Stopped by user',
+'Ejecutado con falla':'Executed with failure',
+'Eventos con problema':'Events with problems',
+'El Worker no resolvió el periodo pedido: devolvió otra ventana. Revisar el Worker antes de creerle a estos números.':'The Worker did not resolve the requested period: it returned a different window. Check the Worker before trusting these numbers.',
+'Sin eventos de riego en este periodo. Probá una ventana más amplia con el selector de arriba.':'No irrigation events in this period. Try a wider window with the selector above.',
 'Vuelo anterior':'Previous flight', 'Vuelo siguiente':'Next flight',
 'Ver por árbol':'View by tree', 'Ocultar árboles':'Hide trees',
 'Variedades por árbol':'Varieties by tree', 'Ocultar variedades':'Hide varieties',
@@ -2892,7 +2896,8 @@ const I18N = {
 'Comparación entre temporadas':'Season comparison',
 'Se necesitan al menos dos temporadas con vuelos.':'At least two seasons with flights are needed.',
 'Promedio del predio por mes, una línea por temporada.':'Farm average per month, one line per season.',
-'Sin vuelos entre mayo y julio.':'No flights between May and July.',
+'La temporada es el año calendario.':'The season is the calendar year.',
+'Sin vuelos en':'No flights in',
 'El reparto por banda de este vuelo todavía no está calculado.':'The per-band breakdown for this flight is not computed yet.',
 'Comparando':'Comparing', 'Lado A':'Side A', 'Lado B':'Side B',
 'Series de tiempo por parámetro con sus umbrales':'Time series per parameter with their thresholds',
@@ -3707,19 +3712,30 @@ function colorNut(v, p){
 /* ═══════════════════════════════════════════════════════════════════════════
    RIEGO · DropControl
 
-   El dato NO se precalcula en un JSON del repo: lo sirve en vivo un Web App de
-   Google Apps Script que habla con la API de DropControl del lado del servidor.
-   Eso es lo que permite que este sitio sea público y que el mapa esté al día
-   sin un workflow de CI: el token de DropControl vive en el Apps Script y nunca
-   llega al navegador.
+   El dato NO se precalcula en un JSON del repo: lo sirve en vivo un Worker de
+   Cloudflare que habla con la API de DropControl del lado del servidor. Eso es
+   lo que permite que este sitio sea público y que el mapa esté al día sin un
+   workflow de CI: la credencial de DropControl vive en el Worker y nunca llega
+   al navegador.
 
-   El endpoint devuelve una ventana FIJA de una semana —ignora cualquier
-   parámetro de rango— agregada por sector, con las mismas claves `E#-S#` que
-   produce kmz_to_geojson.py. Cero mapeo necesario.
+   Antes esto era un Google Apps Script. Se migró al Worker porque se perdió el
+   acceso a esa cuenta de Google; el JSON de respuesta es idéntico, así que el
+   renderizado no cambió. Lo que sí cambió es que el Worker DEVUELVE DATOS: el
+   Apps Script respondía cero eventos en todo periodo, incluidas temporadas
+   completas, y por eso el panel llevaba un aviso que ya no corresponde.
+
+   Las claves de sector son las mismas `E#-S#` que produce kmz_to_geojson.py.
+   Cero mapeo necesario.
+
+   Parámetros, verificados contra el Worker real:
+
+       (sin parámetros)     última semana
+       ?desde=&hasta=       rango arbitrario
+       ?mes=YYYY-MM         un mes. Ojo: "08/2026" devuelve NaN
+       ?temporada=YYYY      año calendario completo, 1-ene a 31-dic
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const RIEGO_URL = 'https://script.google.com/macros/s/'
-    + 'AKfycbx9ghgvxxHBwv67GhGsvTUwPNBb9X-z5mqMp1hQ3u5RRj2F8P4pxEKbrgtxhhjA_yXOaA/exec';
+const RIEGO_URL = 'https://ketcal-riego.rpina.workers.dev';
 
 let RIEGO = null;            // respuesta cruda del endpoint
 let riegoEstado = 'vacio';   // vacio | cargando | listo | error
@@ -3744,72 +3760,73 @@ function metricaRiego(){
 
 /* ── Periodo pedido ──────────────────────────────────────────────────────
    `desplazamiento` cuenta periodos hacia atrás desde el actual: 0 es el
-   vigente, -1 el anterior. La temporada es julio-junio, igual que en el resto
-   del portal (season_of() del pipeline de Ceres). */
+   vigente, -1 el anterior.
+
+   ⚠ En Ketcal la TEMPORADA es el AÑO CALENDARIO, del 1 de enero al 31 de
+   diciembre. No es julio-junio como en San Gerardo, y de ahí venía esta lógica.
+   Es la misma convención que usa el Worker en `?temporada=YYYY` y la que aplica
+   el pipeline de Ceres en `season_of()`.
+
+   Cada modo devuelve además el `query` que hay que mandarle al Worker: para mes
+   y temporada tiene un parámetro propio que resuelve el periodo de una sola
+   llamada, y usarlo es más rápido y más fiel que pedir un rango de fechas. */
+const RIEGO_TEMP_MIN = 2022;   // primera temporada con dato en DropControl
+
 function riegoPeriodo(){
     const modo = S.riego.modo, k = S.riego.desplazamiento;
     const hoy = new Date();
     const iso = d => d.toISOString().slice(0,10);
 
     if(modo === 'dias'){
-        // Ventana de 7 días, que es la unidad que hoy devuelve el endpoint.
         const fin = new Date(hoy); fin.setDate(fin.getDate() + k*7);
         const ini = new Date(fin); ini.setDate(ini.getDate() - 7);
         // El fin no puede pasar de hoy: una ventana "hasta el futuro" no
-        // existe, y el rotulo tiene que decir la verdad.
+        // existe, y el rótulo tiene que decir la verdad.
         const finReal = fin > hoy ? hoy : fin;
         return {desde:iso(ini), hasta:iso(fin),
+                query:`?desde=${iso(ini)}&hasta=${iso(fin)}`,
                 etiqueta:`${fmtFecha(iso(ini))} – ${fmtFecha(iso(finReal))}`,
                 titulo:t('Semana')};
     }
     if(modo === 'meses'){
         const d = new Date(hoy.getFullYear(), hoy.getMonth() + k, 1);
         const fin = new Date(d.getFullYear(), d.getMonth() + 1, 1);
-        return {desde:iso(d), hasta:iso(fin),
+        const mm = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+        // `?mes=YYYY-MM`, no `MM/YYYY`: ese otro formato devuelve NaN.
+        return {desde:iso(d), hasta:iso(fin), query:`?mes=${mm}`,
                 etiqueta:d.toLocaleDateString(LOC(), {month:'long', year:'numeric'}),
                 titulo:t('Mes')};
     }
-    // Temporadas: julio a junio.
-    const anioBase = hoy.getMonth() >= 6 ? hoy.getFullYear() : hoy.getFullYear() - 1;
-    const a = anioBase + k;
-    return {desde:`${a}-07-01`, hasta:`${a+1}-07-01`,
-            etiqueta:`${a}-${String((a+1) % 100).padStart(2,'0')}`,
-            titulo:t('Temporada')};
+    // Temporada = año calendario. Una sola llamada: el Worker resuelve el año
+    // entero por dentro y pide los tramos en paralelo.
+    const a = hoy.getFullYear() + k;
+    return {desde:`${a}-01-01`, hasta:`${a}-12-31`, query:`?temporada=${a}`,
+            etiqueta:String(a), anio:a, titulo:t('Temporada')};
 }
 
-/* ¿El endpoint respeta el rango que se le pide?
-   Sí: verificado contra el Web App real, que echoa `consulta: "<desde> a
-   <hasta>"` con el rango pedido, desde 7 días hasta dos temporadas completas
-   (una temporada tarda ~4 s).
+/* Temporadas disponibles, de la más reciente a 2022. */
+function riegoTemporadas(){
+    const out = [];
+    for(let a = new Date().getFullYear(); a >= RIEGO_TEMP_MIN; a--) out.push(a);
+    return out;
+}
 
-   El sondeo se conserva igual, y no es paranoia: la comprobación no se puede
-   hacer con la consulta normal, porque su rango por defecto son los últimos 7
-   días —exactamente la ventana que el endpoint devuelve cuando NO filtra— así
-   que coincidirían siempre y daría un falso positivo. Se sondea una vez por
-   sesión con un rango del mes pasado, que no puede coincidir por casualidad.
-   Si mañana el Apps Script cambia, el mapa lo detecta en vez de mostrar la
-   semana actual bajo el rótulo de otro periodo. */
+/* ¿El Worker resolvió el periodo que se le pidió?
+   Se comprueba contra el `rango` que devuelve, que es lo que efectivamente
+   usó. Un día de tolerancia por el huso.
+
+   Esto reemplaza a un sondeo aparte que hacía falta con el Apps Script: ahí la
+   consulta por defecto eran los últimos 7 días, exactamente la ventana que
+   devolvía cuando NO filtraba, así que comparar pedido contra devuelto daba un
+   falso positivo. Con ?mes= y ?temporada= eso no puede pasar. */
 let riegoRangoSoportado = null;   // null = todavía no se sabe
 
-async function sondearRangoRiego(){
-    const iso = d => d.toISOString().slice(0,10);
-    const hasta = new Date(); hasta.setDate(hasta.getDate() - 30);
-    const desde = new Date(hasta); desde.setDate(desde.getDate() - 30);
-    try{
-        const r = await fetch(`${RIEGO_URL}?desde=${iso(desde)}&hasta=${iso(hasta)}&modo=dias`,
-                              {cache:'no-store'});
-        if(!r.ok) throw new Error(`HTTP ${r.status}`);
-        const j = await r.json();
-        const dev = ((j || {}).rango || {}).inicio || '';
-        const usado = dev ? new Date(dev.slice(0,10) + 'T00:00:00') : null;
-        riegoRangoSoportado = !!(usado &&
-            Math.abs(usado - desde) / 86400000 <= 1.5);
-    }catch(e){
-        // Sin respuesta no se puede afirmar que soporte rangos.
-        riegoRangoSoportado = false;
-        console.warn('[ketcal] sondeo de rango de riego:', e.message);
-    }
-    renderRiegoCalendario();
+function riegoRespetoElPeriodo(j, per){
+    const r = (j || {}).rango || {};
+    if(!r.inicio) return false;
+    const usado = new Date(String(r.inicio).slice(0,10) + 'T00:00:00');
+    const pedido = new Date(per.desde + 'T00:00:00');
+    return Math.abs(usado - pedido) / 86400000 <= 1.5;
 }
 
 function setRiegoModo(v){
@@ -3820,7 +3837,14 @@ function setRiegoModo(v){
 }
 function pasoRiego(d){
     if(riegoRangoSoportado === false) return;
-    S.riego.desplazamiento = Math.min(0, S.riego.desplazamiento + d);
+    let k = Math.min(0, S.riego.desplazamiento + d);
+    // No se navega antes de 2022: DropControl no tiene dato y el Worker
+    // devolvería una temporada vacía que se lee como "no se riega".
+    if(S.riego.modo === 'temporadas'){
+        const min = RIEGO_TEMP_MIN - new Date().getFullYear();
+        k = Math.max(min, k);
+    }
+    S.riego.desplazamiento = k;
     renderRiegoCalendario();
 }
 
@@ -3848,9 +3872,11 @@ function renderRiegoCalendario(){
         // Confundirlos manda a revisar el lugar equivocado.
         let txt = '';
         if(bloqueado){
-            txt = t('El Web App devuelve siempre la misma ventana: ignora desde/hasta. El calendario queda listo y se activa solo cuando el Apps Script acepte el rango.');
+            txt = t('El Worker no resolvió el periodo pedido: devolvió otra ventana. Revisar el Worker antes de creerle a estos números.');
         }else if(riegoEstado === 'listo' && !(RIEGO.total_eventos_api || 0)){
-            txt = t('El rango se aplicó bien, pero DropControl no devuelve ningún evento para este periodo. Si tampoco aparecen en una temporada completa, lo que hay que revisar es la consulta del Apps Script a DropControl, no el mapa.');
+            // Con el Worker esto ya es un estado normal —una semana de invierno
+            // sin riego— y no un síntoma de backend roto.
+            txt = t('Sin eventos de riego en este periodo. Probá una ventana más amplia con el selector de arriba.');
         }
         aviso.style.display = txt ? '' : 'none';
         aviso.textContent = txt;
@@ -3864,21 +3890,22 @@ async function cargarRiego(forzar){
     renderLegend(); renderStats(); renderStamp();
     const per = riegoPeriodo();
     try{
-        // Se pide el rango aunque hoy el endpoint lo ignore: el dia que lo
-        // acepte, el calendario empieza a funcionar sin cambiar el mapa.
-        const q = `?desde=${per.desde}&hasta=${per.hasta}&modo=${S.riego.modo}`;
-        const r = await fetch(RIEGO_URL + q, {cache:'no-store'});
+        // Cada modo trae su propio parámetro: ?mes= y ?temporada= resuelven el
+        // periodo de una sola llamada, que es más rápido y más fiel que armarlo
+        // con un rango de fechas.
+        const r = await fetch(RIEGO_URL + per.query, {cache:'no-store'});
         if(!r.ok) throw new Error(`HTTP ${r.status}`);
         const j = await r.json();
         if(!j || !Array.isArray(j.sectores)) throw new Error('respuesta sin sectores[]');
         RIEGO = j;
         riegoEstado = 'listo';
 
-        // La deteccion NO se puede hacer con esta consulta: el rango por
-        // defecto (ultimos 7 dias) coincide por construccion con la ventana
-        // fija del endpoint, asi que siempre pareceria soportado. Se sondea
-        // aparte, una vez por sesion, con un rango que no puede coincidir.
-        if(riegoRangoSoportado === null) sondearRangoRiego();
+        // El Worker echoa en `consulta` el periodo que resolvió, así que se
+        // compara contra lo pedido y no hace falta ningún sondeo aparte: con
+        // ?mes= y ?temporada= el rótulo devuelto NO puede coincidir por
+        // casualidad con la ventana por defecto, que era el problema que tenía
+        // el Apps Script.
+        riegoRangoSoportado = riegoRespetoElPeriodo(j, per);
         // Una clave que no exista en la geometría es un cambio de grilla en
         // DropControl, y hay que verlo, no tragárselo.
         const huerfanos = j.sectores.map(x => x.key).filter(k => !IDX.sectores.has(k));
@@ -4666,8 +4693,10 @@ function toggleCeldas(){
    mitad de los vuelos. */
 function mesesConVuelo(){
     const set = new Set(ceresVuelos().map(f => Number(f.date.slice(5,7))));
-    // Orden de temporada: julio a junio.
-    const orden = [7,8,9,10,11,12,1,2,3,4,5,6];
+    // Enero a diciembre: la temporada de Ketcal es el año calendario, así que
+    // el eje arranca en enero. Con el orden julio-junio de San Gerardo, dos
+    // vuelos del mismo año quedaban en extremos opuestos del gráfico.
+    const orden = [1,2,3,4,5,6,7,8,9,10,11,12];
     return orden.filter(m => set.has(m));
 }
 function nombreMes(m){
@@ -4689,6 +4718,9 @@ function renderCeresTemporadas(){
         return;
     }
     const meses = mesesConVuelo();
+    // Los meses sin ningún vuelo se nombran en la nota en vez de dejar un hueco
+    // sin explicar. Se derivan del dato, no de una constante.
+    const faltan = [1,2,3,4,5,6,7,8,9,10,11,12].filter(m => !meses.includes(m));
     const lvl = ceresNivelJSON(S.ceres.nivel);
     const paleta = [SEM('--dat-eq-1'), SEM('--dat-eq-2'), SEM('--dat-eq-3'),
                     SEM('--dat-eq-4'), SEM('--dat-eq-5')];
@@ -4748,7 +4780,9 @@ function renderCeresTemporadas(){
             `<span class="nut-evo-lg"><i style="background:${d.color}"></i>${esc(d.temporada)}</span>`).join('')
         + `</div>`
         + `<div class="ket-note">${esc(t('Promedio del predio por mes, una línea por temporada.'))} `
-        + `${esc(t('Sin vuelos entre mayo y julio.'))}</div>`;
+        + `${esc(t('La temporada es el año calendario.'))}`
+        + (faltan.length ? ` ${t('Sin vuelos en')} ${faltan.map(nombreMes).join(', ')}.` : '')
+        + `</div>`;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -5293,6 +5327,10 @@ function apagarCompare(){
 }
 
 function actualizarUICompare(){
+    // El chrome se actualiza YA, sin esperar a que map2 termine de cargar: el
+    // segundo mapa tarda, y hasta que su evento 'load' no llegaba, el chip de
+    // vigencia seguia diciendo "Vuelo del ..." con el comparador encendido.
+    renderStamp();
     const btn = document.getElementById('btnCompare');
     if(btn){
         btn.classList.toggle('active', compareMode);
@@ -5558,6 +5596,24 @@ function statsRiego(activo){
     ].join(div);
 }
 
+/* Los tres `status` que devuelve DropControl, verificados sobre un mes de
+   eventos: "Executed OK", "Stopped by User" y "Executed with failure". Se
+   pintan con los tokens de estado, que es lo que son. Un status desconocido cae
+   al gris en vez de mentir con un color. */
+function riegoStatusColor(st){
+    if(st === 'Executed OK') return SEM('--dat-st-opt');
+    if(st === 'Stopped by User') return SEM('--dat-st-alto');
+    if(st === 'Executed with failure') return SEM('--dat-st-def');
+    return SEM('--sem-grey');
+}
+function riegoStatusTexto(st){
+    return t({
+        'Executed OK': 'Ejecutado',
+        'Stopped by User': 'Detenido por el usuario',
+        'Executed with failure': 'Ejecutado con falla'
+    }[st] || st || '');
+}
+
 function fichaRiego(p){
     const vals = window._valsRiego || valoresRiego(nivelActivo());
     const d = vals.get(p.id);
@@ -5585,18 +5641,25 @@ function fichaRiego(p){
         [t('Válvulas'), p.n_valvulas || null]
     ]);
 
-    // Eventos individuales. La forma exacta de cada evento todavía no se pudo
-    // observar (el endpoint devolvió cero en todas las consultas), así que se
-    // renderiza lo que venga en vez de asumir un esquema.
-    const ev = Array.isArray(x.eventos) ? x.eventos : [];
+    // Eventos individuales, del más reciente al más antiguo. El `status` va
+    // primero en jerarquía visual porque es lo accionable: un riego cortado o
+    // fallado es lo que hay que ir a mirar.
+    const ev = (Array.isArray(x.eventos) ? x.eventos : []).slice().reverse();
     if(ev.length){
-        html += sect(t('Eventos de riego'), `<div class="ket-rank">` + ev.slice(0,40).map(e => {
-            const campos = Object.entries(e)
-                .filter(([,v]) => v != null && v !== '')
-                .map(([k,v]) => `${esc(k)}: ${typeof v === 'number' ? fmtVal(v) : esc(String(v))}`);
-            return `<div class="ket-row"><span class="nm">${campos.join(' · ')}</span></div>`;
-        }).join('') + `</div>`
-        + (ev.length > 40 ? `<div class="sem-muted-xs" style="margin-top:6px">+${ev.length-40}</div>` : ''));
+        html += sect(`${t('Eventos de riego')} · ${ev.length}`,
+            `<div class="rm-events">` + ev.slice(0, 60).map(e => {
+                const col = riegoStatusColor(e.status);
+                return `<div class="ket-row" style="border-left:3px solid ${col};padding-left:7px">`
+                    + `<span class="nm"><strong>${esc(e.fecha || '—')}</strong>`
+                    + (e.hora_inicio ? ` <span class="sem-muted-xs">${esc(e.hora_inicio)}–${esc(e.hora_fin || '')}</span>` : '')
+                    + (e.status && e.status !== 'Executed OK'
+                        ? `<br><span style="color:${col};font-size:10.5px">${esc(riegoStatusTexto(e.status))}</span>` : '')
+                    + `</span>`
+                    + `<span class="vl">${e.m3 != null ? fmtDec(e.m3,1) + ' m³' : '—'}`
+                    + (e.duracion_hrs != null ? `<br><span class="sub">${fmtDec(e.duracion_hrs,1)} h</span>` : '')
+                    + `</span></div>`;
+            }).join('') + `</div>`
+            + (ev.length > 60 ? `<div class="sem-muted-xs" style="margin-top:6px">+${ev.length-60}</div>` : ''));
     }else{
         html += `<div class="ket-note">${t('Sin riego en la ventana')} · ${esc(ventanaRiego())}</div>`;
     }

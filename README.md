@@ -4,6 +4,12 @@ Mapa Mapbox GL del predio **Ketcal** (cítricos, Región de Coquimbo), operado p
 Sembrador Capital. Sitio estático: un solo `index.html`, los JSON que genera el
 pipeline, y una consulta en vivo a DropControl.
 
+> **La temporada de Ketcal es el AÑO CALENDARIO**, del 1 de enero al 31 de
+> diciembre. No es julio-junio como en San Gerardo, y como este mapa se
+> construyó replicando el de allá, es el error más fácil de reintroducir.
+> Rige en las dos pestañas con eje temporal: el `?temporada=YYYY` del Worker de
+> riego y el `season_of()` del pipeline de Ceres.
+
 Réplica del mapa de [San Gerardo](../san-gerardo): mismo token de Mapbox, mismo
 sistema de diseño (tokens `:root`, chrome, paneles, leyendas, i18n es/en), misma
 arquitectura de un archivo + datos externos.
@@ -213,71 +219,77 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
 
 ---
 
-## Riego: DropControl vía Apps Script
+## Riego: DropControl vía Cloudflare Worker
 
-A diferencia de las otras dos pestañas, Riego **no lee un JSON del repo**.
-Consulta en vivo un Web App de Google Apps Script:
+A diferencia de las otras pestañas, Riego **no lee un JSON del repo**. Consulta
+en vivo un Worker de Cloudflare:
 
 ```
-https://script.google.com/macros/s/AKfycbx9…/exec
+https://ketcal-riego.rpina.workers.dev
 ```
 
-El Apps Script habla con la API de DropControl del lado del servidor y devuelve
-el consumo agregado por sector. **Ese es el punto**: el token de DropControl vive
-en el Apps Script y nunca llega al navegador, así que el sitio puede ser público
-y estar al día sin un workflow de CI ni un archivo que regenerar.
+Sin barra final y sin `/exec`: responde en la raíz.
 
-Lo verificado contra el endpoint real:
+El Worker habla con la API de DropControl del lado del servidor. **Ese es el
+punto**: la credencial vive en el Worker y nunca llega al navegador, así que el
+sitio puede ser público y estar al día sin un workflow de CI.
 
-- Devuelve las **mismas claves `E#-S#`** que produce `kmz_to_geojson.py`, las 28.
-  Cero mapeo necesario. Si alguna vez llega una clave sin geometría, el mapa la
-  avisa por consola en vez de tragársela.
-- Manda `Access-Control-Allow-Origin`, así que el `fetch` desde el navegador
-  funciona. Tarda ~2–3 s.
-- **Acepta `?desde=&hasta=`** y echoa el rango que usó en `consulta`, lo que
-  permite verificar que lo aplicó. Probado de 7 días a dos temporadas completas;
-  una temporada tarda ~4 s. Sin parámetros devuelve la última semana.
+> **Migración desde Apps Script.** Antes esto era un Google Apps Script; se
+> reescribió como Worker al perderse el acceso a esa cuenta de Google. El JSON
+> de respuesta es idéntico —mismos campos, fechas en `dd/MM/yyyy`— así que el
+> renderizado no cambió, sólo la URL.
+>
+> Lo que sí cambió es que **el Worker devuelve datos.** El Apps Script
+> respondía cero eventos en todo periodo, incluidas temporadas completas, y eso
+> había quedado documentado acá como un problema a investigar del lado de
+> DropControl. Era del Apps Script: el Worker devuelve 27 eventos y 10.762 m³
+> en la última semana, y 1.607 eventos en la temporada 2026.
 
-  > Corrección: en una primera pasada concluí que ignoraba el rango. Era un
-  > error de método — probé con un rango de un año, el Apps Script se cayó y
-  > devolvió HTML en vez de JSON, y lo leí como "ignora el parámetro". Con
-  > rangos razonables funciona perfecto.
+### Parámetros
 
-- El mapa **sondea** una vez por sesión si el rango se respeta, con un rango del
-  mes pasado. No se puede comprobar con la consulta normal: su rango por defecto
-  son los últimos 7 días, que es justo lo que el endpoint devuelve cuando NO
-  filtra, así que coincidirían siempre. Si el Apps Script cambia, el mapa lo
-  detecta y deshabilita el calendario en vez de mostrar la semana actual bajo el
-  rótulo de otro periodo.
+Verificados contra el Worker real. Cada modo del calendario usa el que le
+corresponde, porque `?mes=` y `?temporada=` resuelven el periodo de **una sola
+llamada** en vez de armarlo con un rango:
 
-- **Ningún periodo trae eventos.** Cero en la última semana, cero en el último
-  mes, cero en las temporadas 2024-25 y 2025-26 completas. Que dos temporadas
-  enteras vuelvan vacías apunta a la consulta del Apps Script hacia DropControl
-  —ids de equipo, permisos, nombre del campo— y no al mapa ni al rango. El panel
-  lo dice con esas palabras en vez de mostrar un mapa en beige sin explicación.
-- Por sector entrega `total_m3`, `total_mm`, `total_m3_ha`, `total_horas`,
-  `n_eventos`, `frecuencia_dias`, `duracion_promedio_hrs`, `ultimo_evento`,
-  `dias_sin_riego`, `data_ok` y un array `eventos[]`.
+| Modo | Parámetro | Nota |
+|---|---|---|
+| — | *(ninguno)* | última semana |
+| Días | `?desde=YYYY-MM-DD&hasta=…` | rango arbitrario |
+| Meses | `?mes=YYYY-MM` | **`MM/YYYY` devuelve NaN** |
+| Temporadas | `?temporada=YYYY` | año calendario, 1-ene a 31-dic |
 
-La consulta se dispara **al entrar a la pestaña**, no en el load inicial, y queda
-cacheada en memoria hasta que se pulse *Actualizar*.
+El Worker echoa en `consulta` el periodo que resolvió, así que el mapa compara
+lo pedido contra lo devuelto y avisa si no coinciden, en vez de mostrar una
+ventana bajo el rótulo de otra.
 
-Dos cosas a tener presentes:
+> Con el Apps Script esta comprobación necesitaba un sondeo aparte: su consulta
+> por defecto eran los últimos 7 días, **exactamente** la ventana que devolvía
+> cuando no filtraba, así que comparar pedido contra devuelto daba un falso
+> positivo. Con `?mes=` y `?temporada=` eso no puede pasar y el sondeo se
+> eliminó.
 
-1. **Agregación por equipo.** Volumen, horas y eventos se **suman** (el caudal se
-   mide por sector, así que la suma es exacta). Lámina, m³/ha, frecuencia y
-   duración se promedian ponderando por superficie. No se ofrece por cuartel:
-   repartir el volumen de un sector entre los cuarteles que toca exigiría suponer
-   cómo se distribuye por dentro, y eso sería un número inventado.
-2. **`eventos[]` nunca se pudo observar con contenido.** En todas las consultas
-   el endpoint devolvió cero eventos (ventana del 25-ago al 1-sep-2026, receso
-   invernal). El panel los renderiza de forma genérica —muestra los campos que
-   vengan— justamente para no asumir un esquema que no vi. Cuando haya riego
-   real, conviene mirar una ficha y darle a esa tabla el formato que corresponda.
+### La temporada
 
-`0 m³` se pinta con un color propio (`--dat-sin-riego`), no como el extremo bajo
-de la rampa: un sector que no regó es la señal que hay que ver primero, y la
-rampa lo escondería entre los que regaron poco.
+`?temporada=2026` es **el año calendario completo**. Las disponibles son 2022 a
+2026, y la navegación no baja de 2022 porque DropControl no tiene dato antes y
+una temporada vacía se lee como "no se riega".
+
+### Los eventos
+
+Ahora que el backend devuelve eventos, la ficha del sector los lista de verdad
+en vez de volcar sus campos genéricamente. La forma es:
+
+```
+fecha "25/08/2026"  hora_inicio "06:30"  hora_fin "09:30"
+duracion_hrs 3  m3 474.9  mm 6.4  m3_ha 61.4
+status "Executed OK" | "Stopped by User" | "Executed with failure"
+dias_hasta_siguiente 2 | null
+```
+
+El `status` es lo más accionable del evento —un riego cortado o fallado es lo
+que hay que ir a mirar— y era justo lo que el volcado genérico enterraba entre
+las otras ocho claves. Va con color de estado y sólo se nombra cuando **no** es
+`Executed OK`, para que el ojo caiga en la excepción.
 
 ---
 
@@ -608,14 +620,21 @@ elegidos.
 
 **Acá no se copió el eje de San Gerardo, y es la diferencia que importa.** Allá
 son cinco meses (nov–mar) porque el nogal sólo se vuela en esa ventana. Ketcal se
-vuela de **agosto a abril** —nueve meses, ~8 vuelos por temporada— así que un eje
-de cinco meses esconderia más de la mitad del histórico. Los meses se **derivan
-del dato**:
+vuela de **enero a abril y de agosto a diciembre** —nueve meses, ~8 vuelos por
+temporada— así que un eje de cinco meses esconderia más de la mitad del
+histórico. Los meses se **derivan del dato**, y van de **enero a diciembre**
+porque la temporada es el año calendario: con el orden julio-junio de San
+Gerardo, dos vuelos del mismo año quedaban en extremos opuestos del gráfico.
 
 ```
-meses con vuelo: ago sep oct nov dic ene feb mar abr
-temporadas:      2022-23 (4 vuelos) · 2023-24 (8) · 2024-25 (8) · 2025-26 (8)
+meses con vuelo: ene feb mar abr · ago sep oct nov dic
+sin vuelos:      may jun jul          (lo dice la nota del gráfico)
+temporadas:      2022 (1 vuelo) · 2023 (8) · 2024 (8) · 2025 (7) · 2026 (4)
 ```
+
+La temporada 2022 queda con un solo vuelo (13-dic-2022) al pasar a año
+calendario: los de febrero y marzo de 2022 son anteriores a que hubiera grilla
+cargada y el pipeline los omite.
 
 El gráfico es SVG propio, como el resto de los del mapa, con eje de **categoría**
 y no temporal: los vuelos no son equidistantes y un eje lineal dejaría medio
@@ -637,3 +656,19 @@ El orden correcto son dos pasos separados:
 
 1. **Preservar** lo que ya estaba: siempre, salvo `--full`.
 2. **Recalcular** lo que falte: sólo con `--extras`.
+
+
+---
+
+## Nota sobre los indicadores "de temporada" de Ceres
+
+`cumulative_thermal_stress` y `season_average_ndvi` son promedios **de
+temporada** que calcula Ceres, no el mapa. Ceres usa su propia definición de
+temporada para acumularlos, que no necesariamente es el año calendario de
+Ketcal.
+
+O sea: la **etiqueta** de temporada de cada vuelo es nuestra y es el año
+calendario; el **valor** de esos dos indicadores lo acumula Ceres con su
+criterio. En la práctica no cambia la lectura —el valor de un vuelo es el que
+Ceres publica para ese vuelo— pero conviene saberlo antes de interpretar un
+salto de esos dos indicadores justo en un cambio de año.

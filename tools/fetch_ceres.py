@@ -591,10 +591,14 @@ def list_flights(session):
 
 
 def season_of(date_str):
-    """Temporada jul-jun en el formato de la casa: "2025-26"."""
-    year, month = int(date_str[0:4]), int(date_str[5:7])
-    start = year if month >= 7 else year - 1
-    return "%d-%02d" % (start, (start + 1) % 100)
+    """Temporada de Ketcal: el ANO CALENDARIO.
+
+    En San Gerardo la temporada va de julio a junio y se escribe "2025-26". En
+    Ketcal es el ano calendario completo, del 1 de enero al 31 de diciembre, y
+    se escribe "2026". Es la misma convencion que usa el Worker de riego en
+    `?temporada=YYYY`, asi que las dos pestanas hablan del mismo periodo.
+    """
+    return date_str[0:4]
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -1018,6 +1022,20 @@ def compute_tree_stats(session, trees, flights, params, warn):
             flight["relative_bands_trees"] = out
 
 
+def equipos_del_vuelo(flights, wk):
+    """Cuantos equipos cubrio ESE vuelo, segun compute_coverage.
+
+    Es contra esto que hay que medir la cobertura de las capas por arbol,
+    grilla e imagenes: comparar contra los 5 equipos de hoy convierte el
+    crecimiento del predio en 91 advertencias que no son nada.
+    """
+    for f in flights:
+        if f.get("week_key") == wk:
+            cob = (f.get("coverage") or {}).get("equipos") or {}
+            return cob.get("n")
+    return None
+
+
 def week_matcher(flights):
     """
     Devuelve una funcion fecha_de_captura -> week_key.
@@ -1073,10 +1091,11 @@ def build_trees(trees_raw, flights, warn):
              "se omiten." % huerfanos)
     # Aviso si un vuelo trae arboles de algunos equipos y no de los cinco.
     for wk, per in out.items():
+        esperado = equipos_del_vuelo(flights, wk)
         for otype, eqs in per.items():
-            if len(eqs) != LEVEL_N.get("equipos"):
-                warn("vuelo %s / %s: capa por arbol con %d de %d equipos."
-                     % (wk, otype, len(eqs), LEVEL_N.get("equipos")))
+            if esperado and len(eqs) != esperado:
+                warn("vuelo %s / %s: capa por arbol con %d de los %d equipos "
+                     "que ese vuelo midio." % (wk, otype, len(eqs), esperado))
     if not out:
         return None
     return OrderedDict([
@@ -1265,8 +1284,10 @@ def build_grid(grids_raw, flights, warn):
         warn("%d fecha(s) de overlays de grilla no calzaron con ningun vuelo; "
              "se omiten." % huerfanos)
     for wk, eqs in out.items():
-        if len(eqs) != LEVEL_N.get("equipos"):
-            warn("vuelo %s: grilla con %d de %d equipos." % (wk, len(eqs), LEVEL_N.get("equipos")))
+        esperado = equipos_del_vuelo(flights, wk)
+        if esperado and len(eqs) != esperado:
+            warn("vuelo %s: grilla con %d de los %d equipos que ese vuelo midio."
+                 % (wk, len(eqs), esperado))
     if not out:
         return None
     return OrderedDict([
@@ -1330,13 +1351,14 @@ def build_imagery(imagery_raw, flights, warn):
     if huerfanos:
         warn("%d fecha(s) de imagenes no calzaron con ningun vuelo; se omiten."
              % huerfanos)
-    # Un vuelo con imagenes de algunos equipos y no de los cinco se pinta a
-    # medias, que es peor que no pintarse: conviene saberlo.
+    # Un vuelo con imagenes de algunos equipos y no de todos los que midio se
+    # pinta a medias, que es peor que no pintarse: conviene saberlo.
     for wk, per in out.items():
+        esperado = equipos_del_vuelo(flights, wk)
         for otype, eqs in per.items():
-            if len(eqs) != LEVEL_N.get("equipos"):
-                warn("vuelo %s / %s: imagen con %d de %d equipos."
-                     % (wk, otype, len(eqs), LEVEL_N.get("equipos")))
+            if esperado and len(eqs) != esperado:
+                warn("vuelo %s / %s: imagen con %d de los %d equipos que ese "
+                     "vuelo midio." % (wk, otype, len(eqs), esperado))
     if not out:
         return None
     return OrderedDict([
