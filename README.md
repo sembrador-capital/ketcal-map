@@ -200,15 +200,16 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
 - **Capa por árbol** en Ceres (por indicador) y en Vista general (por variedad).
 - **Calendario de riego** por días, meses y temporadas.
 
+- **Capa de celdas** (1.766 celdas de 1.142 m²) con su histograma de reparto.
+- **Comparación entre temporadas** en el panel de Ceres.
+
 **Pendiente**
 
-- **Capa de celdas** de Ceres (`grid_type_id` 26, 1.766 celdas) para mapas de
-  calor dentro del cuartel. El script ya la sabe bajar con `--extras`; el mapa
-  no la consume.
-- **Comparación entre temporadas** en el panel de Ceres, que San Gerardo tiene
-  como tercera sección colapsable.
 - **Datos de riego.** El calendario funciona, pero DropControl devuelve cero
   eventos en todo periodo probado, incluidas dos temporadas completas. Ver abajo.
+- **Comparador A/B para la capa de celdas y la de árboles.** Hoy el comparador
+  pinta los polígonos de los dos lados; las capas vectoriales viven sólo en el
+  lado A.
 
 ---
 
@@ -533,6 +534,10 @@ color             ['step', ['to-number', ['get','value']], …]
 con estrés hídrico, 24.284 árboles pasan a 14.009 al filtrar. Con NDVI el efecto
 es mucho más marcado, porque casi todo el predio cae en la clase alta.
 
+Hay árboles para **water_stress, absolute_ndvi y chlorophyll_class**, los tres en
+los 28 vuelos. *Estrés acumulado* y *NDVI promedio temporada* no tienen: son
+promedios de temporada derivados. El botón se deshabilita solo y dice por qué.
+
 Dos detalles que hubo que resolver y conviene no volver a romper:
 
 - Los ids de las capas vivas se guardan en una lista propia y **no** se deducen
@@ -542,3 +547,93 @@ Dos detalles que hubo que resolver y conviene no volver a romper:
 - La capa se reconstruye sólo cuando cambia algo que la afecta (una firma de
   pestaña + vuelo + indicador + nivel + filtro). Sin ese guardia, cada repintado
   volvía a crear cinco sources vectoriales y a pedir todos los tiles.
+
+
+---
+
+## La capa de celdas
+
+`grid_type_id` 26 parte el predio en **1.766 celdas de 1.142 m²** y responde lo
+que el polígono no puede: **dónde, dentro del cuartel, está el problema.** Un
+cuartel promediado en "Estrés bajo" puede tener media hectárea en crítico y el
+promedio lo esconde.
+
+Sólo existe para **`cumulative_thermal_stress`**: es el único indicador con
+overlays `grid_data`. Con cualquier otro el botón se deshabilita y dice para
+cuál sirve.
+
+**El color sale del propio tile**, y es el de la plataforma de Ceres — no se
+remapea a los tokens del sistema. Es la única capa del mapa donde el usuario
+compara contra lo que ve en Ceres, y cambiarle la paleta rompe esa
+correspondencia. Es la excepción consciente a la regla de las escalas propias.
+
+El histograma del panel es lo que la convierte en un número accionable en vez de
+una mancha de colores: cuánta superficie cae en cada décima, la banda peor
+arriba, como en la plataforma. Para el vuelo del 15-abr-2026:
+
+```
+0,6–0,7      13 celdas    1,2 ha
+0,5–0,6     126 celdas   14,0 ha
+0,4–0,5     506 celdas   58,3 ha
+0,3–0,4     770 celdas   88,7 ha
+0,2–0,3     307 celdas   35,5 ha
+0,1–0,2      44 celdas    4,7 ha
+            1.766 celdas · 1.142 m²        202,5 ha
+```
+
+> **El tamaño de celda se deriva del dato, no se hereda.** San Gerardo declara
+> 0,125 ha; en Ketcal las celdas miden **0,1142 ha**. Rotular 1.766 celdas como
+> "0,125 ha" declararía 20 ha de más, así que el script lo calcula del histograma
+> (ponderado por celdas, ignorando las bandas vacías) y avisa cuando difiere del
+> nominal.
+
+Con las celdas encendidas se ocultan el relleno y las etiquetas del nivel —dos
+rellenos superpuestos dan un color que no es ninguno de los dos— pero **se
+conserva el contorno**, que es la única referencia de qué unidad se está mirando.
+
+Celdas y árboles no se leen juntos, así que encender una apaga la otra. Vale
+saber que **hoy esa guarda no se dispara nunca**: los dos conjuntos de
+indicadores son disjuntos (grilla sólo en `cumulative_thermal_stress`, árboles
+sólo en los otros tres). Se deja por si Ceres publica un día `tree_data` del
+indicador de la grilla.
+
+---
+
+## La comparación entre temporadas
+
+Eje X = mes, una línea por temporada: responde **"¿venimos peor que el año
+pasado a la misma altura?"**. Es el promedio del predio en el nivel activo,
+ubicado en el mes de cada vuelo, y sigue al indicador y al nivel que estén
+elegidos.
+
+**Acá no se copió el eje de San Gerardo, y es la diferencia que importa.** Allá
+son cinco meses (nov–mar) porque el nogal sólo se vuela en esa ventana. Ketcal se
+vuela de **agosto a abril** —nueve meses, ~8 vuelos por temporada— así que un eje
+de cinco meses esconderia más de la mitad del histórico. Los meses se **derivan
+del dato**:
+
+```
+meses con vuelo: ago sep oct nov dic ene feb mar abr
+temporadas:      2022-23 (4 vuelos) · 2023-24 (8) · 2024-25 (8) · 2025-26 (8)
+```
+
+El gráfico es SVG propio, como el resto de los del mapa, con eje de **categoría**
+y no temporal: los vuelos no son equidistantes y un eje lineal dejaría medio
+gráfico vacío. Las líneas se cortan donde no se voló en vez de interpolar por
+encima del hueco.
+
+---
+
+## Una trampa del pipeline que conviene no reintroducir
+
+`build_trees()` y `build_grid()` devuelven un bloque **nuevo** con `varieties`,
+`stats` y `ramp` vacíos: son catálogos de ids, no estadística. Si la reinyección
+de lo ya calculado queda dentro de `if args.extras`, **el refresco semanal del
+workflow —que no pasa `--extras`— pisa el catálogo de variedades y el histograma
+de la grilla con vacíos.** Pasó, y el síntoma es silencioso: el JSON sigue
+pesando lo mismo y el mapa simplemente deja de ofrecer las dos capas.
+
+El orden correcto son dos pasos separados:
+
+1. **Preservar** lo que ya estaba: siempre, salvo `--full`.
+2. **Recalcular** lo que falte: sólo con `--extras`.

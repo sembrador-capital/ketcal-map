@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T18:54:32Z",
+  "generated_at": "2026-09-02T20:17:35Z",
   "source": "Ceres Imaging",
   "farm": {
     "name": "Ketcal",
@@ -32827,6 +32827,42 @@
             }
           }
         }
+      },
+      "relative_bands_trees": {
+        "chlorophyll_class": [
+          {
+            "min": -0.016038,
+            "max": 0.288682,
+            "es": "1 - Más bajo",
+            "en": "1 - Lowest",
+            "status": "exc",
+            "severity": 3
+          },
+          {
+            "min": 0.288682,
+            "max": 0.407341,
+            "es": "2",
+            "en": "2",
+            "status": "alto",
+            "severity": 2
+          },
+          {
+            "min": 0.407341,
+            "max": 0.629618,
+            "es": "3",
+            "en": "3",
+            "status": "bajo",
+            "severity": 1
+          },
+          {
+            "min": 0.629618,
+            "max": 0.809178,
+            "es": "4 - Más alto",
+            "en": "4 - Highest",
+            "status": "opt",
+            "severity": 0
+          }
+        ]
       }
     },
     {
@@ -36375,7 +36411,7 @@
     "color_property": "color",
     "param": "cumulative_thermal_stress",
     "grid_type": 26,
-    "cell_ha": 0.125,
+    "cell_ha": 0.1142,
     "requires_auth": false,
     "min_zoom": 10,
     "bands": 10,

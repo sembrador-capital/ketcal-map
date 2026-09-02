@@ -661,6 +661,10 @@ TREE_SOURCE_LAYER = "trees"
 # El overlay que sirve NO es el mismo que el de la capa por arbol: hay que pedir
 # el de source=grid_data. Con uno de source=tree_data el tiler responde HTTP 500.
 GRID_TYPE_CELDAS = 26
+# Tamano nominal de celda. Es el de San Gerardo y sirve de fallback: en cuanto
+# hay stats se recalcula con el area real de las celdas de ESTE predio, que en
+# Ketcal son ~1.150 m2 (0,115 ha) y no 1.250. Rotular 1.766 celdas como "0,125
+# ha" seria declarar 25 ha de mas.
 GRID_CELL_HA = 0.125
 GRID_SOURCE_LAYER = "grid"
 GRID_MIN_ZOOM = 10
@@ -1281,6 +1285,23 @@ def build_grid(grids_raw, flights, warn):
         ("stats", OrderedDict()),
         ("by_flight", out),
     ])
+
+
+def cell_ha_real(grid):
+    """Tamano medio de celda a partir del histograma, en hectareas.
+
+    Se pondera por celdas para que las del borde —que son parciales— no
+    arrastren el promedio, y se ignoran las bandas vacias.
+    """
+    area = celdas = 0
+    for st in (grid.get("stats") or {}).values():
+        for e in st.get("hist") or []:
+            if e.get("cells"):
+                area += e.get("area_m2") or 0
+                celdas += e["cells"]
+    if not celdas:
+        return None
+    return round(area / celdas / 10000.0, 4)
 
 
 def build_imagery(imagery_raw, flights, warn):
@@ -2870,30 +2891,34 @@ def main():
         payload["trees"] = trees
         print("Capa por arbol: %d vuelo(s) con overlays por arbol."
               % len(trees.get("by_flight") or {}))
-    if not args.extras and trees:
-        print("Estadistica por arbol: omitida (pasa --extras). El mapa igual "
-              "puede pintar los arboles: los cortes salen de las bandas del "
-              "nivel, no de la distribucion por arbol.")
-    if args.extras and trees:
-        # Reusar lo ya calculado: decodificar tiles es lo mas caro de la corrida
-        # (27 tiles por vuelo e indicador), y ni las variedades ni las clases de
-        # un vuelo pasado cambian. Con --full se recalcula todo.
-        prev_trees = (existing or {}).get("trees") or {}
-        if not args.full and prev_trees.get("varieties"):
+    # PASO 1 - Preservar lo ya calculado. Va FUERA de --extras a proposito:
+    # build_trees() solo cataloga, asi que sin esto una corrida incremental
+    # —la del workflow— pisaba el catalogo de variedades con un vacio.
+    prev_trees = (existing or {}).get("trees") or {}
+    prev_rel = {}
+    for f in (existing or {}).get("flights") or []:
+        if f.get("relative_bands_trees"):
+            prev_rel[f.get("week_key")] = f["relative_bands_trees"]
+    if trees and not args.full:
+        if prev_trees.get("varieties"):
             trees["varieties"] = prev_trees["varieties"]
-        prev_rel = {}
-        for f in (existing or {}).get("flights") or []:
-            if f.get("relative_bands_trees"):
-                prev_rel[f.get("week_key")] = f["relative_bands_trees"]
+        for f in flights:
+            if f["week_key"] in prev_rel:
+                f["relative_bands_trees"] = prev_rel[f["week_key"]]
+
+    if not args.extras and trees:
+        falta = "" if trees.get("varieties") else " Todavia no hay catalogo de variedades."
+        print("Estadistica por arbol: no se recalcula (pasa --extras).%s El mapa "
+              "igual puede pintar los arboles: los cortes salen de las bandas "
+              "del nivel." % falta)
+
+    # PASO 2 - Recalcular lo que falte. Esto si es caro y va detras del flag.
+    if args.extras and trees:
         # Solo los N vuelos mas recientes: la capa por arbol se muestra del
         # vuelo elegido, y bajarla para 2022 no le sirve a nadie.
         recientes = {f["week_key"] for f in flights[-max(1, args.extras_ultimos):]}
-        pendientes = []
-        for f in flights:
-            if not args.full and f["week_key"] in prev_rel:
-                f["relative_bands_trees"] = prev_rel[f["week_key"]]
-            elif f["week_key"] in recientes:
-                pendientes.append(f["week_key"])
+        pendientes = [f["week_key"] for f in flights
+                      if f["week_key"] in recientes and f["week_key"] not in prev_rel]
         if pendientes or not trees.get("varieties"):
             print("Calculando estadistica por arbol (%d vuelo(s) pendiente(s))..."
                   % len(pendientes))
@@ -2911,22 +2936,35 @@ def main():
     # Grilla de 1/8 ha del estres acumulado. La leyenda y la rampa salen de
     # decodificar los tiles, que es caro (2 tiles por equipo y por vuelo), asi
     # que se reusa lo del archivo previo salvo --full.
-    if not args.extras:
-        grid = conservar_grid
-        if grid:
-            payload["grid"] = grid
-            print("Grilla de celdas: reusada del archivo previo (sin --extras).")
-        else:
-            print("Grilla de celdas: omitida (pasa --extras para incluirla).")
-    else:
-        grid = build_grid(grids_raw, flights, warn) or conservar_grid
+    # Mismo criterio que la capa por arbol: build_grid() solo CATALOGA ids de
+    # overlay (barato, y es lo que el mapa necesita para pedir los MVT al tiler
+    # publico). Lo caro es compute_grid_stats(), que decodifica tiles para armar
+    # la leyenda y el histograma. Solo eso va detras de --extras.
+    grid = build_grid(grids_raw, flights, warn) or conservar_grid
+    if grid:
+        payload["grid"] = grid
+        print("Grilla de celdas: %d vuelo(s) con overlays de grilla."
+              % len(grid.get("by_flight") or {}))
+    # PASO 1 - Preservar. Igual que con los arboles: fuera de --extras, porque
+    # build_grid() solo cataloga y sin esto el refresco semanal borraba el
+    # histograma y la rampa de la leyenda.
+    prev_grid = (existing or {}).get("grid") or {}
+    prev_stats = prev_grid.get("stats") or {}
+    if grid and not args.full:
+        grid["stats"] = OrderedDict(
+            (wk, prev_stats[wk]) for wk in grid["by_flight"] if wk in prev_stats)
+        if prev_grid.get("ramp"):
+            grid["ramp"] = prev_grid["ramp"]
+        if prev_grid.get("cell_ha"):
+            grid["cell_ha"] = prev_grid["cell_ha"]
+
+    if not args.extras and grid and not (grid.get("ramp") or []):
+        print("Leyenda de la grilla: no se recalcula (pasa --extras). El mapa "
+              "igual puede pintarla: las 10 bandas de 0,1 son las de la leyenda "
+              "de Ceres, no dependen de decodificar tiles.")
+
+    # PASO 2 - Recalcular lo que falte.
     if args.extras and grid:
-        prev_grid = (existing or {}).get("grid") or {}
-        prev_stats = prev_grid.get("stats") or {}
-        if not args.full:
-            grid["stats"] = OrderedDict(
-                (wk, prev_stats[wk]) for wk in grid["by_flight"] if wk in prev_stats)
-            grid["ramp"] = prev_grid.get("ramp") or []
         pendientes = [wk for wk in grid["by_flight"] if wk not in grid["stats"]]
         if pendientes:
             print("Calculando la grilla de %g ha (%d vuelo(s) pendiente(s))..."
@@ -2941,6 +2979,15 @@ def main():
         else:
             print("Grilla: sin cambios, reusada del archivo previo.")
         payload["grid"] = grid
+
+    # El tamano de celda se declara con el real de este predio, no con el
+    # nominal heredado.
+    if grid:
+        real = cell_ha_real(grid)
+        if real and abs(real - (grid.get("cell_ha") or 0)) > 0.002:
+            print("Grilla: celda real %.4f ha (el nominal era %.4f)."
+                  % (real, grid.get("cell_ha") or 0))
+            grid["cell_ha"] = real
 
     # Capas de imagen: solo el catalogo de ids, no hay nada que decodificar.
     imagery = build_imagery(imagery_raw, flights, warn) or conservar_imagery

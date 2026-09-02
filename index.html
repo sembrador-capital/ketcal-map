@@ -2641,6 +2641,7 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
             </div>
             <button class="ceres-tree-btn" id="btnArboles" onclick="toggleArboles()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-satelite"/></svg></span><span id="btnArbolesLabel" data-i18n="Ver por árbol">Ver por árbol</span></button>
             <button class="ceres-tree-btn" id="btnArbolesMalos" style="display:none" onclick="toggleArbolesMalos()" title="Con NDVI casi todo el predio cae en la clase alta: filtrar deja ver las anomalías" data-i18n-title="Con NDVI casi todo el predio cae en la clase alta: filtrar deja ver las anomalías"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-informe"/></svg></span><span data-i18n="Sólo los que no están en la mejor clase">Sólo los que no están en la mejor clase</span></button>
+            <button class="ceres-tree-btn" id="btnCeldas" onclick="toggleCeldas()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-mapa"/></svg></span><span id="btnCeldasLabel" data-i18n="Ver por celda">Ver por celda</span></button>
             <button class="ceres-tree-btn" onclick="openEvoCeres()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
             <button class="ceres-tree-btn" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
         </div>
@@ -2651,12 +2652,28 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
             </button>
             <div class="ceres-section-body" id="ceresCambios"></div>
         </div>
+        <!-- Histograma de la grilla. Sólo aparece con la capa de celdas
+             encendida: sin ella no describe nada de lo que se está viendo. -->
+        <div class="ceres-chart-block" id="ceresCeldasBlock" style="display:none">
+            <button type="button" class="ceres-chart-title" onclick="toggleBloque('ceresCeldasBlock')">
+                <span id="ceresCeldasTitulo" data-i18n="Reparto por celda">Reparto por celda</span>
+                <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
+            </button>
+            <div class="ceres-section-body" id="ceresCeldasHist"></div>
+        </div>
         <div class="ceres-chart-block collapsed" id="ceresRankBlock">
             <button type="button" class="ceres-chart-title" onclick="toggleBloque('ceresRankBlock')">
                 <span data-i18n="Ranking del vuelo">Ranking del vuelo</span>
                 <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
             </button>
             <div class="ceres-section-body" id="ceresRank"></div>
+        </div>
+        <div class="ceres-chart-block collapsed" id="ceresTempBlock">
+            <button type="button" class="ceres-chart-title" onclick="toggleBloque('ceresTempBlock')">
+                <span data-i18n="Comparación entre temporadas">Comparación entre temporadas</span>
+                <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
+            </button>
+            <div class="ceres-section-body" id="ceresTemp"></div>
         </div>
     </div>
 </div>
@@ -2864,6 +2881,19 @@ const I18N = {
 'Clic para ver el detalle':'Click for detail',
 'Elegir un vuelo':'Pick a flight', 'parcial':'partial',
 'Comparar vuelos':'Compare flights', 'Salir de comparación':'Exit comparison',
+// ── Capa de celdas ──
+'Ver por celda':'View by cell', 'Ocultar celdas':'Hide cells',
+'Reparto por celda':'Breakdown by cell', 'celdas':'cells', 'Celda':'Cell',
+'Sólo está disponible para':'Only available for',
+'Este vuelo no tiene grilla de celdas.':'This flight has no cell grid.',
+'El color es el de la plataforma de Ceres, no una escala nuestra: es la capa donde conviene poder comparar contra lo que se ve allá.':'Colours are Ceres’ own, not a scale of ours: this is the layer where being able to compare against what you see there matters.',
+'La grilla parte el predio en celdas, así que muestra dónde está el problema dentro del cuartel, que el promedio del polígono esconde.':'The grid splits the farm into cells, so it shows where the problem sits inside the block, which the polygon average hides.',
+// ── Comparación entre temporadas ──
+'Comparación entre temporadas':'Season comparison',
+'Se necesitan al menos dos temporadas con vuelos.':'At least two seasons with flights are needed.',
+'Promedio del predio por mes, una línea por temporada.':'Farm average per month, one line per season.',
+'Sin vuelos entre mayo y julio.':'No flights between May and July.',
+'El reparto por banda de este vuelo todavía no está calculado.':'The per-band breakdown for this flight is not computed yet.',
 'Comparando':'Comparing', 'Lado A':'Side A', 'Lado B':'Side B',
 'Series de tiempo por parámetro con sus umbrales':'Time series per parameter with their thresholds',
 // ── Criterios de color ──
@@ -4393,6 +4423,9 @@ function renderBotonVariedades(){
 function toggleArboles(){
     if(!arbDisponible()) return;
     arbolesOn = !arbolesOn;
+    // Simétrico del de toggleCeldas, y con la misma nota: hoy los indicadores
+    // con árboles y el de la grilla no se cruzan, así que es defensivo.
+    if(arbolesOn && celdasOn){ celdasOn = false; refrescarCeldas(true); }
     refrescarArboles(true);
     if(arbolesOn && map.getZoom() < ARB_ZOOM_UTIL)
         map.easeTo({zoom: ARB_ZOOM_UTIL, duration: 600});
@@ -4410,6 +4443,312 @@ function toggleVariedades(){
     if(variedadesOn && map.getZoom() < ARB_ZOOM_UTIL)
         map.easeTo({zoom: ARB_ZOOM_UTIL, duration: 600});
     renderLegend();
+}
+
+/* ── Capa de celdas ──────────────────────────────────────────────────────
+   La grilla de Ceres (grid_type_id 26) parte el predio en 1.766 celdas de
+   ~1.150 m² y responde lo que el polígono no puede: DÓNDE, dentro del cuartel,
+   está el problema. Un cuartel promediado en "Estrés bajo" puede tener media
+   hectárea en crítico.
+
+   Sólo existe para `cumulative_thermal_stress`: es el único indicador con
+   overlays `grid_data`. */
+const CEL_PREFIJO = 'ceres-celdas-';
+let celdasOn = false;
+let CEL_CAPAS = [];
+let celPopup = null;
+
+function celdasGrid(){ return (CERES && CERES.grid) || null; }
+function celdasCatalogo(){
+    const g = celdasGrid(), v = ceresVuelo('A');
+    if(!g || !g.by_flight || !v) return null;
+    const eqs = g.by_flight[v.week_key];
+    return (eqs && Object.keys(eqs).length) ? eqs : null;
+}
+/* Disponible sólo si el indicador activo es el que tiene grilla. */
+function celdasDisponible(){
+    const g = celdasGrid();
+    return !!(g && S.ceres.param === g.param && celdasCatalogo());
+}
+function celdasStats(){
+    const g = celdasGrid(), v = ceresVuelo('A');
+    return (g && v && (g.stats || {})[v.week_key]) || null;
+}
+function capasCeldas(){ return CEL_CAPAS.filter(id => map.getLayer(id)); }
+
+function quitarCeldas(){
+    if(!mapaListo()) return;
+    (map.getStyle().layers || []).forEach(l => {
+        if(l.id.indexOf(CEL_PREFIJO) === 0 && map.getLayer(l.id)) map.removeLayer(l.id);
+    });
+    Object.keys(map.getStyle().sources || {}).forEach(k => {
+        if(k.indexOf(CEL_PREFIJO) === 0 && map.getSource(k)) map.removeSource(k);
+    });
+    CEL_CAPAS = [];
+}
+
+function pintarCeldas(){
+    if(!mapaListo()) return false;
+    quitarCeldas();
+    const g = celdasGrid(), cat = celdasCatalogo();
+    if(!g || !cat) return false;
+    const minz = g.min_zoom || 10;
+    Object.keys(cat).forEach(eq => {
+        const id = CEL_PREFIJO + eq;
+        map.addSource(id, {
+            type:'vector', tiles:[g.tile_template.replace('{id}', cat[eq])],
+            minzoom:minz, maxzoom:18
+        });
+        map.addLayer({
+            id, type:'fill', source:id, 'source-layer':g.source_layer || 'grid',
+            minzoom:minz,
+            paint:{
+                // El color viene EN EL TILE y es el de la plataforma de Ceres.
+                // No se remapea a los tokens: es la única capa donde el usuario
+                // compara contra lo que ve allá, y otra paleta rompe eso.
+                'fill-color': ['get', g.color_property || 'color'],
+                // Las celdas se tocan entre sí y taparían el satelital: 0,85
+                // deja ver el terreno sin que el color pierda la banda.
+                'fill-opacity': 0.85
+            }
+        });
+        CEL_CAPAS.push(id);
+        map.on('click', id, e => celdaClick(e));
+        map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
+        map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
+    });
+    return true;
+}
+
+/* Dos rellenos superpuestos dan un color que no es ninguno de los dos, así que
+   con celdas se ocultan relleno y etiquetas del nivel, pero se conserva el
+   contorno: es la única referencia de qué unidad se está mirando. */
+function celdasVelo(ocultar){
+    const n = nivelActivo();
+    if(map.getLayer(`${n}-fill`))
+        map.setLayoutProperty(`${n}-fill`, 'visibility', ocultar ? 'none' : 'visible');
+    if(map.getLayer(`${n}-label`))
+        map.setLayoutProperty(`${n}-label`, 'visibility',
+            (!ocultar && S.capas.etiquetas) ? 'visible' : 'none');
+}
+
+function fmtBanda(v){ return fmtDec(v, 1); }
+function fmtHaCel(ha){
+    // Una banda con celdas redondeada a "0,0 ha" se lee como vacía, y al lado
+    // hay filas vacías con una raya: quedarían indistinguibles.
+    if(ha > 0 && ha < 0.05) return '<0,1 ha';
+    return `${fmtDec(ha, 1)} ha`;
+}
+
+function celdaClick(e){
+    const f = e.features && e.features[0];
+    if(!f) return;
+    const pr = f.properties || {};
+    const v = Number(pr.value);
+    const banda = Math.min(Math.max(Math.floor(v * 10), 0), 9);
+    const col = pr.color || SEM('--sem-grey');
+    if(!celPopup) celPopup = new mapboxgl.Popup({closeButton:true, maxWidth:'240px'});
+    celPopup.setLngLat(e.lngLat).setHTML(
+        `<div class="ct-pop">
+            <div class="ct-pop-head">
+                <span class="ct-pop-val">${fmtCeres(v)}</span>
+                <span class="ct-band" style="background:${arbTinte(col)};color:${arbSombra(col)}">${fmtBanda(banda/10)}–${fmtBanda(banda/10+0.1)}</span>
+            </div>
+            <div class="ct-pop-rows">
+                <div><span>${t('Celda')}</span><strong>${fmt(Math.round(pr.area || 0),0)} m²</strong></div>
+                <div><span>${t('Plantas')}</span><strong>${pr.plants != null ? fmt(pr.plants,0) : '—'}</strong></div>
+                <div><span>${t('Indicador')}</span><strong>${esc(ceresEtiquetaParam(ceresParam()))}</strong></div>
+            </div>
+        </div>`).addTo(map);
+}
+
+let celFirma = null;
+function refrescarCeldas(forzar){
+    if(!CERES || !mapaListo()) return;
+    const encendida = currentMode === 'ceres' && celdasOn && celdasDisponible();
+    const v = ceresVuelo('A');
+    const firma = [currentMode, encendida, v ? v.week_key : '', S.ceres.param,
+                   S.ceres.nivel].join('|');
+    if(forzar || firma !== celFirma){
+        celFirma = firma;
+        if(encendida && !pintarCeldas()){ celdasOn = false; celFirma = null; }
+        if(!encendida) quitarCeldas();
+    }
+    celdasVelo(encendida);
+    renderBotonCeldas();
+    renderCeldasHist();
+}
+
+function renderBotonCeldas(){
+    const btn = document.getElementById('btnCeldas');
+    if(!btn) return;
+    const g = celdasGrid();
+    const hay = celdasDisponible();
+    btn.disabled = !hay;
+    btn.classList.toggle('active', celdasOn && hay);
+    document.getElementById('btnCeldasLabel').textContent =
+        t(celdasOn && hay ? 'Ocultar celdas' : 'Ver por celda');
+    if(!hay && g){
+        const donante = ceresParams().find(x => x.id === g.param);
+        btn.title = S.ceres.param !== g.param
+            ? `${t('Sólo está disponible para')} ${ceresEtiquetaParam(donante) || g.param}`
+            : t('Este vuelo no tiene grilla de celdas.');
+    }else{
+        btn.title = '';
+    }
+}
+
+/* Histograma del vuelo: cuánta superficie cae en cada décima. Es lo que
+   convierte la capa en un número accionable en vez de una mancha de colores. */
+function renderCeldasHist(){
+    const bloque = document.getElementById('ceresCeldasBlock');
+    const box = document.getElementById('ceresCeldasHist');
+    if(!bloque || !box) return;
+    const g = celdasGrid();
+    const st = celdasStats();
+    const visible = celdasOn && celdasDisponible();
+    bloque.style.display = visible ? '' : 'none';
+    if(!visible) return;
+
+    if(!st || !st.hist){
+        box.innerHTML = `<div class="ceres-chart-empty">`
+            + `${esc(t('La grilla parte el predio en celdas, así que muestra dónde está el problema dentro del cuartel, que el promedio del polígono esconde.'))}`
+            + `<br><br>${esc(t('El reparto por banda de este vuelo todavía no está calculado.'))}</div>`;
+        return;
+    }
+    const areas = st.hist.map(e => e.area_m2 || 0);
+    const total = areas.reduce((a,b) => a+b, 0) || 1;
+    const mayor = Math.max.apply(null, areas) || 1;
+    // De arriba hacia abajo, como la plataforma: la banda peor primero.
+    const filas = st.hist.slice().reverse().map(e => {
+        const a = e.area_m2 || 0, vacia = !e.cells;
+        const col = e.color || 'transparent';
+        return `<div class="cgh-row${vacia ? ' cgh-empty' : ''}">`
+            + `<span class="cgh-sw" style="background:${col}"></span>`
+            + `<span class="cgh-lbl">${fmtBanda(e.band/10)}–${fmtBanda(e.band/10+0.1)}</span>`
+            + `<span class="cgh-track"><span class="cgh-bar" style="width:${(100*a/mayor).toFixed(1)}%;background:${col}"></span></span>`
+            + `<span class="cgh-val">${vacia ? '—' : fmtHaCel(a/10000)}</span></div>`;
+    }).join('');
+    const ha = (g && g.cell_ha) || 0;
+    box.innerHTML = filas
+        + `<div class="cs-grid-total"><span>${fmt(st.cells,0)} ${t('celdas')}`
+        + (ha ? ` · ${fmt(Math.round(ha*10000),0)} m²` : '') + `</span>`
+        + `<span>${fmtHaCel(total/10000)}</span></div>`
+        + `<div class="ket-note">${esc(t('El color es el de la plataforma de Ceres, no una escala nuestra: es la capa donde conviene poder comparar contra lo que se ve allá.'))}</div>`;
+}
+
+function toggleCeldas(){
+    if(!celdasDisponible()) return;
+    celdasOn = !celdasOn;
+    // Celdas y árboles a la vez no se leen: 230.000 puntos sobre 1.766 celdas
+    // opacas no dejan ver ninguna de las dos cosas.
+    //
+    // Hoy esta guarda NO se dispara nunca, y conviene saberlo antes de buscarle
+    // el caso: los dos conjuntos son disjuntos. La grilla existe sólo para
+    // `cumulative_thermal_stress` y los árboles sólo para water_stress,
+    // absolute_ndvi y chlorophyll_class (verificado sobre los 28 vuelos). Se
+    // deja porque si Ceres publica un día tree_data del indicador de la grilla,
+    // el mapa no tiene por qué encender las dos capas encimadas.
+    if(celdasOn && arbolesOn){ arbolesOn = false; refrescarArboles(true); }
+    refrescarCeldas(true);
+    const minz = (celdasGrid() || {}).min_zoom || 10;
+    if(celdasOn && map.getZoom() < minz) map.easeTo({zoom:minz + 0.5, duration:600});
+    renderLegend();
+}
+
+/* ── Comparación entre temporadas ────────────────────────────────────────
+   Eje X = mes, una serie por temporada: responde "¿venimos peor que el año
+   pasado a la misma altura?".
+
+   Los meses se DERIVAN del histórico y no se escriben a mano. En San Gerardo
+   son cinco (nov-mar) porque el nogal sólo se vuela en esa ventana; Ketcal se
+   vuela de agosto a abril, así que un eje de cinco meses esconderia más de la
+   mitad de los vuelos. */
+function mesesConVuelo(){
+    const set = new Set(ceresVuelos().map(f => Number(f.date.slice(5,7))));
+    // Orden de temporada: julio a junio.
+    const orden = [7,8,9,10,11,12,1,2,3,4,5,6];
+    return orden.filter(m => set.has(m));
+}
+function nombreMes(m){
+    return new Date(2000, m-1, 1).toLocaleDateString(LOC(), {month:'short'})
+        .replace('.','');
+}
+
+function renderCeresTemporadas(){
+    const box = document.getElementById('ceresTemp');
+    if(!box) return;
+    const par = ceresParam();
+    const vs = ceresVuelos();
+    if(!par || !vs.length){ box.innerHTML = ''; return; }
+
+    const temporadas = [];
+    vs.forEach(f => { if(!temporadas.includes(f.season)) temporadas.push(f.season); });
+    if(temporadas.length < 2){
+        box.innerHTML = `<div class="ceres-chart-empty">${t('Se necesitan al menos dos temporadas con vuelos.')}</div>`;
+        return;
+    }
+    const meses = mesesConVuelo();
+    const lvl = ceresNivelJSON(S.ceres.nivel);
+    const paleta = [SEM('--dat-eq-1'), SEM('--dat-eq-2'), SEM('--dat-eq-3'),
+                    SEM('--dat-eq-4'), SEM('--dat-eq-5')];
+
+    // Promedio del predio por vuelo, ubicado en el mes del vuelo.
+    const series = temporadas.map((s, i) => ({
+        temporada: s,
+        color: paleta[i % paleta.length],
+        puntos: meses.map(m => {
+            const f = vs.find(x => x.season === s && Number(x.date.slice(5,7)) === m);
+            if(!f) return null;
+            const b = f[lvl] || {};
+            const val = Object.keys(b).map(k => b[k][par.id]).filter(v => v != null);
+            return val.length ? val.reduce((a,c) => a+c, 0) / val.length : null;
+        })
+    }));
+
+    const todos = series.flatMap(d => d.puntos).filter(v => v != null);
+    if(!todos.length){
+        box.innerHTML = `<div class="ceres-chart-empty">${t('Sin dato en este vuelo')}</div>`;
+        return;
+    }
+    let lo = Math.min(...todos), hi = Math.max(...todos);
+    const pad = (hi - lo) * 0.12 || Math.abs(hi) * 0.1 || 0.05;
+    lo -= pad; hi += pad;
+
+    // SVG propio, como el resto de los gráficos del mapa: eje de CATEGORÍA por
+    // mes, no temporal, y una línea por temporada con huecos donde no se voló.
+    const W = 300, H = 168, ML = 34, MR = 6, MT = 8, MB = 34;
+    const x = i => ML + (W-ML-MR) * (meses.length === 1 ? 0.5 : i/(meses.length-1));
+    const y = v => MT + (H-MT-MB) * (1 - (v-lo)/(hi-lo));
+
+    const lineas = series.map(d => {
+        let path = '', abierto = false;
+        d.puntos.forEach((v,i) => {
+            if(v == null){ abierto = false; return; }
+            path += `${abierto ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)} `;
+            abierto = true;
+        });
+        const dots = d.puntos.map((v,i) => v == null ? '' :
+            `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.4" fill="${d.color}">`
+            + `<title>${esc(d.temporada)} · ${esc(nombreMes(meses[i]))} · ${fmtCeres(v)}</title></circle>`).join('');
+        return `<path d="${path.trim()}" fill="none" stroke="${d.color}" stroke-width="1.8" `
+            + `stroke-linejoin="round" stroke-linecap="round"/>${dots}`;
+    }).join('');
+
+    const ticks = [lo+pad, hi-pad].map(v =>
+        `<text class="nc-tick" x="${ML-4}" y="${(y(v)+4).toFixed(1)}" text-anchor="end">${fmtCeres(v)}</text>`).join('');
+    const xlabs = meses.map((m,i) =>
+        `<text class="nc-tick" x="${x(i).toFixed(1)}" y="${H-20}" text-anchor="middle">${esc(nombreMes(m))}</text>`).join('');
+
+    box.innerHTML = `<div class="nut-evo-chart"><svg viewBox="0 0 ${W} ${H}" role="img">`
+        + `<line class="nc-axis" x1="${ML}" y1="${H-MB}" x2="${W-MR}" y2="${H-MB}"/>`
+        + `<line class="nc-axis" x1="${ML}" y1="${MT}" x2="${ML}" y2="${H-MB}"/>`
+        + lineas + ticks + xlabs + `</svg></div>`
+        + `<div class="nut-evo-legend">` + series.map(d =>
+            `<span class="nut-evo-lg"><i style="background:${d.color}"></i>${esc(d.temporada)}</span>`).join('')
+        + `</div>`
+        + `<div class="ket-note">${esc(t('Promedio del predio por mes, una línea por temporada.'))} `
+        + `${esc(t('Sin vuelos entre mayo y julio.'))}</div>`;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -4513,7 +4852,7 @@ function repintar(){
 
     // La capa por árbol se refresca en un solo lugar para las dos pestañas que
     // la usan, y va ANTES de la leyenda porque puede apagarse sola.
-    if(CERES) refrescarArboles();
+    if(CERES){ refrescarArboles(); refrescarCeldas(); }
 
     renderLegend();
     renderStats();
@@ -4523,6 +4862,7 @@ function repintar(){
     // extra que aparece al hacer clic.
     if(currentMode === 'ceres'){
         renderCeresStepper(); renderCeresCambios(); renderCeresRank();
+        renderCeresTemporadas();
     }
     if(currentMode === 'riego'){ renderRiegoRank(); renderRiegoSubtitulo(); }
 }
@@ -5747,6 +6087,7 @@ function switchMode(modo){
     // El comparador es de Ceres: salir de la pestaña lo apaga en vez de dejar
     // medio mapa pintado con un vuelo que ya no se está mirando.
     if(modo !== 'ceres' && compareMode) apagarCompare();
+    if(modo !== 'ceres' && celdasOn){ celdasOn = false; celFirma = null; }
     document.getElementById('ctrlGeneral').classList.toggle('visible', modo === 'general');
     document.getElementById('ctrlRiego').classList.toggle('visible', modo === 'riego');
     document.getElementById('ctrlCeres').classList.toggle('visible', modo === 'ceres');
