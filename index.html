@@ -2416,7 +2416,7 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
          parte de la información, y una pestaña que aparece de la nada más
          adelante desorienta más que una que se anuncia. -->
     <button class="tab-btn" data-mode="riego" onclick="switchMode('riego')" title="Consumo por sector · DropControl" data-i18n-title="Consumo por sector · DropControl"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-gota"/></svg></span><span data-i18n="Riego">Riego</span></button>
-    <button class="tab-btn" disabled title="Próximamente · Ceres Imaging" data-i18n-title="Próximamente · Ceres Imaging"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-satelite"/></svg></span><span data-i18n="Ceres">Ceres</span></button>
+    <button class="tab-btn" data-mode="ceres" onclick="switchMode('ceres')" title="Imágenes aéreas · Ceres Imaging" data-i18n-title="Imágenes aéreas · Ceres Imaging"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-satelite"/></svg></span><span data-i18n="Ceres">Ceres</span></button>
 </div>
 
 <div class="stats-bar glass hidden" id="statsBar" aria-live="polite">
@@ -2519,6 +2519,35 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
         <div class="ket-toggles">
             <label class="ket-toggle"><input type="checkbox" id="chkValvulasRiego" onchange="setCapa('valvulas',this.checked)"><span data-i18n="Válvulas">Válvulas</span></label>
             <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasRiego" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+        </div>
+    </div>
+    <button class="fc-compare-btn" onclick="encuadrarPredio()" title="Encuadrar el predio" data-i18n-title="Encuadrar el predio"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
+</div>
+
+<!-- ── Controles · Ceres ──────────────────────────────────────────────── -->
+<div class="foliar-controls glass" id="ctrlCeres">
+    <div class="fc-group">
+        <label class="fc-label" for="selCeresParam" data-i18n="Indicador">Indicador</label>
+        <select class="fc-select" id="selCeresParam" onchange="setCeresParam(this.value)"></select>
+    </div>
+    <div class="fc-group">
+        <label class="fc-label" for="selCeresVuelo" data-i18n="Vuelo">Vuelo</label>
+        <select class="fc-select" id="selCeresVuelo" onchange="setCeresVuelo(+this.value)"></select>
+    </div>
+    <div class="fc-group">
+        <label class="fc-label" data-i18n="Nivel">Nivel</label>
+        <div class="ket-seg" id="segNivelCeres" role="group" aria-label="Nivel del mapa" data-i18n-aria="Nivel del mapa">
+            <button type="button" data-v="equipos"   onclick="setNivelCeres('equipos')"   data-i18n="Equipo">Equipo</button>
+            <button type="button" data-v="sectores"  class="active" onclick="setNivelCeres('sectores')"  data-i18n="Sector">Sector</button>
+            <button type="button" data-v="cuarteles" onclick="setNivelCeres('cuarteles')" data-i18n="Cuartel">Cuartel</button>
+        </div>
+    </div>
+    <div class="fc-divider" aria-hidden="true"></div>
+    <button class="fc-compare-btn nut-evo-btn" onclick="openEvoCeres()" title="Series de tiempo por indicador con sus bandas" data-i18n-title="Series de tiempo por indicador con sus bandas"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
+    <div class="fc-group">
+        <label class="fc-label" data-i18n="Capas">Capas</label>
+        <div class="ket-toggles">
+            <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasCeres" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
         </div>
     </div>
     <button class="fc-compare-btn" onclick="encuadrarPredio()" title="Encuadrar el predio" data-i18n-title="Encuadrar el predio"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
@@ -2647,6 +2676,29 @@ const I18N = {
 'Último evento':'Last event', 'Sin eventos':'No events',
 'Sin respuesta de la caseta':'No response from the pump house',
 'Datos en vivo desde DropControl':'Live data from DropControl',
+// ── Ceres Imaging ──
+'Imágenes aéreas · Ceres Imaging':'Aerial imagery · Ceres Imaging',
+'Indicador':'Indicator', 'Vuelo':'Flight', 'Vuelos':'Flights',
+'Series de tiempo por indicador con sus bandas':'Time series per indicator with their bands',
+'Cobertura':'Coverage', 'En cumplimiento':'Within compliance',
+'Superficie en cumplimiento':'Area within compliance',
+'Plantas':'Plants', 'Plantas por hectárea':'Plants per hectare',
+'Cambio vs. vuelo anterior':'Change vs. previous flight',
+'Primer vuelo con dato para esta unidad':'First flight with data for this unit',
+'Sin cambio':'No change', 'mejora':'improving', 'deterioro':'worsening',
+'No plantado en esta fecha':'Not planted at this date',
+'de las':'of the', 'unidades del nivel':'units at this level',
+'Este vuelo cubre':'This flight covers',
+'El predio se plantó por etapas: los cuarteles que no existían en esta fecha se muestran en beige, no en gris.':'The farm was planted in stages: blocks that did not exist at this date are shown in beige, not grey.',
+'Cortes publicados por Ceres':'Cut-offs published by Ceres',
+'Cortes definidos por agronomía':'Cut-offs defined by agronomy',
+'Clases relativas a este vuelo':'Classes relative to this flight',
+'Los cortes se recalculan en cada vuelo, así que dos vuelos no son comparables entre sí.':'Cuts are recomputed for each flight, so two flights are not comparable with each other.',
+'Vuelo del':'Flight of', 'hace un mes':'a month ago',
+'Ranking del vuelo':'Flight ranking',
+'Ceres agrega sobre los píxeles en los tres niveles: el cuartel es dato medido, no un promedio de sectores.':'Ceres aggregates over pixels at all three levels: the block is measured data, not an average of sectors.',
+'Sin dato en este vuelo':'No data in this flight',
+'Peor clase':'Worst class', 'unidades':'units',
 'Series de tiempo por parámetro con sus umbrales':'Time series per parameter with their thresholds',
 // ── Criterios de color ──
 'Equipo de riego':'Irrigation unit', 'Especie':'Species', 'Variedad':'Variety',
@@ -2837,6 +2889,7 @@ const S = {
     gen: { nivel:'sectores', color:'equipo' },
     nut: { matriz:'Foliar', param:null, fecha:null, prof:null, nivel:'ubicaciones' },
     riego: { metrica:'total_m3', nivel:'sectores' },
+    ceres: { param:'water_stress', nivel:'sectores', vuelo:null },
     capas: { etiquetas:true, valvulas:false, pozos:true, calicatas:false },
     sel: null,          // id de la unidad seleccionada
     selNivel: null,     // nivel al que pertenece la selección
@@ -2883,6 +2936,11 @@ function renderStamp(){
     if(currentMode === 'general'){
         iso = GEO && GEO.generated_at ? GEO.generated_at.slice(0,10) : null;
         el.textContent = iso ? `${t('Datos al')} ${fmtFecha(iso)} · KMZ ${esc(GEO.source)}` : '';
+    }else if(currentMode === 'ceres'){
+        const v = ceresVuelo();
+        el.textContent = v
+            ? `${t('Vuelo del')} ${fmtFecha(v.date)} · ${antiguedad(v.date)}`
+            : (CERES ? t('Sin dato') : t('Cargando datos del predio…'));
     }else if(currentMode === 'riego'){
         el.textContent = riegoEstado === 'listo'
             ? `${t('Datos en vivo desde DropControl')} · ${ventanaRiego()}`
@@ -3048,6 +3106,30 @@ function tooltipUnidad(nivel, id){
             [t('Muestras'), nMuestrasDe(p) || null]
         ];
         return tt(esc(p.name || p.id), esc((p.especies || [p.especie_corta]).filter(Boolean).map(nombreClase).join(' · ')), filas);
+    }
+
+    if(currentMode === 'ceres'){
+        const par = ceresParam(), vuelo = ceresVuelo();
+        const bandas = window._bandasCeres || ceresBandas(par, vuelo);
+        const d = (window._valsCeres || new Map()).get(id);
+        const cob = window._cobCeres || ceresCobertura();
+        if(!d){
+            const noExistia = ((cob && cob.no_existia) || []).includes(id);
+            return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`]],
+                      t(noExistia ? 'No plantado en esta fecha' : 'Sin dato en este vuelo'));
+        }
+        const b = ceresBandaDe(d.v, bandas);
+        const m = d.meta || {};
+        return tt(
+            `${esc(p.name || p.id)} · <strong>${fmtCeres(d.v)}</strong>`,
+            b ? esc(ceresEtiquetaBanda(b)) : '',
+            [
+                [t('Cambio vs. vuelo anterior'), ceresDeltaTexto(d.delta, par)],
+                [t('Plantas'), m.plants ? fmt(m.plants,0) : null],
+                [t('Plantas por hectárea'), m.plants_per_ha ? fmtDec(m.plants_per_ha,0) : null],
+                [t('Superficie'), `${fmtVal(p.ha)} ha`],
+                [t('Vuelo'), vuelo ? fmtFecha(vuelo.date) : null]
+            ]);
     }
 
     if(currentMode === 'riego'){
@@ -3293,6 +3375,22 @@ function campanasActuales(){
     return (NUT && NUT.campanas[S.nut.matriz]) || [];
 }
 
+/* Campanas que tienen dato del parametro elegido. No todas las matrices se
+   midieron completas en cada fecha: S, Mo, Na y Cl foliares solo estan en las
+   muestras de AGQ. Ofrecer fechas sin dato deja el mapa en gris sin explicar
+   que el dato existe, pero en otro muestreo. */
+function campanasDelParam(){
+    if(!NUT || !S.nut.param) return campanasActuales();
+    const conDato = new Set();
+    NUT.lecturas.forEach(l => {
+        if(l.m !== S.nut.matriz || !l.f) return;
+        if(`${l.p} [${l.un || '-'}]` !== S.nut.param) return;
+        if(S.nut.prof != null && l.d !== S.nut.prof) return;
+        conDato.add(l.f);
+    });
+    return campanasActuales().filter(c => conDato.has(c.fecha));
+}
+
 /* Lecturas que pasan los filtros vigentes. */
 function lecturas(){
     if(!NUT) return [];
@@ -3522,12 +3620,184 @@ function fmtRiego(v){
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   CERES IMAGING
+
+   32 vuelos aéreos entre 2022 y 2026, agregados por Ceres sobre los píxeles en
+   TRES niveles: 5 equipos, 28 sectores y 30 cuarteles. Los tres son dato
+   medido; el cuartel no sale de promediar sectores, y eso es lo que permite
+   cruzarlo con los análisis foliares, que se toman por cuartel.
+
+   Dos hechos de Ketcal que mandan sobre el diseño:
+
+   1. El predio se plantó por etapas (E1/E2/E5 en 2022, E3 en ago-2023, E4 en
+      nov-2023). Un vuelo de 2023 legítimamente no tiene E4: eso NO es "sin
+      dato", es "no existía", y se pinta distinto. De los 28 vuelos con dato,
+      sólo 9 cubren el predio completo.
+   2. A diferencia de San Gerardo, hay vuelos casi todo el año (la única ventana
+      sin vuelos es mayo-julio), así que el histórico es denso: ~8 por temporada.
+      El eje de los gráficos sigue siendo categórico, pero por volumen conviene
+      agrupar por temporada en los selectores.
+
+   El color no declara tokens nuevos: los indicadores tienen entre 4 y 9 clases,
+   así que se interpola sobre las anclas --dat-st-* por SEVERIDAD de la banda
+   (0 = mejor). Con 4 clases cae exacto sobre las anclas. Es el mismo criterio
+   del mapa de San Gerardo.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+let CERES = null;
+
+const CERES_RAMP = () => [
+    SEM('--dat-st-opt'),    // mejor
+    SEM('--dat-st-alto'),
+    SEM('--dat-st-bajo'),
+    SEM('--dat-st-def')     // peor
+];
+
+/* Color de una banda por su severidad, para cualquier número de clases. */
+function ceresColor(severidad, n){
+    const rampa = CERES_RAMP();
+    if(n <= 1) return rampa[0];
+    const pos = (severidad / (n - 1)) * (rampa.length - 1);
+    const i = Math.min(Math.floor(pos), rampa.length - 2);
+    return mixHex(rampa[i], rampa[i + 1], pos - i);
+}
+
+/* El nivel del mapa (español) y el del JSON de Ceres no se llaman igual: el
+   script usa "sectors" porque así lo heredó de San Gerardo. `levels[].geo` es
+   el puente, y se lee del propio JSON en vez de hardcodear la traducción. */
+function ceresNivelJSON(nivelMapa){
+    if(!CERES || !CERES.levels) return null;
+    for(const [k, v] of Object.entries(CERES.levels)){
+        if(v.geo === nivelMapa) return k;
+    }
+    return null;
+}
+function ceresNivelesMapa(){
+    if(!CERES || !CERES.levels) return [];
+    return Object.values(CERES.levels).map(v => v.geo);
+}
+
+function ceresParams(){ return (CERES && CERES.params) || []; }
+function ceresParam(){
+    return ceresParams().find(p => p.id === S.ceres.param) || ceresParams()[0] || null;
+}
+function ceresVuelos(){ return (CERES && CERES.flights) || []; }
+function ceresVuelo(){
+    const vs = ceresVuelos();
+    if(!vs.length) return null;
+    const i = S.ceres.vuelo == null ? vs.length - 1 : S.ceres.vuelo;
+    return vs[Math.max(0, Math.min(vs.length - 1, i))] || null;
+}
+
+/* Bandas vigentes. Los relativos (Clorofila) no tienen cortes propios: la
+   plataforma los recalcula en cada vuelo, así que viven dentro del vuelo y por
+   nivel. El resto los tiene en el indicador. */
+function ceresBandas(par, vuelo){
+    if(!par) return [];
+    if(par.bands_source === 'relative'){
+        const lvl = ceresNivelJSON(S.ceres.nivel);
+        const rel = vuelo && vuelo.relative_bands ? vuelo.relative_bands[par.id] : null;
+        return (rel && rel[lvl]) || [];
+    }
+    return par.bands || [];
+}
+function ceresEsRelativo(par){ return !!(par && par.bands_source === 'relative'); }
+
+function ceresBandaDe(v, bandas){
+    if(v == null || !bandas.length) return null;
+    for(const b of bandas){
+        const lo = b.min == null ? -Infinity : b.min;
+        const hi = b.max == null ?  Infinity : b.max;
+        if(v >= lo && v < hi) return b;
+    }
+    return v >= bandas[bandas.length-1].min ? bandas[bandas.length-1] : bandas[0];
+}
+
+/* Valores del vuelo y nivel activos, más la cobertura de ese vuelo. */
+function ceresValores(){
+    const out = new Map();
+    const vuelo = ceresVuelo(), par = ceresParam();
+    if(!vuelo || !par) return out;
+    const lvl = ceresNivelJSON(S.ceres.nivel);
+    const unidades = vuelo[lvl] || {};
+    for(const [id, vals] of Object.entries(unidades)){
+        const v = vals[par.id];
+        if(v == null) continue;
+        const d = ((vuelo.deltas || {})[lvl] || {})[id] || {};
+        out.set(id, {v, delta: d[par.id] == null ? null : d[par.id],
+                     meta: (((CERES.units || {})[lvl]) || {})[id] || {}});
+    }
+    return out;
+}
+
+/* Cobertura: qué unidades existían en este vuelo. Es lo que separa "no estaba
+   plantado" de "sin dato", y en un predio que crecio por etapas esa diferencia
+   es la mitad del histórico. */
+function ceresCobertura(){
+    const vuelo = ceresVuelo();
+    const lvl = ceresNivelJSON(S.ceres.nivel);
+    return ((vuelo && vuelo.coverage) || {})[lvl] || null;
+}
+
+/* Bandas que cuentan como cumplimiento: la mitad mejor de la escala. */
+function ceresBandasOk(par, vuelo){
+    const bandas = ceresBandas(par, vuelo);
+    return bandas.filter(b => b.severity < bandas.length / 2);
+}
+
+function ceresCumplimiento(){
+    const vuelo = ceresVuelo(), par = ceresParam();
+    if(!vuelo || !par) return null;
+    const lvl = ceresNivelJSON(S.ceres.nivel);
+    const fila = ((vuelo.compliance || {})[lvl] || {})[par.id];
+    if(!fila) return null;
+    const suma = o => Object.values(o || {}).reduce((a,b) => a+b, 0);
+    const ok = ceresBandasOk(par, vuelo).map(b => b.status);
+    const tomar = o => ok.reduce((a,s) => a + ((o||{})[s] || 0), 0);
+    return {
+        unidades: suma(fila.by_unit), unidadesOk: tomar(fila.by_unit),
+        area: suma(fila.by_area_m2), areaOk: tomar(fila.by_area_m2),
+        plantas: suma(fila.by_plants), plantasOk: tomar(fila.by_plants),
+        porBanda: fila.by_unit || {}
+    };
+}
+
+function ceresEtiquetaParam(par){
+    return par ? (LANG === 'en' ? par.en : par.es) : '';
+}
+function ceresEtiquetaBanda(b){
+    return b ? (LANG === 'en' ? b.en : b.es) : '';
+}
+function ceresOrigenBandas(par){
+    const src = (par && par.bands_source) || '';
+    if(src === 'relative') return t('Clases relativas a este vuelo');
+    if(src === 'agronomia') return t('Cortes definidos por agronomía');
+    if(src.indexOf(':') !== -1) return t('Cortes publicados por Ceres');
+    if(src === 'custom') return 'ceres_thresholds.json';
+    return t('Cortes publicados por Ceres');
+}
+function fmtCeres(v){ return v == null ? '—' : fmtDec(v, 3); }
+
+async function cargarCeres(){
+    if(CERES) return;
+    CERES = await loadDataset('ceres', './ceres_data.json');
+    if(!CERES) return;
+    // El vuelo por defecto es el último: el estado inicial tiene que ser útil
+    // sin tocar nada.
+    if(S.ceres.vuelo == null) S.ceres.vuelo = (CERES.flights || []).length - 1;
+    if(!ceresParams().some(p => p.id === S.ceres.param) && ceresParams().length)
+        S.ceres.param = ceresParams()[0].id;
+    renderNotice();
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    PINTADO
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function nivelActivo(){
     if(currentMode === 'general') return S.gen.nivel;
     if(currentMode === 'riego')   return S.riego.nivel;
+    if(currentMode === 'ceres')   return S.ceres.nivel;
     return S.nut.nivel;
 }
 
@@ -3571,6 +3841,26 @@ function repintar(){
                 : nombreCorto(f.properties));
         });
         window._valsRiego = vals; window._escalaRiego = escala;
+    }else if(currentMode === 'ceres'){
+        const par = ceresParam(), vuelo = ceresVuelo();
+        const bandas = ceresBandas(par, vuelo);
+        const vals = ceresValores();
+        const cob = ceresCobertura();
+        // Una unidad que no existía en este vuelo no es "sin dato": se pinta
+        // con el beige de ausencia, igual que el "sin riego" de la otra pestaña.
+        const noExistia = new Set((cob && cob.no_existia) || []);
+        feats(activo).forEach(f => {
+            const id = f.properties.id;
+            const d = vals.get(id);
+            const b = d ? ceresBandaDe(d.v, bandas) : null;
+            exprColor.push(id, b ? ceresColor(b.severity, bandas.length)
+                : d ? SEM('--sem-slate-data')
+                : noExistia.has(id) ? SEM('--dat-sin-riego') : SEM('--sem-grey'));
+            exprLabel.push(id, d ? `${nombreCorto(f.properties)}\n${fmtCeres(d.v)}`
+                                 : nombreCorto(f.properties));
+        });
+        window._valsCeres = vals; window._bandasCeres = bandas;
+        window._cobCeres = cob;
     }else{
         const p = paramActual();
         const vals = valoresNut(activo);
@@ -3660,6 +3950,7 @@ function renderLegend(){
     }
 
     if(currentMode === 'riego'){ el.innerHTML = legendRiego(activo); return; }
+    if(currentMode === 'ceres'){ el.innerHTML = legendCeres(activo); return; }
 
     const p = paramActual();
     if(!p){ el.innerHTML = `<div class="legend-label">${t('Sin dato')}</div>`; return; }
@@ -3715,6 +4006,247 @@ function campanaAprox(){
     const c = campanasActuales().find(x => x.fecha === S.nut.fecha);
     return !!(c && c.aprox);
 }
+/* ── Leyenda, métricas y ficha de Ceres ────────────────────────────────── */
+
+/* El signo de una mejora depende del indicador: en estrés hídrico bajar es
+   mejorar, en NDVI es lo contrario. */
+function ceresDeltaTexto(delta, par){
+    if(delta == null) return t('Primer vuelo con dato para esta unidad');
+    if(Math.abs(delta) < 0.0005) return t('Sin cambio');
+    const mejora = par && par.higher_is_better ? delta > 0 : delta < 0;
+    const flecha = delta > 0 ? '↑' : '↓';
+    return `${flecha} ${fmtDec(Math.abs(delta), 3)} · ${t(mejora ? 'mejora' : 'deterioro')}`;
+}
+
+function legendCeres(activo){
+    if(!CERES) return `<div class="legend-label">${t('Ceres')}</div>`
+        + `<div class="sem-muted-xs">${t('Cargando datos del predio…')}</div>`;
+    const par = ceresParam(), vuelo = ceresVuelo();
+    if(!par || !vuelo) return `<div class="legend-label">${t('Sin dato')}</div>`;
+    const bandas = window._bandasCeres || ceresBandas(par, vuelo);
+    const comp = ceresCumplimiento();
+    const cob = window._cobCeres || ceresCobertura();
+    const vals = window._valsCeres || ceresValores();
+
+    const filas = bandas.map(b => {
+        const n = (comp && comp.porBanda[b.status]) || 0;
+        const rango = ceresEsRelativo(par)
+            ? `${fmtDec(b.min,2)} – ${fmtDec(b.max,2)}`
+            : (b.min == null ? `< ${fmtDec(b.max,2)}`
+               : b.max == null ? `≥ ${fmtDec(b.min,2)}`
+               : `${fmtDec(b.min,2)} – ${fmtDec(b.max,2)}`);
+        return `<div class="ket-lg-row">`
+            + `<span class="sw" style="background:${ceresColor(b.severity, bandas.length)}"></span>`
+            + `<span class="lb">${esc(ceresEtiquetaBanda(b))}</span>`
+            + `<span class="rg">${rango}</span><span class="ct">${n}</span></div>`;
+    }).join('');
+
+    const noExistia = ((cob && cob.no_existia) || []).length;
+    const sinDato = feats(activo).length - vals.size - noExistia;
+
+    return `<div class="legend-label">${esc(ceresEtiquetaParam(par))}</div>`
+        + filas
+        + (noExistia ? `<div class="ket-lg-row"><span class="sw" style="background:${SEM('--dat-sin-riego')}"></span>`
+            + `<span class="lb">${t('No plantado en esta fecha')}</span><span class="ct">${noExistia}</span></div>` : '')
+        + (sinDato > 0 ? `<div class="ket-lg-row"><span class="sw" style="background:${SEM('--sem-grey')}"></span>`
+            + `<span class="lb">${t('Sin dato en este vuelo')}</span><span class="ct">${sinDato}</span></div>` : '')
+        + `<div class="ket-lg-foot">`
+        + `<span class="ket-lg-src ${par.bands_source === 'agronomia' ? 'ref' : par.bands_source === 'relative' ? 'rel' : 'lab'}">`
+        + `${par.bands_source === 'relative' ? t('rel.') : par.bands_source === 'agronomia' ? t('ref.') : 'Ceres'}</span> `
+        + esc(ceresOrigenBandas(par))
+        + (ceresEsRelativo(par) ? `<br>${esc(t('Los cortes se recalculan en cada vuelo, así que dos vuelos no son comparables entre sí.'))}` : '')
+        + (cob ? `<br>${t('Este vuelo cubre')} ${cob.n} ${t('de las')} ${cob.de} ${t('unidades del nivel')}` : '')
+        + (noExistia ? `<br>${esc(t('El predio se plantó por etapas: los cuarteles que no existían en esta fecha se muestran en beige, no en gris.'))}` : '')
+        + `<br>${esc(t('Ceres agrega sobre los píxeles en los tres niveles: el cuartel es dato medido, no un promedio de sectores.'))}`
+        + `</div>`;
+}
+
+function statsCeres(activo){
+    const div = '<div class="stat-div"></div>';
+    if(!CERES) return stat('—', t('Cargando datos del predio…'));
+    const par = ceresParam(), vuelo = ceresVuelo();
+    if(!par || !vuelo) return stat('—', t('Sin dato'));
+    const comp = ceresCumplimiento();
+    const vals = window._valsCeres || ceresValores();
+    const bandas = window._bandasCeres || ceresBandas(par, vuelo);
+    const items = [];
+    const cob = window._cobCeres || ceresCobertura();
+
+    items.push(stat(`<span style="font-size:12.5px">${esc(fmtFecha(vuelo.date))}</span>`,
+                    `${t('Vuelo del')} · ${antiguedad(vuelo.date)}`));
+    items.push(stat(`${vals.size}<span class="sem-muted-xs"> / ${cob ? cob.de : feats(activo).length}</span>`,
+                    `${t('Cobertura')} · ${t(NIVELES[activo].titulo)}`));
+
+    const nums = [...vals.values()].map(d => d.v).sort((a,b) => a-b);
+    if(nums.length) items.push(stat(fmtCeres(nums[Math.floor(nums.length/2)]), t('Mediana')));
+
+    // En un indicador relativo NO se habla de cumplimiento: por construcción la
+    // mitad de las unidades cae en la mitad mejor, así que un porcentaje se
+    // leería como veredicto agronómico cuando sólo dice "sobre la mediana".
+    if(comp && !ceresEsRelativo(par)){
+        items.push(stat(`${comp.unidadesOk}<span class="sem-muted-xs"> / ${comp.unidades}</span>`,
+                        t('En cumplimiento')));
+        if(comp.area) items.push(stat(
+            `${Math.round(comp.areaOk / comp.area * 100)}<span class="sem-muted-xs">%</span>`,
+            t('Superficie en cumplimiento')));
+    }else if(comp && bandas.length){
+        // La peor es la de mayor SEVERIDAD, no la ultima del arreglo: las
+        // bandas van ordenadas por valor ascendente, y en clorofila —donde mas
+        // es mejor— la ultima es justamente la mejor clase.
+        const peor = bandas.reduce((a,b) => b.severity > a.severity ? b : a);
+        items.push(stat(String(comp.porBanda[peor.status] || 0),
+                        `${t('Peor clase')} · ${esc(ceresEtiquetaBanda(peor))}`));
+    }
+    if(comp && comp.plantas) items.push(stat(fmt(comp.plantas,0), t('Plantas')));
+
+    // Peor unidad del vuelo: lo primero que hay que ir a mirar.
+    const arr = [...vals.entries()].sort((a,b) => {
+        const ba = ceresBandaDe(a[1].v, bandas), bb = ceresBandaDe(b[1].v, bandas);
+        return (bb ? bb.severity : -1) - (ba ? ba.severity : -1)
+            || (par.higher_is_better ? a[1].v - b[1].v : b[1].v - a[1].v);
+    });
+    if(arr.length) items.push(stat(`<span style="font-size:12.5px">${esc(arr[0][0])}</span>`,
+                                   `${t('Peor unidad')} · ${fmtCeres(arr[0][1].v)}`));
+    return items.join(div);
+}
+
+function fichaCeres(p){
+    const par = ceresParam(), vuelo = ceresVuelo();
+    const bandas = window._bandasCeres || ceresBandas(par, vuelo);
+    const vals = window._valsCeres || ceresValores();
+    const d = vals.get(p.id);
+    const cob = window._cobCeres || ceresCobertura();
+
+    if(!d){
+        const noExistia = ((cob && cob.no_existia) || []).includes(p.id);
+        return `<div class="ket-empty">${t(noExistia ? 'No plantado en esta fecha' : 'Sin dato en este vuelo')}</div>`
+            + kv([[t('Superficie'), `${fmtVal(p.ha)} ha`]]);
+    }
+    const b = ceresBandaDe(d.v, bandas);
+    const m = d.meta || {};
+
+    let html = `<div class="pv-chart-card" style="display:flex;align-items:baseline;gap:10px">`
+        + `<div style="font-size:26px;font-weight:300;color:var(--sem-ink)">${fmtCeres(d.v)}</div>`
+        + (b ? `<div class="ket-chip" style="margin-left:auto;background:${ceresColor(b.severity, bandas.length)};color:var(--sem-surface);border:none">${esc(ceresEtiquetaBanda(b))}</div>` : '')
+        + `</div>`;
+
+    html += kv([
+        [t('Indicador'), esc(ceresEtiquetaParam(par))],
+        [t('Vuelo'), vuelo ? `${fmtFecha(vuelo.date)} · ${antiguedad(vuelo.date)}` : null],
+        [t('Cambio vs. vuelo anterior'), ceresDeltaTexto(d.delta, par)],
+        [t('Superficie'), m.area_m2 ? `${fmtDec(m.area_m2/10000, 2)} ha` : `${fmtVal(p.ha)} ha`],
+        [t('Plantas'), m.plants ? fmt(m.plants,0) : null],
+        [t('Plantas por hectárea'), m.plants_per_ha ? fmtDec(m.plants_per_ha,0) : null]
+    ]);
+
+    html += sect(t('Evolución temporal'), sparkCeres(p.id, par));
+
+    const arr = [...vals.entries()].sort((a,b2) => {
+        const ba = ceresBandaDe(a[1].v, bandas), bb = ceresBandaDe(b2[1].v, bandas);
+        return (bb ? bb.severity : -1) - (ba ? ba.severity : -1)
+            || (par.higher_is_better ? a[1].v - b2[1].v : b2[1].v - a[1].v);
+    });
+    if(arr.length > 1){
+        html += sect(`${t('Ranking del vuelo')} · ${t(NIVELES[S.ceres.nivel].titulo)}`,
+            `<div class="ket-rank">` + arr.map(([id,x]) => {
+                const bb = ceresBandaDe(x.v, bandas);
+                return `<div class="ket-row${id===p.id?' active':''}" onclick="seleccionar('${S.ceres.nivel}','${esc(id)}',true)">`
+                    + `<span class="sw" style="background:${bb ? ceresColor(bb.severity, bandas.length) : SEM('--sem-grey')}"></span>`
+                    + `<span class="nm">${esc(id)}</span>`
+                    + `<span class="vl">${fmtCeres(x.v)}</span></div>`;
+            }).join('') + `</div>`);
+    }
+    return html;
+}
+
+/* Serie de una unidad a través de los 28 vuelos, para el indicador activo. */
+function serieCeres(id, par){
+    if(!CERES || !par) return [];
+    const lvl = ceresNivelJSON(S.ceres.nivel);
+    const out = [];
+    ceresVuelos().forEach(f => {
+        const v = ((f[lvl] || {})[id] || {})[par.id];
+        if(v != null) out.push({f: f.date, v});
+    });
+    return out;
+}
+
+function sparkCeres(id, par){
+    const serie = serieCeres(id, par);
+    if(serie.length < 2) return `<div class="nut-evo-empty">${t('Se necesitan al menos dos muestreos.')}</div>`;
+    const bandas = ceresBandas(par, ceresVuelo()).map(b => ({
+        min: b.min, max: b.max,
+        color: ceresColor(b.severity, ceresBandas(par, ceresVuelo()).length)
+    }));
+    return sparklineBandas(serie, bandas, v => fmtDec(v, 2), {w:340, h:140});
+}
+
+/* ── Modal de evolución de Ceres: un pequeño múltiplo por indicador ── */
+function openEvoCeres(){
+    const sel = document.getElementById('selEvoUnidad');
+    const lvl = ceresNivelJSON(S.ceres.nivel);
+    const ids = new Set();
+    ceresVuelos().forEach(f => Object.keys(f[lvl] || {}).forEach(k => ids.add(k)));
+    const lista = [...ids].sort();
+    sel.innerHTML = lista.length
+        ? lista.map(id => `<option value="${esc(id)}"${id === S.sel ? ' selected' : ''}>${esc(id)}</option>`).join('')
+        : `<option value="">—</option>`;
+    S.evoFocus = null;
+    const over = document.getElementById('evoOver');
+    over.classList.add('visible'); over.classList.remove('focused');
+    over.dataset.modo = 'ceres';
+    renderEvo();
+}
+
+function renderEvoCeres(){
+    const id = document.getElementById('selEvoUnidad').value;
+    document.getElementById('evoTitle').textContent = `${t('Evolución temporal')} · ${id || '—'}`;
+    document.getElementById('evoSub').textContent = `Ceres Imaging · ${ceresVuelos().length} ${t('Vuelos').toLowerCase()}`;
+    const par0 = ceresParam();
+    document.getElementById('evoLegend').innerHTML = ceresBandas(par0, ceresVuelo())
+        .map(b => `<span class="nut-evo-lg"><i style="background:${ceresColor(b.severity, ceresBandas(par0, ceresVuelo()).length)};opacity:0.45"></i>${esc(ceresEtiquetaBanda(b))}</span>`)
+        .join('');
+
+    const body = document.getElementById('evoBody');
+    if(!id){ body.innerHTML = `<div class="nut-evo-empty">${t('Sin serie temporal para esta unidad.')}</div>`; return; }
+
+    const lista = S.evoFocus ? ceresParams().filter(p => p.id === S.evoFocus) : ceresParams();
+    const cards = lista.map(par => {
+        const serie = serieCeres(id, par);
+        if(!serie.length) return '';
+        const ultimo = serie[serie.length-1];
+        const bandas = ceresBandas(par, ceresVuelo());
+        const b = ceresBandaDe(ultimo.v, bandas);
+        const franjas = bandas.map(x => ({min:x.min, max:x.max,
+            color: ceresColor(x.severity, bandas.length)}));
+        const chart = serie.length >= 2
+            ? sparklineBandas(serie, franjas, v => fmtDec(v, 2),
+                              S.evoFocus ? {w:820, h:300, big:true} : {})
+            : `<div class="nut-evo-empty">${t('Se necesitan al menos dos muestreos.')}</div>`;
+        const head = `<div class="nut-evo-it-head"><span class="nut-evo-it-name">${esc(ceresEtiquetaParam(par))}</span></div>`
+            + `<div class="nut-evo-it-last">${t('Último')}: <strong>${fmtCeres(ultimo.v)}</strong>`
+            + (b ? ` · <span>${esc(ceresEtiquetaBanda(b))}</span>` : '')
+            + ` · <span class="sem-muted-xs">${esc(fmtFecha(ultimo.f))}</span></div>`;
+        return S.evoFocus
+            ? `<div class="nut-evo-focus">${head}${chart}</div>`
+            : `<button type="button" class="nut-evo-item" onclick="evoFocus('${esc(par.id)}')">${head}${chart}</button>`;
+    }).filter(Boolean).join('');
+
+    body.innerHTML = cards
+        ? (S.evoFocus ? cards : `<div class="nut-evo-grid">${cards}</div>`)
+        : `<div class="nut-evo-empty">${t('Sin serie temporal para esta unidad.')}</div>`;
+}
+
+function setCeresParam(v){ S.ceres.param = v; repintar(); renderPanel(); }
+function setCeresVuelo(i){ S.ceres.vuelo = i; repintar(); renderPanel(); }
+function setNivelCeres(v, silencioso){
+    S.ceres.nivel = v;
+    document.querySelectorAll('#segNivelCeres button').forEach(b =>
+        b.classList.toggle('active', b.dataset.v === v));
+    if(!silencioso) limpiarSeleccionSiCambiaNivel(v);
+    repintar(); renderPanel();
+}
+
 /* ── Leyenda, métricas y ficha de Riego ─────────────────────────────────── */
 
 function ventanaRiego(){
@@ -3904,6 +4436,11 @@ function renderStats(){
         bar.classList.remove('hidden');
         return;
     }
+    if(currentMode === 'ceres'){
+        el.innerHTML = statsCeres(activo);
+        bar.classList.remove('hidden');
+        return;
+    }
 
     const p = paramActual();
     const vals = window._valsNut || valoresNut(activo);
@@ -3979,6 +4516,7 @@ function renderPanel(){
     subEl.textContent = p.etiqueta && p.etiqueta !== p.name ? p.etiqueta : t(NIVELES[S.selNivel].sing);
     bodyEl.innerHTML = currentMode === 'general' ? fichaGeneral(p)
                      : currentMode === 'riego'   ? fichaRiego(p)
+                     : currentMode === 'ceres'   ? fichaCeres(p)
                      : fichaNutricion(p);
 }
 
@@ -4150,13 +4688,21 @@ function serieDe(id, nivel, par){
 /* Eje X categórico: los muestreos no son equidistantes en el tiempo y un eje
    lineal deja el gráfico medio vacío. */
 function sparkline(serie, par, opts){
+    return sparklineBandas(serie, bandasDe(par), v => fmtP(v, par), opts);
+}
+
+/* `bandas` son [{min, max, color}] y `fmtFn` formatea el valor. Las dos cosas
+   se pasan porque Nutricion las saca de un parametro de laboratorio y Ceres de
+   un indicador con severidad; el resto del grafico es identico. */
+function sparklineBandas(serie, bandas, fmtFn, opts){
     opts = opts || {};
+    bandas = bandas || [];
+    fmtFn = fmtFn || fmtVal;
     const W = opts.w || 320, H = opts.h || 130;
     const ML = 40, MR = 8, MT = 10, MB = 26;
     if(serie.length < 2)
         return `<div class="nut-evo-empty">${t('Se necesitan al menos dos muestreos.')}</div>`;
 
-    const bandas = bandasDe(par);
     const vs = serie.map(s => s.v);
     let lo = Math.min(...vs), hi = Math.max(...vs);
     bandas.forEach(b => {
@@ -4179,10 +4725,10 @@ function sparkline(serie, par, opts){
 
     const linea = serie.map((s,i) => `${i?'L':'M'}${x(i).toFixed(1)},${y(s.v).toFixed(1)}`).join(' ');
     const dots = serie.map((s,i) =>
-        `<circle class="${i===serie.length-1?'nc-dot-last':'nc-dot'}" cx="${x(i).toFixed(1)}" cy="${y(s.v).toFixed(1)}" r="${i===serie.length-1?3.5:2.5}"><title>${esc(fmtFecha(s.f))} · ${fmtP(s.v, par)}</title></circle>`).join('');
+        `<circle class="${i===serie.length-1?'nc-dot-last':'nc-dot'}" cx="${x(i).toFixed(1)}" cy="${y(s.v).toFixed(1)}" r="${i===serie.length-1?3.5:2.5}"><title>${esc(fmtFecha(s.f))} · ${fmtFn(s.v)}</title></circle>`).join('');
 
     const ticks = [lo + pad, hi - pad].map(v =>
-        `<text class="nc-tick" x="${ML-5}" y="${(y(v)+4).toFixed(1)}" text-anchor="end">${fmtP(v, par)}</text>`).join('');
+        `<text class="nc-tick" x="${ML-5}" y="${(y(v)+4).toFixed(1)}" text-anchor="end">${fmtFn(v)}</text>`).join('');
     const xlabs = serie.map((s,i) => {
         if(serie.length > 5 && i % Math.ceil(serie.length/4) !== 0 && i !== serie.length-1) return '';
         return `<text class="nc-tick" x="${x(i).toFixed(1)}" y="${H-8}" text-anchor="middle">${esc(s.f.slice(2,7))}</text>`;
@@ -4224,8 +4770,10 @@ function openEvo(){
         `<option value="${esc(id)}"${id === S.sel ? ' selected' : ''}>${esc(id)}</option>`).join('');
     if(!ids.length){ sel.innerHTML = `<option value="">—</option>`; }
     S.evoFocus = null;
-    document.getElementById('evoOver').classList.add('visible');
-    document.getElementById('evoOver').classList.remove('focused');
+    const over = document.getElementById('evoOver');
+    over.classList.add('visible');
+    over.classList.remove('focused');
+    over.dataset.modo = 'nutricion';
     renderEvo();
 }
 function closeEvo(){ document.getElementById('evoOver').classList.remove('visible'); }
@@ -4237,6 +4785,9 @@ function evoFocus(pid){
 }
 
 function renderEvo(){
+    // El mismo modal sirve a Nutricion y a Ceres; `data-modo` dice cual lo abrio.
+    if(document.getElementById('evoOver').dataset.modo === 'ceres')
+        return renderEvoCeres();
     const id = document.getElementById('selEvoUnidad').value;
     const activo = nivelActivo();
     const m = matrizActual();
@@ -4305,8 +4856,10 @@ function switchMode(modo){
     document.body.classList.toggle('foliar-active', modo === 'foliares');
     document.body.classList.toggle('soil-active', modo === 'suelo');
     document.body.classList.toggle('riego-active', modo === 'riego');
+    document.body.classList.toggle('ceres-active', modo === 'ceres');
     document.getElementById('ctrlGeneral').classList.toggle('visible', modo === 'general');
     document.getElementById('ctrlRiego').classList.toggle('visible', modo === 'riego');
+    document.getElementById('ctrlCeres').classList.toggle('visible', modo === 'ceres');
     document.getElementById('ctrlNutricion').classList.toggle('visible',
         modo === 'foliares' || modo === 'suelo');
 
@@ -4314,6 +4867,14 @@ function switchMode(modo){
     // no en el load inicial, y se cachea en memoria hasta que se pida
     // "Actualizar". El mapa dibuja mientras tanto con el estado "cargando".
     if(modo === 'riego') cargarRiego(false);
+    // ceres_data.json pesa ~1 MB: se carga al entrar a la pestaña y no en el
+    // load inicial, igual que la consulta de riego.
+    if(modo === 'ceres'){
+        cargarCeres().then(() => {
+            if(currentMode !== 'ceres') return;
+            poblarSelectores(); repintar(); renderPanel();
+        });
+    }
 
     // Al cambiar de pestaña, la selección se mantiene si el nivel sigue existiendo.
     if(S.sel && S.selNivel !== nivelActivo()){
@@ -4367,14 +4928,14 @@ function setMatriz(v){
     S.nut.matriz = v; S.nut.param = null; S.nut.fecha = null; S.nut.prof = null;
     poblarSelectores(); repintar(); renderPanel();
 }
-function setParam(v){ S.nut.param = v; poblarSelectores(true); repintar(); renderPanel(); }
+function setParam(v){ S.nut.param = v; poblarSelectores(); repintar(); renderPanel(); }
 function setFecha(v){ S.nut.fecha = v || null; repintar(); renderPanel(); }
 function setProf(v){ S.nut.prof = v || null; repintar(); renderPanel(); }
 
 function setCapa(capa, on){
     S.capas[capa] = on;
     if(capa === 'etiquetas'){
-        ['chkEtiquetas','chkEtiquetasNut','chkEtiquetasRiego'].forEach(id => {
+        ['chkEtiquetas','chkEtiquetasNut','chkEtiquetasRiego','chkEtiquetasCeres'].forEach(id => {
             const el = document.getElementById(id); if(el) el.checked = on;
         });
     }
@@ -4419,6 +4980,51 @@ function poblarSelectores(soloDependientes){
         ).join('');
     }
 
+    // ── Ceres ──
+    if(CERES){
+        const selP = document.getElementById('selCeresParam');
+        // Se agrupan como los agrupa la plataforma, para que el agronomo
+        // encuentre el indicador donde ya sabe buscarlo.
+        const grupos = [];
+        ceresParams().forEach(par => {
+            const g = (LANG === 'en' ? par.group_en : par.group_es) || '';
+            let bucket = grupos.find(x => x[0] === g);
+            if(!bucket){ bucket = [g, []]; grupos.push(bucket); }
+            bucket[1].push(par);
+        });
+        selP.innerHTML = grupos.map(([g, ps]) => {
+            const ops = ps.map(par =>
+                `<option value="${esc(par.id)}"${par.id === S.ceres.param ? ' selected' : ''}>`
+                + `${esc(ceresEtiquetaParam(par))}</option>`).join('');
+            return g ? `<optgroup label="${esc(g)}">${ops}</optgroup>` : ops;
+        }).join('');
+
+        // Los vuelos van agrupados por temporada y del mas reciente al mas
+        // antiguo: con 28 vuelos una lista plana es inmanejable. Los parciales
+        // se marcan, porque el predio se planto por etapas.
+        const selV = document.getElementById('selCeresVuelo');
+        const vs = ceresVuelos();
+        const porTemp = [];
+        vs.forEach((f, i) => {
+            let b = porTemp.find(x => x[0] === f.season);
+            if(!b){ b = [f.season, []]; porTemp.push(b); }
+            b[1].push([i, f]);
+        });
+        porTemp.reverse();
+        selV.innerHTML = porTemp.map(([temp, filas]) => {
+            const ops = filas.slice().reverse().map(([i, f]) => {
+                const cob = (f.coverage || {})[ceresNivelJSON(S.ceres.nivel)] || {};
+                const parcial = cob.n != null && cob.de != null && cob.n < cob.de;
+                return `<option value="${i}"${i === S.ceres.vuelo ? ' selected' : ''}>`
+                    + `${esc(fmtFecha(f.date))}${parcial ? ` · ${cob.n}/${cob.de}` : ''}</option>`;
+            }).join('');
+            return `<optgroup label="${esc(temp)}">${ops}</optgroup>`;
+        }).join('');
+
+        document.querySelectorAll('#segNivelCeres button').forEach(b =>
+            b.classList.toggle('active', b.dataset.v === S.ceres.nivel));
+    }
+
     const selM = document.getElementById('selMetricaRiego');
     if(selM) selM.innerHTML = METRICAS_RIEGO.map(m =>
         `<option value="${m.id}"${m.id===S.riego.metrica?' selected':''}>`
@@ -4442,7 +5048,9 @@ function poblarSelectores(soloDependientes){
              + `${esc(p[LANG] || p.parametro)}${p.unidad?' ('+esc(p.unidad)+')':''} ${src}</option>`;
     }).join('');
 
-    const cs = campanasActuales();
+    // Solo las fechas con dato del parametro, y si la elegida se queda sin
+    // dato al cambiar de parametro, cae a la mas reciente que si lo tenga.
+    const cs = campanasDelParam();
     if(S.nut.fecha && !cs.some(c => c.fecha === S.nut.fecha)) S.nut.fecha = null;
     if(!S.nut.fecha && cs.length) S.nut.fecha = cs[0].fecha;
     document.getElementById('selFecha').innerHTML =

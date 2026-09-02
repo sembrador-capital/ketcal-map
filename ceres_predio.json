@@ -1,0 +1,80 @@
+{
+  "_doc": [
+    "Identificadores de Ketcal en Ceres Imaging. Los escribe",
+    "`python tools/fetch_ceres.py --discover`, y se pueden corregir a mano.",
+    "",
+    "Como se llego a ellos (todo verificado contra la cuenta real):",
+    "",
+    "  1. /fields/ lista los campos. Los 5 de Ketcal salen ahi con",
+    "     customer=4558 y farm='c6bcf7de-8ca4-48b2-badb-1ab9d828ba36'.",
+    "     Sus superficies calzan con la geometria del KMZ.",
+    "  2. Ese 'farm' es un UUID, y el admin_group usa el id NUMERICO del predio.",
+    "     /farms/?customer=4558 los cruza: legacy_id=<uuid> -> id=6311, 'Ketcal'.",
+    "  3. De ahi admin_group = 'CFF|4558.6311', confirmado porque",
+    "     /admin_groups/weeks/7868/CFF%7C4558.6311/ responde 32 vuelos.",
+    "",
+    "OJO: Ketcal NO cuelga del mismo cliente que San Gerardo (4527, ATF",
+    "Gestion) sino del 4558, que tiene 12 predios."
+  ],
+
+  "user_id": "7868",
+  "admin_group": "CFF|4558.6311",
+  "farm_name": "Ketcal",
+  "customer": "4558",
+  "farm_id": 6311,
+
+  "_doc_grillas": [
+    "Las TRES son agregados nativos de Ceres sobre los pixeles: ninguna se",
+    "deriva de otra. Por eso el cuartel es dato medido y se puede cruzar con",
+    "los analisis foliares sin promediar nada.",
+    "",
+    "Cada grilla nombra sus unidades a su manera y NINGUNA coincide con las",
+    "claves del repo; unit_key() normaliza los tres formatos:",
+    "",
+    "  sectors    'E1 - S2'            -> 'E1-S2'",
+    "  equipos    'equipo 3 naranjos'  -> 'E3'",
+    "  cuarteles  'Naranjos- C12'      -> 'NAR-C12'",
+    "",
+    "Verificado contra el vuelo 2026.16.A: las 63 claves (28+5+30) mapean",
+    "sin faltantes ni sobrantes contra geo_data.json."
+  ],
+  "grid_types": {
+    "equipos": 18,
+    "sectors": 7,
+    "cuarteles": 11
+  },
+
+  "field_to_equipo": {
+    "92062": "E1",
+    "92061": "E2",
+    "182484": "E3",
+    "185084": "E4",
+    "92060": "E5"
+  },
+
+  "_doc_otras_grillas": [
+    "Otras grillas que la cuenta tiene cargadas y que este mapa NO usa, con",
+    "cuantas unidades devolvieron en 2026.16.A. Quedan anotadas para no volver",
+    "a sondearlas:",
+    "",
+    "   8 ->   30 unidades, claves mezcladas (numeros y 'geo 5'): parece una",
+    "          version antigua de los cuarteles. Se usa la 11, que trae los",
+    "          nombres.",
+    "  19 ->  151 unidades, claves tipo 'E4S6V20.2': son las valvulas. El KMZ",
+    "          trae 150, asi que hay una de diferencia por revisar antes de",
+    "          usarla como nivel.",
+    "  13 ->  507   14 ->  969   25 -> 10315   26 -> 1766: grillas de celdas",
+    "          de distinto tamano, para mapas de calor."
+  ],
+  "otras_grillas": {"8": 30, "13": 507, "14": 969, "19": 151, "25": 10315, "26": 1766},
+
+  "claves_sectores": [
+    "E1-S1", "E1-S2", "E1-S3", "E1-S4", "E1-S5", "E1-S6",
+    "E2-S1", "E2-S2", "E2-S3", "E2-S4", "E2-S5", "E2-S6",
+    "E3-S1", "E3-S2", "E3-S3", "E3-S4", "E3-S5", "E3-S6", "E3-S7",
+    "E4-S1", "E4-S2", "E4-S3", "E4-S4", "E4-S5", "E4-S6", "E4-S7",
+    "E5-S1", "E5-S2"
+  ],
+
+  "descubierto": "2026-09-01T22:00:00Z"
+}

@@ -1,0 +1,81 @@
+name: Ceres Imaging
+
+# Ketcal tiene vuelos casi todo el año: la única ventana sin vuelos es
+# mayo-julio. Son ~8 por temporada, cerca de uno por mes, así que un chequeo
+# semanal alcanza de sobra. El script es incremental y no vuelve a pedir los
+# vuelos que ya están en ceres_data.json.
+#
+# Solo schedule y workflow_dispatch. Nada de pull_request_target: en un repo
+# publico ese evento entrega los secrets a PRs de forks.
+on:
+  schedule:
+    - cron: '0 6 * * 1'      # lunes 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      check_token:
+        description: 'Solo verificar el token, sin descargar nada'
+        type: boolean
+        default: false
+      full:
+        description: 'Refetch completo, ignorando lo ya guardado'
+        type: boolean
+        default: false
+
+# Lo minimo para commitear el resultado. Nada mas.
+permissions:
+  contents: write
+
+# Dos corridas simultaneas se pisarian al pushear.
+concurrency:
+  group: ceres-fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: '3.12'
+
+      # Sin mapbox-vector-tile: las capas que decodifican tiles van detras de
+      # --extras y el workflow no las pide. Con los 28 vuelos de Ketcal esa
+      # etapa se pasaba de los 20 minutos de timeout, y encima Ketcal no tiene
+      # overlays tree_data, asi que la capa por arbol no existe aca.
+      - name: Instalar dependencias
+        run: pip install --disable-pip-version-check requests
+
+      # Verificacion opcional del secret. Describe la FORMA del token (largo,
+      # espacios, prefijo) sin imprimir su valor, y hace una sola llamada.
+      - name: Verificar el token
+        if: inputs.check_token
+        env:
+          CERES_TOKEN: ${{ secrets.CERES_TOKEN }}
+        run: python tools/fetch_ceres.py --check-token
+
+      # El token viaja solo por env, nunca por linea de comandos (los argv son
+      # visibles en la lista de procesos del runner). Sin set -x, sin echo.
+      - name: Descargar vuelos de Ceres
+        if: ${{ !inputs.check_token }}
+        env:
+          CERES_TOKEN: ${{ secrets.CERES_TOKEN }}
+        run: python tools/fetch_ceres.py ${{ inputs.full && '--full' || '' }}
+
+      - name: Commitear si cambio algo
+        if: ${{ !inputs.check_token }}
+        run: |
+          if git diff --quiet -- ceres_data.json data-version.json; then
+            echo "Sin cambios: no hay vuelo nuevo que commitear."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ceres_data.json data-version.json
+          git commit -m "Actualizar datos de Ceres Imaging"
+          git push

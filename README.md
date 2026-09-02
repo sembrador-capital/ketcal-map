@@ -62,11 +62,15 @@ contar bordes de digitalización como si fueran riego real.
 index.html                  ← TODO el mapa: HTML + CSS + JS en un archivo
 geo_data.json               ← geometría (generado)
 nutricion_data.json         ← análisis de suelo y foliares (generado)
+ceres_data.json             ← vuelos de Ceres Imaging (generado)
 umbrales_nutricion.json     ← umbrales agronómicos — SE EDITA A MANO
+ceres_predio.json           ← identificadores de Ketcal en Ceres (descubierto)
 data-version.json           ← cache-busting por dataset
 
 tools/kmz_to_geojson.py     ← Ketcal KMZ.kmz  → geo_data.json
 tools/build_nutricion.py    ← Excel + umbrales → nutricion_data.json
+tools/fetch_ceres.py        ← API de Ceres    → ceres_data.json
+.github/workflows/ceres.yml ← refresco semanal de Ceres
 
 (Riego no genera archivo: se consulta en vivo. Ver más abajo.)
 
@@ -80,6 +84,7 @@ AGQ Labs …/  Laboquim …/  Analisis Suelos AgroLab/   ← informes de origen 
 ```bash
 python tools/kmz_to_geojson.py
 python tools/build_nutricion.py
+python tools/fetch_ceres.py            # incremental; --full para rehacer todo
 ```
 
 Los dos son idempotentes, imprimen un resumen y **listan sus incidencias** en
@@ -87,7 +92,8 @@ vez de corregirlas en silencio. `nutricion_data.json` incluye esas incidencias
 en `issues[]`. Después de regenerar, subir la clave correspondiente de
 `data-version.json`.
 
-Única dependencia externa: `shapely` (geometría) y `openpyxl` (Excel).
+Dependencias externas: `shapely` (geometría), `openpyxl` (Excel) y `requests`
+(Ceres).
 
 ---
 
@@ -157,19 +163,17 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   físico y químico.
 - **Riego** — consumo por sector de la última semana, en vivo desde DropControl.
   Ver la sección de abajo.
+- **Ceres Imaging** — 28 vuelos aéreos entre dic-2022 y abr-2026, 5 indicadores,
+  en los tres niveles nativos. Ver la sección de abajo.
 
 **Pendiente**
 
-- **Ceres Imaging** — la pestaña está en la barra, deshabilitada. En San Gerardo
-  está resuelto y documentado
-  en `../san-gerardo/docs/ceres-integracion.md`: **leer ese documento antes de
-  empezar**, la investigación de la API ya está hecha. Lo que cambia en Ketcal
-  son los identificadores (`admin_group`, `field_id` por equipo, `grid_type_id`)
-  y que acá hay tres niveles de grilla posibles, no dos.
-
-El token de Ceres se lee de variable de entorno (`CERES_TOKEN`) y de secrets en
-CI. **Nunca de un archivo versionado**, y nunca inyectado en el navegador: este
-sitio es público.
+- **Comparador A/B** de dos vuelos lado a lado, que en San Gerardo existe
+  (`mapbox-gl-compare`) y acá todavía no. Con 28 vuelos es donde más se
+  aprovecharía.
+- **Capa de celdas** de Ceres (`grid_type_id` 26, 1.766 celdas) para mapas de
+  calor dentro del cuartel. El script ya la sabe bajar con `--extras`; el mapa
+  no la consume.
 
 ---
 
@@ -230,3 +234,156 @@ tener en cuenta que si va a GitHub Pages como el de San Gerardo, queda público
 **junto con los insumos**: el Excel de la base y los PDF de AGQ, Laboquim y
 AgroLab, que hoy están en la raíz. Si eso no corresponde, moverlos fuera del
 repo y apuntar los scripts con `--xlsx` / `--kmz`.
+
+
+---
+
+## Ceres Imaging
+
+`tools/fetch_ceres.py` es una adaptación de
+`../san-gerardo/tools/fetch_ceres.py`. Toda la lógica de API, políticas de
+umbrales, etiquetado de bandas, deltas y cumplimiento viene de ahí sin cambios:
+es código verificado contra la cuenta real. Lo propio de Ketcal es el bloque de
+identificadores y el paso de dos niveles a tres.
+
+### La credencial
+
+Token DRF permanente, leído en este orden:
+
+1. Variable de entorno `CERES_TOKEN` — lo que usa CI (`secrets.CERES_TOKEN`).
+2. Archivo `.ceres_token` en la raíz — conveniencia para correr en local.
+
+`.ceres_token` está en `.gitignore`. **Este repo es público: el token no va en
+ningún archivo rastreado, ni en un log, ni en un mensaje de error.** Para
+comprobar que la credencial sirve sin descargar nada:
+
+```bash
+python tools/fetch_ceres.py --check-token
+```
+
+Describe la *forma* del token (largo, espacios, prefijo) sin imprimir su valor,
+que es lo que sirve para depurar un secret mal pegado.
+
+### Los identificadores
+
+`ceres_predio.json` los guarda y `--discover` los encuentra. Cómo se llegó a
+ellos, todo verificado contra la cuenta:
+
+| Qué | Valor |
+|---|---|
+| user_id | `7868` (es de la cuenta, no del predio) |
+| Cliente | `4558` — **no** el 4527 de San Gerardo |
+| Predio | `Ketcal`, farm id `6311` |
+| admin_group | `CFF\|4558.6311` |
+
+El camino no es obvio: `/fields/` lista los 5 campos de Ketcal con
+`customer=4558` y un `farm` que es un **UUID**, pero el `admin_group` usa el id
+**numérico** del predio. `/farms/?customer=4558` cruza los dos
+(`legacy_id` → `id`). Si mañana hay que rehacerlo:
+
+```bash
+python tools/fetch_ceres.py --discover
+```
+
+Es de solo lectura e imprime lo que encuentra para revisarlo antes de confiar.
+
+### Los tres niveles
+
+Ketcal tiene **tres grillas cargadas** y las tres son agregados nativos de Ceres
+sobre los píxeles. Ninguna se deriva de otra:
+
+| Nivel | `grid_type_id` | Unidades | `block_name` en Ceres |
+|---|---|---|---|
+| Equipo | 18 | 5 | `equipo 3 naranjos` |
+| Sector | 7 | 28 | `E1 - S2` |
+| Cuartel | 11 | 30 | `Naranjos- C12` |
+
+**Que el cuartel sea dato medido y no un promedio de sectores es lo que permite
+cruzar Ceres con Nutrición**, cuyos análisis foliares se toman por cuartel.
+
+Los tres formatos de `block_name` son distintos entre sí y **ninguno coincide
+con las claves del repo**, así que `unit_key()` normaliza los tres. Verificado
+contra el vuelo `2026.16.A`: las 63 claves (28+5+30) mapean sin faltantes ni
+sobrantes contra `geo_data.json`.
+
+### El predio creció por etapas
+
+Este es el hecho que manda sobre el diseño de la pestaña, como en San Gerardo lo
+manda que sólo haya vuelos de noviembre a marzo.
+
+```
+2022-02 a 2022-10   0 unidades    Ceres voló, pero no había grilla cargada
+2022-12 a 2023-03   2-3 equipos   limoneros (E1, E2) y mandarinos (E5)
+2023-08             4 equipos     aparece E3 (naranjos, creado ago-2023)
+2025-01             5 equipos     aparece E4 (creado nov-2023)
+2025-03 en adelante 5 / 28 / 30   completo
+```
+
+De los 32 vuelos de la API, **4 no traen ninguna unidad** y se omiten del JSON
+(quedan registrados en `flights_omitidos`). De los 28 restantes, **sólo 9 cubren
+el predio completo.**
+
+Por eso cada vuelo lleva su `coverage` por nivel, con tres estados que el mapa
+pinta distinto:
+
+- `no_existia` — nunca apareció hasta esa fecha: **no estaba plantado.** Va en
+  beige, no en gris, y la leyenda lo explica.
+- `sin_dato` — ya había aparecido antes y en este vuelo no viene. Eso sí es una
+  anomalía, y el script la advierte.
+- el resto — tiene valor.
+
+Sin esa distinción, la mitad del histórico se vería como "sin dato" cuando el
+cuartel simplemente no existía.
+
+### Los umbrales
+
+Cada indicador declara cómo se clasifica, y eso llega a la leyenda:
+
+| Indicador | Clases | Origen |
+|---|---|---|
+| Estrés hídrico | 4 | cortes publicados por Ceres |
+| Estrés acumulado | 4 | los mismos: es el promedio de temporada del anterior |
+| NDVI absoluto | 9 | definidos por agronomía |
+| NDVI promedio temporada | 9 | los mismos |
+| Clorofila | 4 | **relativas a cada vuelo** |
+
+> **Los cortes de NDVI venían de nogal.** Se verificó si discriminan en cítricos,
+> que son de hoja perenne y mantienen NDVI alto todo el año: en el vuelo de
+> abr-2026 los sectores van de 0,519 a 0,852 con mediana 0,706, y **8 de las 9
+> clases están pobladas**. La escalera sirve, y sirve porque la plantación es
+> joven y el dosel está en formación. Conviene volver a mirarlo en un par de
+> temporadas: si se apelotona arriba, hay dos salidas y las dos se hacen editando
+> `ceres_thresholds.json`, sin tocar código — cortes propios para cítricos, o
+> `"bands_policy": "relative"`.
+
+En la clorofila **no se habla de cumplimiento**: por construcción la mitad de las
+unidades cae en la mitad mejor, así que un porcentaje se leería como veredicto
+agronómico cuando sólo dice "sobre la mediana del vuelo". Ahí la métrica informa
+la peor clase, que sí es accionable.
+
+El color no declara tokens nuevos: los indicadores tienen entre 4 y 9 clases, así
+que se interpola sobre las anclas `--dat-st-*` por **severidad** de la banda
+(0 = mejor). Con 4 clases cae exacto sobre las anclas.
+
+### Lo que no se baja por defecto
+
+`--extras` habilita la capa por árbol y la grilla de celdas, que decodifican
+miles de tiles. Está apagado porque con 28 vuelos esa etapa pasó los 30 minutos
+sin terminar, y hasta que no termina **no escribe nada**: se perdían los vuelos
+ya descargados. El workflow tampoco lo usa, porque su timeout es de 20 min.
+
+Para Ketcal la capa por árbol además no existe: la cuenta no tiene overlays
+`tree_data`. Queda la grilla de celdas, que el mapa todavía no consume.
+
+### Advertencias que quedan
+
+Una corrida limpia deja ~40, y todas dicen algo:
+
+- **Paginación del catálogo de overlays** (3): lee ~1.377 de 1.440. Con cientos
+  de fechas empatadas la paginación de Ceres no es estable. Afecta al catálogo de
+  imágenes, no a los umbrales (con un overlay por indicador alcanza).
+- **`2023.36.A` (2023-09-07) pierde E3** (3): ese vuelo no trae los naranjos, que
+  sí están el 11-ago y el 31-oct. **Es una anomalía real, no crecimiento del
+  predio.** Vale preguntárselo a Ceres.
+- **Cobertura parcial de imágenes** (~34): el mismo crecimiento por etapas, en el
+  catálogo de imágenes. Son informativas.
