@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T16:46:02Z",
+  "generated_at": "2026-09-02T18:28:42Z",
   "source": "Ceres Imaging",
   "farm": {
     "name": "Ketcal",
@@ -35708,6 +35708,573 @@
       "motivo": "el vuelo no trae ninguna unidad en ningun nivel"
     }
   ],
+  "trees": {
+    "tile_template": "https://tiler.ceresimaging.net/tree/data/{id}/{z}/{x}/{y}.mvt",
+    "source_layer": "trees",
+    "value_property": "value",
+    "requires_auth": false,
+    "min_zoom": 15,
+    "by_flight": {
+      "2022.50.A": {
+        "water_stress": {
+          "E1": "05db26c0-53df-4c8d-82aa-3e885bb61555",
+          "E2": "9e3463fb-e66a-4a04-872e-c804f469893b"
+        },
+        "absolute_ndvi": {
+          "E1": "bd144e5c-e867-453c-a156-9a10eafe2bf9",
+          "E2": "75f061a5-6c28-4bd3-bc4a-8262b0db6f6b"
+        },
+        "chlorophyll_class": {
+          "E1": "9a9792ae-9dc5-4de9-a759-6c49b654853b",
+          "E2": "44ff186c-0d09-4546-bc2d-38e80e5a1389"
+        }
+      },
+      "2023.1.A": {
+        "water_stress": {
+          "E1": "fadd62e1-9def-4d80-9ef0-2240ad8b4ab6",
+          "E2": "ae99e213-a90e-47cb-a184-3e674804618c"
+        },
+        "absolute_ndvi": {
+          "E1": "818fb737-6b2f-4532-996c-6a706c47a143",
+          "E2": "ca862b0a-d0be-4437-b45a-7b7119abed2a"
+        },
+        "chlorophyll_class": {
+          "E1": "f892b28c-d0c8-4db0-b166-2baef135cf9c",
+          "E2": "274b8240-447c-4da9-864d-1c80cd16cc23"
+        }
+      },
+      "2023.4.A": {
+        "water_stress": {
+          "E1": "ee8c4c52-eb59-439e-9dfe-aefac6aa5a2e",
+          "E2": "a7f0dacc-aa83-41ae-bdf1-192fbb80582f",
+          "E5": "6b7c1947-0f27-4bdc-8d99-3d77a8faeddb"
+        },
+        "absolute_ndvi": {
+          "E1": "0604189c-b8f3-4d47-ae66-98f40f922706",
+          "E2": "4fc559eb-a257-416f-9e12-450f5b91bc30",
+          "E5": "3d27ec6e-a0a0-4a63-90b0-821fddfd0194"
+        },
+        "chlorophyll_class": {
+          "E1": "ef3ee471-a8e7-49c0-afde-3cd2db7734ee",
+          "E2": "0d99945c-06fd-4098-90ab-1be8e3ebd4ee",
+          "E5": "aea03893-f74f-4f51-847b-1b2456a99ad3"
+        }
+      },
+      "2023.11.A": {
+        "water_stress": {
+          "E1": "a668b07e-626b-47c1-9f85-b52da33699a4",
+          "E2": "69a29624-74c7-4a6f-9015-c40d0a46a364",
+          "E5": "7af642f6-e57e-4d74-86c9-97b8b648a555"
+        },
+        "absolute_ndvi": {
+          "E1": "e2be5b8a-58d3-4f7c-b82e-12c6bd8ed887",
+          "E2": "00eff145-c9ac-41bb-ab7e-8341834907a7",
+          "E5": "3133bb17-6aea-4753-9a5c-8ba8d99e7694"
+        },
+        "chlorophyll_class": {
+          "E1": "a7d22550-5717-4ecd-a01f-6895c94a7199",
+          "E2": "f5fafc08-800b-43fe-9061-427a3623c40f",
+          "E5": "439a9526-fbd8-479a-8b3f-4315f1dedeaf"
+        }
+      },
+      "2023.32.A": {
+        "water_stress": {
+          "E1": "04b2ad74-98b7-4787-9fe7-585b91c4849b",
+          "E2": "65452b23-7668-4a64-9f6b-6063781ddd72",
+          "E3": "e6186692-5263-4d47-88ee-7537aba64e26",
+          "E5": "1c2b956c-095c-425a-bf8f-9b0f9f4d1f25"
+        },
+        "absolute_ndvi": {
+          "E1": "f33e1712-869b-4aa2-8b75-27476810560c",
+          "E2": "0be9fcdb-c520-4b23-80a7-4540e05ef7ad",
+          "E3": "6600a359-2e4e-4507-b206-87b174b2df2d",
+          "E5": "e6e7cca2-aa46-41b1-b37f-ed4317cbc4ba"
+        },
+        "chlorophyll_class": {
+          "E1": "e0f9ae55-0993-4423-ab49-6c982e8f783d",
+          "E2": "adc8b270-850b-405a-a842-c4f548587393",
+          "E3": "47cb1918-5f88-43df-8d95-21c520ae43d6",
+          "E5": "a84d4526-f2c0-4fc5-bf81-d20c96d29822"
+        }
+      },
+      "2023.36.A": {
+        "water_stress": {
+          "E1": "fde80df8-8f2f-44d0-82ba-0917d22d8e44",
+          "E2": "ed0be987-1cf5-4a47-aeac-cf61ec48771e",
+          "E5": "4ba0b503-fb1e-46b8-95df-c110355316ee"
+        },
+        "absolute_ndvi": {
+          "E1": "840b4c78-a918-4257-b4d9-e7b4bd90c424",
+          "E2": "da6eb02a-03a2-4c64-a548-64f7d54ef99d",
+          "E5": "f411c519-5b75-4e69-8b26-38beff9546b9"
+        },
+        "chlorophyll_class": {
+          "E1": "866332a0-e4df-496f-8a8a-4e0f6e58aca8",
+          "E2": "b7c2673a-e466-4df7-b106-187c9d28c09a",
+          "E5": "f2a81a34-0ace-4821-9472-ebdae191c321"
+        }
+      },
+      "2023.44.A": {
+        "water_stress": {
+          "E1": "255bcf04-051f-4833-824a-83964d3459d5",
+          "E2": "33b14cd2-1f2f-4a2d-ae73-1052a3c35df1",
+          "E3": "8929376d-d2e3-4fa7-b74b-f758c1336527",
+          "E5": "131932fa-4cff-4cb0-85e2-24cdfa465cba"
+        },
+        "absolute_ndvi": {
+          "E1": "76384d0e-edfa-4470-a88b-9c306c18f4a6",
+          "E2": "93445b72-f8cc-46f7-99d0-67d796fbbcd5",
+          "E3": "617ae157-e7c0-4069-960f-f9d12f57b996",
+          "E5": "b7ad6ca0-c121-4c91-a1c4-48c64adca246"
+        },
+        "chlorophyll_class": {
+          "E1": "726c095b-40c3-43ed-8dd4-dffa2b3ee674",
+          "E2": "c435b1dc-e408-46c7-864c-83dbab8fd815",
+          "E3": "6ab2c86e-9b68-418c-92c0-21b2299003c2",
+          "E5": "a3c12f20-516e-45f1-897f-138cbebf10eb"
+        }
+      },
+      "2023.48.A": {
+        "water_stress": {
+          "E1": "529caa6b-a526-4236-95a2-01ee8fc2739a",
+          "E2": "23750eb1-99cd-4035-8428-77599607af76",
+          "E3": "02b8e097-9078-4a3c-8b2a-34022e589f52",
+          "E5": "f677671b-7b57-46e4-8680-4c4492921df2"
+        },
+        "absolute_ndvi": {
+          "E1": "a850cc11-5a9c-465f-899e-5bf3353eaa76",
+          "E2": "9ca18d0e-fd71-465f-a736-ef4380d815c8",
+          "E3": "9e95e47c-6b5b-4a26-8bc8-90216d2b3c8d",
+          "E5": "e3a5ccd2-286f-478a-bf72-06c9f37c8964"
+        },
+        "chlorophyll_class": {
+          "E1": "87f00a4b-7bca-4b7b-9437-55a4d6ce82f0",
+          "E2": "651dec1b-72bd-45ff-b8e8-442dbfb428c5",
+          "E3": "3c83e24d-827f-4a8a-ab03-0dee17f85b8f",
+          "E5": "75f553b4-d80e-4eb8-8fe7-4e5e5b3f711c"
+        }
+      },
+      "2023.52.A": {
+        "water_stress": {
+          "E1": "354b4f30-ab5f-4fa6-bbe4-ef92b7802276",
+          "E2": "17943907-b3a3-466a-b68c-dca0d6edb843",
+          "E3": "793b7203-026a-48e9-9746-dfeb1bc7a09e",
+          "E5": "c4f7c8c4-d8ff-4a2b-afc6-a05ec29de67e"
+        },
+        "absolute_ndvi": {
+          "E1": "f080da16-3a90-49b2-bb18-b68cb73ad3db",
+          "E2": "41276ac5-0696-49fd-8131-ba11c8ac91ca",
+          "E3": "61c8942a-e89e-4dfe-a191-29612622467e",
+          "E5": "7e0f0e05-5bbd-4f6e-bbf1-64a99346bd85"
+        },
+        "chlorophyll_class": {
+          "E1": "84895d79-d1c1-4b55-a031-65ef2e57afa0",
+          "E2": "7f41c194-b75f-41c5-90dc-851598cfeab9",
+          "E3": "88ff4de5-2a13-430e-bd5a-c16f269ec338",
+          "E5": "d0315e4d-5e59-473e-b389-5b7384f084cf"
+        }
+      },
+      "2024.6.A": {
+        "water_stress": {
+          "E1": "0a57dd02-f944-4d0d-aab5-fa347017e68b",
+          "E2": "e6319eef-a605-445b-b7d6-92c68dab323c",
+          "E3": "42294182-18cd-4fcb-9a3b-b53da4695426",
+          "E5": "9d64f9e1-01a9-434a-93e5-9ae663ffd487"
+        },
+        "absolute_ndvi": {
+          "E1": "aff34ffe-bb4c-47fb-8770-77c702c9e13e",
+          "E2": "0fa8db22-6960-4eac-a0cf-8d895d8e2992",
+          "E3": "3757cf79-cc03-406a-9dc3-d1ca250a8067",
+          "E5": "0ac846de-6994-4d1a-87b0-b6b69bb4da59"
+        },
+        "chlorophyll_class": {
+          "E1": "366e942e-da5c-4690-94a3-9c915a6a84de",
+          "E2": "dda77543-ceed-49cf-8838-375cfc3a783a",
+          "E3": "60faaaad-55a3-4202-8329-e3104b03b822",
+          "E5": "d27e0635-2631-4422-9704-6680ea598a3b"
+        }
+      },
+      "2024.10.A": {
+        "water_stress": {
+          "E1": "e233d82a-4418-4446-81c6-a7f56874d523",
+          "E2": "4662c919-2413-4fa6-9853-0073cc886fde",
+          "E3": "bcb151e6-199d-4d2b-94ed-bc9dffd47a5d",
+          "E5": "2646b875-fe83-4370-b6b2-10f9fa0fdb38"
+        },
+        "absolute_ndvi": {
+          "E1": "495eb349-c3aa-4d89-b576-ed580830831e",
+          "E2": "2b925bdc-f045-4c8c-9826-6061b5e0b39d",
+          "E3": "cee23f3d-bb36-461b-94b8-993bef654d71",
+          "E5": "743e5973-c029-4798-8d34-6542ede530f8"
+        },
+        "chlorophyll_class": {
+          "E1": "5d9dfe2e-83b4-480d-955b-facb428d6865",
+          "E2": "50cadb91-a8a9-4cec-853e-f6a31b65bf5a",
+          "E3": "72a81fe9-dab9-4c55-ae91-0b3f96761d8b",
+          "E5": "061de21b-cfb5-4ccc-8b8c-5fd219b18cff"
+        }
+      },
+      "2024.14.A": {
+        "water_stress": {
+          "E1": "4cd898a0-f94d-45aa-908f-30abae7c3acb",
+          "E2": "f365ad50-58e1-407e-b5e2-ecbff74615fa",
+          "E3": "2c39d834-6db0-45ca-9fcc-36924aeae54f",
+          "E5": "0e705e9e-ceb8-44de-992b-54047aed823e"
+        },
+        "absolute_ndvi": {
+          "E1": "fdd0d591-9be9-4569-bd88-501b5b873dd4",
+          "E2": "96b0d452-b747-4e2c-909d-d2a2b1c0c4e2",
+          "E3": "3a87bd8a-ab55-4a7c-bc95-49c0ad57c6a0",
+          "E5": "38d35af6-21eb-4b77-b1b8-68d49160cab5"
+        },
+        "chlorophyll_class": {
+          "E1": "654f4248-e192-49fc-86fc-730704e7bdbb",
+          "E2": "7bdb20fb-3f57-4e6f-bc74-99dfdeb2201b",
+          "E3": "e5c37263-0f76-422f-aed5-a9198f570b4f",
+          "E5": "fcdb4ba8-470b-4ec6-b953-4455433705d3"
+        }
+      },
+      "2024.34.A": {
+        "water_stress": {
+          "E1": "832fbba3-68cb-4726-901f-a426002b5a3a",
+          "E2": "a79032cc-e2f1-41cb-bbf8-641070f23114",
+          "E3": "297d3d57-014a-423c-9124-59e5b360266d",
+          "E5": "746a98b3-7469-4fec-a066-91a53952b10c"
+        },
+        "absolute_ndvi": {
+          "E1": "a94f567f-cd50-48ae-a835-fa02f2e3aef0",
+          "E2": "1789202a-0928-48ae-bf4c-1b91a84c7c6c",
+          "E3": "121e588f-30b5-42ba-af76-a879a5b35ab9",
+          "E5": "2b8cdd60-6a7a-44ce-8dc8-69e3fd358391"
+        },
+        "chlorophyll_class": {
+          "E1": "85cc8c67-58fc-4720-8ca9-e35e52d74bff",
+          "E2": "060908d1-7910-49f9-bd71-6e6820f22af8",
+          "E3": "f395f502-3f1e-4060-afba-30bb5ae861ad",
+          "E5": "4b36c159-ae3b-4cf1-b586-b96f63bf46b2"
+        }
+      },
+      "2024.39.A": {
+        "water_stress": {
+          "E1": "a9423366-758f-447b-b8b5-1582212aaf85",
+          "E2": "606fea6f-e98d-463b-aea3-a4fca8d92258",
+          "E3": "e71c101d-fb96-4534-bf97-3ff5e104955d",
+          "E5": "fe6af46d-aa1f-41a4-a076-a8e94a518272"
+        },
+        "absolute_ndvi": {
+          "E1": "617eac85-d902-4853-8b1f-80de32855641",
+          "E2": "b49b4966-d308-4770-b0ac-dacd25a713c0",
+          "E3": "3af7a4b2-fd31-4305-bac1-237e382b7739",
+          "E5": "23ae7baa-73a4-4a43-9bec-a0fcd5c0bf62"
+        },
+        "chlorophyll_class": {
+          "E1": "e116fe86-27b1-4df1-9ebb-bac9b4dd3bed",
+          "E2": "82bf5061-d6de-439b-b589-41a236da364a",
+          "E3": "8abbd752-5a72-49f1-b6b6-1fa1e3b8d727",
+          "E5": "a3cd3ec3-d49c-43fe-a3ca-139858b917dd"
+        }
+      },
+      "2024.43.A": {
+        "water_stress": {
+          "E1": "772b51b4-fab5-4987-8bfd-576abdf7841d",
+          "E2": "34b0f552-53a0-44da-a60c-bd9cb65d93d0",
+          "E3": "b7ba7829-23ab-4a61-aca8-7cf17c56a6de",
+          "E5": "135530c8-00d6-4f2d-9d45-d12eb57d217b"
+        },
+        "absolute_ndvi": {
+          "E1": "d94b5c0c-32d3-4d52-9176-7e03d04a119a",
+          "E2": "0fc54cfb-a777-41b6-91f5-c9bdd1952334",
+          "E3": "7dbc5f1c-2e35-444e-a548-41df1d5a0dc0",
+          "E5": "445c8f01-cd3c-4ce6-a5fb-004d7acd4c87"
+        },
+        "chlorophyll_class": {
+          "E1": "a4f5fecb-9b2e-4efb-9c7b-0b8e90d57307",
+          "E2": "e5aaad84-1acd-4220-9060-f56d7615945a",
+          "E3": "c3555663-84be-439f-bea6-7a8f5676f537",
+          "E5": "84cdac08-526e-4333-bd7c-9d8032fdbb7b"
+        }
+      },
+      "2024.47.A": {
+        "water_stress": {
+          "E1": "c73bfb9c-90d3-491d-815e-755f65a2827c",
+          "E5": "8c4d6842-069b-41e0-a402-44d8d2dfcd62"
+        },
+        "absolute_ndvi": {
+          "E1": "832f350d-a3a7-4027-91f7-531cfb93a730",
+          "E5": "7542adfe-6990-406e-af30-491a1b083094"
+        },
+        "chlorophyll_class": {
+          "E1": "0fb6d13d-a4cb-4f8d-a2fd-4603178e14c4",
+          "E5": "c3e1d3fb-8416-412e-aa3a-d504286171e5"
+        }
+      },
+      "2024.51.A": {
+        "water_stress": {
+          "E1": "ce612467-4992-41dd-85d5-8b298024a41b",
+          "E2": "3e7340f3-2b8a-41d1-bf91-7a0d632dc8ed",
+          "E3": "66af3544-8b8f-42d0-9bc2-dd7db0deca29",
+          "E5": "5280987f-a855-4e72-9c16-202881a06e03"
+        },
+        "absolute_ndvi": {
+          "E1": "74cba83f-8786-4adf-bca6-8dd8b8f68c85",
+          "E2": "2b1e1b87-3ac3-4623-99b7-dbae19313342",
+          "E3": "6fc92c03-500a-44ed-b77c-a5cdc7b0de1f",
+          "E5": "e21c950d-402d-4f50-999f-67e07a084deb"
+        },
+        "chlorophyll_class": {
+          "E1": "14b15bfc-8047-455c-988c-1dfcffa10e14",
+          "E2": "1b47285b-6fc7-4426-bc72-79a18cc00557",
+          "E3": "a3f85cd8-8065-4378-8c5a-09e57c864e41",
+          "E5": "f37a380c-8b9d-4161-8c1f-b3942514bc27"
+        }
+      },
+      "2025.4.A": {
+        "water_stress": {
+          "E1": "3d543434-ce64-41fb-b7e5-c09222eb5a40",
+          "E2": "43f4835e-6f48-4c5f-951c-4fb4cba3150e",
+          "E3": "f340c150-e82e-45b4-a1d4-e860e920d7aa",
+          "E4": "dee5b46a-aec5-4e1b-b8e8-6f370f15cdf4",
+          "E5": "a5e400d4-27c7-48a2-a3dc-7500e493825d"
+        },
+        "absolute_ndvi": {
+          "E1": "771a8c73-2aea-4671-b359-9dfdb6d79732",
+          "E2": "7f288562-bdbc-4477-8c90-22613b445400",
+          "E3": "54edb720-7ea1-4cee-aeae-cbfd139ca4d7",
+          "E4": "4773bb65-3e96-473a-a713-1a5d8201aaba",
+          "E5": "d50abc43-4c26-4fd3-bc43-c16ed16c65ae"
+        },
+        "chlorophyll_class": {
+          "E1": "69358362-cfa8-49e8-9fdc-c4f7a1b1b847",
+          "E2": "334e3931-ee68-4db3-9c00-7047eb9e8c83",
+          "E4": "3b5ea7d1-edcc-4577-9b65-9c0c27fdc22b",
+          "E5": "e446b2a4-76b2-4a27-8a73-c083eb36c1e6"
+        }
+      },
+      "2025.9.A": {
+        "water_stress": {
+          "E1": "335cd656-9a88-4369-a816-18affd90078e",
+          "E2": "8fa2ea87-f8bc-4428-b7dd-ce3c474c3a52",
+          "E3": "cf27559a-8f7d-4548-b6da-73d9ae64e00d",
+          "E4": "d2e5c755-ebe8-408b-ab5d-5a23fa7fa606",
+          "E5": "b9f8b307-bcff-4fa7-92c0-c978fe14c344"
+        },
+        "absolute_ndvi": {
+          "E1": "fe656806-531f-4b9c-848c-29cb81927756",
+          "E2": "b19785b2-722e-42a0-a695-3c15cdfd8f1c",
+          "E3": "f3bac77b-0447-4bba-8ce1-1a0774dc597f",
+          "E4": "cb1db710-d9cb-4122-8b4d-1e9c055e7dd4",
+          "E5": "0875fffa-a650-44ca-ad48-c0ebb7d3a5c1"
+        },
+        "chlorophyll_class": {
+          "E1": "dc152a89-b325-4304-a68f-491ef79d137f",
+          "E2": "36b76eb0-216b-42db-a299-9dc5514235b7",
+          "E3": "96e0b12e-237d-4f8e-b315-5164de63e0f6",
+          "E4": "15ae4d3c-3321-4423-a45d-23b2a001e927",
+          "E5": "82c708fe-ce87-4fb2-8c8b-d85dc37ffd73"
+        }
+      },
+      "2025.13.A": {
+        "water_stress": {
+          "E2": "e847b104-d991-4f9d-80ab-8d8a23affd76",
+          "E3": "fb55dc9a-82b0-4afe-b1aa-d2383067cd72",
+          "E4": "554937e7-5ccb-405c-afdc-dd650b504fa8",
+          "E5": "a8f6a022-d263-4c72-977b-8c5489439617"
+        },
+        "absolute_ndvi": {
+          "E1": "7afd9806-1872-430c-b9dd-2e1a7ac41392",
+          "E2": "f86aa60f-bb38-48ba-a61e-cf758b4ad199",
+          "E3": "12645cd8-c7af-4fa2-8f34-8ca12070eb65",
+          "E4": "bfeb2da0-2886-4b28-a891-8ae8ce7164dc",
+          "E5": "78050c58-b63f-401c-ab18-b455dadd0e83"
+        },
+        "chlorophyll_class": {
+          "E1": "89709593-afda-42f9-9e38-157a2fa58eed",
+          "E2": "3d066a04-5c95-4386-b1c4-8ca8f76df840",
+          "E3": "bfcd1307-eb5e-46e0-b031-31737fcee447",
+          "E4": "c0468f1c-f53d-4277-bf11-e08a345165c5",
+          "E5": "3907a001-a7c9-4827-ab80-be553c44be3b"
+        }
+      },
+      "2025.38.A": {
+        "water_stress": {
+          "E1": "04a7d45c-b6d6-43bd-8cac-c12411b50aec",
+          "E2": "13ece3a6-b09c-43a1-97bc-4b9d3fe35dd4",
+          "E3": "1a16b981-b90e-409a-af1a-f3848ad95aa1",
+          "E4": "78f66d9c-5f1b-4e5a-a041-63d677ccd5ce",
+          "E5": "96fe8897-0523-4545-b5c2-94c4c6648568"
+        },
+        "absolute_ndvi": {
+          "E1": "b1c4a96c-e92d-4432-89e9-b7a268084102",
+          "E2": "87d51bce-a619-4d8c-96b3-a934cceea92b",
+          "E3": "dbf3e208-6482-4a3c-88cc-b0f3e0b77318",
+          "E4": "74adb238-62ae-472e-aa91-88e7ecfa31d7",
+          "E5": "d8fe2d79-d60b-41df-8d98-243eb35162b5"
+        },
+        "chlorophyll_class": {
+          "E1": "63b282bb-8497-441e-9e51-b32f58569419",
+          "E2": "f2876f37-35a5-4efc-abcb-ece1dec0bf6d",
+          "E3": "ab6b6621-b0f9-446e-b686-f0d38603bf8a",
+          "E4": "ecb96d1e-3d66-49f3-a69c-28c05815de9e",
+          "E5": "4b6afe88-6aff-4638-afdb-ab8dd7b56a0a"
+        }
+      },
+      "2025.42.A": {
+        "water_stress": {
+          "E1": "0baa2869-5fee-4fbd-a553-2eebcd406f74",
+          "E2": "548a3cc6-4890-4511-b102-9db723c0d51d",
+          "E3": "c087c031-d939-4d35-a0ea-618707d5670f",
+          "E4": "c6237e3d-95b7-4e08-b754-bfd066b9f150",
+          "E5": "098eb82b-7813-49e3-a35b-462e4c8b6817"
+        },
+        "absolute_ndvi": {
+          "E1": "ef743517-480b-4dae-b258-a5ac84c89c10",
+          "E2": "92bb0250-8576-4b64-b014-b154201dd62c",
+          "E3": "f72a1883-4d43-495e-bbe4-fb58faed6919",
+          "E4": "69a54a1b-c1cf-4b36-806f-be0e92de1365",
+          "E5": "86cd0b04-8483-4700-ac09-2fd55c5ff0b3"
+        },
+        "chlorophyll_class": {
+          "E1": "0ccc7745-e425-4c45-be96-46f7bc7c124e",
+          "E2": "2a728392-018f-4b90-aeb6-4258a9ed3141",
+          "E3": "fbd6d36f-b476-432b-8657-68df42f930e8",
+          "E4": "b91a3f68-e1a7-4c87-b5d6-1191c228c3e9",
+          "E5": "c90a6fb8-09b4-4c3e-a578-36b52d584bc7"
+        }
+      },
+      "2025.46.A": {
+        "water_stress": {
+          "E1": "c600feeb-9c91-451b-95b3-3114cf3c46bb",
+          "E2": "8065cd1f-8bda-455e-ac12-a671cbac293f",
+          "E3": "52f1893b-aeff-45c8-b8db-0701cd65be47",
+          "E4": "8cbed3f8-46f0-4ad6-99b5-1f2e77c864bf",
+          "E5": "fb3c2111-bfd6-4316-bdc6-7dab859878f1"
+        },
+        "absolute_ndvi": {
+          "E1": "12769d6a-bfc2-44d9-acc1-8e83333c7e99",
+          "E2": "4074882a-3b33-410e-a5e2-52c41005a0fc",
+          "E3": "3d73a7a6-dce0-4558-9bed-618b0dd0e6d9",
+          "E4": "8d2f57e4-bf32-443d-aa4c-5da48b81fdbf",
+          "E5": "f48c4e9a-9a4b-45b7-83d3-d894e5cb5eed"
+        },
+        "chlorophyll_class": {
+          "E1": "ee31ec73-1705-4549-baf1-40bbfc995ad4",
+          "E2": "7b04b29a-b99d-4dbf-a67e-01970e2fabf5",
+          "E3": "371f29a9-369e-4b26-998b-28f624e0f33f",
+          "E4": "3a8429bc-7758-4ee5-ac49-08157569953b"
+        }
+      },
+      "2025.51.A": {
+        "water_stress": {
+          "E1": "2f78817a-17d0-4eb4-bca2-8f93268b130f",
+          "E2": "aa52f9cf-0c1f-4da6-939f-e2750376feda",
+          "E3": "57e03572-49c4-47c4-89d9-354b1c7545d9",
+          "E4": "aaecad87-04cd-4b00-913c-9bf97fa5eca7",
+          "E5": "93f3d150-0199-4a94-8a23-2a5d567a9238"
+        },
+        "absolute_ndvi": {
+          "E1": "5d57143d-18a1-4d6a-aaf1-133f3b4d848b",
+          "E2": "35f575c5-6caa-4ea0-9ff8-50974709eb3e",
+          "E3": "73567d9e-b908-46e9-838e-84066ed2244c",
+          "E4": "ddf104b6-22ab-4718-aa06-4098a55cde0f",
+          "E5": "6f52faa7-6589-4428-a7d7-df64a2635773"
+        },
+        "chlorophyll_class": {
+          "E1": "b24f110c-79dc-4c90-924a-f73c82545743",
+          "E2": "4e4dfc15-7627-44df-b3dc-e9cc3fc7fb1f",
+          "E3": "4632f685-7192-4e27-888c-0634230276bf",
+          "E4": "6c9834e1-b400-45a2-8014-abbebc2567a1",
+          "E5": "a483c6e2-00c6-4db9-b30f-9cff5173852a"
+        }
+      },
+      "2026.3.A": {
+        "water_stress": {
+          "E1": "cecf6c2d-7a2f-4dff-99ac-49f0cecf7dd7",
+          "E2": "75473f36-8655-4556-85a0-a0261517bf82",
+          "E3": "0ccc2842-8cc7-4fcd-9a4f-b69e2e494ad1",
+          "E4": "c90c0d41-e2c1-4463-839c-f25c45999f04"
+        },
+        "absolute_ndvi": {
+          "E1": "391ae1be-bbe9-46a3-b4fa-79c7a3be5252",
+          "E2": "fbaf3587-8291-431b-8d61-d7b3c298a894",
+          "E3": "a0068653-7827-40b3-9921-25a618992ebe",
+          "E4": "5f49d46d-4332-4216-ac41-6b3c5e247385"
+        },
+        "chlorophyll_class": {
+          "E1": "7afc754d-d138-4285-bafe-0466120cd5dc",
+          "E2": "713870e4-ccff-4215-8e7d-e6369e069324",
+          "E3": "f88d33de-d94e-4f3a-b9b3-2b43f2d3f29a",
+          "E4": "3a30f51c-42a9-4b80-b760-7c8c05b2cfb4"
+        }
+      },
+      "2026.7.A": {
+        "water_stress": {
+          "E1": "ee3786bf-f419-46c8-91ed-75da271e0968",
+          "E2": "516c648f-bab2-4337-8a84-f8f8340e5e55",
+          "E3": "35a717c5-981a-450a-9dcd-33f00a9fdb6f",
+          "E4": "2db9fac0-0d86-4b51-8db1-475026d3a0c0",
+          "E5": "02116d3c-96fb-4b84-8ac8-ead51b268374"
+        },
+        "absolute_ndvi": {
+          "E1": "f2b6c8c5-dfbd-4ce8-bee8-aee6d0cbfac7",
+          "E2": "607e6eb5-fc60-4b19-b0a0-dcae2954084c",
+          "E3": "a5b5dbe3-1191-4b25-9e1f-1c740685bb9f",
+          "E4": "8e19d361-e3af-4ecc-b581-c3b0497cb1ab",
+          "E5": "723dcd10-2234-476e-8e9b-24ebba6ab5aa"
+        },
+        "chlorophyll_class": {
+          "E1": "90832abc-3430-4f4b-b1a7-886a79aa7dba",
+          "E2": "5af803d1-ea41-4774-b702-fd004a70fdb8",
+          "E3": "692415c5-f75a-4810-956f-ae1f21fb5be5",
+          "E4": "a36ef66f-5d39-4440-98dd-7ccbef44c392",
+          "E5": "554621ae-30bb-4809-933c-75680a8a39c2"
+        }
+      },
+      "2026.11.A": {
+        "water_stress": {
+          "E2": "1277e1ee-0b10-4c16-9f13-159382c7c887",
+          "E3": "30d5ca7d-cdd1-4a26-9f59-753e70da0ba3",
+          "E4": "c2f3bfff-01a6-4681-98f5-b4132f5b5d89",
+          "E5": "ecafb663-c990-4ef5-a925-3c7424cb9007"
+        },
+        "absolute_ndvi": {
+          "E1": "da4cd6b7-885e-4d27-bfa0-dfcb834cb76b",
+          "E2": "6b63eed2-4ed6-4c77-8b44-637383909a47",
+          "E3": "290227d3-eb58-471a-af9c-7276eb1b9968",
+          "E4": "f5982b42-292c-4db7-b8de-d8f852ecf3e1",
+          "E5": "8e201e15-9be7-4192-9ffa-e785f2e62c8c"
+        },
+        "chlorophyll_class": {
+          "E2": "9dcbc6b6-23dc-44fc-aad0-f3b1d7ea91aa",
+          "E3": "4ebc5d37-b425-4c46-ad8d-1d376b647674",
+          "E4": "6f97b738-373f-4bc5-8dcf-c5c7802d1fbd",
+          "E5": "b81f9f33-414b-4a60-ba2c-4f62cf503234"
+        }
+      },
+      "2026.16.A": {
+        "water_stress": {
+          "E1": "5f4a2145-b7b6-4d51-ba5d-d8cc4bba2535",
+          "E2": "c8f808e0-7ae7-48b2-af6e-acddcc7f01f7",
+          "E3": "ed4cdaca-fc82-4fd1-bf05-c334839086aa",
+          "E4": "15047bd2-963f-4eec-8ce1-5a666ffa9141",
+          "E5": "94e9512d-78c5-416c-8be2-d11b7ea1785c"
+        },
+        "absolute_ndvi": {
+          "E1": "26d97945-e5bd-476d-aed1-7b0f343e4e20",
+          "E2": "354c1f2c-1f6f-4602-b7ba-c06d9638b9aa",
+          "E3": "d8cf14eb-1166-453f-8885-a2b853f0f6c8",
+          "E4": "3cc4ed0b-5b4e-4692-8ee7-2b6cb6def5ca",
+          "E5": "0a620fa0-0d1c-43bf-b36a-5994f2e4fe14"
+        },
+        "chlorophyll_class": {
+          "E1": "99d8dde9-8591-4a69-86cb-028d5934e82f",
+          "E2": "d7f4d950-6939-48a3-baab-44c477497141",
+          "E3": "daab2460-be88-4fb0-8402-0b973cfb40d4",
+          "E4": "a51207a5-fa49-44dd-b129-84a38a524d9a",
+          "E5": "06d080f2-e498-4406-8368-bf4a57229249"
+        }
+      }
+    }
+  },
   "imagery": {
     "tile_template": "https://tiler.ceresimaging.net/imagery/{id}/{z}/{x}/{y}.png",
     "requires_auth": false,

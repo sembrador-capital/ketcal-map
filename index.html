@@ -2220,6 +2220,40 @@ body.soil-active .stats-bar {
 }
 body .stats-bar.hidden { display:none; }
 
+/* ── Panel derecho de pestaña ────────────────────────────────────────────
+   En San Gerardo, Riego / Ceres / Aplicaciones / Financiero / Plagas ponen sus
+   controles en una columna a la derecha, con header y cuerpo desplegable, y
+   General / Cosecha / Nutrición mantienen la barra superior. Ketcal replica ese
+   reparto. Las clases vienen del CSS copiado; acá sólo se ajusta lo que
+   depende de tener también la barra de métricas al pie. */
+.ceres-controls, .riego-controls { max-height:calc(100vh - 150px); }
+/* Con el panel abierto, la leyenda y las métricas no deben quedar debajo de él. */
+body.ceres-active .stats-bar, body.riego-active .stats-bar {
+    right:calc(330px + 28px); max-width:calc(100vw - 330px - 460px);
+}
+body.ceres-active.ket-panel .stats-bar, body.riego-active.ket-panel .stats-bar {
+    right:calc(min(392px, 46%) + 16px); max-width:none;
+}
+/* Con la ficha de una unidad abierta, el panel de pestaña se corre a su izquierda. */
+body.ket-panel .ceres-controls, body.ket-panel .riego-controls {
+    right:calc(min(392px, 46%) + 16px);
+}
+.cc-summary { font-size:11px; color:var(--sem-text-2); margin-bottom:7px; }
+.ceres-season-group + .ceres-season-group { margin-top:14px; }
+.ceres-season-label { font-size:10.5px; font-weight:600; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--sem-text-2); margin-bottom:6px; }
+.ceres-flights { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:6px; }
+.ceres-flight.active { border:var(--sem-border-accent); color:var(--sem-navy);
+    background:var(--sem-navy-wash); }
+.ceres-section-body { max-height:320px; overflow:auto; }
+
+@media (max-width:720px) {
+    .ceres-controls, .riego-controls {
+        top:106px; left:8px; right:8px; width:auto; max-height:38vh;
+    }
+    body.ket-panel .ceres-controls, body.ket-panel .riego-controls { right:8px; }
+}
+
 /* ── Panel lateral: se generaliza lo que en San Gerardo sólo hacía Plagas ── */
 body.ket-panel #pvSide { display:block; }
 body.ket-panel #map { width:calc(100% - min(392px, 46%)); }
@@ -2499,58 +2533,121 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     <button class="fc-compare-btn" onclick="encuadrarPredio()" title="Encuadrar el predio" data-i18n-title="Encuadrar el predio"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
 </div>
 
-<!-- ── Controles · Riego ──────────────────────────────────────────────── -->
-<div class="foliar-controls glass" id="ctrlRiego">
-    <div class="fc-group">
-        <label class="fc-label" for="selMetricaRiego" data-i18n="Métrica">Métrica</label>
-        <select class="fc-select" id="selMetricaRiego" onchange="setMetricaRiego(this.value)"></select>
+<!-- ── Panel · Riego ─────────────────────────────────────────────────────
+     Panel derecho, como en San Gerardo: header con el origen del dato y los
+     controles apilados en el cuerpo. -->
+<div class="riego-controls" id="ctrlRiego">
+    <div class="riego-controls-header">
+        <div class="riego-controls-title"><span class="rc-dot"></span><span data-i18n="Temporalidad de riego">Temporalidad de riego</span></div>
+        <div class="riego-controls-subtitle" id="riegoSubtitulo" data-i18n="Datos en vivo desde DropControl">Datos en vivo desde DropControl</div>
     </div>
-    <div class="fc-group">
-        <label class="fc-label" data-i18n="Nivel">Nivel</label>
-        <div class="ket-seg" id="segNivelRiego" role="group" aria-label="Nivel del mapa" data-i18n-aria="Nivel del mapa">
-            <button type="button" data-v="sectores" class="active" onclick="setNivelRiego('sectores')" data-i18n="Sector">Sector</button>
-            <button type="button" data-v="equipos"  onclick="setNivelRiego('equipos')"  data-i18n="Equipo">Equipo</button>
+    <div class="riego-controls-body">
+        <div class="dz-controls">
+            <div class="fc-group">
+                <label class="fc-label" for="selMetricaRiego" data-i18n="Métrica">Métrica</label>
+                <select class="fc-select" id="selMetricaRiego" onchange="setMetricaRiego(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Nivel">Nivel</label>
+                <div class="ceres-level-tabs" id="segNivelRiego" role="group" aria-label="Nivel del mapa" data-i18n-aria="Nivel del mapa">
+                    <button type="button" class="ceres-level-tab active" data-v="sectores" onclick="setNivelRiego('sectores')" data-i18n="Sector">Sector</button>
+                    <button type="button" class="ceres-level-tab" data-v="equipos" onclick="setNivelRiego('equipos')" data-i18n="Equipo">Equipo</button>
+                </div>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Capas">Capas</label>
+                <div class="ket-toggles">
+                    <label class="ket-toggle"><input type="checkbox" id="chkValvulasRiego" onchange="setCapa('valvulas',this.checked)"><span data-i18n="Válvulas">Válvulas</span></label>
+                    <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasRiego" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+                </div>
+            </div>
+            <button class="ceres-tree-btn" id="btnRecargarRiego" onclick="cargarRiego(true)"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-recargar"/></svg></span><span data-i18n="Actualizar">Actualizar</span></button>
+            <button class="ceres-tree-btn" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
+        </div>
+        <div class="ceres-chart-block" id="riegoRankBlock">
+            <button type="button" class="ceres-chart-title" onclick="toggleBloque('riegoRankBlock')">
+                <span data-i18n="Ranking del periodo">Ranking del periodo</span>
+                <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
+            </button>
+            <div class="ceres-section-body" id="riegoRank"></div>
         </div>
     </div>
-    <div class="fc-divider" aria-hidden="true"></div>
-    <button class="fc-compare-btn" id="btnRecargarRiego" onclick="cargarRiego(true)" title="Volver a consultar DropControl" data-i18n-title="Volver a consultar DropControl"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-recargar"/></svg></span><span data-i18n="Actualizar">Actualizar</span></button>
-    <div class="fc-group">
-        <label class="fc-label" data-i18n="Capas">Capas</label>
-        <div class="ket-toggles">
-            <label class="ket-toggle"><input type="checkbox" id="chkValvulasRiego" onchange="setCapa('valvulas',this.checked)"><span data-i18n="Válvulas">Válvulas</span></label>
-            <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasRiego" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
-        </div>
-    </div>
-    <button class="fc-compare-btn" onclick="encuadrarPredio()" title="Encuadrar el predio" data-i18n-title="Encuadrar el predio"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
 </div>
 
-<!-- ── Controles · Ceres ──────────────────────────────────────────────── -->
-<div class="foliar-controls glass" id="ctrlCeres">
-    <div class="fc-group">
-        <label class="fc-label" for="selCeresParam" data-i18n="Indicador">Indicador</label>
-        <select class="fc-select" id="selCeresParam" onchange="setCeresParam(this.value)"></select>
+<!-- ── Panel · Ceres ─────────────────────────────────────────────────────
+     Panel derecho, como en San Gerardo. El vuelo se elige con un stepper y no
+     con un desplegable: con 28 vuelos, avanzar de una fecha a la siguiente es
+     el gesto frecuente y con un <select> cuesta tres acciones. -->
+<div class="ceres-controls" id="ctrlCeres">
+    <div class="ceres-controls-header">
+        <div class="ceres-controls-title"><span class="cs-dot"></span><span data-i18n="Imágenes aéreas">Imágenes aéreas</span></div>
+        <div class="ceres-controls-subtitle" id="ceresSubtitulo" data-i18n="Vuelos de Ceres Imaging sobre el predio">Vuelos de Ceres Imaging sobre el predio</div>
     </div>
-    <div class="fc-group">
-        <label class="fc-label" for="selCeresVuelo" data-i18n="Vuelo">Vuelo</label>
-        <select class="fc-select" id="selCeresVuelo" onchange="setCeresVuelo(+this.value)"></select>
-    </div>
-    <div class="fc-group">
-        <label class="fc-label" data-i18n="Nivel">Nivel</label>
-        <div class="ket-seg" id="segNivelCeres" role="group" aria-label="Nivel del mapa" data-i18n-aria="Nivel del mapa">
-            <button type="button" data-v="equipos"   onclick="setNivelCeres('equipos')"   data-i18n="Equipo">Equipo</button>
-            <button type="button" data-v="sectores"  class="active" onclick="setNivelCeres('sectores')"  data-i18n="Sector">Sector</button>
-            <button type="button" data-v="cuarteles" onclick="setNivelCeres('cuarteles')" data-i18n="Cuartel">Cuartel</button>
+    <div class="ceres-controls-body">
+        <div class="dz-controls">
+            <div class="fc-group">
+                <label class="fc-label" for="selCeresParam" data-i18n="Indicador">Indicador</label>
+                <select class="fc-select" id="selCeresParam" onchange="setCeresParam(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Nivel">Nivel</label>
+                <div class="ceres-level-tabs" id="segNivelCeres" role="group" aria-label="Nivel del mapa" data-i18n-aria="Nivel del mapa">
+                    <button type="button" class="ceres-level-tab" data-v="equipos" onclick="setNivelCeres('equipos')" data-i18n="Equipo">Equipo</button>
+                    <button type="button" class="ceres-level-tab active" data-v="sectores" onclick="setNivelCeres('sectores')" data-i18n="Sector">Sector</button>
+                    <button type="button" class="ceres-level-tab" data-v="cuarteles" onclick="setNivelCeres('cuarteles')" data-i18n="Cuartel">Cuartel</button>
+                </div>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Vuelo">Vuelo</label>
+                <div class="ceres-step">
+                    <button type="button" id="ceresPrev" onclick="pasoCeresVuelo(-1)" aria-label="Vuelo anterior" data-i18n-aria="Vuelo anterior">‹</button>
+                    <button type="button" class="ceres-step-label" id="ceresVueloLabel" onclick="openVuelos()"></button>
+                    <button type="button" id="ceresNext" onclick="pasoCeresVuelo(1)" aria-label="Vuelo siguiente" data-i18n-aria="Vuelo siguiente">›</button>
+                </div>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Capas">Capas</label>
+                <div class="ket-toggles">
+                    <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasCeres" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+                </div>
+            </div>
+            <button class="ceres-tree-btn" id="btnArboles" onclick="toggleArboles()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-satelite"/></svg></span><span id="btnArbolesLabel" data-i18n="Ver por árbol">Ver por árbol</span></button>
+            <button class="ceres-tree-btn" onclick="openEvoCeres()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
+            <button class="ceres-tree-btn" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
+        </div>
+        <div class="ceres-chart-block" id="ceresCambiosBlock">
+            <button type="button" class="ceres-chart-title" onclick="toggleBloque('ceresCambiosBlock')">
+                <span id="ceresCambiosTitulo" data-i18n="Cambios de clase">Cambios de clase</span>
+                <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
+            </button>
+            <div class="ceres-section-body" id="ceresCambios"></div>
+        </div>
+        <div class="ceres-chart-block collapsed" id="ceresRankBlock">
+            <button type="button" class="ceres-chart-title" onclick="toggleBloque('ceresRankBlock')">
+                <span data-i18n="Ranking del vuelo">Ranking del vuelo</span>
+                <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
+            </button>
+            <div class="ceres-section-body" id="ceresRank"></div>
         </div>
     </div>
-    <div class="fc-divider" aria-hidden="true"></div>
-    <button class="fc-compare-btn nut-evo-btn" onclick="openEvoCeres()" title="Series de tiempo por indicador con sus bandas" data-i18n-title="Series de tiempo por indicador con sus bandas"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
-    <div class="fc-group">
-        <label class="fc-label" data-i18n="Capas">Capas</label>
-        <div class="ket-toggles">
-            <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasCeres" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+</div>
+
+<!-- Lista completa de vuelos, para saltar a uno lejano sin 20 clics del stepper -->
+<div class="nut-evo-over" id="vuelosOver" onclick="if(event.target===this)closeVuelos()">
+    <div class="nut-evo-card" style="width:min(560px, calc(100% - 40px))">
+        <div class="nut-evo-head">
+            <div class="nut-evo-head-main">
+                <div>
+                    <div class="nut-evo-title" data-i18n="Vuelos">Vuelos</div>
+                    <div class="nut-evo-sub" id="vuelosSub"></div>
+                </div>
+            </div>
+            <button type="button" class="pv-close" onclick="closeVuelos()" aria-label="Cerrar" data-i18n-aria="Cerrar">
+                <svg viewBox="0 0 18 18"><use href="#ic-cerrar"/></svg>
+            </button>
         </div>
+        <div class="nut-evo-body" id="vuelosBody"></div>
     </div>
-    <button class="fc-compare-btn" onclick="encuadrarPredio()" title="Encuadrar el predio" data-i18n-title="Encuadrar el predio"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
 </div>
 
 <div class="legend-panel" id="legend"></div>
@@ -2699,6 +2796,21 @@ const I18N = {
 'Ceres agrega sobre los píxeles en los tres niveles: el cuartel es dato medido, no un promedio de sectores.':'Ceres aggregates over pixels at all three levels: the block is measured data, not an average of sectors.',
 'Sin dato en este vuelo':'No data in this flight',
 'Peor clase':'Worst class', 'unidades':'units',
+'Imágenes aéreas':'Aerial imagery',
+'Vuelos de Ceres Imaging sobre el predio':'Ceres Imaging flights over the farm',
+'Temporalidad de riego':'Irrigation timing',
+'Ranking del periodo':'Period ranking', 'Cambios de clase':'Class changes',
+'Vuelo anterior':'Previous flight', 'Vuelo siguiente':'Next flight',
+'Ver por árbol':'View by tree', 'Ocultar árboles':'Hide trees',
+'árboles':'trees', 'Árbol':'Tree',
+'Este vuelo no tiene imagen por árbol para el indicador elegido.':'This flight has no per-tree imagery for the selected indicator.',
+'visible desde zoom':'visible from zoom',
+'Sus clases se calculan sobre las unidades del nivel, que son promedios de píxeles, y no se trasladan al árbol individual.':'Its classes are computed over the level’s units, which are pixel averages, and do not carry over to the individual tree.',
+'unidades se deterioraron':'units worsened', 'unidades mejoraron':'units improved',
+'Sin cambios de clase respecto del vuelo anterior.':'No class changes since the previous flight.',
+'Primer vuelo del histórico: no hay con qué comparar.':'First flight on record: nothing to compare against.',
+'Clic para ver el detalle':'Click for detail',
+'Elegir un vuelo':'Pick a flight', 'parcial':'partial',
 'Series de tiempo por parámetro con sus umbrales':'Time series per parameter with their thresholds',
 // ── Criterios de color ──
 'Equipo de riego':'Irrigation unit', 'Especie':'Species', 'Variedad':'Variety',
@@ -3790,6 +3902,122 @@ async function cargarCeres(){
     renderNotice();
 }
 
+/* ── Capa por árbol ──────────────────────────────────────────────────────
+   Ketcal tiene 460 overlays `tree_data`. El tiler de Ceres es público y manda
+   CORS abierto (verificado), así que el mapa consume los MVT directo y NO hace
+   falta pre-extraer nada ni inyectar el token: este sitio es público y
+   `transformRequest` con la credencial se la entregaría a cualquier visitante.
+
+   Son ~230.000 árboles, así que la capa se agrega BAJO DEMANDA al activar el
+   botón, nunca en el load inicial, y sólo se ve desde z≥15: más abajo es un
+   manchón ilegible. */
+let arbolesOn = false;
+const ARBOLES_SRC = 'ceres-arboles';
+
+function capasArboles(){
+    return map.getStyle().layers.map(l => l.id).filter(i => i.startsWith(ARBOLES_SRC));
+}
+function ceresArbolesDelVuelo(){
+    const tr = CERES && CERES.trees;
+    const v = ceresVuelo(), par = ceresParam();
+    if(!tr || !v || !par) return null;
+    const porParam = (tr.by_flight || {})[v.week_key];
+    const eqs = porParam && porParam[par.id];
+    if(!eqs || !Object.keys(eqs).length) return null;
+    return {tr, ids: Object.values(eqs)};
+}
+
+function quitarArboles(){
+    // Hay un source y una capa POR EQUIPO (cinco). Antes se removia solo la
+    // primera capa, asi que las otras seguian usando su source, removeSource
+    // fallaba y la siguiente activacion choca con "source ya existe".
+    // Las capas van todas primero, y despues los sources.
+    map.getStyle().layers.forEach(l => {
+        if(l.id.startsWith(ARBOLES_SRC) && map.getLayer(l.id)) map.removeLayer(l.id);
+    });
+    Object.keys(map.getStyle().sources || {}).forEach(k => {
+        if(k.startsWith(ARBOLES_SRC) && map.getSource(k)) map.removeSource(k);
+    });
+}
+
+function pintarArboles(){
+    quitarArboles();
+    const d = ceresArbolesDelVuelo();
+    if(!d) return false;
+    const par = ceresParam();
+    const bandas = window._bandasCeres || ceresBandas(par, ceresVuelo());
+
+    // Un source por overlay (uno por equipo) con la plantilla del tiler.
+    d.ids.forEach((oid, i) => {
+        map.addSource(ARBOLES_SRC + '-' + i, {
+            type: 'vector',
+            tiles: [d.tr.tile_template.replace('{id}', oid)],
+            minzoom: d.tr.min_zoom || 15, maxzoom: 22
+        });
+    });
+    // Expresión de color por banda sobre el valor del árbol. Los cortes son los
+    // del nivel: el árbol individual no tiene clases propias sin la estadística
+    // que --extras calcula, y la leyenda lo dice.
+    const prop = d.tr.value_property || 'value';
+    const expr = ['case'];
+    bandas.forEach(b => {
+        const lo = b.min == null ? -Infinity : b.min;
+        const hi = b.max == null ? Infinity : b.max;
+        expr.push(['all', ['>=', ['get', prop], lo], ['<', ['get', prop], hi]],
+                  ceresColor(b.severity, bandas.length));
+    });
+    expr.push(SEM('--sem-grey'));
+
+    d.ids.forEach((oid, i) => {
+        map.addLayer({
+            id: ARBOLES_SRC + '-pt-' + i,
+            type: 'circle',
+            source: ARBOLES_SRC + '-' + i,
+            'source-layer': d.tr.source_layer || 'trees',
+            minzoom: d.tr.min_zoom || 15,
+            paint: {
+                'circle-radius': ['interpolate', ['linear'], ['zoom'], 15, 1.6, 17, 3.2, 19, 6],
+                'circle-color': expr,
+                'circle-opacity': 0.95
+            }
+        });
+    });
+    return true;
+}
+
+/* Estado del botón por vuelo e indicador. Estrés acumulado y NDVI promedio de
+   temporada son derivados y NO tienen raster por árbol, así que el botón se
+   reevalúa en cada pintado en vez de quedar deshabilitado para siempre. */
+function renderBotonArboles(){
+    const btn = document.getElementById('btnArboles');
+    const lbl = document.getElementById('btnArbolesLabel');
+    if(!btn) return;
+    const hay = !!ceresArbolesDelVuelo();
+    btn.disabled = !hay;
+    btn.title = hay ? '' : t('Este vuelo no tiene imagen por árbol para el indicador elegido.');
+    btn.classList.toggle('active', arbolesOn && hay);
+    lbl.textContent = t(arbolesOn && hay ? 'Ocultar árboles' : 'Ver por árbol');
+}
+
+function toggleArboles(){
+    const btn = document.getElementById('btnArboles');
+    const lbl = document.getElementById('btnArbolesLabel');
+    if(arbolesOn){
+        arbolesOn = false; quitarArboles();
+        btn.classList.remove('active');
+        lbl.textContent = t('Ver por árbol');
+        renderLegend();
+        return;
+    }
+    if(!pintarArboles()) return;   // el estado del botón lo fija renderBotonArboles()
+    arbolesOn = true;
+    btn.classList.add('active');
+    lbl.textContent = t('Ocultar árboles');
+    if(map.getZoom() < (CERES.trees.min_zoom || 15))
+        map.easeTo({zoom: (CERES.trees.min_zoom || 15) + 0.3, duration: 600});
+    renderLegend();
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    PINTADO
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -3889,6 +4117,21 @@ function repintar(){
     renderLegend();
     renderStats();
     renderStamp();
+
+    // Contenido del panel derecho, que ahora es parte de la vista y no un
+    // extra que aparece al hacer clic.
+    if(currentMode === 'ceres'){
+        renderCeresStepper(); renderCeresCambios(); renderCeresRank();
+        // Los arboles siguen al vuelo y al indicador activos. Si el indicador
+        // nuevo no tiene raster por arbol, se apaga la capa en vez de dejarla
+        // pintada con los valores del anterior.
+        if(arbolesOn){
+            if(!ceresArbolesDelVuelo()){ arbolesOn = false; quitarArboles(); }
+            else pintarArboles();
+        }
+        renderBotonArboles();
+    }
+    if(currentMode === 'riego') renderRiegoRank();
 }
 
 function nombreCorto(p){
@@ -4058,7 +4301,9 @@ function legendCeres(activo){
         + (cob ? `<br>${t('Este vuelo cubre')} ${cob.n} ${t('de las')} ${cob.de} ${t('unidades del nivel')}` : '')
         + (noExistia ? `<br>${esc(t('El predio se plantó por etapas: los cuarteles que no existían en esta fecha se muestran en beige, no en gris.'))}` : '')
         + `<br>${esc(t('Ceres agrega sobre los píxeles en los tres niveles: el cuartel es dato medido, no un promedio de sectores.'))}`
-        + `</div>`;
+        + `</div>`
+        + (arbolesOn ? `<div class="ket-note">${esc(t('Sus clases se calculan sobre las unidades del nivel, que son promedios de píxeles, y no se trasladan al árbol individual.'))}`
+            + ` ${t('visible desde zoom')} ${(CERES.trees && CERES.trees.min_zoom) || 15}.</div>` : '');
 }
 
 function statsCeres(activo){
@@ -4141,21 +4386,8 @@ function fichaCeres(p){
 
     html += sect(t('Evolución temporal'), sparkCeres(p.id, par));
 
-    const arr = [...vals.entries()].sort((a,b2) => {
-        const ba = ceresBandaDe(a[1].v, bandas), bb = ceresBandaDe(b2[1].v, bandas);
-        return (bb ? bb.severity : -1) - (ba ? ba.severity : -1)
-            || (par.higher_is_better ? a[1].v - b2[1].v : b2[1].v - a[1].v);
-    });
-    if(arr.length > 1){
-        html += sect(`${t('Ranking del vuelo')} · ${t(NIVELES[S.ceres.nivel].titulo)}`,
-            `<div class="ket-rank">` + arr.map(([id,x]) => {
-                const bb = ceresBandaDe(x.v, bandas);
-                return `<div class="ket-row${id===p.id?' active':''}" onclick="seleccionar('${S.ceres.nivel}','${esc(id)}',true)">`
-                    + `<span class="sw" style="background:${bb ? ceresColor(bb.severity, bandas.length) : SEM('--sem-grey')}"></span>`
-                    + `<span class="nm">${esc(id)}</span>`
-                    + `<span class="vl">${fmtCeres(x.v)}</span></div>`;
-            }).join('') + `</div>`);
-    }
+    // El ranking ya no va aca: vive en el panel derecho, donde esta disponible
+    // sin tener que elegir una unidad primero.
     return html;
 }
 
@@ -4237,8 +4469,160 @@ function renderEvoCeres(){
         : `<div class="nut-evo-empty">${t('Sin serie temporal para esta unidad.')}</div>`;
 }
 
+/* Secciones colapsables del panel. El estado vive en la clase, como en San
+   Gerardo, para que no haya que sincronizar un objeto aparte con el DOM. */
+function toggleBloque(id){
+    const el = document.getElementById(id);
+    if(el) el.classList.toggle('collapsed');
+}
+
 function setCeresParam(v){ S.ceres.param = v; repintar(); renderPanel(); }
-function setCeresVuelo(i){ S.ceres.vuelo = i; repintar(); renderPanel(); }
+function setCeresVuelo(i){
+    const n = ceresVuelos().length;
+    S.ceres.vuelo = Math.max(0, Math.min(n - 1, i));
+    repintar(); renderPanel();
+}
+/* Avanzar o retroceder un vuelo. Es el gesto frecuente —comparar fechas
+   consecutivas— y con un desplegable de 28 opciones costaba tres acciones. */
+function pasoCeresVuelo(d){ setCeresVuelo((S.ceres.vuelo == null ? 0 : S.ceres.vuelo) + d); }
+
+function openVuelos(){
+    const vs = ceresVuelos();
+    document.getElementById('vuelosSub').textContent =
+        `${vs.length} ${t('Vuelos').toLowerCase()} · ${fmtFecha(vs[0].date)} – ${fmtFecha(vs[vs.length-1].date)}`;
+    const porTemp = [];
+    vs.forEach((f, i) => {
+        let b = porTemp.find(x => x[0] === f.season);
+        if(!b){ b = [f.season, []]; porTemp.push(b); }
+        b[1].push([i, f]);
+    });
+    porTemp.reverse();
+    document.getElementById('vuelosBody').innerHTML = porTemp.map(([temp, filas]) =>
+        `<div class="ceres-season-group"><div class="ceres-season-label">${esc(temp)}</div>`
+        + `<div class="ceres-flights">` + filas.slice().reverse().map(([i, f]) => {
+            const cob = (f.coverage || {})[ceresNivelJSON(S.ceres.nivel)] || {};
+            const parcial = cob.n != null && cob.de != null && cob.n < cob.de;
+            return `<button type="button" class="ceres-flight${i === S.ceres.vuelo ? ' active' : ''}" `
+                + `onclick="setCeresVuelo(${i}); closeVuelos();">`
+                + `<div>${esc(fmtFecha(f.date))}</div>`
+                + `<div class="sem-muted-xs">${parcial ? `${cob.n}/${cob.de} · ${t('parcial')}` : `${cob.n || ''}`}</div>`
+                + `</button>`;
+        }).join('') + `</div></div>`).join('');
+    document.getElementById('vuelosOver').classList.add('visible');
+}
+function closeVuelos(){ document.getElementById('vuelosOver').classList.remove('visible'); }
+
+/* Rotulo del stepper: fecha, temporada y posicion en el historico. */
+function renderCeresStepper(){
+    const vs = ceresVuelos(), v = ceresVuelo();
+    const lbl = document.getElementById('ceresVueloLabel');
+    if(!lbl) return;
+    if(!v){ lbl.innerHTML = `<div>—</div>`; return; }
+    const i = S.ceres.vuelo == null ? vs.length - 1 : S.ceres.vuelo;
+    lbl.innerHTML = `<div style="font-size:11.5px;font-weight:500">${esc(fmtFecha(v.date))}</div>`
+        + `<div class="sem-muted-xs">${esc(v.season)} · ${i+1}/${vs.length}</div>`;
+    lbl.title = t('Elegir un vuelo');
+    const prev = document.getElementById('ceresPrev'), next = document.getElementById('ceresNext');
+    if(prev) prev.disabled = i <= 0;
+    if(next) next.disabled = i >= vs.length - 1;
+}
+
+/* Cambios de clase respecto del vuelo anterior: es lo mas accionable que hay
+   —no "esta en 0,52" sino "paso de Adecuado a Alerta"— y por eso encabeza el
+   panel en vez de esconderse en un popup. */
+function renderCeresCambios(){
+    const cont = document.getElementById('ceresCambios');
+    const tit = document.getElementById('ceresCambiosTitulo');
+    if(!cont) return;
+    const par = ceresParam(), vuelo = ceresVuelo();
+    const bandas = window._bandasCeres || ceresBandas(par, vuelo);
+    const i = S.ceres.vuelo == null ? ceresVuelos().length - 1 : S.ceres.vuelo;
+    if(i <= 0 || !par || !vuelo || !bandas.length){
+        tit.textContent = t('Cambios de clase');
+        cont.innerHTML = `<div class="ceres-chart-empty">${t(i <= 0
+            ? 'Primer vuelo del histórico: no hay con qué comparar.'
+            : 'Sin cambios de clase respecto del vuelo anterior.')}</div>`;
+        return;
+    }
+    const prev = ceresVuelos()[i-1];
+    const lvl = ceresNivelJSON(S.ceres.nivel);
+    const bandasPrev = ceresBandas(par, prev);
+    const filas = [];
+    Object.entries(vuelo[lvl] || {}).forEach(([id, vals]) => {
+        const ahora = vals[par.id], antes = ((prev[lvl] || {})[id] || {})[par.id];
+        if(ahora == null || antes == null) return;
+        const bA = ceresBandaDe(antes, bandasPrev), bN = ceresBandaDe(ahora, bandas);
+        if(!bA || !bN || bA.status === bN.status) return;
+        filas.push({id, bA, bN, peor: bN.severity > bA.severity});
+    });
+    // Primero los deterioros, y dentro de ellos los que caen mas abajo.
+    filas.sort((a,b) => (b.peor - a.peor) || (b.bN.severity - a.bN.severity));
+    tit.textContent = `${t('Cambios de clase')}${filas.length ? ' · ' + filas.length : ''}`;
+    if(!filas.length){
+        cont.innerHTML = `<div class="ceres-chart-empty">${t('Sin cambios de clase respecto del vuelo anterior.')}</div>`;
+        return;
+    }
+    const peores = filas.filter(f => f.peor).length;
+    const mejores = filas.length - peores;
+    const resumen = [
+        peores ? `${peores} ${t('unidades se deterioraron')}` : '',
+        mejores ? `${mejores} ${t('unidades mejoraron')}` : ''
+    ].filter(Boolean).join(' · ');
+    cont.innerHTML = `<div class="cc-summary">${esc(resumen)}</div>`
+        + filas.map(f =>
+            `<div class="cc-row ${f.peor ? 'peor' : 'mejor'}" title="${t('Clic para ver el detalle')}" `
+            + `onclick="seleccionar('${S.ceres.nivel}','${esc(f.id)}',true)">`
+            + `<span class="cc-key">${esc(f.id)}</span>`
+            + `<span class="cc-arrow">${f.peor ? '▲' : '▼'}</span>`
+            + `<span class="cc-from">${esc(ceresEtiquetaBanda(f.bA))}</span>`
+            + `<span class="cc-to">→ ${esc(ceresEtiquetaBanda(f.bN))}</span>`
+            + `</div>`).join('');
+}
+
+/* Ranking del vuelo, de peor a mejor. Vive en el panel y no en la ficha de la
+   unidad: es lo que se mira ANTES de elegir una unidad. */
+function renderCeresRank(){
+    const cont = document.getElementById('ceresRank');
+    if(!cont) return;
+    const par = ceresParam();
+    const bandas = window._bandasCeres || ceresBandas(par, ceresVuelo());
+    const vals = window._valsCeres || ceresValores();
+    const arr = [...vals.entries()].sort((a,b) => {
+        const ba = ceresBandaDe(a[1].v, bandas), bb = ceresBandaDe(b[1].v, bandas);
+        return (bb ? bb.severity : -1) - (ba ? ba.severity : -1)
+            || (par && par.higher_is_better ? a[1].v - b[1].v : b[1].v - a[1].v);
+    });
+    cont.innerHTML = arr.length
+        ? `<div class="ket-rank">` + arr.map(([id,x]) => {
+            const b = ceresBandaDe(x.v, bandas);
+            return `<div class="ket-row${id===S.sel?' active':''}" onclick="seleccionar('${S.ceres.nivel}','${esc(id)}',true)">`
+                + `<span class="sw" style="background:${b ? ceresColor(b.severity, bandas.length) : SEM('--sem-grey')}"></span>`
+                + `<span class="nm">${esc(id)}</span>`
+                + `<span class="vl">${fmtCeres(x.v)}</span></div>`;
+        }).join('') + `</div>`
+        : `<div class="ceres-chart-empty">${t('Sin dato en este vuelo')}</div>`;
+}
+
+function renderRiegoRank(){
+    const cont = document.getElementById('riegoRank');
+    if(!cont) return;
+    if(riegoEstado !== 'listo'){
+        cont.innerHTML = `<div class="ceres-chart-empty">${t(riegoEstado === 'error'
+            ? 'No se pudo consultar DropControl.' : 'Consultando DropControl…')}</div>`;
+        return;
+    }
+    const m = metricaRiego();
+    const vals = window._valsRiego || valoresRiego(S.riego.nivel);
+    const escala = window._escalaRiego || escalaRiego(vals);
+    const arr = [...vals.entries()].sort((a,b) => (b[1].v || 0) - (a[1].v || 0));
+    cont.innerHTML = arr.length
+        ? `<div class="ket-rank">` + arr.map(([id,x]) =>
+            `<div class="ket-row${id===S.sel?' active':''}" onclick="seleccionar('${S.riego.nivel}','${esc(id)}',true)">`
+            + `<span class="sw" style="background:${colorRiego(x.v, escala)}"></span>`
+            + `<span class="nm">${esc(id)}</span>`
+            + `<span class="vl">${fmtRiego(x.v)}</span></div>`).join('') + `</div>`
+        : `<div class="ceres-chart-empty">${t('Sin riego en la ventana')}</div>`;
+}
 function setNivelCeres(v, silencioso){
     S.ceres.nivel = v;
     document.querySelectorAll('#segNivelCeres button').forEach(b =>
@@ -4999,28 +5383,9 @@ function poblarSelectores(soloDependientes){
             return g ? `<optgroup label="${esc(g)}">${ops}</optgroup>` : ops;
         }).join('');
 
-        // Los vuelos van agrupados por temporada y del mas reciente al mas
-        // antiguo: con 28 vuelos una lista plana es inmanejable. Los parciales
-        // se marcan, porque el predio se planto por etapas.
-        const selV = document.getElementById('selCeresVuelo');
-        const vs = ceresVuelos();
-        const porTemp = [];
-        vs.forEach((f, i) => {
-            let b = porTemp.find(x => x[0] === f.season);
-            if(!b){ b = [f.season, []]; porTemp.push(b); }
-            b[1].push([i, f]);
-        });
-        porTemp.reverse();
-        selV.innerHTML = porTemp.map(([temp, filas]) => {
-            const ops = filas.slice().reverse().map(([i, f]) => {
-                const cob = (f.coverage || {})[ceresNivelJSON(S.ceres.nivel)] || {};
-                const parcial = cob.n != null && cob.de != null && cob.n < cob.de;
-                return `<option value="${i}"${i === S.ceres.vuelo ? ' selected' : ''}>`
-                    + `${esc(fmtFecha(f.date))}${parcial ? ` · ${cob.n}/${cob.de}` : ''}</option>`;
-            }).join('');
-            return `<optgroup label="${esc(temp)}">${ops}</optgroup>`;
-        }).join('');
-
+        // El vuelo se elige con el stepper (renderCeresStepper) y, para saltar
+        // a uno lejano, con el modal openVuelos(). Un <select> de 28 opciones
+        // costaba tres acciones para avanzar una fecha.
         document.querySelectorAll('#segNivelCeres button').forEach(b =>
             b.classList.toggle('active', b.dataset.v === S.ceres.nivel));
     }
@@ -5122,7 +5487,8 @@ function inicializarMapa(){
 
 document.addEventListener('keydown', e => {
     if(e.key !== 'Escape') return;
-    if(document.getElementById('evoOver').classList.contains('visible')) closeEvo();
+    if(document.getElementById('vuelosOver').classList.contains('visible')) closeVuelos();
+    else if(document.getElementById('evoOver').classList.contains('visible')) closeEvo();
     else if(S.sel) cerrarPanel();
 });
 

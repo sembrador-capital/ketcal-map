@@ -2860,15 +2860,20 @@ def main():
     # Detras de --extras: decodificar los tiles de los 32 vuelos es lo que hacia
     # que la corrida no terminara nunca. Sin el flag se conserva lo que ya
     # hubiera en el archivo previo, que es mejor que borrarlo.
-    if not args.extras:
-        trees = conservar_trees
-        if trees:
-            payload["trees"] = trees
-            print("Capa por arbol: reusada del archivo previo (sin --extras).")
-        else:
-            print("Capa por arbol: omitida (pasa --extras para incluirla).")
-    else:
-        trees = build_trees(trees_raw, flights, warn) or conservar_trees
+    # El gate anterior era demasiado grueso y dejaba el mapa sin la capa por
+    # arbol: build_trees() solo CATALOGA ids de overlay (barato, y es lo que el
+    # mapa necesita para pedir los MVT directo al tiler, que es publico). Lo
+    # caro es compute_tree_stats(), que decodifica miles de tiles para las
+    # clases relativas y el conteo de variedades. Solo eso va detras de --extras.
+    trees = build_trees(trees_raw, flights, warn) or conservar_trees
+    if trees:
+        payload["trees"] = trees
+        print("Capa por arbol: %d vuelo(s) con overlays por arbol."
+              % len(trees.get("by_flight") or {}))
+    if not args.extras and trees:
+        print("Estadistica por arbol: omitida (pasa --extras). El mapa igual "
+              "puede pintar los arboles: los cortes salen de las bandas del "
+              "nivel, no de la distribucion por arbol.")
     if args.extras and trees:
         # Reusar lo ya calculado: decodificar tiles es lo mas caro de la corrida
         # (27 tiles por vuelo e indicador), y ni las variedades ni las clases de

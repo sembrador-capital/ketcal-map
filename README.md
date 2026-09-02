@@ -123,6 +123,35 @@ se lee igual que uno validado y hace tomar decisiones equivocadas.
 
 ---
 
+## El layout, igual que San Gerardo
+
+El reparto de controles se copia del mapa de San Gerardo, verificado contra el
+sitio publicado:
+
+| Pestañas | Controles |
+|---|---|
+| Vista general, Nutrición | barra superior centrada (`.foliar-controls`) |
+| Riego, Ceres | **panel lateral derecho** (`.riego-controls`, `.ceres-controls`) |
+
+El panel derecho tiene header con título en mayúsculas y un subtítulo que dice
+de dónde sale el dato ("Datos en vivo desde DropControl", "Vuelos de Ceres
+Imaging sobre el predio"), y un cuerpo con los controles apilados más
+**secciones colapsables** debajo: en Ceres, *Cambios de clase* y *Ranking del
+vuelo*; en Riego, *Ranking del periodo*.
+
+Que el ranking viva en el panel y no en la ficha de una unidad es deliberado: es
+lo que se mira **antes** de elegir una unidad, no después.
+
+Al hacer clic en una unidad se abre además `#pvSide`, la columna de detalle a
+todo el alto, y el panel de pestaña se corre a su izquierda.
+
+El selector de vuelo de Ceres es un **stepper** (`‹ fecha ›`) y no un
+desplegable: con 28 vuelos, avanzar a la fecha siguiente —el gesto frecuente al
+comparar— costaba tres acciones con un `<select>`. Para saltar a un vuelo lejano
+hay un modal con los 28 agrupados por temporada.
+
+---
+
 ## Convenciones (heredadas de San Gerardo, no negociables)
 
 1. **Ningún literal de color fuera de `:root`.** En CSS `var(--token)`, en JS
@@ -164,16 +193,20 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
 - **Riego** — consumo por sector de la última semana, en vivo desde DropControl.
   Ver la sección de abajo.
 - **Ceres Imaging** — 28 vuelos aéreos entre dic-2022 y abr-2026, 5 indicadores,
-  en los tres niveles nativos. Ver la sección de abajo.
+  en los tres niveles nativos, más la capa por árbol. Ver la sección de abajo.
 
 **Pendiente**
 
 - **Comparador A/B** de dos vuelos lado a lado, que en San Gerardo existe
   (`mapbox-gl-compare`) y acá todavía no. Con 28 vuelos es donde más se
   aprovecharía.
+- **Vista de variedades por árbol.** Los MVT ya traen `varietal` en cada árbol
+  (p. ej. `Messina-Fino`), que es lo que alimenta esa vista en San Gerardo.
 - **Capa de celdas** de Ceres (`grid_type_id` 26, 1.766 celdas) para mapas de
   calor dentro del cuartel. El script ya la sabe bajar con `--extras`; el mapa
   no la consume.
+- **Comparación entre temporadas** en el panel de Ceres, que San Gerardo tiene
+  como tercera sección colapsable.
 
 ---
 
@@ -365,15 +398,40 @@ El color no declara tokens nuevos: los indicadores tienen entre 4 y 9 clases, as
 que se interpola sobre las anclas `--dat-st-*` por **severidad** de la banda
 (0 = mejor). Con 4 clases cae exacto sobre las anclas.
 
+### La capa por árbol
+
+Ketcal tiene **460 overlays `tree_data`** y 22 de `tree_count` — más que San
+Gerardo. El JSON trae el catálogo de los 334 que calzan con un vuelo, indexados
+por vuelo e indicador.
+
+El tiler de Ceres (`tiler.ceresimaging.net`) es **público y manda CORS abierto**,
+así que el mapa consume los MVT directo y no hace falta pre-extraer nada. Eso
+importa por seguridad: inyectar el token con `transformRequest` se lo entregaría
+a cualquier visitante de un sitio público.
+
+Son ~230.000 árboles, así que la capa se agrega **bajo demanda** al pulsar *Ver
+por árbol*, nunca en el load inicial, y sólo se ve desde **z≥15**: más abajo es
+un manchón ilegible. Cada árbol trae `tree_id`, `value` y `varietal`.
+
+Dos indicadores —*Estrés acumulado* y *NDVI promedio temporada*— **no tienen
+raster por árbol**: son promedios de temporada derivados. El botón se deshabilita
+solo al elegirlos y explica por qué, y si la capa estaba encendida se apaga en
+vez de quedar pintada con los valores del indicador anterior.
+
+Los cortes de color del árbol son los **del nivel**, y la leyenda lo declara: las
+clases por árbol propias requieren la estadística que sólo calcula `--extras`.
+
 ### Lo que no se baja por defecto
 
-`--extras` habilita la capa por árbol y la grilla de celdas, que decodifican
-miles de tiles. Está apagado porque con 28 vuelos esa etapa pasó los 30 minutos
-sin terminar, y hasta que no termina **no escribe nada**: se perdían los vuelos
-ya descargados. El workflow tampoco lo usa, porque su timeout es de 20 min.
+`--extras` habilita dos cosas que decodifican miles de tiles: la **estadística**
+por árbol (clases relativas sobre la distribución real de árboles y conteo de
+variedades) y la **grilla de celdas**. Está apagado porque con 28 vuelos esa
+etapa pasó los 30 minutos sin terminar, y hasta que no termina **no escribe
+nada**: se perdían los vuelos ya descargados. El workflow tampoco lo usa, porque
+su timeout es de 20 min.
 
-Para Ketcal la capa por árbol además no existe: la cuenta no tiene overlays
-`tree_data`. Queda la grilla de celdas, que el mapa todavía no consume.
+Ojo con la distinción: el **catálogo** de árboles sí se genera siempre —es sólo
+indexar ids— y es lo único que el mapa necesita para pintarlos.
 
 ### Advertencias que quedan
 
