@@ -190,23 +190,25 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   ranking de peor a mejor, series de tiempo por parámetro con las bandas de
   fondo, y las 13 calicatas del estudio 2018 como capa de puntos con su perfil
   físico y químico.
-- **Riego** — consumo por sector de la última semana, en vivo desde DropControl.
-  Ver la sección de abajo.
+- **Riego** — consumo por sector con calendario de días / meses / temporadas,
+  en vivo desde DropControl. Ver la sección de abajo.
 - **Ceres Imaging** — 28 vuelos aéreos entre dic-2022 y abr-2026, 5 indicadores,
   en los tres niveles nativos, más la capa por árbol. Ver la sección de abajo.
 
+- **Comparador A/B** de dos vuelos lado a lado (`mapbox-gl-compare`). El
+  indicador y el nivel valen para los dos lados; lo que se compara es la fecha.
+- **Capa por árbol** en Ceres (por indicador) y en Vista general (por variedad).
+- **Calendario de riego** por días, meses y temporadas.
+
 **Pendiente**
 
-- **Comparador A/B** de dos vuelos lado a lado, que en San Gerardo existe
-  (`mapbox-gl-compare`) y acá todavía no. Con 28 vuelos es donde más se
-  aprovecharía.
-- **Vista de variedades por árbol.** Los MVT ya traen `varietal` en cada árbol
-  (p. ej. `Messina-Fino`), que es lo que alimenta esa vista en San Gerardo.
 - **Capa de celdas** de Ceres (`grid_type_id` 26, 1.766 celdas) para mapas de
   calor dentro del cuartel. El script ya la sabe bajar con `--extras`; el mapa
   no la consume.
 - **Comparación entre temporadas** en el panel de Ceres, que San Gerardo tiene
   como tercera sección colapsable.
+- **Datos de riego.** El calendario funciona, pero DropControl devuelve cero
+  eventos en todo periodo probado, incluidas dos temporadas completas. Ver abajo.
 
 ---
 
@@ -231,9 +233,27 @@ Lo verificado contra el endpoint real:
   avisa por consola en vez de tragársela.
 - Manda `Access-Control-Allow-Origin`, así que el `fetch` desde el navegador
   funciona. Tarda ~2–3 s.
-- La ventana es **fija: la última semana**. Probé `?dias=`, `?periodo=`,
-  `?rango=`, `?desde=/?hasta=` y `?modo=`: los ignora todos. Si más adelante hace
-  falta histórico o temporada, hay que tocar el Apps Script, no el mapa.
+- **Acepta `?desde=&hasta=`** y echoa el rango que usó en `consulta`, lo que
+  permite verificar que lo aplicó. Probado de 7 días a dos temporadas completas;
+  una temporada tarda ~4 s. Sin parámetros devuelve la última semana.
+
+  > Corrección: en una primera pasada concluí que ignoraba el rango. Era un
+  > error de método — probé con un rango de un año, el Apps Script se cayó y
+  > devolvió HTML en vez de JSON, y lo leí como "ignora el parámetro". Con
+  > rangos razonables funciona perfecto.
+
+- El mapa **sondea** una vez por sesión si el rango se respeta, con un rango del
+  mes pasado. No se puede comprobar con la consulta normal: su rango por defecto
+  son los últimos 7 días, que es justo lo que el endpoint devuelve cuando NO
+  filtra, así que coincidirían siempre. Si el Apps Script cambia, el mapa lo
+  detecta y deshabilita el calendario en vez de mostrar la semana actual bajo el
+  rótulo de otro periodo.
+
+- **Ningún periodo trae eventos.** Cero en la última semana, cero en el último
+  mes, cero en las temporadas 2024-25 y 2025-26 completas. Que dos temporadas
+  enteras vuelvan vacías apunta a la consulta del Apps Script hacia DropControl
+  —ids de equipo, permisos, nombre del campo— y no al mapa ni al rango. El panel
+  lo dice con esas palabras en vez de mostrar un mapa en beige sin explicación.
 - Por sector entrega `total_m3`, `total_mm`, `total_m3_ha`, `total_horas`,
   `n_eventos`, `frecuencia_dias`, `duracion_promedio_hrs`, `ultimo_evento`,
   `dias_sin_riego`, `data_ok` y un array `eventos[]`.
@@ -445,3 +465,80 @@ Una corrida limpia deja ~40, y todas dicen algo:
   predio.** Vale preguntárselo a Ceres.
 - **Cobertura parcial de imágenes** (~34): el mismo crecimiento por etapas, en el
   catálogo de imágenes. Son informativas.
+
+
+---
+
+## El comparador A/B
+
+Sólo en Ceres: es la única pestaña con un histórico denso donde comparar dos
+fechas lado a lado responde algo que una sola no responde.
+
+El indicador y el nivel son ajustes de **vista** y valen para los dos lados; lo
+que se compara es el **vuelo**, que es el eje con dato estacional. Cada lado
+tiene su propio stepper, y el chip de vigencia pasa a decir
+`Comparando 9 mar 2026 → 15 abr 2026`.
+
+El lado B arranca en el penúltimo vuelo, que es la comparación que se quiere el
+90 % de las veces. Salir de la pestaña apaga el comparador en vez de dejar medio
+mapa pintado con un vuelo que ya no se está mirando.
+
+Lo único que hubo que cambiar del resto del mapa fue `addLayers()`, que pasó a
+recibir la instancia: era lo único que impedía tener dos mapas.
+
+---
+
+## La capa por árbol
+
+Ketcal tiene **460 overlays `tree_data`** y 22 de `tree_count` — más que San
+Gerardo. El JSON trae el catálogo de los 334 que calzan con un vuelo, indexados
+por vuelo e indicador, y el **catálogo de variedades** con sus conteos:
+
+| Variedad | Árboles |
+|---|---|
+| Cara Cara | 153.837 |
+| Eureka | 26.713 |
+| Fino | 21.121 |
+| Tango | 18.378 |
+| Messina-Fino | 15.326 |
+| Eureka-Messina-Fino | 14.320 |
+| Fino-Eureka | 8.325 |
+
+Los compuestos (`Messina-Fino`) son cuarteles con más de una variedad donde
+Ceres no separa el árbol individual.
+
+La capa la usan **dos pestañas** y el modo se deduce de la activa, no de un
+estado global, así ninguna puede dejar a la otra pintando lo que no corresponde:
+
+- **Ceres** la pinta por indicador, con las mismas bandas del nivel. La leyenda
+  lo declara: las clases propias del árbol requieren la estadística que sólo
+  calcula `--extras`.
+- **Vista general** la pinta por variedad, con los tokens categóricos de equipo.
+  Con las variedades encendidas se ocultan los polígonos: son 230.000 círculos
+  de 2 px y cualquier capa encima compite con ellos.
+
+Parámetros calibrados, tomados de San Gerardo tal cual:
+
+```
+minzoom capa      13        más abajo son 230.000 puntos encimados
+zoom al encender  14.2
+maxzoom source    18
+radio             z13 0,5 → z18 6,5   (más gruesa con el filtro puesto)
+opacidad          0,92
+borde             0 en z16 → 0,4 en z18
+color             ['step', ['to-number', ['get','value']], …]
+```
+
+**"Sólo los que no están en la mejor clase"** es el botón que hace útil la capa:
+con estrés hídrico, 24.284 árboles pasan a 14.009 al filtrar. Con NDVI el efecto
+es mucho más marcado, porque casi todo el predio cae en la clase alta.
+
+Dos detalles que hubo que resolver y conviene no volver a romper:
+
+- Los ids de las capas vivas se guardan en una lista propia y **no** se deducen
+  de `getStyle()`: esa devuelve una serialización que no refleja los
+  `addLayer`/`removeLayer` del mismo tick, y leer el filtro justo después daba
+  `null`.
+- La capa se reconstruye sólo cuando cambia algo que la afecta (una firma de
+  pestaña + vuelo + indicador + nivel + filtro). Sin ese guardia, cada repintado
+  volvía a crear cinco sources vectoriales y a pedir todos los tiles.

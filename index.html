@@ -2381,6 +2381,8 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 
 <div id="map-wrap">
     <div id="map"></div>
+    <!-- Lado B del comparador. Oculto salvo body.compare-mode. -->
+    <div id="map2"></div>
 </div>
 
 <div class="data-stamp" id="dataStamp"></div>
@@ -2542,6 +2544,23 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
         <div class="riego-controls-subtitle" id="riegoSubtitulo" data-i18n="Datos en vivo desde DropControl">Datos en vivo desde DropControl</div>
     </div>
     <div class="riego-controls-body">
+        <!-- Calendario. Ver el aviso de #riegoAvisoRango: hoy el endpoint
+             devuelve siempre la última semana. -->
+        <div class="riego-mode-tabs" id="riegoModos" role="group" aria-label="Agrupación temporal" data-i18n-aria="Agrupación temporal">
+            <button type="button" class="riego-mode-tab" data-v="dias" onclick="setRiegoModo('dias')" data-i18n="Días">Días</button>
+            <button type="button" class="riego-mode-tab" data-v="meses" onclick="setRiegoModo('meses')" data-i18n="Meses">Meses</button>
+            <button type="button" class="riego-mode-tab" data-v="temporadas" onclick="setRiegoModo('temporadas')" data-i18n="Temporadas">Temporadas</button>
+        </div>
+        <div class="riego-nav">
+            <button type="button" onclick="pasoRiego(-1)" aria-label="Periodo anterior" data-i18n-aria="Periodo anterior">‹</button>
+            <div class="riego-period-label" id="riegoPeriodo" style="flex:1;text-align:center"></div>
+            <button type="button" onclick="pasoRiego(1)" aria-label="Periodo siguiente" data-i18n-aria="Periodo siguiente">›</button>
+        </div>
+        <div class="riego-range" id="riegoRango"></div>
+        <button class="riego-load-btn" id="riegoCargar" onclick="cargarRiego(true)"><span data-i18n="Cargar periodo">Cargar periodo</span></button>
+        <div class="riego-status" id="riegoStatus"></div>
+        <div class="dz-notice" id="riegoAvisoRango" style="display:none"></div>
+
         <div class="dz-controls">
             <div class="fc-group">
                 <label class="fc-label" for="selMetricaRiego" data-i18n="Métrica">Métrica</label>
@@ -2597,12 +2616,21 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
                     <button type="button" class="ceres-level-tab" data-v="cuarteles" onclick="setNivelCeres('cuarteles')" data-i18n="Cuartel">Cuartel</button>
                 </div>
             </div>
+            <button class="ceres-tree-btn" id="btnCompare" onclick="toggleCompare()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-comparar"/></svg></span><span id="btnCompareLabel" data-i18n="Comparar vuelos">Comparar vuelos</span></button>
             <div class="fc-group">
-                <label class="fc-label" data-i18n="Vuelo">Vuelo</label>
+                <label class="fc-label"><span data-i18n="Vuelo">Vuelo</span> <span class="fc-side-label fc-side-A" id="ceresLabelA" style="display:none">A</span></label>
                 <div class="ceres-step">
-                    <button type="button" id="ceresPrev" onclick="pasoCeresVuelo(-1)" aria-label="Vuelo anterior" data-i18n-aria="Vuelo anterior">‹</button>
-                    <button type="button" class="ceres-step-label" id="ceresVueloLabel" onclick="openVuelos()"></button>
-                    <button type="button" id="ceresNext" onclick="pasoCeresVuelo(1)" aria-label="Vuelo siguiente" data-i18n-aria="Vuelo siguiente">›</button>
+                    <button type="button" id="ceresPrev" onclick="pasoCeresVuelo(-1,'A')" aria-label="Vuelo anterior" data-i18n-aria="Vuelo anterior">‹</button>
+                    <button type="button" class="ceres-step-label" id="ceresVueloLabel" onclick="openVuelos('A')"></button>
+                    <button type="button" id="ceresNext" onclick="pasoCeresVuelo(1,'A')" aria-label="Vuelo siguiente" data-i18n-aria="Vuelo siguiente">›</button>
+                </div>
+            </div>
+            <div class="fc-group" id="ceresLadoB" style="display:none">
+                <label class="fc-label"><span data-i18n="Vuelo">Vuelo</span> <span class="fc-side-label fc-side-B">B</span></label>
+                <div class="ceres-step">
+                    <button type="button" id="ceresPrevB" onclick="pasoCeresVuelo(-1,'B')" aria-label="Vuelo anterior" data-i18n-aria="Vuelo anterior">‹</button>
+                    <button type="button" class="ceres-step-label" id="ceresVueloLabelB" onclick="openVuelos('B')"></button>
+                    <button type="button" id="ceresNextB" onclick="pasoCeresVuelo(1,'B')" aria-label="Vuelo siguiente" data-i18n-aria="Vuelo siguiente">›</button>
                 </div>
             </div>
             <div class="fc-group">
@@ -2612,6 +2640,7 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
                 </div>
             </div>
             <button class="ceres-tree-btn" id="btnArboles" onclick="toggleArboles()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-satelite"/></svg></span><span id="btnArbolesLabel" data-i18n="Ver por árbol">Ver por árbol</span></button>
+            <button class="ceres-tree-btn" id="btnArbolesMalos" style="display:none" onclick="toggleArbolesMalos()" title="Con NDVI casi todo el predio cae en la clase alta: filtrar deja ver las anomalías" data-i18n-title="Con NDVI casi todo el predio cae en la clase alta: filtrar deja ver las anomalías"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-informe"/></svg></span><span data-i18n="Sólo los que no están en la mejor clase">Sólo los que no están en la mejor clase</span></button>
             <button class="ceres-tree-btn" onclick="openEvoCeres()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
             <button class="ceres-tree-btn" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
         </div>
@@ -2650,7 +2679,18 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     </div>
 </div>
 
-<div class="legend-panel" id="legend"></div>
+<div class="legend-panel" id="legend">
+    <!-- El bloque de variedades vive al pie de la leyenda de General, como en
+         San Gerardo. renderLegend() lo reinyecta, así que su contenido se
+         conserva aparte en #varBlock. -->
+</div>
+<div class="legend-panel eq-var-block" id="varBlock" style="display:none">
+    <button type="button" class="ceres-tree-btn" id="btnVariedades" onclick="toggleVariedades()">
+        <span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-hoja"/></svg></span>
+        <span id="btnVariedadesLabel" data-i18n="Variedades por árbol">Variedades por árbol</span>
+    </button>
+    <div class="cv-rows" id="varLeyenda"></div>
+</div>
 <div class="hover-tooltip" id="tooltip"></div>
 
 <aside id="pvSide" aria-live="polite">
@@ -2800,8 +2840,20 @@ const I18N = {
 'Vuelos de Ceres Imaging sobre el predio':'Ceres Imaging flights over the farm',
 'Temporalidad de riego':'Irrigation timing',
 'Ranking del periodo':'Period ranking', 'Cambios de clase':'Class changes',
+'Días':'Days', 'Meses':'Months', 'Temporadas':'Seasons',
+'Semana':'Week', 'Mes':'Month', 'Temporada':'Season',
+'Agrupación temporal':'Time grouping',
+'Periodo anterior':'Previous period', 'Periodo siguiente':'Next period',
+'Cargar periodo':'Load period', 'sectores con riego':'sectors irrigated',
+'El Web App devuelve siempre la misma ventana: ignora desde/hasta. El calendario queda listo y se activa solo cuando el Apps Script acepte el rango.':'The Web App always returns the same window: it ignores desde/hasta. The calendar is ready and activates on its own once the Apps Script accepts the range.',
+'El rango se aplicó bien, pero DropControl no devuelve ningún evento para este periodo. Si tampoco aparecen en una temporada completa, lo que hay que revisar es la consulta del Apps Script a DropControl, no el mapa.':'The range was applied correctly, but DropControl returns no events for this period. If none appear for a full season either, what needs checking is the Apps Script query to DropControl, not the map.',
 'Vuelo anterior':'Previous flight', 'Vuelo siguiente':'Next flight',
 'Ver por árbol':'View by tree', 'Ocultar árboles':'Hide trees',
+'Variedades por árbol':'Varieties by tree', 'Ocultar variedades':'Hide varieties',
+'Sólo los que no están en la mejor clase':'Only those outside the best class',
+'Con NDVI casi todo el predio cae en la clase alta: filtrar deja ver las anomalías':'With NDVI nearly the whole farm falls in the top class: filtering reveals the anomalies',
+'Sin clasificar':'Unclassified', 'Variedad':'Variety',
+'la variedad no depende del vuelo':'variety does not depend on the flight',
 'árboles':'trees', 'Árbol':'Tree',
 'Este vuelo no tiene imagen por árbol para el indicador elegido.':'This flight has no per-tree imagery for the selected indicator.',
 'visible desde zoom':'visible from zoom',
@@ -2811,6 +2863,8 @@ const I18N = {
 'Primer vuelo del histórico: no hay con qué comparar.':'First flight on record: nothing to compare against.',
 'Clic para ver el detalle':'Click for detail',
 'Elegir un vuelo':'Pick a flight', 'parcial':'partial',
+'Comparar vuelos':'Compare flights', 'Salir de comparación':'Exit comparison',
+'Comparando':'Comparing', 'Lado A':'Side A', 'Lado B':'Side B',
 'Series de tiempo por parámetro con sus umbrales':'Time series per parameter with their thresholds',
 // ── Criterios de color ──
 'Equipo de riego':'Irrigation unit', 'Especie':'Species', 'Variedad':'Variety',
@@ -3000,8 +3054,8 @@ let NUTRI_SUBMODE = 'foliares';
 const S = {
     gen: { nivel:'sectores', color:'equipo' },
     nut: { matriz:'Foliar', param:null, fecha:null, prof:null, nivel:'ubicaciones' },
-    riego: { metrica:'total_m3', nivel:'sectores' },
-    ceres: { param:'water_stress', nivel:'sectores', vuelo:null },
+    riego: { metrica:'total_m3', nivel:'sectores', modo:'dias', desplazamiento:0 },
+    ceres: { param:'water_stress', nivel:'sectores', vuelo:null, vueloB:null },
     capas: { etiquetas:true, valvulas:false, pozos:true, calicatas:false },
     sel: null,          // id de la unidad seleccionada
     selNivel: null,     // nivel al que pertenece la selección
@@ -3049,10 +3103,15 @@ function renderStamp(){
         iso = GEO && GEO.generated_at ? GEO.generated_at.slice(0,10) : null;
         el.textContent = iso ? `${t('Datos al')} ${fmtFecha(iso)} · KMZ ${esc(GEO.source)}` : '';
     }else if(currentMode === 'ceres'){
-        const v = ceresVuelo();
-        el.textContent = v
-            ? `${t('Vuelo del')} ${fmtFecha(v.date)} · ${antiguedad(v.date)}`
-            : (CERES ? t('Sin dato') : t('Cargando datos del predio…'));
+        const v = ceresVuelo('A');
+        if(compareMode){
+            const b = ceresVuelo('B');
+            el.textContent = `${t('Comparando')} ${b ? fmtFecha(b.date) : '—'} → ${v ? fmtFecha(v.date) : '—'}`;
+        }else{
+            el.textContent = v
+                ? `${t('Vuelo del')} ${fmtFecha(v.date)} · ${antiguedad(v.date)}`
+                : (CERES ? t('Sin dato') : t('Cargando datos del predio…'));
+        }
     }else if(currentMode === 'riego'){
         el.textContent = riegoEstado === 'listo'
             ? `${t('Datos en vivo desde DropControl')} · ${ventanaRiego()}`
@@ -3081,14 +3140,23 @@ let hoverId = null, hoverNivel = null;
 
 const POLY_NIVELES = ['equipos','sectores','cuarteles','ubicaciones'];
 
-function addLayers(){
+/* ── Comparador A/B ──────────────────────────────────────────────────────
+   El indicador y el nivel son ajustes de VISTA y valen para los dos lados: lo
+   que se compara es el vuelo, que es el eje con dato estacional. Aun asi el
+   vuelo vive por lado para que el resto del modulo tome `lado` como parametro
+   sin casos especiales. */
+let compareMode = false;
+let map2 = null, compareInstance = null;
+let ladoHover = 'A';
+
+function addLayers(m){
     POLY_NIVELES.forEach(n => {
-        map.addSource(n, {type:'geojson', data:GEO[n], promoteId:'id'});
-        map.addLayer({id:`${n}-fill`, type:'fill', source:n, layout:{visibility:'none'}, paint:{
+        m.addSource(n, {type:'geojson', data:GEO[n], promoteId:'id'});
+        m.addLayer({id:`${n}-fill`, type:'fill', source:n, layout:{visibility:'none'}, paint:{
             'fill-color':SEM('--sem-grey'),
             'fill-opacity':['case',['boolean',['feature-state','hover'],false],0.86,0.62]
         }});
-        map.addLayer({id:`${n}-line`, type:'line', source:n, layout:{visibility:'none'}, paint:{
+        m.addLayer({id:`${n}-line`, type:'line', source:n, layout:{visibility:'none'}, paint:{
             'line-color':['case',
                 ['boolean',['feature-state','sel'],false], SEM('--sem-surface'),
                 ['boolean',['feature-state','hover'],false], SEM('--sem-surface'),
@@ -3097,7 +3165,7 @@ function addLayers(){
                 ['boolean',['feature-state','sel'],false], 3.2,
                 ['boolean',['feature-state','hover'],false], 2.4, 0.8]
         }});
-        map.addLayer({id:`${n}-label`, type:'symbol', source:n, layout:{
+        m.addLayer({id:`${n}-label`, type:'symbol', source:n, layout:{
             visibility:'none', 'text-field':['get','name'], 'text-size':11,
             'text-font':['DIN Pro Medium','Arial Unicode MS Regular'],
             'text-allow-overlap':false, 'text-line-height':1.15
@@ -3107,20 +3175,20 @@ function addLayers(){
         }});
     });
 
-    map.addSource('valvulas', {type:'geojson', data:GEO.valvulas, promoteId:'id'});
-    map.addLayer({id:'valvulas-pt', type:'circle', source:'valvulas', layout:{visibility:'none'}, paint:{
+    m.addSource('valvulas', {type:'geojson', data:GEO.valvulas, promoteId:'id'});
+    m.addLayer({id:'valvulas-pt', type:'circle', source:'valvulas', layout:{visibility:'none'}, paint:{
         'circle-radius':['interpolate',['linear'],['zoom'],13,2,15,3.5,17,6],
         'circle-color':SEM('--dat-valvula'),
         'circle-stroke-color':SEM('--sem-ink'), 'circle-stroke-width':0.8
     }});
 
-    map.addSource('pozos', {type:'geojson', data:GEO.pozos, promoteId:'id'});
-    map.addLayer({id:'pozos-pt', type:'circle', source:'pozos', layout:{visibility:'none'}, paint:{
+    m.addSource('pozos', {type:'geojson', data:GEO.pozos, promoteId:'id'});
+    m.addLayer({id:'pozos-pt', type:'circle', source:'pozos', layout:{visibility:'none'}, paint:{
         'circle-radius':['interpolate',['linear'],['zoom'],13,5,17,11],
         'circle-color':['case',['get','operativo'], SEM('--dat-pozo'), SEM('--dat-pozo-off')],
         'circle-stroke-color':SEM('--sem-surface'), 'circle-stroke-width':2
     }});
-    map.addLayer({id:'pozos-label', type:'symbol', source:'pozos', layout:{
+    m.addLayer({id:'pozos-label', type:'symbol', source:'pozos', layout:{
         visibility:'none', 'text-field':['get','name'], 'text-size':10.5, 'text-offset':[0,1.3],
         'text-font':['DIN Pro Medium','Arial Unicode MS Regular'], 'text-anchor':'top'
     }, paint:{
@@ -3129,8 +3197,8 @@ function addLayers(){
     }});
 
     if(NUT && NUT.calicatas){
-        map.addSource('calicatas', {type:'geojson', data:NUT.calicatas, promoteId:'id'});
-        map.addLayer({id:'calicatas-pt', type:'circle', source:'calicatas', layout:{visibility:'none'}, paint:{
+        m.addSource('calicatas', {type:'geojson', data:NUT.calicatas, promoteId:'id'});
+        m.addLayer({id:'calicatas-pt', type:'circle', source:'calicatas', layout:{visibility:'none'}, paint:{
             'circle-radius':['interpolate',['linear'],['zoom'],13,4,17,9],
             'circle-color':SEM('--dat-calicata'),
             'circle-stroke-color':SEM('--sem-surface'), 'circle-stroke-width':1.6
@@ -3138,29 +3206,30 @@ function addLayers(){
     }
 
     POLY_NIVELES.forEach(n => {
-        map.on('mousemove', `${n}-fill`, e => onHover(n, e));
-        map.on('mouseleave', `${n}-fill`, () => onLeave(n));
-        map.on('click', `${n}-fill`, e => {
+        m.on('mousemove', `${n}-fill`, e => onHover(n, e, m));
+        m.on('mouseleave', `${n}-fill`, () => onLeave(n));
+        m.on('click', `${n}-fill`, e => {
             if(!e.features.length) return;
             seleccionar(n, e.features[0].properties.id);
         });
     });
     ['valvulas-pt','pozos-pt','calicatas-pt'].forEach(id => {
-        if(!map.getLayer(id)) return;
-        map.on('mouseenter', id, () => map.getCanvas().style.cursor = 'pointer');
-        map.on('mouseleave', id, () => { map.getCanvas().style.cursor=''; ocultarTooltip(); });
-        map.on('mousemove', id, e => onHoverPunto(id, e));
+        if(!m.getLayer(id)) return;
+        m.on('mouseenter', id, () => m.getCanvas().style.cursor = 'pointer');
+        m.on('mouseleave', id, () => { m.getCanvas().style.cursor=''; ocultarTooltip(); });
+        m.on('mousemove', id, e => onHoverPunto(id, e));
     });
-    if(map.getLayer('calicatas-pt')){
-        map.on('click', 'calicatas-pt', e => {
+    if(m.getLayer('calicatas-pt')){
+        m.on('click', 'calicatas-pt', e => {
             if(e.features.length) seleccionar('calicatas', e.features[0].properties.id);
         });
     }
 }
 
 /* ── Hover ──────────────────────────────────────────────────────────────── */
-function onHover(nivel, e){
+function onHover(nivel, e, m){
     if(!e.features.length) return;
+    if(m && m !== map) ladoHover = 'B'; else ladoHover = 'A';
     const id = e.features[0].properties.id;
     if(hoverId !== id || hoverNivel !== nivel){
         limpiarHover();
@@ -3643,18 +3712,143 @@ function metricaRiego(){
     return METRICAS_RIEGO.find(m => m.id === S.riego.metrica) || METRICAS_RIEGO[0];
 }
 
+/* ── Periodo pedido ──────────────────────────────────────────────────────
+   `desplazamiento` cuenta periodos hacia atrás desde el actual: 0 es el
+   vigente, -1 el anterior. La temporada es julio-junio, igual que en el resto
+   del portal (season_of() del pipeline de Ceres). */
+function riegoPeriodo(){
+    const modo = S.riego.modo, k = S.riego.desplazamiento;
+    const hoy = new Date();
+    const iso = d => d.toISOString().slice(0,10);
+
+    if(modo === 'dias'){
+        // Ventana de 7 días, que es la unidad que hoy devuelve el endpoint.
+        const fin = new Date(hoy); fin.setDate(fin.getDate() + k*7);
+        const ini = new Date(fin); ini.setDate(ini.getDate() - 7);
+        // El fin no puede pasar de hoy: una ventana "hasta el futuro" no
+        // existe, y el rotulo tiene que decir la verdad.
+        const finReal = fin > hoy ? hoy : fin;
+        return {desde:iso(ini), hasta:iso(fin),
+                etiqueta:`${fmtFecha(iso(ini))} – ${fmtFecha(iso(finReal))}`,
+                titulo:t('Semana')};
+    }
+    if(modo === 'meses'){
+        const d = new Date(hoy.getFullYear(), hoy.getMonth() + k, 1);
+        const fin = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+        return {desde:iso(d), hasta:iso(fin),
+                etiqueta:d.toLocaleDateString(LOC(), {month:'long', year:'numeric'}),
+                titulo:t('Mes')};
+    }
+    // Temporadas: julio a junio.
+    const anioBase = hoy.getMonth() >= 6 ? hoy.getFullYear() : hoy.getFullYear() - 1;
+    const a = anioBase + k;
+    return {desde:`${a}-07-01`, hasta:`${a+1}-07-01`,
+            etiqueta:`${a}-${String((a+1) % 100).padStart(2,'0')}`,
+            titulo:t('Temporada')};
+}
+
+/* ¿El endpoint respeta el rango que se le pide?
+   Sí: verificado contra el Web App real, que echoa `consulta: "<desde> a
+   <hasta>"` con el rango pedido, desde 7 días hasta dos temporadas completas
+   (una temporada tarda ~4 s).
+
+   El sondeo se conserva igual, y no es paranoia: la comprobación no se puede
+   hacer con la consulta normal, porque su rango por defecto son los últimos 7
+   días —exactamente la ventana que el endpoint devuelve cuando NO filtra— así
+   que coincidirían siempre y daría un falso positivo. Se sondea una vez por
+   sesión con un rango del mes pasado, que no puede coincidir por casualidad.
+   Si mañana el Apps Script cambia, el mapa lo detecta en vez de mostrar la
+   semana actual bajo el rótulo de otro periodo. */
+let riegoRangoSoportado = null;   // null = todavía no se sabe
+
+async function sondearRangoRiego(){
+    const iso = d => d.toISOString().slice(0,10);
+    const hasta = new Date(); hasta.setDate(hasta.getDate() - 30);
+    const desde = new Date(hasta); desde.setDate(desde.getDate() - 30);
+    try{
+        const r = await fetch(`${RIEGO_URL}?desde=${iso(desde)}&hasta=${iso(hasta)}&modo=dias`,
+                              {cache:'no-store'});
+        if(!r.ok) throw new Error(`HTTP ${r.status}`);
+        const j = await r.json();
+        const dev = ((j || {}).rango || {}).inicio || '';
+        const usado = dev ? new Date(dev.slice(0,10) + 'T00:00:00') : null;
+        riegoRangoSoportado = !!(usado &&
+            Math.abs(usado - desde) / 86400000 <= 1.5);
+    }catch(e){
+        // Sin respuesta no se puede afirmar que soporte rangos.
+        riegoRangoSoportado = false;
+        console.warn('[ketcal] sondeo de rango de riego:', e.message);
+    }
+    renderRiegoCalendario();
+}
+
+function setRiegoModo(v){
+    S.riego.modo = v; S.riego.desplazamiento = 0;
+    document.querySelectorAll('#riegoModos button').forEach(b =>
+        b.classList.toggle('active', b.dataset.v === v));
+    renderRiegoCalendario();
+}
+function pasoRiego(d){
+    if(riegoRangoSoportado === false) return;
+    S.riego.desplazamiento = Math.min(0, S.riego.desplazamiento + d);
+    renderRiegoCalendario();
+}
+
+function renderRiegoCalendario(){
+    const per = riegoPeriodo();
+    const lbl = document.getElementById('riegoPeriodo');
+    const rng = document.getElementById('riegoRango');
+    if(lbl) lbl.innerHTML = `<div class="fc-label">${esc(per.titulo)}</div>`
+        + `<div style="font-size:12.5px;font-weight:500">${esc(per.etiqueta)}</div>`;
+    if(rng) rng.textContent = `${fmtFecha(per.desde)} → ${fmtFecha(per.hasta)}`;
+    document.querySelectorAll('#riegoModos button').forEach(b =>
+        b.classList.toggle('active', b.dataset.v === S.riego.modo));
+
+    // El aviso sólo aparece cuando ya se comprobó que el endpoint no filtra.
+    const aviso = document.getElementById('riegoAvisoRango');
+    const cargar = document.getElementById('riegoCargar');
+    const modos = document.getElementById('riegoModos');
+    const bloqueado = riegoRangoSoportado === false;
+    if(cargar) cargar.disabled = bloqueado;
+    if(modos) modos.style.opacity = bloqueado ? '0.45' : '';
+    if(aviso){
+        // Dos avisos distintos, y sólo uno puede ser cierto a la vez:
+        //   · el endpoint no filtra por rango (el calendario no sirve), o
+        //   · filtra bien pero el periodo no trae ningún evento.
+        // Confundirlos manda a revisar el lugar equivocado.
+        let txt = '';
+        if(bloqueado){
+            txt = t('El Web App devuelve siempre la misma ventana: ignora desde/hasta. El calendario queda listo y se activa solo cuando el Apps Script acepte el rango.');
+        }else if(riegoEstado === 'listo' && !(RIEGO.total_eventos_api || 0)){
+            txt = t('El rango se aplicó bien, pero DropControl no devuelve ningún evento para este periodo. Si tampoco aparecen en una temporada completa, lo que hay que revisar es la consulta del Apps Script a DropControl, no el mapa.');
+        }
+        aviso.style.display = txt ? '' : 'none';
+        aviso.textContent = txt;
+    }
+}
+
 async function cargarRiego(forzar){
     if(riegoEstado === 'cargando') return;
     if(RIEGO && !forzar) return;
     riegoEstado = 'cargando'; riegoError = null;
     renderLegend(); renderStats(); renderStamp();
+    const per = riegoPeriodo();
     try{
-        const r = await fetch(RIEGO_URL, {cache:'no-store'});
+        // Se pide el rango aunque hoy el endpoint lo ignore: el dia que lo
+        // acepte, el calendario empieza a funcionar sin cambiar el mapa.
+        const q = `?desde=${per.desde}&hasta=${per.hasta}&modo=${S.riego.modo}`;
+        const r = await fetch(RIEGO_URL + q, {cache:'no-store'});
         if(!r.ok) throw new Error(`HTTP ${r.status}`);
         const j = await r.json();
         if(!j || !Array.isArray(j.sectores)) throw new Error('respuesta sin sectores[]');
         RIEGO = j;
         riegoEstado = 'listo';
+
+        // La deteccion NO se puede hacer con esta consulta: el rango por
+        // defecto (ultimos 7 dias) coincide por construccion con la ventana
+        // fija del endpoint, asi que siempre pareceria soportado. Se sondea
+        // aparte, una vez por sesion, con un rango que no puede coincidir.
+        if(riegoRangoSoportado === null) sondearRangoRiego();
         // Una clave que no exista en la geometría es un cambio de grilla en
         // DropControl, y hay que verlo, no tragárselo.
         const huerfanos = j.sectores.map(x => x.key).filter(k => !IDX.sectores.has(k));
@@ -3662,6 +3856,15 @@ async function cargarRiego(forzar){
     }catch(e){
         riegoEstado = 'error'; riegoError = e.message;
         console.error('[ketcal] DropControl:', e);
+    }
+    renderRiegoCalendario();
+    const st = document.getElementById('riegoStatus');
+    if(st){
+        st.className = 'riego-status ' + (riegoEstado === 'error' ? 'error' : 'success');
+        st.textContent = riegoEstado === 'listo'
+            ? `${(RIEGO.resumen || {}).sectores_con_riego || 0} ${t('sectores con riego')} · ${RIEGO.total_eventos_api || 0} ${t('eventos')}`
+            : riegoEstado === 'error' ? `${t('No se pudo consultar DropControl.')} ${riegoError || ''}`
+            : t('Consultando DropControl…');
     }
     if(currentMode === 'riego'){ repintar(); renderPanel(); }
 }
@@ -3794,11 +3997,18 @@ function ceresParam(){
     return ceresParams().find(p => p.id === S.ceres.param) || ceresParams()[0] || null;
 }
 function ceresVuelos(){ return (CERES && CERES.flights) || []; }
-function ceresVuelo(){
+function ceresIdx(lado){
     const vs = ceresVuelos();
     if(!vs.length) return null;
-    const i = S.ceres.vuelo == null ? vs.length - 1 : S.ceres.vuelo;
-    return vs[Math.max(0, Math.min(vs.length - 1, i))] || null;
+    const raw = (lado === 'B') ? S.ceres.vueloB : S.ceres.vuelo;
+    const def = (lado === 'B') ? Math.max(0, vs.length - 2) : vs.length - 1;
+    const i = raw == null ? def : raw;
+    return Math.max(0, Math.min(vs.length - 1, i));
+}
+function ceresVuelo(lado){
+    const vs = ceresVuelos();
+    const i = ceresIdx(lado || 'A');
+    return i == null ? null : (vs[i] || null);
 }
 
 /* Bandas vigentes. Los relativos (Clorofila) no tienen cortes propios: la
@@ -3826,9 +4036,9 @@ function ceresBandaDe(v, bandas){
 }
 
 /* Valores del vuelo y nivel activos, más la cobertura de ese vuelo. */
-function ceresValores(){
+function ceresValores(lado){
     const out = new Map();
-    const vuelo = ceresVuelo(), par = ceresParam();
+    const vuelo = ceresVuelo(lado), par = ceresParam();
     if(!vuelo || !par) return out;
     const lvl = ceresNivelJSON(S.ceres.nivel);
     const unidades = vuelo[lvl] || {};
@@ -3845,8 +4055,8 @@ function ceresValores(){
 /* Cobertura: qué unidades existían en este vuelo. Es lo que separa "no estaba
    plantado" de "sin dato", y en un predio que crecio por etapas esa diferencia
    es la mitad del histórico. */
-function ceresCobertura(){
-    const vuelo = ceresVuelo();
+function ceresCobertura(lado){
+    const vuelo = ceresVuelo(lado);
     const lvl = ceresNivelJSON(S.ceres.nivel);
     return ((vuelo && vuelo.coverage) || {})[lvl] || null;
 }
@@ -3857,8 +4067,8 @@ function ceresBandasOk(par, vuelo){
     return bandas.filter(b => b.severity < bandas.length / 2);
 }
 
-function ceresCumplimiento(){
-    const vuelo = ceresVuelo(), par = ceresParam();
+function ceresCumplimiento(lado){
+    const vuelo = ceresVuelo(lado), par = ceresParam();
     if(!vuelo || !par) return null;
     const lvl = ceresNivelJSON(S.ceres.nivel);
     const fila = ((vuelo.compliance || {})[lvl] || {})[par.id];
@@ -3908,113 +4118,297 @@ async function cargarCeres(){
    falta pre-extraer nada ni inyectar el token: este sitio es público y
    `transformRequest` con la credencial se la entregaría a cualquier visitante.
 
-   Son ~230.000 árboles, así que la capa se agrega BAJO DEMANDA al activar el
-   botón, nunca en el load inicial, y sólo se ve desde z≥15: más abajo es un
-   manchón ilegible. */
-let arbolesOn = false;
-const ARBOLES_SRC = 'ceres-arboles';
+   Los valores de abajo son los de San Gerardo, que están calibrados contra el
+   dato real; no se reinventan.
 
-function capasArboles(){
-    return map.getStyle().layers.map(l => l.id).filter(i => i.startsWith(ARBOLES_SRC));
-}
-function ceresArbolesDelVuelo(){
+   La capa la usan DOS pestañas: Ceres la pinta por indicador y General por
+   variedad. El modo se deduce de la pestaña activa en vez de ser un estado
+   global, así ninguna puede dejar a la otra pintando lo que no corresponde. */
+const ARB_PREFIJO = 'ceres-arboles-';
+const ARB_MINZOOM = 13;      // más abajo son 230.000 puntos encimados
+const ARB_ZOOM_UTIL = 14.2;  // a dónde se acerca al encender
+let arbolesOn = false;       // capa por indicador, en Ceres
+let variedadesOn = false;    // capa por variedad, en General
+/* Sólo los árboles fuera de la mejor clase. Con NDVI el 99 % del predio cae en
+   la clase alta y el resto son las anomalías: en un mapa de 230.000 puntos
+   verdes esos no se ven. Filtrarlos deja el mapa que sirve para ir a revisar. */
+let arbolesSoloMalos = false;
+
+function arbModo(){ return currentMode === 'general' ? 'variedad' : 'indicador'; }
+
+/* Ids de las capas vivas. Se mantiene acá y NO se deduce de getStyle(): esa
+   devuelve una serialización que no refleja los addLayer/removeLayer del mismo
+   tick, así que leer el filtro o el radio justo después daba null. */
+let ARB_CAPAS = [];
+function capasArboles(){ return ARB_CAPAS.filter(id => map.getLayer(id)); }
+
+/* Mismo criterio que repintar(): se comprueba que las capas base existan, NO
+   isStyleLoaded(), que devuelve false mientras quedan fuentes cargando. Gatear
+   con eso dejaba `arbolesOn` en true y el mapa sin una sola capa. */
+function mapaListo(){ return !!map.getLayer('sectores-fill'); }
+
+/* Catálogo del vuelo activo: overlay por equipo. En modo variedad el indicador
+   es irrelevante —`varietal` viene en todos los tiles— así que se toma el
+   primero que haya. */
+function arbCatalogo(){
     const tr = CERES && CERES.trees;
-    const v = ceresVuelo(), par = ceresParam();
-    if(!tr || !v || !par) return null;
+    const v = ceresVuelo();
+    if(!tr || !v) return null;
     const porParam = (tr.by_flight || {})[v.week_key];
-    const eqs = porParam && porParam[par.id];
-    if(!eqs || !Object.keys(eqs).length) return null;
-    return {tr, ids: Object.values(eqs)};
+    if(!porParam) return null;
+    if(arbModo() === 'variedad'){
+        for(const pid of Object.keys(porParam)){
+            if(porParam[pid] && Object.keys(porParam[pid]).length) return porParam[pid];
+        }
+        return null;
+    }
+    const par = ceresParam();
+    const eqs = par && porParam[par.id];
+    return (eqs && Object.keys(eqs).length) ? eqs : null;
+}
+function arbDisponible(){ return !!arbCatalogo(); }
+
+/* ── Variedades ──
+   Categóricas, no una escala: usan los tokens de equipo, que son la paleta
+   categórica del sistema y ya está validada. El orden sale del catálogo del
+   JSON para que el color de una variedad no cambie entre vuelos. */
+const ARB_VAR_COLORES = () => [
+    SEM('--dat-eq-1'), SEM('--dat-eq-2'), SEM('--dat-eq-3'),
+    SEM('--dat-eq-4'), SEM('--dat-eq-5'),
+    SEM('--dat-esp-lim'), SEM('--dat-esp-nar'), SEM('--dat-esp-man')
+];
+function arbVariedades(){
+    const v = (CERES && CERES.trees && CERES.trees.varieties) || null;
+    return (v && v.order && v.order.length) ? v.order : [];
+}
+function arbVariedadColor(nombre){
+    const cs = ARB_VAR_COLORES();
+    const i = arbVariedades().indexOf(nombre);
+    return i < 0 ? SEM('--sem-slate-data') : cs[i % cs.length];
+}
+function arbVariedadesDisponibles(){
+    return !!(arbCatalogo() && arbVariedades().length);
+}
+
+/* ── Expresiones de pintado ── */
+function arbExprVariedad(){
+    const expr = ['match', ['get', 'varietal']];
+    arbVariedades().forEach(v => { expr.push(v, arbVariedadColor(v)); });
+    expr.push(SEM('--sem-slate-data'));   // variedad no catalogada
+    return expr;
+}
+/* Color por clase con las MISMAS bandas del nivel: el árbol y su cuartel se
+   leen con la misma leyenda. `value` viene en cada punto del tile. */
+function arbExprValor(){
+    const bandas = window._bandasCeres || ceresBandas(ceresParam(), ceresVuelo());
+    if(!bandas.length) return SEM('--sem-grey');
+    const n = bandas.length;
+    const expr = ['step', ['to-number', ['get', 'value']],
+                  ceresColor(bandas[0].severity, n)];
+    for(let i = 1; i < n; i++) expr.push(bandas[i].min, ceresColor(bandas[i].severity, n));
+    return expr;
+}
+function arbExprColor(){
+    return arbModo() === 'variedad' ? arbExprVariedad() : arbExprValor();
+}
+function arbFiltro(){
+    if(!arbolesSoloMalos || arbModo() === 'variedad') return null;
+    const bandas = window._bandasCeres || ceresBandas(ceresParam(), ceresVuelo());
+    if(bandas.length < 2) return null;
+    const par = ceresParam();
+    const mejor = bandas.reduce((a, b) => b.severity < a.severity ? b : a);
+    const v = ['to-number', ['get', 'value']];
+    return par && par.higher_is_better ? ['<', v, mejor.min] : ['>=', v, mejor.max];
 }
 
 function quitarArboles(){
-    // Hay un source y una capa POR EQUIPO (cinco). Antes se removia solo la
-    // primera capa, asi que las otras seguian usando su source, removeSource
-    // fallaba y la siguiente activacion choca con "source ya existe".
-    // Las capas van todas primero, y despues los sources.
-    map.getStyle().layers.forEach(l => {
-        if(l.id.startsWith(ARBOLES_SRC) && map.getLayer(l.id)) map.removeLayer(l.id);
+    if(!mapaListo()) return;
+    // Las capas van TODAS primero y después los sources: hay una de cada por
+    // equipo, y si queda una capa viva su source no se puede remover.
+    (map.getStyle().layers || []).forEach(l => {
+        if(l.id.indexOf(ARB_PREFIJO) === 0 && map.getLayer(l.id)) map.removeLayer(l.id);
     });
     Object.keys(map.getStyle().sources || {}).forEach(k => {
-        if(k.startsWith(ARBOLES_SRC) && map.getSource(k)) map.removeSource(k);
+        if(k.indexOf(ARB_PREFIJO) === 0 && map.getSource(k)) map.removeSource(k);
     });
+    ARB_CAPAS = [];
 }
 
 function pintarArboles(){
+    if(!mapaListo()) return false;
     quitarArboles();
-    const d = ceresArbolesDelVuelo();
-    if(!d) return false;
-    const par = ceresParam();
-    const bandas = window._bandasCeres || ceresBandas(par, ceresVuelo());
+    const cat = arbCatalogo();
+    if(!cat) return false;
+    const color = arbExprColor();
+    const filtro = arbFiltro();
+    const tpl = CERES.trees.tile_template;
 
-    // Un source por overlay (uno por equipo) con la plantilla del tiler.
-    d.ids.forEach((oid, i) => {
-        map.addSource(ARBOLES_SRC + '-' + i, {
+    Object.keys(cat).forEach(eq => {
+        const id = ARB_PREFIJO + eq;
+        map.addSource(id, {
             type: 'vector',
-            tiles: [d.tr.tile_template.replace('{id}', oid)],
-            minzoom: d.tr.min_zoom || 15, maxzoom: 22
+            tiles: [tpl.replace('{id}', cat[eq])],
+            minzoom: ARB_MINZOOM, maxzoom: 18
         });
-    });
-    // Expresión de color por banda sobre el valor del árbol. Los cortes son los
-    // del nivel: el árbol individual no tiene clases propias sin la estadística
-    // que --extras calcula, y la leyenda lo dice.
-    const prop = d.tr.value_property || 'value';
-    const expr = ['case'];
-    bandas.forEach(b => {
-        const lo = b.min == null ? -Infinity : b.min;
-        const hi = b.max == null ? Infinity : b.max;
-        expr.push(['all', ['>=', ['get', prop], lo], ['<', ['get', prop], hi]],
-                  ceresColor(b.severity, bandas.length));
-    });
-    expr.push(SEM('--sem-grey'));
-
-    d.ids.forEach((oid, i) => {
-        map.addLayer({
-            id: ARBOLES_SRC + '-pt-' + i,
-            type: 'circle',
-            source: ARBOLES_SRC + '-' + i,
-            'source-layer': d.tr.source_layer || 'trees',
-            minzoom: d.tr.min_zoom || 15,
+        map.addLayer(Object.assign({
+            id: id, type: 'circle', source: id,
+            'source-layer': CERES.trees.source_layer || 'trees',
+            minzoom: ARB_MINZOOM,
             paint: {
-                'circle-radius': ['interpolate', ['linear'], ['zoom'], 15, 1.6, 17, 3.2, 19, 6],
-                'circle-color': expr,
-                'circle-opacity': 0.95
+                // Filtrados quedan pocos puntos sueltos, así que se agrandan
+                // para encontrarlos. Sin filtro la rampa arranca fina: a z13
+                // son 230.000 puntos y cualquier radio mayor los funde.
+                'circle-radius': arbolesSoloMalos
+                    ? ['interpolate',['linear'],['zoom'],13,1.6,14,2.2,15,3,16,4.5,17,6.5,18,9]
+                    : ['interpolate',['linear'],['zoom'],13,0.5,14,1,15,1.8,16,2.8,17,4.2,18,6.5],
+                'circle-color': color,
+                'circle-opacity': 0.92,
+                'circle-stroke-width': ['interpolate',['linear'],['zoom'],16,0,18,0.4],
+                'circle-stroke-color': SEM('--sem-ink')
             }
-        });
+        }, filtro ? {filter: filtro} : {}));
+        ARB_CAPAS.push(id);
+        map.on('click', id, e => arbClick(e));
+        map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
+        map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
     });
     return true;
 }
 
-/* Estado del botón por vuelo e indicador. Estrés acumulado y NDVI promedio de
-   temporada son derivados y NO tienen raster por árbol, así que el botón se
-   reevalúa en cada pintado en vez de quedar deshabilitado para siempre. */
+/* Popup del árbol. Una sola instancia reutilizada: abrir una por clic dejaría
+   una fuga de nodos igual que un canvas sin destruir. */
+let arbPopup = null;
+function arbTinte(c){ return mixHex(c, SEM('--sem-surface'), 0.80); }
+function arbSombra(c){ return mixHex(c, SEM('--sem-ink'), 0.35); }
+
+function arbClick(e){
+    const f = e.features && e.features[0];
+    if(!f) return;
+    const pr = f.properties || {};
+    const par = ceresParam();
+    const v = Number(pr.value);
+    const bandas = window._bandasCeres || ceresBandas(par, ceresVuelo());
+    const b = ceresBandaDe(v, bandas);
+    const esVar = arbModo() === 'variedad';
+    const col = esVar ? arbVariedadColor(pr.varietal)
+              : (b ? ceresColor(b.severity, bandas.length) : SEM('--sem-grey'));
+    const etiqueta = esVar ? (pr.varietal || t('Sin clasificar'))
+                   : (b ? ceresEtiquetaBanda(b) : t('Sin clasificar'));
+    if(!arbPopup) arbPopup = new mapboxgl.Popup({closeButton:true, maxWidth:'240px'});
+    arbPopup.setLngLat(e.lngLat).setHTML(
+        `<div class="ct-pop">
+            <div class="ct-pop-head">
+                <span class="ct-pop-val">${esVar ? esc(pr.crop_name || '') : fmtCeres(v)}</span>
+                <span class="ct-band" style="background:${arbTinte(col)};color:${arbSombra(col)}">${esc(etiqueta)}</span>
+            </div>
+            <div class="ct-pop-rows">
+                <div><span>${t('Árbol')}</span><strong>#${pr.tree_id != null ? esc(pr.tree_id) : '—'}</strong></div>
+                <div><span>${t('Variedad')}</span><strong>${esc(pr.varietal || '—')}</strong></div>
+                ${esVar ? '' : `<div><span>${t('Indicador')}</span><strong>${esc(ceresEtiquetaParam(par))}</strong></div>`}
+                <div><span>${t('Vuelo')}</span><strong>${esc(fmtFecha((ceresVuelo()||{}).date))}</strong></div>
+            </div>
+        </div>`).addTo(map);
+}
+
+/* Con las variedades encendidas se ocultan los polígonos completos: son
+   230.000 círculos de 2 px y cualquier capa encima compite con ellos. Se
+   restauran al apagar o al salir de General. */
+function arbVelo(ocultar){
+    const nivel = nivelActivo();
+    ['fill','line','label'].forEach(sfx => {
+        const id = `${nivel}-${sfx}`;
+        if(!map.getLayer(id)) return;
+        const visible = !ocultar && (sfx !== 'label' || S.capas.etiquetas);
+        map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
+    });
+}
+
+/* Único punto que decide si la capa está o no, para las dos pestañas.
+   Reconstruir cuesta cinco sources vectoriales y sus tiles, así que sólo se
+   rehace cuando cambia algo que la afecta: llamarlo desde repintar() sin este
+   guardia volvía a pedir todos los tiles ante cualquier cambio de la vista. */
+let arbFirma = null;
+function refrescarArboles(forzar){
+    if(!CERES || !mapaListo()) return;
+    const encendida = (currentMode === 'ceres' && arbolesOn)
+                   || (currentMode === 'general' && variedadesOn);
+    const v = ceresVuelo('A');
+    const firma = [currentMode, encendida, arbModo(), arbolesSoloMalos,
+                   v ? v.week_key : '', S.ceres.param, S.ceres.nivel].join('|');
+
+    if(forzar || firma !== arbFirma){
+        arbFirma = firma;
+        if(encendida && !pintarArboles()){
+            if(currentMode === 'ceres') arbolesOn = false; else variedadesOn = false;
+            arbFirma = null;
+        }
+        if(!encendida) quitarArboles();
+    }
+    arbVelo(currentMode === 'general' && variedadesOn);
+    renderBotonArboles();
+    renderBotonVariedades();
+}
+
 function renderBotonArboles(){
     const btn = document.getElementById('btnArboles');
-    const lbl = document.getElementById('btnArbolesLabel');
-    if(!btn) return;
-    const hay = !!ceresArbolesDelVuelo();
-    btn.disabled = !hay;
-    btn.title = hay ? '' : t('Este vuelo no tiene imagen por árbol para el indicador elegido.');
-    btn.classList.toggle('active', arbolesOn && hay);
-    lbl.textContent = t(arbolesOn && hay ? 'Ocultar árboles' : 'Ver por árbol');
+    if(btn){
+        const hay = arbDisponible() && arbModo() === 'indicador';
+        btn.disabled = !hay;
+        btn.title = hay ? '' : t('Este vuelo no tiene imagen por árbol para el indicador elegido.');
+        btn.classList.toggle('active', arbolesOn && hay);
+        document.getElementById('btnArbolesLabel').textContent =
+            t(arbolesOn && hay ? 'Ocultar árboles' : 'Ver por árbol');
+    }
+    const bad = document.getElementById('btnArbolesMalos');
+    if(bad){
+        bad.style.display = (arbolesOn && arbModo() === 'indicador') ? '' : 'none';
+        bad.classList.toggle('active', arbolesSoloMalos);
+    }
+}
+
+function renderBotonVariedades(){
+    const bloque = document.getElementById('varBlock');
+    if(!bloque) return;
+    const hay = arbVariedadesDisponibles();
+    bloque.style.display = (currentMode === 'general' && hay) ? '' : 'none';
+    const btn = document.getElementById('btnVariedades');
+    if(btn){
+        btn.classList.toggle('active', variedadesOn);
+        document.getElementById('btnVariedadesLabel').textContent =
+            t(variedadesOn ? 'Ocultar variedades' : 'Variedades por árbol');
+    }
+    const leyenda = document.getElementById('varLeyenda');
+    if(leyenda){
+        const vs = arbVariedades();
+        const conteo = (CERES && CERES.trees && CERES.trees.varieties
+                        && CERES.trees.varieties.counts) || {};
+        leyenda.innerHTML = variedadesOn
+            ? vs.map(v => `<div class="cv-row"><span class="cv-swatch" style="background:${arbVariedadColor(v)}"></span>`
+                + `<span class="cv-name">${esc(v)}</span>`
+                + `<span class="cv-n">${conteo[v] ? fmt(conteo[v],0) : ''}</span></div>`).join('')
+            : '';
+    }
 }
 
 function toggleArboles(){
-    const btn = document.getElementById('btnArboles');
-    const lbl = document.getElementById('btnArbolesLabel');
-    if(arbolesOn){
-        arbolesOn = false; quitarArboles();
-        btn.classList.remove('active');
-        lbl.textContent = t('Ver por árbol');
-        renderLegend();
-        return;
-    }
-    if(!pintarArboles()) return;   // el estado del botón lo fija renderBotonArboles()
-    arbolesOn = true;
-    btn.classList.add('active');
-    lbl.textContent = t('Ocultar árboles');
-    if(map.getZoom() < (CERES.trees.min_zoom || 15))
-        map.easeTo({zoom: (CERES.trees.min_zoom || 15) + 0.3, duration: 600});
+    if(!arbDisponible()) return;
+    arbolesOn = !arbolesOn;
+    refrescarArboles(true);
+    if(arbolesOn && map.getZoom() < ARB_ZOOM_UTIL)
+        map.easeTo({zoom: ARB_ZOOM_UTIL, duration: 600});
+    renderLegend();
+}
+function toggleArbolesMalos(){
+    arbolesSoloMalos = !arbolesSoloMalos;
+    refrescarArboles(true);
+    renderLegend();
+}
+function toggleVariedades(){
+    if(!arbVariedadesDisponibles()) return;
+    variedadesOn = !variedadesOn;
+    refrescarArboles(true);
+    if(variedadesOn && map.getZoom() < ARB_ZOOM_UTIL)
+        map.easeTo({zoom: ARB_ZOOM_UTIL, duration: 600});
     renderLegend();
 }
 
@@ -4070,10 +4464,10 @@ function repintar(){
         });
         window._valsRiego = vals; window._escalaRiego = escala;
     }else if(currentMode === 'ceres'){
-        const par = ceresParam(), vuelo = ceresVuelo();
+        const par = ceresParam(), vuelo = ceresVuelo('A');
         const bandas = ceresBandas(par, vuelo);
-        const vals = ceresValores();
-        const cob = ceresCobertura();
+        const vals = ceresValores('A');
+        const cob = ceresCobertura('A');
         // Una unidad que no existía en este vuelo no es "sin dato": se pinta
         // con el beige de ausencia, igual que el "sin riego" de la otra pestaña.
         const noExistia = new Set((cob && cob.no_existia) || []);
@@ -4106,6 +4500,9 @@ function repintar(){
     if(map.getLayer(`${activo}-fill`)) map.setPaintProperty(`${activo}-fill`, 'fill-color', exprColor);
     if(map.getLayer(`${activo}-label`)) map.setLayoutProperty(`${activo}-label`, 'text-field', exprLabel);
 
+    // Lado B del comparador: mismo nivel e indicador, otro vuelo.
+    if(compareMode && map2) pintarLadoB(activo);
+
     ['valvulas-pt'].forEach(id => map.getLayer(id) &&
         map.setLayoutProperty(id, 'visibility', S.capas.valvulas ? 'visible' : 'none'));
     ['pozos-pt','pozos-label'].forEach(id => map.getLayer(id) &&
@@ -4113,6 +4510,10 @@ function repintar(){
     if(map.getLayer('calicatas-pt'))
         map.setLayoutProperty('calicatas-pt', 'visibility',
             S.capas.calicatas && currentMode !== 'general' ? 'visible' : 'none');
+
+    // La capa por árbol se refresca en un solo lugar para las dos pestañas que
+    // la usan, y va ANTES de la leyenda porque puede apagarse sola.
+    if(CERES) refrescarArboles();
 
     renderLegend();
     renderStats();
@@ -4122,16 +4523,8 @@ function repintar(){
     // extra que aparece al hacer clic.
     if(currentMode === 'ceres'){
         renderCeresStepper(); renderCeresCambios(); renderCeresRank();
-        // Los arboles siguen al vuelo y al indicador activos. Si el indicador
-        // nuevo no tiene raster por arbol, se apaga la capa en vez de dejarla
-        // pintada con los valores del anterior.
-        if(arbolesOn){
-            if(!ceresArbolesDelVuelo()){ arbolesOn = false; quitarArboles(); }
-            else pintarArboles();
-        }
-        renderBotonArboles();
     }
-    if(currentMode === 'riego') renderRiegoRank();
+    if(currentMode === 'riego'){ renderRiegoRank(); renderRiegoSubtitulo(); }
 }
 
 function nombreCorto(p){
@@ -4147,6 +4540,39 @@ function etiquetaGen(p, escala){
         return n ? `${base}\n${n} ${t('muestras')}` : base;
     }
     return base;
+}
+
+/* Lado B: sólo Ceres se compara, porque es la única pestaña con un eje temporal
+   denso. Se replica la visibilidad de capas y se pinta con su propio vuelo. */
+function pintarLadoB(activo){
+    if(!map2 || !map2.getLayer(`${activo}-fill`)) return;
+    POLY_NIVELES.forEach(n => {
+        ['fill','line','label'].forEach(sfx => {
+            const id = `${n}-${sfx}`;
+            if(!map2.getLayer(id)) return;
+            const vis = n === activo && (sfx !== 'label' || S.capas.etiquetas) ? 'visible' : 'none';
+            map2.setLayoutProperty(id, 'visibility', vis);
+        });
+    });
+    const par = ceresParam(), vuelo = ceresVuelo('B');
+    const bandas = ceresBandas(par, vuelo);
+    const vals = ceresValores('B');
+    const cob = ceresCobertura('B');
+    const noExistia = new Set((cob && cob.no_existia) || []);
+    const c = ['match', ['get','id']], l = ['match', ['get','id']];
+    feats(activo).forEach(f => {
+        const id = f.properties.id;
+        const d = vals.get(id);
+        const b = d ? ceresBandaDe(d.v, bandas) : null;
+        c.push(id, b ? ceresColor(b.severity, bandas.length)
+            : d ? SEM('--sem-slate-data')
+            : noExistia.has(id) ? SEM('--dat-sin-riego') : SEM('--sem-grey'));
+        l.push(id, d ? `${nombreCorto(f.properties)}\n${fmtCeres(d.v)}` : nombreCorto(f.properties));
+    });
+    c.push(SEM('--sem-grey')); l.push('');
+    map2.setPaintProperty(`${activo}-fill`, 'fill-color', c);
+    if(map2.getLayer(`${activo}-label`)) map2.setLayoutProperty(`${activo}-label`, 'text-field', l);
+    window._valsCeresB = vals;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -4302,8 +4728,8 @@ function legendCeres(activo){
         + (noExistia ? `<br>${esc(t('El predio se plantó por etapas: los cuarteles que no existían en esta fecha se muestran en beige, no en gris.'))}` : '')
         + `<br>${esc(t('Ceres agrega sobre los píxeles en los tres niveles: el cuartel es dato medido, no un promedio de sectores.'))}`
         + `</div>`
-        + (arbolesOn ? `<div class="ket-note">${esc(t('Sus clases se calculan sobre las unidades del nivel, que son promedios de píxeles, y no se trasladan al árbol individual.'))}`
-            + ` ${t('visible desde zoom')} ${(CERES.trees && CERES.trees.min_zoom) || 15}.</div>` : '');
+        + ((arbolesOn || variedadesOn) ? `<div class="ket-note">${esc(t('Sus clases se calculan sobre las unidades del nivel, que son promedios de píxeles, y no se trasladan al árbol individual.'))}`
+            + ` ${t('visible desde zoom')} ${ARB_MINZOOM}.</div>` : '');
 }
 
 function statsCeres(activo){
@@ -4476,17 +4902,81 @@ function toggleBloque(id){
     if(el) el.classList.toggle('collapsed');
 }
 
+/* ── Comparador ──
+   Sólo Ceres: es la única pestaña con un histórico denso donde comparar dos
+   fechas lado a lado responde algo que una sola no responde. */
+function toggleCompare(){
+    if(compareMode) apagarCompare(); else encenderCompare();
+}
+
+function encenderCompare(){
+    if(currentMode !== 'ceres' || !CERES) return;
+    if(!mapaListo()){ setTimeout(encenderCompare, 200); return; }
+    compareMode = true;
+    document.body.classList.add('compare-mode');
+    if(S.ceres.vueloB == null) S.ceres.vueloB = Math.max(0, ceresVuelos().length - 2);
+
+    if(!map2){
+        map2 = new mapboxgl.Map({
+            container:'map2', style:'mapbox://styles/mapbox/satellite-v9',
+            center:map.getCenter(), zoom:map.getZoom(), antialias:true
+        });
+        map2.on('load', () => {
+            addLayers(map2);
+            montarCompare();
+            repintar();
+            requestAnimationFrame(() => map2.resize());
+        });
+    }else{
+        montarCompare();
+        repintar();
+        requestAnimationFrame(() => map2.resize());
+    }
+    actualizarUICompare();
+}
+
+function montarCompare(){
+    if(compareInstance) compareInstance.remove();
+    compareInstance = new mapboxgl.Compare(map, map2, '#map-wrap', {
+        mousemove:false, orientation:'vertical'
+    });
+    requestAnimationFrame(() => { map.resize(); map2.resize(); });
+}
+
+function apagarCompare(){
+    compareMode = false;
+    document.body.classList.remove('compare-mode');
+    if(compareInstance){ compareInstance.remove(); compareInstance = null; }
+    actualizarUICompare();
+    repintar(); renderPanel();
+    requestAnimationFrame(() => map.resize());
+}
+
+function actualizarUICompare(){
+    const btn = document.getElementById('btnCompare');
+    if(btn){
+        btn.classList.toggle('active', compareMode);
+        document.getElementById('btnCompareLabel').textContent =
+            t(compareMode ? 'Salir de comparación' : 'Comparar vuelos');
+    }
+    const b = document.getElementById('ceresLadoB');
+    if(b) b.style.display = compareMode ? '' : 'none';
+    renderCeresStepper();
+}
+
 function setCeresParam(v){ S.ceres.param = v; repintar(); renderPanel(); }
-function setCeresVuelo(i){
+function setCeresVuelo(i, lado){
     const n = ceresVuelos().length;
-    S.ceres.vuelo = Math.max(0, Math.min(n - 1, i));
+    const v = Math.max(0, Math.min(n - 1, i));
+    if(lado === 'B') S.ceres.vueloB = v; else S.ceres.vuelo = v;
     repintar(); renderPanel();
 }
 /* Avanzar o retroceder un vuelo. Es el gesto frecuente —comparar fechas
    consecutivas— y con un desplegable de 28 opciones costaba tres acciones. */
-function pasoCeresVuelo(d){ setCeresVuelo((S.ceres.vuelo == null ? 0 : S.ceres.vuelo) + d); }
+function pasoCeresVuelo(d, lado){ setCeresVuelo(ceresIdx(lado || 'A') + d, lado); }
 
-function openVuelos(){
+function openVuelos(lado){
+    ladoVuelos = lado === 'B' ? 'B' : 'A';
     const vs = ceresVuelos();
     document.getElementById('vuelosSub').textContent =
         `${vs.length} ${t('Vuelos').toLowerCase()} · ${fmtFecha(vs[0].date)} – ${fmtFecha(vs[vs.length-1].date)}`;
@@ -4502,8 +4992,8 @@ function openVuelos(){
         + `<div class="ceres-flights">` + filas.slice().reverse().map(([i, f]) => {
             const cob = (f.coverage || {})[ceresNivelJSON(S.ceres.nivel)] || {};
             const parcial = cob.n != null && cob.de != null && cob.n < cob.de;
-            return `<button type="button" class="ceres-flight${i === S.ceres.vuelo ? ' active' : ''}" `
-                + `onclick="setCeresVuelo(${i}); closeVuelos();">`
+            return `<button type="button" class="ceres-flight${i === ceresIdx(ladoVuelos) ? ' active' : ''}" `
+                + `onclick="setCeresVuelo(${i}, '${ladoVuelos}'); closeVuelos();">`
                 + `<div>${esc(fmtFecha(f.date))}</div>`
                 + `<div class="sem-muted-xs">${parcial ? `${cob.n}/${cob.de} · ${t('parcial')}` : `${cob.n || ''}`}</div>`
                 + `</button>`;
@@ -4511,20 +5001,25 @@ function openVuelos(){
     document.getElementById('vuelosOver').classList.add('visible');
 }
 function closeVuelos(){ document.getElementById('vuelosOver').classList.remove('visible'); }
+let ladoVuelos = 'A';
 
 /* Rotulo del stepper: fecha, temporada y posicion en el historico. */
 function renderCeresStepper(){
-    const vs = ceresVuelos(), v = ceresVuelo();
-    const lbl = document.getElementById('ceresVueloLabel');
-    if(!lbl) return;
-    if(!v){ lbl.innerHTML = `<div>—</div>`; return; }
-    const i = S.ceres.vuelo == null ? vs.length - 1 : S.ceres.vuelo;
-    lbl.innerHTML = `<div style="font-size:11.5px;font-weight:500">${esc(fmtFecha(v.date))}</div>`
-        + `<div class="sem-muted-xs">${esc(v.season)} · ${i+1}/${vs.length}</div>`;
-    lbl.title = t('Elegir un vuelo');
-    const prev = document.getElementById('ceresPrev'), next = document.getElementById('ceresNext');
-    if(prev) prev.disabled = i <= 0;
-    if(next) next.disabled = i >= vs.length - 1;
+    ['A','B'].forEach(lado => {
+        const sfx = lado === 'B' ? 'B' : '';
+        const lbl = document.getElementById('ceresVueloLabel' + sfx);
+        if(!lbl) return;
+        const vs = ceresVuelos(), v = ceresVuelo(lado);
+        if(!v){ lbl.innerHTML = `<div>—</div>`; return; }
+        const i = ceresIdx(lado);
+        lbl.innerHTML = `<div style="font-size:11.5px;font-weight:500">${esc(fmtFecha(v.date))}</div>`
+            + `<div class="sem-muted-xs">${esc(v.season)} · ${i+1}/${vs.length}</div>`;
+        lbl.title = t('Elegir un vuelo');
+        const prev = document.getElementById('ceresPrev' + sfx);
+        const next = document.getElementById('ceresNext' + sfx);
+        if(prev) prev.disabled = i <= 0;
+        if(next) next.disabled = i >= vs.length - 1;
+    });
 }
 
 /* Cambios de clase respecto del vuelo anterior: es lo mas accionable que hay
@@ -4637,6 +5132,14 @@ function ventanaRiego(){
     if(!RIEGO || !RIEGO.rango) return '';
     const d = iso => fmtFecha(String(iso).slice(0,10));
     return `${d(RIEGO.rango.inicio)} – ${d(RIEGO.rango.fin)}`;
+}
+
+function renderRiegoSubtitulo(){
+    const el = document.getElementById('riegoSubtitulo');
+    if(!el) return;
+    el.textContent = riegoEstado === 'listo'
+        ? `${t('Datos en vivo desde DropControl')} · ${ventanaRiego()}`
+        : t('Datos en vivo desde DropControl');
 }
 
 function legendRiego(activo){
@@ -5241,6 +5744,9 @@ function switchMode(modo){
     document.body.classList.toggle('soil-active', modo === 'suelo');
     document.body.classList.toggle('riego-active', modo === 'riego');
     document.body.classList.toggle('ceres-active', modo === 'ceres');
+    // El comparador es de Ceres: salir de la pestaña lo apaga en vez de dejar
+    // medio mapa pintado con un vuelo que ya no se está mirando.
+    if(modo !== 'ceres' && compareMode) apagarCompare();
     document.getElementById('ctrlGeneral').classList.toggle('visible', modo === 'general');
     document.getElementById('ctrlRiego').classList.toggle('visible', modo === 'riego');
     document.getElementById('ctrlCeres').classList.toggle('visible', modo === 'ceres');
@@ -5250,7 +5756,7 @@ function switchMode(modo){
     // La consulta a DropControl tarda ~2 s: se dispara al entrar a la pestaña,
     // no en el load inicial, y se cachea en memoria hasta que se pida
     // "Actualizar". El mapa dibuja mientras tanto con el estado "cargando".
-    if(modo === 'riego') cargarRiego(false);
+    if(modo === 'riego'){ renderRiegoCalendario(); cargarRiego(false); }
     // ceres_data.json pesa ~1 MB: se carga al entrar a la pestaña y no en el
     // load inicial, igual que la consulta de riego.
     if(modo === 'ceres'){
@@ -5479,7 +5985,7 @@ function encuadrarPredio(duracion){
 
 function inicializarMapa(){
     if(!GEO || !estiloListo || map.getLayer('sectores-fill')) return;
-    addLayers();
+    addLayers(map);
     encuadrarPredio(0);
     poblarSelectores();
     switchMode('general');
