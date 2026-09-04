@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-04T00:15:59+00:00",
+ "generated_at": "2026-09-04T16:49:51+00:00",
  "source": [
   {
    "archivo": "Base de datos Cosecha Ketcal_2026.xlsx",
@@ -607,6 +607,73 @@
     "n_semanas": 30,
     "cuarteles": 25
    },
+   "receptores": [
+    {
+     "id": "rosales",
+     "nombre": "Rosales",
+     "exportadora": true,
+     "kg": 3261521.1,
+     "dest": {
+      "exportacion": 1675746.0,
+      "mercado_interno": 1585775.2,
+      "desecho": 0.0
+     },
+     "cuarteles": 25,
+     "semanas": 28
+    },
+    {
+     "id": "gesex",
+     "nombre": "Gesex",
+     "exportadora": true,
+     "kg": 840331.0,
+     "dest": {
+      "exportacion": 840331.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 22,
+     "semanas": 14
+    },
+    {
+     "id": "propal",
+     "nombre": "Propal",
+     "exportadora": true,
+     "kg": 195057.0,
+     "dest": {
+      "exportacion": 195057.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 11,
+     "semanas": 6
+    },
+    {
+     "id": "botadero",
+     "nombre": "Botadero",
+     "exportadora": false,
+     "kg": 134963.7,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.0,
+      "desecho": 134963.7
+     },
+     "cuarteles": 25,
+     "semanas": 20
+    },
+    {
+     "id": "el_parque",
+     "nombre": "El Parque",
+     "exportadora": true,
+     "kg": 90774.0,
+     "dest": {
+      "exportacion": 90774.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 4,
+     "semanas": 2
+    }
+   ],
    "semanas": [
     {
      "kg": 0.0,
@@ -1310,16 +1377,43 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 160860.8
+       "exportadora": true,
+       "kg": 160860.8,
+       "dest": {
+        "exportacion": 87207.0,
+        "mercado_interno": 73653.8,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 11
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 26786.0
+       "exportadora": true,
+       "kg": 26786.0,
+       "dest": {
+        "exportacion": 26786.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 3810.0
+       "exportadora": false,
+       "kg": 3810.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 3810.0
+       },
+       "cuarteles": 1,
+       "semanas": 7
       }
      ],
      "semanas": {
@@ -1489,16 +1583,43 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 194694.6
+       "exportadora": true,
+       "kg": 194694.6,
+       "dest": {
+        "exportacion": 119361.0,
+        "mercado_interno": 75333.6,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 11
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 31024.0
+       "exportadora": true,
+       "kg": 31024.0,
+       "dest": {
+        "exportacion": 31024.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 2191.0
+       "exportadora": false,
+       "kg": 2191.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 2191.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       }
      ],
      "semanas": {
@@ -1656,16 +1777,43 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 187934.9
+       "exportadora": true,
+       "kg": 187934.9,
+       "dest": {
+        "exportacion": 82906.0,
+        "mercado_interno": 105028.9,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 13
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 50459.0
+       "exportadora": true,
+       "kg": 50459.0,
+       "dest": {
+        "exportacion": 50459.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 2222.0
+       "exportadora": false,
+       "kg": 2222.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 2222.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       }
      ],
      "semanas": {
@@ -1846,16 +1994,43 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 184101.2
+       "exportadora": true,
+       "kg": 184101.2,
+       "dest": {
+        "exportacion": 68471.0,
+        "mercado_interno": 115630.2,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 14
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 16583.0
+       "exportadora": true,
+       "kg": 16583.0,
+       "dest": {
+        "exportacion": 16583.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 1310.6
+       "exportadora": false,
+       "kg": 1310.6,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 1310.6
+       },
+       "cuarteles": 1,
+       "semanas": 6
       }
      ],
      "semanas": {
@@ -2046,16 +2221,43 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 315002.6
+       "exportadora": true,
+       "kg": 315002.6,
+       "dest": {
+        "exportacion": 170844.0,
+        "mercado_interno": 144158.6,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 12
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 53090.0
+       "exportadora": true,
+       "kg": 53090.0,
+       "dest": {
+        "exportacion": 53090.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 8364.0
+       "exportadora": false,
+       "kg": 8364.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 8364.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       }
      ],
      "semanas": {
@@ -2225,16 +2427,43 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 228838.0
+       "exportadora": true,
+       "kg": 228838.0,
+       "dest": {
+        "exportacion": 131487.0,
+        "mercado_interno": 97351.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 16
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 30021.0
+       "exportadora": true,
+       "kg": 30021.0,
+       "dest": {
+        "exportacion": 30021.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 8885.0
+       "exportadora": false,
+       "kg": 8885.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 8885.0
+       },
+       "cuarteles": 1,
+       "semanas": 7
       }
      ],
      "semanas": {
@@ -2450,20 +2679,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 250557.5
+       "exportadora": true,
+       "kg": 250557.5,
+       "dest": {
+        "exportacion": 121459.0,
+        "mercado_interno": 129098.5,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 15
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 82514.0
+       "exportadora": true,
+       "kg": 82514.0,
+       "dest": {
+        "exportacion": 82514.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 4510.2
+       "exportadora": false,
+       "kg": 4510.2,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 4510.2
+       },
+       "cuarteles": 1,
+       "semanas": 10
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 2327.0
+       "exportadora": true,
+       "kg": 2327.0,
+       "dest": {
+        "exportacion": 2327.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -2666,20 +2931,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 259672.3
+       "exportadora": true,
+       "kg": 259672.3,
+       "dest": {
+        "exportacion": 118798.0,
+        "mercado_interno": 140874.3,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 13
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 72422.0
+       "exportadora": true,
+       "kg": 72422.0,
+       "dest": {
+        "exportacion": 72422.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 7
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 18326.0
+       "exportadora": true,
+       "kg": 18326.0,
+       "dest": {
+        "exportacion": 18326.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 4350.2
+       "exportadora": false,
+       "kg": 4350.2,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 4350.2
+       },
+       "cuarteles": 1,
+       "semanas": 8
       }
      ],
      "semanas": {
@@ -2871,20 +3172,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 187586.5
+       "exportadora": true,
+       "kg": 187586.5,
+       "dest": {
+        "exportacion": 46446.0,
+        "mercado_interno": 141140.5,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 14
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 83987.0
+       "exportadora": true,
+       "kg": 83987.0,
+       "dest": {
+        "exportacion": 83987.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 20417.0
+       "exportadora": true,
+       "kg": 20417.0,
+       "dest": {
+        "exportacion": 20417.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 4441.7
+       "exportadora": false,
+       "kg": 4441.7,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 4441.7
+       },
+       "cuarteles": 1,
+       "semanas": 8
       }
      ],
      "semanas": {
@@ -3088,20 +3425,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 135484.6
+       "exportadora": true,
+       "kg": 135484.6,
+       "dest": {
+        "exportacion": 65278.0,
+        "mercado_interno": 70206.6,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 15
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 39635.0
+       "exportadora": true,
+       "kg": 39635.0,
+       "dest": {
+        "exportacion": 39635.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 7
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 7618.0
+       "exportadora": true,
+       "kg": 7618.0,
+       "dest": {
+        "exportacion": 7618.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 2251.1
+       "exportadora": false,
+       "kg": 2251.1,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 2251.1
+       },
+       "cuarteles": 1,
+       "semanas": 9
       }
      ],
      "semanas": {
@@ -3303,20 +3676,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 201179.2
+       "exportadora": true,
+       "kg": 201179.2,
+       "dest": {
+        "exportacion": 114253.0,
+        "mercado_interno": 86926.2,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 13
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 81704.0
+       "exportadora": true,
+       "kg": 81704.0,
+       "dest": {
+        "exportacion": 81704.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 16327.0
+       "exportadora": true,
+       "kg": 16327.0,
+       "dest": {
+        "exportacion": 16327.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 3151.6
+       "exportadora": false,
+       "kg": 3151.6,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 3151.6
+       },
+       "cuarteles": 1,
+       "semanas": 8
       }
      ],
      "semanas": {
@@ -3495,20 +3904,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 133501.4
+       "exportadora": true,
+       "kg": 133501.4,
+       "dest": {
+        "exportacion": 73499.0,
+        "mercado_interno": 60002.4,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 11
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 27973.0
+       "exportadora": true,
+       "kg": 27973.0,
+       "dest": {
+        "exportacion": 27973.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 7680.0
+       "exportadora": true,
+       "kg": 7680.0,
+       "dest": {
+        "exportacion": 7680.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 3550.0
+       "exportadora": false,
+       "kg": 3550.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 3550.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       }
      ],
      "semanas": {
@@ -3666,20 +4111,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 159783.7
+       "exportadora": true,
+       "kg": 159783.7,
+       "dest": {
+        "exportacion": 91197.0,
+        "mercado_interno": 68586.7,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 13
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 34979.0
+       "exportadora": true,
+       "kg": 34979.0,
+       "dest": {
+        "exportacion": 34979.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 14473.0
+       "exportadora": true,
+       "kg": 14473.0,
+       "dest": {
+        "exportacion": 14473.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 2381.6
+       "exportadora": false,
+       "kg": 2381.6,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 2381.6
+       },
+       "cuarteles": 1,
+       "semanas": 8
       }
      ],
      "semanas": {
@@ -3870,20 +4351,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 351279.8
+       "exportadora": true,
+       "kg": 351279.8,
+       "dest": {
+        "exportacion": 197616.0,
+        "mercado_interno": 153663.7,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 18
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 47949.0
+       "exportadora": true,
+       "kg": 47949.0,
+       "dest": {
+        "exportacion": 47949.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 20910.0
+       "exportadora": true,
+       "kg": 20910.0,
+       "dest": {
+        "exportacion": 20910.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 7623.2
+       "exportadora": false,
+       "kg": 7623.2,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 7623.2
+       },
+       "cuarteles": 1,
+       "semanas": 10
       }
      ],
      "semanas": {
@@ -4120,20 +4637,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 50613.0
+       "exportadora": true,
+       "kg": 50613.0,
+       "dest": {
+        "exportacion": 31391.0,
+        "mercado_interno": 19222.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 44723.0
+       "exportadora": true,
+       "kg": 44723.0,
+       "dest": {
+        "exportacion": 44723.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 44337.0
+       "exportadora": true,
+       "kg": 44337.0,
+       "dest": {
+        "exportacion": 44337.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 21700.0
+       "exportadora": false,
+       "kg": 21700.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 21700.0
+       },
+       "cuarteles": 1,
+       "semanas": 7
       }
      ],
      "semanas": {
@@ -4241,20 +4794,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 68333.0
+       "exportadora": true,
+       "kg": 68333.0,
+       "dest": {
+        "exportacion": 46944.0,
+        "mercado_interno": 21389.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 40285.0
+       "exportadora": true,
+       "kg": 40285.0,
+       "dest": {
+        "exportacion": 40285.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 28020.5
+       "exportadora": false,
+       "kg": 28020.5,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 28020.5
+       },
+       "cuarteles": 1,
+       "semanas": 7
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 14117.0
+       "exportadora": true,
+       "kg": 14117.0,
+       "dest": {
+        "exportacion": 14117.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       }
      ],
      "semanas": {
@@ -4362,24 +4951,69 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 26626.0
+       "exportadora": true,
+       "kg": 26626.0,
+       "dest": {
+        "exportacion": 15880.0,
+        "mercado_interno": 10746.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 23617.0
+       "exportadora": true,
+       "kg": 23617.0,
+       "dest": {
+        "exportacion": 23617.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 6290.0
+       "exportadora": false,
+       "kg": 6290.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 6290.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 4671.0
+       "exportadora": true,
+       "kg": 4671.0,
+       "dest": {
+        "exportacion": 4671.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 1971.0
+       "exportadora": true,
+       "kg": 1971.0,
+       "dest": {
+        "exportacion": 1971.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -4465,20 +5099,56 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 42365.0
+       "exportadora": true,
+       "kg": 42365.0,
+       "dest": {
+        "exportacion": 29932.0,
+        "mercado_interno": 12433.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 35590.0
+       "exportadora": true,
+       "kg": 35590.0,
+       "dest": {
+        "exportacion": 35590.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 16106.0
+       "exportadora": false,
+       "kg": 16106.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 16106.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 8703.0
+       "exportadora": true,
+       "kg": 8703.0,
+       "dest": {
+        "exportacion": 8703.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       }
      ],
      "semanas": {
@@ -4564,12 +5234,30 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 26388.0
+       "exportadora": true,
+       "kg": 26388.0,
+       "dest": {
+        "exportacion": 17531.0,
+        "mercado_interno": 8857.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 725.0
+       "exportadora": false,
+       "kg": 725.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 725.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -4611,16 +5299,43 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 37874.0
+       "exportadora": true,
+       "kg": 37874.0,
+       "dest": {
+        "exportacion": 20791.0,
+        "mercado_interno": 17083.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 25567.0
+       "exportadora": true,
+       "kg": 25567.0,
+       "dest": {
+        "exportacion": 25567.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 1103.0
+       "exportadora": false,
+       "kg": 1103.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 1103.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       }
      ],
      "semanas": {
@@ -4684,16 +5399,43 @@
      ],
      "receptores": [
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 21506.0
+       "exportadora": true,
+       "kg": 21506.0,
+       "dest": {
+        "exportacion": 21506.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 16421.0
+       "exportadora": true,
+       "kg": 16421.0,
+       "dest": {
+        "exportacion": 10140.0,
+        "mercado_interno": 6281.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 487.0
+       "exportadora": false,
+       "kg": 487.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 487.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       }
      ],
      "semanas": {
@@ -4757,16 +5499,43 @@
      ],
      "receptores": [
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 37917.0
+       "exportadora": true,
+       "kg": 37917.0,
+       "dest": {
+        "exportacion": 37917.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 20180.0
+       "exportadora": true,
+       "kg": 20180.0,
+       "dest": {
+        "exportacion": 8474.0,
+        "mercado_interno": 11706.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 691.0
+       "exportadora": false,
+       "kg": 691.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 691.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       }
      ],
      "semanas": {
@@ -4830,16 +5599,43 @@
      ],
      "receptores": [
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 16519.0
+       "exportadora": true,
+       "kg": 16519.0,
+       "dest": {
+        "exportacion": 16519.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 7058.0
+       "exportadora": true,
+       "kg": 7058.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 7058.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 281.0
+       "exportadora": false,
+       "kg": 281.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 281.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       }
      ],
      "semanas": {
@@ -4892,16 +5688,43 @@
      ],
      "receptores": [
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 9258.0
+       "exportadora": true,
+       "kg": 9258.0,
+       "dest": {
+        "exportacion": 9258.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 6279.0
+       "exportadora": true,
+       "kg": 6279.0,
+       "dest": {
+        "exportacion": 1468.0,
+        "mercado_interno": 4811.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 212.0
+       "exportadora": false,
+       "kg": 212.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 212.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       }
      ],
      "semanas": {
@@ -4954,16 +5777,43 @@
      ],
      "receptores": [
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 10177.0
+       "exportadora": true,
+       "kg": 10177.0,
+       "dest": {
+        "exportacion": 10177.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 8907.0
+       "exportadora": true,
+       "kg": 8907.0,
+       "dest": {
+        "exportacion": 4373.0,
+        "mercado_interno": 4534.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 306.0
+       "exportadora": false,
+       "kg": 306.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 306.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       }
      ],
      "semanas": {
@@ -5032,6 +5882,112 @@
     "n_semanas": 36,
     "cuarteles": 14
    },
+   "receptores": [
+    {
+     "id": "rosales",
+     "nombre": "Rosales",
+     "exportadora": true,
+     "kg": 1996969.6,
+     "dest": {
+      "exportacion": 863319.0,
+      "mercado_interno": 1133650.6,
+      "desecho": 0.0
+     },
+     "cuarteles": 14,
+     "semanas": 36
+    },
+    {
+     "id": "propal",
+     "nombre": "Propal",
+     "exportadora": true,
+     "kg": 376900.0,
+     "dest": {
+      "exportacion": 376900.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 14,
+     "semanas": 12
+    },
+    {
+     "id": "el_parque",
+     "nombre": "El Parque",
+     "exportadora": true,
+     "kg": 336803.0,
+     "dest": {
+      "exportacion": 336803.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 14,
+     "semanas": 11
+    },
+    {
+     "id": "gesex",
+     "nombre": "Gesex",
+     "exportadora": true,
+     "kg": 290425.0,
+     "dest": {
+      "exportacion": 290425.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 14,
+     "semanas": 11
+    },
+    {
+     "id": "westfalia",
+     "nombre": "Westfalia",
+     "exportadora": true,
+     "kg": 214837.0,
+     "dest": {
+      "exportacion": 214837.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 14,
+     "semanas": 10
+    },
+    {
+     "id": "botadero",
+     "nombre": "Botadero",
+     "exportadora": false,
+     "kg": 106700.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 4400.0,
+      "desecho": 102300.0
+     },
+     "cuarteles": 13,
+     "semanas": 17
+    },
+    {
+     "id": "rio_blanco",
+     "nombre": "Río Blanco",
+     "exportadora": true,
+     "kg": 46674.0,
+     "dest": {
+      "exportacion": 46674.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 6,
+     "semanas": 2
+    },
+    {
+     "id": "inversion_cordillera",
+     "nombre": "Inversión Cordillera",
+     "exportadora": true,
+     "kg": 748.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 748.0,
+      "desecho": 0.0
+     },
+     "cuarteles": 1,
+     "semanas": 1
+    }
+   ],
    "sin_cuartel": {
     "kg": 13808.6,
     "bins": 0.0,
@@ -5857,32 +6813,95 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 68263.0
+       "exportadora": true,
+       "kg": 68263.0,
+       "dest": {
+        "exportacion": 11752.0,
+        "mercado_interno": 56511.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 17268.0
+       "exportadora": true,
+       "kg": 17268.0,
+       "dest": {
+        "exportacion": 17268.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 7722.0
+       "exportadora": true,
+       "kg": 7722.0,
+       "dest": {
+        "exportacion": 7722.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 6860.0
+       "exportadora": true,
+       "kg": 6860.0,
+       "dest": {
+        "exportacion": 6860.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
-       "nombre": "Rio Blanco",
-       "kg": 6594.0
+       "id": "rio_blanco",
+       "nombre": "Río Blanco",
+       "exportadora": true,
+       "kg": 6594.0,
+       "dest": {
+        "exportacion": 6594.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 2280.0
+       "exportadora": true,
+       "kg": 2280.0,
+       "dest": {
+        "exportacion": 2280.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 800.0
+       "exportadora": false,
+       "kg": 800.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 800.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -6012,28 +7031,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 93309.0
+       "exportadora": true,
+       "kg": 93309.0,
+       "dest": {
+        "exportacion": 12721.0,
+        "mercado_interno": 80588.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 7
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 25975.0
+       "exportadora": true,
+       "kg": 25975.0,
+       "dest": {
+        "exportacion": 25975.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 13232.0
+       "exportadora": true,
+       "kg": 13232.0,
+       "dest": {
+        "exportacion": 13232.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 8500.0
+       "exportadora": true,
+       "kg": 8500.0,
+       "dest": {
+        "exportacion": 8500.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 7200.0
+       "exportadora": false,
+       "kg": 7200.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 7200.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 5070.0
+       "exportadora": true,
+       "kg": 5070.0,
+       "dest": {
+        "exportacion": 5070.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -6163,32 +7236,95 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 134023.0
+       "exportadora": true,
+       "kg": 134023.0,
+       "dest": {
+        "exportacion": 52871.0,
+        "mercado_interno": 81152.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 12
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 46350.0
+       "exportadora": true,
+       "kg": 46350.0,
+       "dest": {
+        "exportacion": 46350.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 23559.0
+       "exportadora": true,
+       "kg": 23559.0,
+       "dest": {
+        "exportacion": 23559.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 11847.0
+       "exportadora": true,
+       "kg": 11847.0,
+       "dest": {
+        "exportacion": 11847.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 10264.0
+       "exportadora": true,
+       "kg": 10264.0,
+       "dest": {
+        "exportacion": 10264.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 2400.0
+       "exportadora": false,
+       "kg": 2400.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 2400.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
-       "nombre": "Rio Blanco",
-       "kg": 1274.0
+       "id": "rio_blanco",
+       "nombre": "Río Blanco",
+       "exportadora": true,
+       "kg": 1274.0,
+       "dest": {
+        "exportacion": 1274.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -6351,28 +7487,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 93766.0
+       "exportadora": true,
+       "kg": 93766.0,
+       "dest": {
+        "exportacion": 22873.0,
+        "mercado_interno": 70893.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 9
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 38553.0
+       "exportadora": true,
+       "kg": 38553.0,
+       "dest": {
+        "exportacion": 38553.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 23504.0
+       "exportadora": true,
+       "kg": 23504.0,
+       "dest": {
+        "exportacion": 23504.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 17635.0
+       "exportadora": true,
+       "kg": 17635.0,
+       "dest": {
+        "exportacion": 17635.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 9837.0
+       "exportadora": true,
+       "kg": 9837.0,
+       "dest": {
+        "exportacion": 9837.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
-       "nombre": "Inversion Cordillera",
-       "kg": 748.0
+       "id": "inversion_cordillera",
+       "nombre": "Inversión Cordillera",
+       "exportadora": true,
+       "kg": 748.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 748.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -6524,28 +7714,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 265574.0
+       "exportadora": true,
+       "kg": 265574.0,
+       "dest": {
+        "exportacion": 107939.0,
+        "mercado_interno": 157635.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 15
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 46862.0
+       "exportadora": true,
+       "kg": 46862.0,
+       "dest": {
+        "exportacion": 46862.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 41767.0
+       "exportadora": true,
+       "kg": 41767.0,
+       "dest": {
+        "exportacion": 41767.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 17328.0
+       "exportadora": true,
+       "kg": 17328.0,
+       "dest": {
+        "exportacion": 17328.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 12998.0
+       "exportadora": true,
+       "kg": 12998.0,
+       "dest": {
+        "exportacion": 12998.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 8800.0
+       "exportadora": false,
+       "kg": 8800.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 1200.0,
+        "desecho": 7600.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       }
      ],
      "semanas": {
@@ -6752,28 +7996,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 97091.0
+       "exportadora": true,
+       "kg": 97091.0,
+       "dest": {
+        "exportacion": 18258.0,
+        "mercado_interno": 78833.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 10
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 46547.0
+       "exportadora": true,
+       "kg": 46547.0,
+       "dest": {
+        "exportacion": 46547.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 38795.0
+       "exportadora": true,
+       "kg": 38795.0,
+       "dest": {
+        "exportacion": 38795.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 28748.0
+       "exportadora": true,
+       "kg": 28748.0,
+       "dest": {
+        "exportacion": 28748.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 18198.0
+       "exportadora": true,
+       "kg": 18198.0,
+       "dest": {
+        "exportacion": 18198.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 6000.0
+       "exportadora": false,
+       "kg": 6000.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 6000.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       }
      ],
      "semanas": {
@@ -6947,32 +8245,95 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 170711.0
+       "exportadora": true,
+       "kg": 170711.0,
+       "dest": {
+        "exportacion": 100403.0,
+        "mercado_interno": 70308.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 14
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 31475.0
+       "exportadora": true,
+       "kg": 31475.0,
+       "dest": {
+        "exportacion": 31475.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 20805.0
+       "exportadora": true,
+       "kg": 20805.0,
+       "dest": {
+        "exportacion": 20805.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
-       "nombre": "Rio Blanco",
-       "kg": 17613.0
+       "id": "rio_blanco",
+       "nombre": "Río Blanco",
+       "exportadora": true,
+       "kg": 17613.0,
+       "dest": {
+        "exportacion": 17613.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 15274.0
+       "exportadora": true,
+       "kg": 15274.0,
+       "dest": {
+        "exportacion": 15274.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 10400.0
+       "exportadora": false,
+       "kg": 10400.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 10400.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 8972.0
+       "exportadora": true,
+       "kg": 8972.0,
+       "dest": {
+        "exportacion": 8972.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       }
      ],
      "semanas": {
@@ -7157,32 +8518,95 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 208769.0
+       "exportadora": true,
+       "kg": 208769.0,
+       "dest": {
+        "exportacion": 128089.0,
+        "mercado_interno": 80680.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 17
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 42765.0
+       "exportadora": true,
+       "kg": 42765.0,
+       "dest": {
+        "exportacion": 42765.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 38103.0
+       "exportadora": true,
+       "kg": 38103.0,
+       "dest": {
+        "exportacion": 38103.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 32875.0
+       "exportadora": true,
+       "kg": 32875.0,
+       "dest": {
+        "exportacion": 32875.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 18268.0
+       "exportadora": true,
+       "kg": 18268.0,
+       "dest": {
+        "exportacion": 18268.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
-       "nombre": "Rio Blanco",
-       "kg": 12942.0
+       "id": "rio_blanco",
+       "nombre": "Río Blanco",
+       "exportadora": true,
+       "kg": 12942.0,
+       "dest": {
+        "exportacion": 12942.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 4000.0
+       "exportadora": false,
+       "kg": 4000.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 4000.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       }
      ],
      "semanas": {
@@ -7433,28 +8857,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 260356.0
+       "exportadora": true,
+       "kg": 260356.0,
+       "dest": {
+        "exportacion": 124138.0,
+        "mercado_interno": 136218.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 13
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 50540.0
+       "exportadora": true,
+       "kg": 50540.0,
+       "dest": {
+        "exportacion": 50540.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 38026.0
+       "exportadora": true,
+       "kg": 38026.0,
+       "dest": {
+        "exportacion": 38026.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 26480.0
+       "exportadora": false,
+       "kg": 26480.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 3200.0,
+        "desecho": 23280.0
+       },
+       "cuarteles": 1,
+       "semanas": 7
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 25305.0
+       "exportadora": true,
+       "kg": 25305.0,
+       "dest": {
+        "exportacion": 25305.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 11550.0
+       "exportadora": true,
+       "kg": 11550.0,
+       "dest": {
+        "exportacion": 11550.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       }
      ],
      "semanas": {
@@ -7661,32 +9139,95 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 87105.2
+       "exportadora": true,
+       "kg": 87105.2,
+       "dest": {
+        "exportacion": 58035.2,
+        "mercado_interno": 29070.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 12
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 23640.0
+       "exportadora": true,
+       "kg": 23640.0,
+       "dest": {
+        "exportacion": 23640.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 20958.0
+       "exportadora": true,
+       "kg": 20958.0,
+       "dest": {
+        "exportacion": 20958.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 18442.0
+       "exportadora": true,
+       "kg": 18442.0,
+       "dest": {
+        "exportacion": 18442.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 10228.0
+       "exportadora": true,
+       "kg": 10228.0,
+       "dest": {
+        "exportacion": 10228.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
-       "nombre": "Rio Blanco",
-       "kg": 5773.0
+       "id": "rio_blanco",
+       "nombre": "Río Blanco",
+       "exportadora": true,
+       "kg": 5773.0,
+       "dest": {
+        "exportacion": 5773.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 1600.0
+       "exportadora": false,
+       "kg": 1600.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 1600.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -7860,28 +9401,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 128619.8
+       "exportadora": true,
+       "kg": 128619.8,
+       "dest": {
+        "exportacion": 37127.8,
+        "mercado_interno": 91492.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 11
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 39969.0
+       "exportadora": true,
+       "kg": 39969.0,
+       "dest": {
+        "exportacion": 39969.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 31613.0
+       "exportadora": true,
+       "kg": 31613.0,
+       "dest": {
+        "exportacion": 31613.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 6
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 26203.0
+       "exportadora": true,
+       "kg": 26203.0,
+       "dest": {
+        "exportacion": 26203.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 21564.0
+       "exportadora": true,
+       "kg": 21564.0,
+       "dest": {
+        "exportacion": 21564.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 14620.0
+       "exportadora": false,
+       "kg": 14620.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 14620.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       }
      ],
      "semanas": {
@@ -8066,28 +9661,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 92506.0
+       "exportadora": true,
+       "kg": 92506.0,
+       "dest": {
+        "exportacion": 41373.0,
+        "mercado_interno": 51133.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 8
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 15600.0
+       "exportadora": false,
+       "kg": 15600.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 15600.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 12105.0
+       "exportadora": true,
+       "kg": 12105.0,
+       "dest": {
+        "exportacion": 12105.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 10261.0
+       "exportadora": true,
+       "kg": 10261.0,
+       "dest": {
+        "exportacion": 10261.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 3650.0
+       "exportadora": true,
+       "kg": 3650.0,
+       "dest": {
+        "exportacion": 3650.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 2
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 690.0
+       "exportadora": true,
+       "kg": 690.0,
+       "dest": {
+        "exportacion": 690.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -8239,32 +9888,95 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 101224.0
+       "exportadora": true,
+       "kg": 101224.0,
+       "dest": {
+        "exportacion": 45499.0,
+        "mercado_interno": 55725.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 8
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 30322.0
+       "exportadora": true,
+       "kg": 30322.0,
+       "dest": {
+        "exportacion": 30322.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 21692.0
+       "exportadora": true,
+       "kg": 21692.0,
+       "dest": {
+        "exportacion": 21692.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 6850.0
+       "exportadora": true,
+       "kg": 6850.0,
+       "dest": {
+        "exportacion": 6850.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 5600.0
+       "exportadora": true,
+       "kg": 5600.0,
+       "dest": {
+        "exportacion": 5600.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
-       "nombre": "Rio Blanco",
-       "kg": 2478.0
+       "id": "rio_blanco",
+       "nombre": "Río Blanco",
+       "exportadora": true,
+       "kg": 2478.0,
+       "dest": {
+        "exportacion": 2478.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 2000.0
+       "exportadora": false,
+       "kg": 2000.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 2000.0
+       },
+       "cuarteles": 1,
+       "semanas": 1
       }
      ],
      "semanas": {
@@ -8405,28 +10117,82 @@
      ],
      "receptores": [
       {
+       "id": "rosales",
        "nombre": "Rosales",
-       "kg": 181844.0
+       "exportadora": true,
+       "kg": 181844.0,
+       "dest": {
+        "exportacion": 102240.0,
+        "mercado_interno": 79604.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 13
       },
       {
+       "id": "propal",
        "nombre": "Propal",
-       "kg": 22556.0
+       "exportadora": true,
+       "kg": 22556.0,
+       "dest": {
+        "exportacion": 22556.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 5
       },
       {
+       "id": "el_parque",
        "nombre": "El Parque",
-       "kg": 22507.0
+       "exportadora": true,
+       "kg": 22507.0,
+       "dest": {
+        "exportacion": 22507.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "gesex",
        "nombre": "Gesex",
-       "kg": 19453.0
+       "exportadora": true,
+       "kg": 19453.0,
+       "dest": {
+        "exportacion": 19453.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 4
       },
       {
+       "id": "westfalia",
        "nombre": "Westfalia",
-       "kg": 17005.0
+       "exportadora": true,
+       "kg": 17005.0,
+       "dest": {
+        "exportacion": 17005.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       },
       {
+       "id": "botadero",
        "nombre": "Botadero",
-       "kg": 6800.0
+       "exportadora": false,
+       "kg": 6800.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 6800.0
+       },
+       "cuarteles": 1,
+       "semanas": 3
       }
      ],
      "semanas": {

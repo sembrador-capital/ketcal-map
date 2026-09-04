@@ -87,6 +87,42 @@ ES_CAMOTE = ("minterno - camote", "minterno-camote", "camote")
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
          "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 
+# Receptores de la fruta, tal como los escribe la columna `Destino`. La planilla
+# los tipea de varias formas —EL PARQUE / El Parque, ROSALES / Rosales— y sin
+# canonizar salian como receptores distintos. El `id` es el que usa el mapa para
+# buscar el logo en assets/exportadoras/<id>.png.
+#
+# `exportadora` distingue a quien recibe fruta de exportacion del botadero, que
+# no es una exportadora sino el destino de la merma. Meterlos en la misma torta
+# haria parecer que el desecho es un cliente.
+RECEPTORES = {
+    "rosales":              ("Rosales", "rosales", True),
+    "gesex":                ("Gesex", "gesex", True),
+    "propal":               ("Propal", "propal", True),
+    "el parque":            ("El Parque", "el_parque", True),
+    "westfalia":            ("Westfalia", "westfalia", True),
+    "rio blanco":           ("Río Blanco", "rio_blanco", True),
+    "inversion cordillera": ("Inversión Cordillera", "inversion_cordillera", True),
+    "botadero":             ("Botadero", "botadero", False),
+}
+
+
+def receptor(txt):
+    """(id, nombre, es_exportadora) canonico de un receptor."""
+    k = sinacento(txt)
+    if k in RECEPTORES:
+        nombre, rid, expo = RECEPTORES[k]
+        return rid, nombre, expo
+    if not k:
+        return None, None, False
+    # Un receptor nuevo no se descarta: entra con su nombre tal cual y se
+    # asume exportadora, que es lo que casi siempre sera.
+    return slug_txt(k), norm(txt).title(), True
+
+
+def slug_txt(s):
+    return re.sub(r"[^a-z0-9]+", "_", sinacento(s)).strip("_")
+
 
 # ----------------------------------------------------------------- utilidades
 
@@ -217,8 +253,27 @@ def acumulador():
         "kg": 0.0, "bins": 0.0, "camote": 0.0,
         "dest": {d[0]: 0.0 for d in DESTINOS},
         "fechas": set(), "semanas": set(),
-        "variedades": Counter(), "receptores": Counter(),
+        "variedades": Counter(),
+        # receptor -> {kg, dest{...}, cuarteles, semanas}
+        "receptores": defaultdict(lambda: {
+            "kg": 0.0, "dest": {d[0]: 0.0 for d in DESTINOS},
+            "cuarteles": set(), "semanas": set(), "nombre": None, "expo": True}),
     }
+
+
+def receptores_de(a):
+    """Receptores ordenados por kilos, con su reparto por destino."""
+    out = []
+    for rid, v in a["receptores"].items():
+        out.append(OrderedDict([
+            ("id", rid), ("nombre", v["nombre"]), ("exportadora", v["expo"]),
+            ("kg", r2(v["kg"], 1)),
+            ("dest", {k: r2(x, 1) for k, x in v["dest"].items()}),
+            ("cuarteles", len(v["cuarteles"])),
+            ("semanas", len(v["semanas"])),
+        ]))
+    out.sort(key=lambda x: -x["kg"])
+    return out
 
 
 def cerrar(a, ha=None):
@@ -385,9 +440,17 @@ def main():
                 v = norm(r.get(c_var))
                 if v and not v.startswith("#"):
                     a["variedades"][v] += kg
-                rc = norm(r.get(c_rec))
-                if rc:
-                    a["receptores"][rc.title()] += kg
+                rid, rnombre, rexpo = receptor(r.get(c_rec))
+                if rid:
+                    ac = a["receptores"][rid]
+                    ac["nombre"] = rnombre
+                    ac["expo"] = rexpo
+                    ac["kg"] += kg
+                    ac["dest"][destino] += kg
+                    if cid:
+                        ac["cuarteles"].add(cid)
+                    if sem is not None:
+                        ac["semanas"].add(sem)
 
             sumar(tot)
             if sem is not None:
@@ -421,6 +484,7 @@ def main():
         t_out["n_filas"] = len(filas)
         t_out["total"] = cerrar(tot, ha_cosechada)
         t_out["total"]["cuarteles"] = len(por_cuartel)
+        t_out["receptores"] = receptores_de(tot)
         if sin_cuartel["filas"]:
             t_out["sin_cuartel"] = {"kg": r2(sin_cuartel["kg"], 1),
                                     "bins": r2(sin_cuartel["bins"], 1),
@@ -443,8 +507,7 @@ def main():
             ha = (plantacion.get(cid) or {}).get("ha_plantada")
             c_out = cerrar(a, ha)
             c_out["variedades"] = [v for v, _ in a["variedades"].most_common()]
-            c_out["receptores"] = [{"nombre": k, "kg": r2(v, 1)}
-                                   for k, v in a["receptores"].most_common()]
+            c_out["receptores"] = receptores_de(a)
             c_out["semanas"] = OrderedDict()
             for n in sorted(por_cuartel_semana[cid]):
                 sa = por_cuartel_semana[cid][n]
@@ -559,6 +622,12 @@ def main():
                  len(t["semanas"]), tt.get("desde"), tt.get("hasta")))
         print("        exportacion %4.1f %%   mercado interno %4.1f %%   desecho %4.1f %%"
               % tuple(tt["pct"][d[0]] * 100 for d in DESTINOS))
+        expo = [r for r in t["receptores"] if r["exportadora"]]
+        tot_e = sum(r["dest"]["exportacion"] for r in expo) or 1
+        print("        exportadoras: " + " · ".join(
+            "%s %.1f %%" % (r["nombre"], r["dest"]["exportacion"] / tot_e * 100)
+            for r in sorted(expo, key=lambda x: -x["dest"]["exportacion"])
+            if r["dest"]["exportacion"]))
     if issues:
         print("    ISSUES (%d):" % len(issues))
         for i in issues:

@@ -2495,6 +2495,50 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 .cos-chart-legend i.linea-b { height:0; border-top:2px dashed var(--sem-grey); width:14px;
     border-radius:0; }
 
+/* ── Tortas de reparto ───────────────────────────────────────────────────
+   Anillos y no tortas macizas: el hueco central lleva el total, que es el
+   número que uno busca antes de mirar las proporciones. */
+.cos-pies { display:grid; gap:18px; margin-bottom:4px;
+    grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); }
+.cos-pie-card { border:var(--sem-border-hair); border-radius:var(--sem-radius);
+    padding:13px 15px; background:var(--sem-surface); }
+.cos-pie-t { font-size:11px; font-weight:600; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--sem-text-2); margin-bottom:10px; }
+.cos-pie-wrap { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.cos-pie { flex:0 0 150px; width:150px; }
+.cos-pie svg { width:100%; height:auto; display:block; }
+.cos-pie path, .cos-pie circle { transition:opacity 0.15s; cursor:default; }
+.cos-pie .cp-hover:hover { opacity:0.78; }
+.cos-pie .cp-tot { font-size:21px; font-weight:300; fill:var(--sem-ink); }
+.cos-pie .cp-sub { font-size:9px; fill:var(--sem-text-3); }
+
+.cos-pie-leg { flex:1 1 150px; min-width:150px; display:flex;
+    flex-direction:column; gap:7px; }
+.cos-leg-row { display:grid; grid-template-columns:auto 1fr auto; gap:3px 9px;
+    align-items:center; font-size:11.5px; }
+.cos-leg-row .sw { width:10px; height:10px; border-radius:3px; flex:0 0 10px; }
+.cos-leg-row .nm { color:var(--sem-ink); overflow:hidden;
+    text-overflow:ellipsis; white-space:nowrap; }
+.cos-leg-row .vl { text-align:right; font-weight:600; color:var(--sem-ink);
+    font-variant-numeric:tabular-nums; }
+.cos-leg-row .sub { grid-column:2 / -1; font-size:10px; color:var(--sem-text-3);
+    font-variant-numeric:tabular-nums; }
+
+/* Logo de exportadora. El <img> apunta a assets/exportadoras/<id>.png y, si el
+   archivo no está, `onerror` lo quita del DOM y el monograma que va detrás
+   queda visible: el selector `img + b` sólo lo oculta MIENTRAS el img exista.
+   Así la pestaña funciona con o sin los logos, sin JavaScript de por medio. */
+.expo-logo { display:inline-flex; align-items:center; justify-content:center;
+    width:46px; height:24px; flex:0 0 46px; overflow:hidden;
+    border-radius:3px; background:var(--sem-surface);
+    border:var(--sem-border-soft); }
+.expo-logo img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
+.expo-logo img + b { display:none; }
+.expo-logo b { font-size:9.5px; font-weight:700; letter-spacing:0.04em;
+    color:var(--sem-surface); background:var(--sem-slate); width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center; }
+.expo-logo.chica { width:34px; height:19px; flex:0 0 34px; }
+
 /* Comparación entre temporadas: el delta con su signo leído en agronomía. */
 .cos-delta { font-weight:600; font-variant-numeric:tabular-nums; }
 .cos-delta.up { color:var(--dat-st-opt); }
@@ -3463,6 +3507,14 @@ const I18N = {
 'Incidencia media del predio por plaga. Las franjas de fondo son los umbrales de alerta del informe. Clic en un mes para llevar el mapa ahí.':'Farm mean incidence by pest. The background bands are the report alert thresholds. Click a month to take the map there.',
 'Porcentaje de frutos afectados por defecto. Clic en una semana para llevar el mapa ahí.':'Percentage of fruit affected by defect. Click a week to take the map there.',
 'cuart.':'blocks', 'Mes':'Month', 'Medio':'Medium',
+'Destino de la fruta':'Fruit destination',
+'Exportación por exportadora':'Export by exporter',
+'Todos los receptores':'All receivers',
+'Sin exportación registrada.':'No export recorded.',
+'de la cosecha':'of the harvest', 'de la exportación':'of the export',
+'de camote':'of misshapen fruit', 'en total':'in total',
+'cosechadas':'harvested', 'exportadas':'exported', 'Reparto':'Split',
+'Las dos tortas son de la temporada completa, no de la ventana del mapa. El anillo de exportadoras usa sólo los kilos de exportación de cada receptor.':'Both rings cover the full season, not the map window. The exporter ring uses only each receiver\u2019s export kilos.',
 'Evolución de la temporada':'Season evolution',
 'Agrandar el gráfico de la temporada':'Enlarge the season chart',
 'Sin cosecha esta semana.':'No harvest this week.',
@@ -7838,6 +7890,80 @@ function cosColor(v, escala){
     return escala.colores[i];
 }
 
+/* ── Exportadoras ────────────────────────────────────────────────────────
+   Paleta categórica para las tortas: son identidades, no magnitudes. Se
+   reusa el set validado de equipos y se extiende con el de plagas, que es el
+   otro set categórico del sistema.
+
+   No se usan los colores de marca de cada exportadora: cuatro de las cinco
+   son verdes y en un anillo de seis porciones no se distinguirían. El logo
+   lleva la identidad; el color sólo tiene que separar las porciones. */
+const RAMPA_CAT = ['--dat-eq-1','--dat-eq-2','--dat-eq-3','--dat-eq-4','--dat-eq-5',
+                   '--dat-pest-conchuelas','--dat-pest-acaros','--dat-pest-escamas',
+                   '--dat-pest-chanchito','--sem-slate-data'];
+function colorCat(i){ return SEM(RAMPA_CAT[i % RAMPA_CAT.length]); }
+
+/* Monograma de respaldo cuando no hay archivo de logo: las iniciales de las
+   dos primeras palabras, o las dos primeras letras si es una sola. */
+function expoMonograma(nombre){
+    const ps = String(nombre || '').trim().split(/\s+/).filter(Boolean);
+    if(!ps.length) return '—';
+    return ps.length > 1 ? (ps[0][0] + ps[1][0]).toUpperCase()
+                         : ps[0].slice(0, 2).toUpperCase();
+}
+function expoLogo(id, nombre, color, chica){
+    return `<span class="expo-logo${chica ? ' chica' : ''}" title="${esc(nombre || '')}">`
+        // Sin `loading="lazy"`: la carga diferida no dispara `onerror` mientras
+        // el elemento está bajo el pliegue, así que el respaldo no aparecía
+        // nunca y quedaba una caja de color con el monograma oculto. Son cinco
+        // PNG de pocos KB; diferirlos no ahorra nada.
+        + `<img src="assets/exportadoras/${esc(id)}.png" alt="${esc(nombre || '')}" `
+        + `onerror="this.remove()">`
+        + `<b${color ? ` style="background:${color}"` : ''}>`
+        + `${esc(expoMonograma(nombre))}</b></span>`;
+}
+
+/* ── Anillo de reparto ───────────────────────────────────────────────────
+   `segs` son {nombre, v, color, tip}. Anillo y no torta maciza: el hueco
+   central lleva el total, que es el número que se busca antes de comparar
+   proporciones. Una sola porción se dibuja como círculo: un arco de 360° tiene
+   los dos extremos en el mismo punto y degenera. */
+function cosPie(segs, opts){
+    opts = opts || {};
+    const total = segs.reduce((a, s) => a + s.v, 0);
+    if(!total) return `<div class="nut-evo-empty">${t('Sin dato')}</div>`;
+    const cx = 100, cy = 100, R = 82, r = 52;
+    const vivos = segs.filter(s => s.v > 0);
+
+    let piezas = '';
+    if(vivos.length === 1){
+        piezas = `<circle class="cp-hover" cx="${cx}" cy="${cy}" r="${(R+r)/2}" `
+            + `fill="none" stroke="${vivos[0].color}" stroke-width="${R-r}" `
+            + `data-tip="${tipAttr(vivos[0].tip || '')}"/>`;
+    }else{
+        let a0 = -Math.PI / 2;
+        vivos.forEach(s => {
+            const frac = s.v / total;
+            const a1 = a0 + frac * 2 * Math.PI;
+            const largo = frac > 0.5 ? 1 : 0;
+            const pt = (ang, rad) => [(cx + rad*Math.cos(ang)).toFixed(2),
+                                      (cy + rad*Math.sin(ang)).toFixed(2)];
+            const [x0,y0] = pt(a0,R), [x1,y1] = pt(a1,R);
+            const [x2,y2] = pt(a1,r), [x3,y3] = pt(a0,r);
+            piezas += `<path class="cp-hover" d="M${x0},${y0} A${R},${R} 0 ${largo} 1 ${x1},${y1} `
+                + `L${x2},${y2} A${r},${r} 0 ${largo} 0 ${x3},${y3} Z" `
+                + `fill="${s.color}" data-tip="${tipAttr(s.tip || '')}"/>`;
+            a0 = a1;
+        });
+    }
+    return `<div class="cos-pie"><svg viewBox="0 0 200 200" role="img" `
+        + `aria-label="${esc(opts.aria || t('Reparto'))}">${piezas}`
+        + `<text class="cp-tot" x="${cx}" y="${cy - 1}" text-anchor="middle">`
+        + `${esc(opts.centro || '')}</text>`
+        + `<text class="cp-sub" x="${cx}" y="${cy + 14}" text-anchor="middle">`
+        + `${esc(opts.centroSub || '')}</text></svg></div>`;
+}
+
 /* Barra de reparto por destino. Un solo componente para el tooltip, la ficha,
    la leyenda y el modal. */
 function cosSplitBar(pct, opts){
@@ -8356,11 +8482,47 @@ function cosModalHTML(cid, c, t0, meta){
          + cosTablaSemanas(c, t0, meta);
 
     if(c.receptores && c.receptores.length){
+        // El mismo anillo del detalle general, pero de este cuartel: a quién le
+        // fue su fruta de exportación.
+        const expo = c.receptores.filter(r => r.exportadora && (r.dest.exportacion || 0) > 0)
+            .sort((a, b) => b.dest.exportacion - a.dest.exportacion);
+        const totExpo = expo.reduce((a, r) => a + r.dest.exportacion, 0);
+        const segs = expo.map((r, i) => ({
+            nombre: r.nombre, id: r.id, v: r.dest.exportacion, color: colorCat(i),
+            tip: `<div class="ch-tip-t">${esc(r.nombre)}</div>`
+                + `<div class="ch-tip-hr"></div>`
+                + `<div class="ch-tip-big">${fmtDec(r.dest.exportacion/1000, 2)} t</div>`
+                + `<div class="ch-tip-s">${fmtDec(r.dest.exportacion/(totExpo||1)*100, 1)} % `
+                + `${t('de la exportación')}</div>`
+                + `<div class="ch-tip-foot">${plural(r.semanas, 'semana', 'semanas')}</div>`
+        }));
         html += `<div class="cos-section-title">${t('Recepción')}</div>`
-             + `<div class="ket-rank">` + c.receptores.map(r =>
-                `<div class="ket-row"><span class="nm">${esc(r.nombre)}</span>`
-                + `<span class="vl">${fmtDec(r.kg/1000, 2)} t</span></div>`).join('')
-             + `</div>`;
+             + `<div class="cos-pies"><div class="cos-pie-card">`
+             + `<div class="cos-pie-t">${t('Exportación por exportadora')}</div>`
+             + `<div class="cos-pie-wrap">`
+             + (segs.length
+                ? cosPie(segs, {centro: fmtDec(totExpo/1000, 1), centroSub: 't ' + t('exportadas'),
+                                aria: t('Exportación por exportadora')})
+                  + `<div class="cos-pie-leg">` + segs.map(s =>
+                    `<div class="cos-leg-row">${expoLogo(s.id, s.nombre, s.color, true)}`
+                    + `<span class="nm">${esc(s.nombre)}</span>`
+                    + `<span class="vl">${fmtDec(s.v/(totExpo||1)*100, 1)} %</span>`
+                    + `<span class="sub">${fmtDec(s.v/1000, 2)} t</span></div>`).join('')
+                  + `</div>`
+                : `<div class="nut-evo-empty">${t('Sin exportación registrada.')}</div>`)
+             + `</div></div>`
+             // Todos los receptores, incluido el botadero, que no es exportadora.
+             + `<div class="cos-pie-card"><div class="cos-pie-t">${t('Todos los receptores')}</div>`
+             + `<div class="cos-pie-leg">` + c.receptores.map(r =>
+                `<div class="cos-leg-row">`
+                + (r.exportadora ? expoLogo(r.id, r.nombre, null, true)
+                    : `<span class="sw" style="background:${SEM(COS_DEST_TOKEN.desecho)}"></span>`)
+                + `<span class="nm">${esc(r.nombre)}</span>`
+                + `<span class="vl">${fmtDec(r.kg/1000, 2)} t</span>`
+                + `<span class="sub">${COS_DEST.filter(d => r.dest[d] > 0).map(d =>
+                    `${esc(t(COS_DEST_ES[d]))} ${fmtDec(r.dest[d]/1000, 2)} t`).join(' · ')}</span>`
+                + `</div>`).join('')
+             + `</div></div></div>`;
     }
     return html;
 }
@@ -8529,12 +8691,80 @@ function cosTemporadaModalHTML(t0){
         + `<div class="v">${v}${u ? `<span class="u">${esc(u)}</span>` : ''}</div></div>`).join('');
 
     return `<div class="cos-modal-kpis">${kpis}</div>`
-        + `<div class="cos-section-title">${t('Reparto por destino')}</div>`
-        + cosSplitBar(tt.pct, {tall:true, leyenda:true})
+        + `<div class="cos-section-title">${t('Destino de la fruta')}</div>`
+        + cosTortasDestino(t0)
         + `<div class="cos-section-title">${t('Evolución semanal')}</div>`
         + cosChartSemanal(serie, t0, cb, {w:1180, h:340, total: tt.kg})
         + `<div class="cos-section-title">${t('Semanas')}</div>`
         + cosTablaSemanasPredio(t0);
+}
+
+/* Las dos tortas del detalle general: a dónde fue la fruta y, dentro de la que
+   se exportó, a qué exportadora. Son dos preguntas distintas y una sola barra
+   apilada sólo contestaba la primera.
+
+   El anillo de exportadoras se calcula sobre los kilos de EXPORTACIÓN de cada
+   receptor, no sobre sus kilos totales: Rosales también recibe mercado interno
+   y contarlo aquí infla su porción con fruta que no se exportó. */
+function cosTortasDestino(t0){
+    const tt = t0.total;
+    const recep = t0.receptores || [];
+
+    const segDest = COS_DEST.map(d => ({
+        nombre: t(COS_DEST_ES[d]), v: tt.dest[d] || 0,
+        color: SEM(COS_DEST_TOKEN[d]),
+        tip: `<div class="ch-tip-t">${esc(t(COS_DEST_ES[d]))}</div>`
+            + `<div class="ch-tip-hr"></div>`
+            + `<div class="ch-tip-big">${fmtDec((tt.dest[d]||0)/1000, 1)} t</div>`
+            + `<div class="ch-tip-s">${fmtDec((tt.pct[d]||0)*100, 1)} % `
+            + `${t('de la cosecha')}</div>`
+            + (d === 'mercado_interno' && tt.camote
+                ? `<div class="ch-tip-foot">${fmtDec(tt.camote/1000, 2)} t ${t('de camote')}</div>` : '')
+    }));
+
+    const expo = recep.filter(r => r.exportadora && (r.dest.exportacion || 0) > 0)
+        .sort((a, b) => b.dest.exportacion - a.dest.exportacion);
+    const totExpo = expo.reduce((a, r) => a + r.dest.exportacion, 0);
+    const segExpo = expo.map((r, i) => ({
+        nombre: r.nombre, id: r.id, v: r.dest.exportacion, color: colorCat(i),
+        tip: `<div class="ch-tip-t">${esc(r.nombre)}</div>`
+            + `<div class="ch-tip-hr"></div>`
+            + `<div class="ch-tip-big">${fmtDec(r.dest.exportacion/1000, 1)} t</div>`
+            + `<div class="ch-tip-s">${fmtDec(r.dest.exportacion/(totExpo||1)*100, 1)} % `
+            + `${t('de la exportación')}</div>`
+            + `<div class="ch-tip-foot">${plural(r.cuarteles, 'cuartel', 'cuarteles')} · `
+            + `${plural(r.semanas, 'semana', 'semanas')}`
+            + (r.kg > r.dest.exportacion
+                ? ` · ${fmtDec(r.kg/1000, 1)} t ${t('en total')}` : '') + `</div>`
+    }));
+
+    const legDest = segDest.map(s =>
+        `<div class="cos-leg-row"><span class="sw" style="background:${s.color}"></span>`
+        + `<span class="nm">${esc(s.nombre)}</span>`
+        + `<span class="vl">${fmtDec(s.v/tt.kg*100, 1)} %</span>`
+        + `<span class="sub">${fmtDec(s.v/1000, 1)} t</span></div>`).join('');
+
+    const legExpo = segExpo.map(s =>
+        `<div class="cos-leg-row">${expoLogo(s.id, s.nombre, s.color, true)}`
+        + `<span class="nm">${esc(s.nombre)}</span>`
+        + `<span class="vl">${fmtDec(s.v/(totExpo||1)*100, 1)} %</span>`
+        + `<span class="sub">${fmtDec(s.v/1000, 1)} t</span></div>`).join('');
+
+    return `<div class="cos-pies">`
+        + `<div class="cos-pie-card"><div class="cos-pie-t">${t('Reparto por destino')}</div>`
+        + `<div class="cos-pie-wrap">`
+        + cosPie(segDest, {centro: fmtDec(tt.kg/1000, 0), centroSub: 't ' + t('cosechadas'),
+                           aria: t('Reparto por destino')})
+        + `<div class="cos-pie-leg">${legDest}</div></div></div>`
+        + `<div class="cos-pie-card"><div class="cos-pie-t">${t('Exportación por exportadora')}</div>`
+        + `<div class="cos-pie-wrap">`
+        + (segExpo.length
+            ? cosPie(segExpo, {centro: fmtDec(totExpo/1000, 0), centroSub: 't ' + t('exportadas'),
+                               aria: t('Exportación por exportadora')})
+              + `<div class="cos-pie-leg">${legExpo}</div>`
+            : `<div class="nut-evo-empty">${t('Sin exportación registrada.')}</div>`)
+        + `</div></div></div>`
+        + `<div class="cos-hint">${t('Las dos tortas son de la temporada completa, no de la ventana del mapa. El anillo de exportadoras usa sólo los kilos de exportación de cada receptor.')}</div>`;
 }
 
 /* Tabla de semanas del predio. Es la del cuartel más la columna de cuánto del

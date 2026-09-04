@@ -66,6 +66,7 @@ contar bordes de digitalización como si fueran riego real.
 
 ```
 index.html                  ← TODO el mapa: HTML + CSS + JS en un archivo
+assets/exportadoras/        ← logos de las exportadoras (ver su README)
 geo_data.json               ← geometría (generado)
 nutricion_data.json         ← análisis de suelo y foliares (generado)
 cosecha_data.json           ← cosecha por cuartel y semana (generado)
@@ -416,6 +417,52 @@ Cubre las tres familias:
 | Franja de semanas y columnas de Cosecha | semana, fechas, toneladas, reparto por destino con sus tres colores y porcentajes, bins, cuarteles, peso sobre la temporada, avance acumulado y —en el modal de un cuartel— kg/ha |
 | Series de Nutrición | fecha, valor con su unidad, banda de umbral en la que cae, variación respecto del muestreo anterior y número de muestras |
 | Series de Ceres | fecha del vuelo, valor, clase del indicador y variación respecto del vuelo anterior |
+
+### El destino de la fruta, en anillos
+
+El detalle general de la temporada abre con **dos anillos**, porque son dos
+preguntas distintas y una sola barra apilada sólo contestaba la primera:
+
+1. **Reparto por destino** — exportación / mercado interno / desecho, con el
+   total cosechado en el centro.
+2. **Exportación por exportadora** — a quién le fue la fruta que se exportó, con
+   el logo de cada una.
+
+Anillos y no tortas macizas: el hueco central lleva el total, que es el número
+que uno busca antes de comparar proporciones. Una sola porción se dibuja como
+círculo, porque un arco de 360° tiene los dos extremos en el mismo punto y
+degenera.
+
+El segundo anillo usa los kilos de **exportación** de cada receptor, no sus
+kilos totales: Rosales también recibe mercado interno, y contarlo ahí infla su
+porción con fruta que no se exportó. La diferencia no es menor — en 2026 Rosales
+recibió 3.261 t en total y 1.676 t de exportación.
+
+| Exportadora | 2026 | 2025 |
+|---|---|---|
+| Rosales | 59,8 % | 40,6 % |
+| Gesex | 30,0 % | 13,6 % |
+| Propal | 7,0 % | 17,7 % |
+| El Parque | 3,2 % | 15,8 % |
+| Westfalia | — | 10,1 % |
+| Río Blanco | — | 2,2 % |
+
+El **botadero no entra** en el anillo de exportadoras: no es un cliente, es el
+destino de la merma. Aparece en la tarjeta "Todos los receptores" del detalle de
+cada cuartel, con su reparto por destino.
+
+Los colores de las porciones **no** son los de marca de cada exportadora: cuatro
+de las cinco son verdes y en un anillo de seis porciones no se distinguirían. El
+logo lleva la identidad; el color sólo tiene que separar las porciones.
+
+Los logos viven en `assets/exportadoras/<id>.png`, donde `<id>` es el que emite
+`tools/build_cosecha.py`. Si el archivo no está, el `onerror` del `<img>` lo
+quita del DOM y el monograma que va detrás queda visible — el selector
+`img + b` sólo lo oculta *mientras* el `img` exista, así que el respaldo es CSS
+puro sin JavaScript de por medio. Un detalle que costó descubrir: con
+`loading="lazy"` el respaldo **no** funcionaba, porque la carga diferida no
+dispara `onerror` mientras el elemento está bajo el pliegue y quedaba una caja
+vacía. Son cinco PNG de pocos KB; diferirlos no ahorraba nada.
 
 ### El detalle semanal
 
