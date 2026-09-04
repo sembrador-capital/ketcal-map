@@ -411,6 +411,7 @@ use[href^="#ic-"] { stroke:currentColor; }
 body.foliar-active .stats-bar,
 body.ceres-active .stats-bar,
 body.riego-active .stats-bar,
+body.cosecha-active .stats-bar,
 body.prod-active .stats-bar,
 body.soil-active .stats-bar,
 body.agro-active .stats-bar,
@@ -422,6 +423,7 @@ body.pest-active .stats-bar {
 body.foliar-active .mapboxgl-ctrl-bottom-right,
 body.ceres-active .mapboxgl-ctrl-bottom-right,
 body.riego-active .mapboxgl-ctrl-bottom-right,
+body.cosecha-active .mapboxgl-ctrl-bottom-right,
 body.prod-active .mapboxgl-ctrl-bottom-right,
 body.soil-active .mapboxgl-ctrl-bottom-right,
 body.agro-active .mapboxgl-ctrl-bottom-right,
@@ -627,7 +629,7 @@ body.compare-mode .foliar-controls-B { display:flex; gap:14px; align-items:cente
 .mapboxgl-ctrl-attrib, .mapboxgl-ctrl-attrib a { color:var(--sem-text-2); font-size:11px; }
 
 /* ── COMPONENTE 4 · Paneles laterales ───────────────────────────────────── */
-.ceres-controls, .riego-controls, .agro-controls, .fin-controls, .pest-controls {
+.ceres-controls, .riego-controls, .cos-controls, .agro-controls, .fin-controls, .pest-controls {
     position:absolute; z-index:var(--z-panel); display:none; overflow:hidden;
     background:var(--sem-surface); color:var(--sem-ink);
     border:var(--sem-border-hair);
@@ -644,24 +646,25 @@ body.compare-mode .foliar-controls-B { display:flex; gap:14px; align-items:cente
 .agro-controls  { top:60px; right:16px; width:364px; max-height:calc(100vh - 146px); overflow:auto; }
 .fin-controls   { top:60px; right:16px; width:336px; max-height:calc(100vh - 146px); overflow:auto; }
 .pest-controls  { top:60px; right:16px; width:336px; max-height:calc(100vh - 146px); overflow:auto; }
-.ceres-controls.visible, .riego-controls.visible, .agro-controls.visible, .fin-controls.visible, .pest-controls.visible { display:block; }
+.cos-controls   { top:60px; right:16px; width:342px; max-height:calc(100vh - 146px); overflow:auto; }
+.ceres-controls.visible, .riego-controls.visible, .cos-controls.visible, .agro-controls.visible, .fin-controls.visible, .pest-controls.visible { display:block; }
 
-.ceres-controls-header, .riego-controls-header, .agro-controls-header, .fin-controls-header, .pest-controls-header {
+.ceres-controls-header, .riego-controls-header, .cos-controls-header, .agro-controls-header, .fin-controls-header, .pest-controls-header {
     padding:10px 14px 9px; background:var(--sem-beige-wash);
     border-bottom:var(--sem-border-soft);
 }
-.ceres-controls-title, .riego-controls-title, .agro-controls-title, .fin-controls-title, .pest-controls-title {
+.ceres-controls-title, .riego-controls-title, .cos-controls-title, .agro-controls-title, .fin-controls-title, .pest-controls-title {
     font-size:11px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
     color:var(--sem-navy); display:flex; align-items:center; gap:7px;
 }
-.ceres-controls-title .cs-dot, .riego-controls-title .rc-dot, .agro-controls-title .ac-dot,
-.fin-controls-title .fc-dot, .pest-controls-title .pc-dot {
+.ceres-controls-title .cs-dot, .riego-controls-title .rc-dot, .cos-controls-title .cc-dot,
+.agro-controls-title .ac-dot, .fin-controls-title .fc-dot, .pest-controls-title .pc-dot {
     width:7px; height:7px; border-radius:50%; background:var(--sem-green); flex:0 0 7px;
 }
-.ceres-controls-subtitle, .riego-controls-subtitle, .agro-controls-subtitle, .fin-controls-subtitle, .pest-controls-subtitle {
+.ceres-controls-subtitle, .riego-controls-subtitle, .cos-controls-subtitle, .agro-controls-subtitle, .fin-controls-subtitle, .pest-controls-subtitle {
     font-size:11px; color:var(--sem-text-2); margin-top:4px; line-height:1.35;
 }
-.ceres-controls-body, .riego-controls-body, .agro-controls-body, .fin-controls-body, .pest-controls-body { padding:11px 13px 13px; }
+.ceres-controls-body, .riego-controls-body, .cos-controls-body, .agro-controls-body, .fin-controls-body, .pest-controls-body { padding:11px 13px 13px; }
 
 /* Sub-pestañas del panel de riego */
 .riego-mode-tabs {
@@ -1289,30 +1292,31 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 .soil-controls .soil-param-select { min-width:210px; }
 
 /* ── Modales ────────────────────────────────────────────────────────────── */
-.riego-modal, .agro-modal, .fin-modal, .pest-modal {
+.riego-modal, .cos-modal, .agro-modal, .fin-modal, .pest-modal {
     position:fixed; inset:0; z-index:var(--z-modal); display:none;
     align-items:center; justify-content:center;
     background:var(--sem-scrim);
     backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
 }
-.riego-modal.visible, .agro-modal.visible, .fin-modal.visible, .pest-modal.visible { display:flex; }
-.riego-modal-content, .agro-modal-content, .fin-modal-content, .pest-modal-content {
+.riego-modal.visible, .cos-modal.visible, .agro-modal.visible, .fin-modal.visible, .pest-modal.visible { display:flex; }
+.riego-modal-content, .cos-modal-content, .agro-modal-content, .fin-modal-content, .pest-modal-content {
     background:var(--sem-surface); color:var(--sem-ink);
     border-radius:var(--sem-radius-lg); padding:22px 24px 24px;
     max-height:90vh; overflow:auto; box-shadow:var(--sem-shadow-lg);
 }
 .riego-modal-content { width:min(820px,calc(100vw - 40px)); }
+.cos-modal-content   { width:min(980px,calc(100vw - 36px)); }
 .agro-modal-content  { width:min(1120px,calc(100vw - 36px)); }
 .fin-modal-content   { width:min(940px,calc(100vw - 36px)); }
 .pest-modal-content  { width:min(980px,calc(100vw - 36px)); }
-.riego-modal-head, .agro-modal-head, .fin-modal-head, .pest-modal-head {
+.riego-modal-head, .cos-modal-head, .agro-modal-head, .fin-modal-head, .pest-modal-head {
     display:flex; justify-content:space-between; align-items:flex-start;
     padding-bottom:14px; margin-bottom:16px; border-bottom:var(--sem-border-soft);
 }
-.riego-modal-head h2, .agro-modal-head h2, .fin-modal-head h2, .pest-modal-head h2 {
+.riego-modal-head h2, .cos-modal-head h2, .agro-modal-head h2, .fin-modal-head h2, .pest-modal-head h2 {
     font-size:19px; font-weight:600; color:var(--sem-navy); letter-spacing:-0.01em;
 }
-.riego-modal-head .rm-sub, .agro-modal-sub, .fin-modal-sub, .pest-modal-sub {
+.riego-modal-head .rm-sub, .cos-modal-head .rm-sub, .agro-modal-sub, .fin-modal-sub, .pest-modal-sub {
     font-size:11px; color:var(--sem-text-2); margin-top:5px;
     text-transform:uppercase; letter-spacing:0.05em;
 }
@@ -1320,42 +1324,44 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 
 /* Métricas de modal: cifra grande en peso 300 sobre fondo beige, sin borde */
 .riego-modal-kpis { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:18px; }
+.cos-modal-kpis { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin-bottom:18px; }
 .agro-modal-kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:16px; }
 .fin-modal-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
 .pest-modal-meta { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:18px; }
-.rm-kpi, .agro-kpi, .fin-kpi, .pest-meta-card {
+.rm-kpi, .cos-kpi, .agro-kpi, .fin-kpi, .pest-meta-card {
     background:var(--sem-beige-wash); border:none;
     border-radius:var(--sem-radius); padding:11px 13px;
 }
-.rm-kpi .k, .agro-kpi .k, .fin-kpi .k, .pest-meta-card .k {
+.rm-kpi .k, .cos-kpi .k, .agro-kpi .k, .fin-kpi .k, .pest-meta-card .k {
     font-size:11px; font-weight:400; color:var(--sem-text-2);
     text-transform:uppercase; letter-spacing:0.05em; margin-bottom:5px;
 }
-.rm-kpi .v, .agro-kpi .v, .fin-kpi .v, .pest-meta-card .v {
+.rm-kpi .v, .cos-kpi .v, .agro-kpi .v, .fin-kpi .v, .pest-meta-card .v {
     font-size:20px; font-weight:300; color:var(--sem-ink); line-height:1.15;
 }
-.rm-kpi .u { font-size:11px; font-weight:400; color:var(--sem-text-2); margin-left:3px; }
+.rm-kpi .u, .cos-kpi .u { font-size:11px; font-weight:400; color:var(--sem-text-2); margin-left:3px; }
 .pest-meta-card .v { font-size:14px; font-weight:500; }
-.rm-section-title, .agro-modal-section-title, .pest-modal-section-title {
+.rm-section-title, .cos-section-title, .agro-modal-section-title, .pest-modal-section-title {
     font-size:12px; font-weight:600; color:var(--sem-navy);
     text-transform:uppercase; letter-spacing:0.05em;
     margin:18px 0 10px; padding-bottom:6px; border-bottom:var(--sem-border-soft);
 }
 /* Tablas: sin bordes verticales, sólo divisores horizontales */
-.rm-events, .agro-events {
+.rm-events, .cos-events, .agro-events {
     border:var(--sem-border-hair); border-radius:var(--sem-radius); overflow:auto;
 }
+.cos-events { max-height:300px; }
 .rm-events { max-height:220px; }
 .agro-events { max-height:52vh; }
-.rm-events-table, .agro-events-table, .fin-detail-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+.rm-events-table, .cos-events-table, .agro-events-table, .fin-detail-table { width:100%; border-collapse:collapse; font-size:12.5px; }
 .agro-events-table { min-width:1000px; }
-.rm-events-table th, .agro-events-table th, .fin-detail-table th {
+.rm-events-table th, .cos-events-table th, .agro-events-table th, .fin-detail-table th {
     text-align:left; padding:9px 12px; background:var(--sem-beige-wash); color:var(--sem-navy);
     font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;
     border-bottom:var(--sem-border-soft);
 }
 .agro-events-table th { position:sticky; top:0; z-index:var(--z-map); }
-.rm-events-table td, .agro-events-table td, .fin-detail-table td {
+.rm-events-table td, .cos-events-table td, .agro-events-table td, .fin-detail-table td {
     padding:9px 12px; border-top:var(--sem-border-soft); vertical-align:top;
 }
 .rm-events-table tr:hover td, .agro-events-table tr:hover td, .fin-detail-table tr:hover td {
@@ -1395,13 +1401,13 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 #ttRiegoBlock .rt-detail .v, #ttCeresBlock .rt-detail .v, #ttAgroBlock .agro-tooltip-detail .v, #ttFinBlock .fin-tooltip-detail .v {
     font-size:12.5px; font-weight:500; color:var(--sem-ink); line-height:1.3;
 }
-#ttRiegoBlock .rt-cta, #ttCeresBlock .rt-cta, #ttAgroBlock .agro-tooltip-cta, #ttFinBlock .fin-tooltip-cta {
+#ttRiegoBlock .rt-cta, #ttCeresBlock .rt-cta, #ttCosBlock .rt-cta, #ttAgroBlock .agro-tooltip-cta, #ttFinBlock .fin-tooltip-cta {
     display:block; width:100%; margin-top:11px; padding:8px;
     background:var(--sem-navy); color:var(--sem-surface); border:none;
     border-radius:var(--sem-radius); font-size:12px; font-weight:500;
     cursor:pointer; font-family:inherit;
 }
-#ttRiegoBlock .rt-cta:hover, #ttCeresBlock .rt-cta:hover, #ttAgroBlock .agro-tooltip-cta:hover, #ttFinBlock .fin-tooltip-cta:hover {
+#ttRiegoBlock .rt-cta:hover, #ttCeresBlock .rt-cta:hover, #ttCosBlock .rt-cta:hover, #ttAgroBlock .agro-tooltip-cta:hover, #ttFinBlock .fin-tooltip-cta:hover {
     background:var(--sem-navy-dark);
 }
 #ttRiegoBlock .rt-source, #ttCeresBlock .rt-source { font-size:11px; color:var(--sem-text-3); margin-top:9px; }
@@ -2194,6 +2200,33 @@ body.pest-active #dataStamp { top:56px; }
     --sem-white-a72: rgba(255,255,255,0.72);
     --sem-shadow-panel: -2px 0 12px rgba(26,39,51,0.06);
 
+    /* ── Cosecha ────────────────────────────────────────────────────────
+       Destino de la fruta. Son tres CLASES, no una magnitud, y se eligieron
+       por separación de tono y de luminosidad —teal / oro / tierra— y no por
+       el reflejo de verde-amarillo-rojo: bajo deuteranopia ese trío colapsa a
+       tres olivas y el reparto de la fruta deja de leerse, que es justo lo
+       único que esta pestaña tiene que comunicar de un vistazo.
+       El mismo color identifica al destino en todas partes: barra apilada del
+       tooltip, curva semanal del modal, franja de semanas y leyenda. */
+    --dat-dest-exp: #1F6F8B;
+    --dat-dest-mi:  #D99A2B;
+    --dat-dest-des: #6B4A3E;
+
+    /* Y una rampa secuencial por destino, anclada en su propio color, para
+       cuando el mapa pinta el PORCENTAJE que va a ese destino. Que la rampa
+       del "% a exportación" termine en el mismo teal que el segmento de
+       exportación evita tener que explicar dos códigos de color distintos. */
+    --dat-exp-1:#EAF2F5; --dat-exp-2:#C2DCE4; --dat-exp-3:#8FBECD;
+    --dat-exp-4:#4E92AB; --dat-exp-5:var(--dat-dest-exp);
+    --dat-mi-1:#FBF3E4; --dat-mi-2:#F2DFB6; --dat-mi-3:#E8C77A;
+    --dat-mi-4:#E3B04F; --dat-mi-5:var(--dat-dest-mi);
+    --dat-des-1:#F2EEEC; --dat-des-2:#DCD0C9; --dat-des-3:#BCA79C;
+    --dat-des-4:#93786B; --dat-des-5:var(--dat-dest-des);
+
+    /* "Sin cosecha en la ventana" es una clase aparte, igual que el sin-riego:
+       un cuartel que no se cosechó esta semana no rindió cero, no se tocó. */
+    --dat-sin-cosecha: #D2CEC5;
+
     /* "Sin riego en la ventana": no es el extremo bajo de la rampa de riego,
        es una clase aparte. Beige de marca, para que se lea como ausencia de
        dato de riego y no como "regó poquito". */
@@ -2352,6 +2385,91 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 .ket-lg-src.ref { background:var(--sem-navy-a12); color:var(--sem-navy); }
 .ket-lg-src.rel { background:var(--dat-rel-1); color:var(--dat-rel-4); }
 
+/* ══ COSECHA ═══════════════════════════════════════════════════════════════
+
+   Franja de semanas. Es el control central de la pestaña, no un adorno: la
+   cosecha de un cítrico es una curva de tres meses y la pregunta operativa
+   —"¿cuándo entró la fruta y a dónde se fue?"— no se contesta con un total de
+   temporada. Cada barra es una semana, apilada por destino con los mismos tres
+   colores de todo el resto, y se puede clickear para llevar el mapa a esa
+   semana. Un stepper solo obligaba a adivinar dónde estaba el peak. */
+.cos-weeks {
+    display:flex; align-items:flex-end; gap:2px; height:74px;
+    padding:6px 2px 0; margin:2px 0 10px;
+    border-bottom:var(--sem-border-soft); overflow:hidden;
+}
+.cos-wk {
+    flex:1 1 0; min-width:0; display:flex; flex-direction:column;
+    align-items:stretch; gap:3px; cursor:pointer; background:none;
+    border:none; padding:0; font-family:inherit;
+}
+.cos-wk-bar {
+    height:52px; display:flex; flex-direction:column-reverse;
+    border-radius:2px 2px 0 0; overflow:hidden;
+    background:var(--sem-line-soft);
+    transition:opacity 0.15s;
+}
+.cos-wk-bar i { display:block; width:100%; }
+.cos-wk-n {
+    font-size:8.5px; line-height:1; color:var(--sem-text-3); text-align:center;
+    font-variant-numeric:tabular-nums; height:9px; overflow:hidden;
+}
+.cos-wk:hover .cos-wk-bar { opacity:0.72; }
+.cos-wk.fuera .cos-wk-bar { opacity:0.26; }
+.cos-wk.activa .cos-wk-bar { box-shadow:0 0 0 1.5px var(--sem-navy); }
+.cos-wk.activa .cos-wk-n { color:var(--sem-navy); font-weight:700; }
+.cos-wk.vacia .cos-wk-bar { background:var(--sem-line-soft); }
+
+/* Barra de reparto por destino. Se repite en el tooltip, en la ficha lateral,
+   en la leyenda y en el modal: es la misma lectura en los cuatro sitios. */
+.cos-split { display:flex; height:9px; border-radius:3px; overflow:hidden;
+    background:var(--sem-line-soft); }
+.cos-split i { display:block; height:100%; }
+.cos-split.tall { height:13px; }
+.cos-split-legend { display:flex; flex-wrap:wrap; gap:9px; margin-top:5px; }
+.cos-split-legend span { display:inline-flex; align-items:center; gap:5px;
+    font-size:10.5px; color:var(--sem-text-2); font-variant-numeric:tabular-nums; }
+.cos-split-legend i { width:9px; height:9px; border-radius:2px; flex:0 0 9px; }
+
+/* Ventana activa: el rótulo que dice qué está pintado el mapa ahora mismo. */
+.cos-ventana {
+    font-size:11.5px; font-weight:500; color:var(--sem-ink);
+    text-align:center; line-height:1.4;
+}
+.cos-ventana .cv-sub { font-size:10.5px; font-weight:400; color:var(--sem-text-2); }
+
+/* Gráfico semanal del modal: columnas apiladas + curva de avance acumulado. */
+.cos-chart { width:100%; }
+.cos-chart svg { width:100%; height:auto; display:block; }
+.cos-chart .cc-axis { stroke:var(--sem-line); stroke-width:1; }
+.cos-chart .cc-grid { stroke:var(--sem-line-soft); stroke-width:1; }
+.cos-chart .cc-tick { font-size:9px; fill:var(--sem-text-3); }
+.cos-chart .cc-acum { fill:none; stroke:var(--sem-navy); stroke-width:1.6;
+    stroke-linejoin:round; }
+.cos-chart .cc-acum-b { fill:none; stroke:var(--sem-grey); stroke-width:1.4;
+    stroke-dasharray:4 3; }
+.cos-chart .cc-dot { fill:var(--sem-navy); }
+.cos-chart rect.cc-col:hover { opacity:0.75; }
+
+.cos-chart-legend { display:flex; flex-wrap:wrap; gap:12px; margin-top:7px;
+    font-size:11px; color:var(--sem-text-2); }
+.cos-chart-legend span { display:inline-flex; align-items:center; gap:6px; }
+.cos-chart-legend i { width:11px; height:9px; border-radius:2px; }
+.cos-chart-legend i.linea { height:0; border-top:2px solid var(--sem-navy); width:14px;
+    border-radius:0; }
+.cos-chart-legend i.linea-b { height:0; border-top:2px dashed var(--sem-grey); width:14px;
+    border-radius:0; }
+
+/* Comparación entre temporadas: el delta con su signo leído en agronomía. */
+.cos-delta { font-weight:600; font-variant-numeric:tabular-nums; }
+.cos-delta.up { color:var(--dat-st-opt); }
+.cos-delta.down { color:var(--dat-st-def); }
+.cos-delta.flat { color:var(--sem-text-2); }
+
+/* Aviso de la ficha lateral cuando la métrica no se puede repartir por destino. */
+.cos-hint { font-size:10.5px; line-height:1.45; color:var(--sem-text-3);
+    margin-top:6px; }
+
 /* ── Cabecera de programa en la leyenda ─────────────────────────────────
    Un programa es matriz x laboratorio. Lo que cambia entre uno y otro no es
    solo el nombre del lab: cambian la cadencia, las unidades muestreadas y los
@@ -2477,6 +2595,7 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     <button class="tab-btn active" data-mode="general" onclick="switchMode('general')"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-mapa"/></svg></span><span data-i18n="Vista general">Vista general</span></button>
     <!-- Nutrición agrupa foliares y suelo. El modo interno sigue siendo uno de
          los dos: data-modes le dice a la barra cuándo pintarse activa. -->
+    <button class="tab-btn" data-mode="cosecha" onclick="switchMode('cosecha')" title="Cosecha por cuartel · planilla de campo" data-i18n-title="Cosecha por cuartel · planilla de campo"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Cosecha">Cosecha</span></button>
     <button class="tab-btn" data-mode="nutricion" data-modes="foliares suelo" onclick="switchMode(NUTRI_SUBMODE)"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-hoja"/></svg></span><span data-i18n="Nutrición">Nutrición</span></button>
     <span class="tabs-sep" aria-hidden="true"></span>
     <!-- Pendientes. Se muestran deshabilitadas a propósito: la hoja de ruta es
@@ -2721,6 +2840,72 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     </div>
 </div>
 
+<!-- ── Controles · Cosecha ─────────────────────────────────────────────────
+     Panel lateral, como Riego y Ceres: la franja de semanas necesita ancho y
+     alto propios, y encima de todo hay tres ejes que el usuario combina
+     (temporada, ventana temporal y destino de la fruta). En la barra superior
+     no entraban sin quedar en tres filas. -->
+<div class="cos-controls" id="ctrlCosecha">
+    <div class="cos-controls-header">
+        <div class="cos-controls-title"><span class="cc-dot"></span><span data-i18n="Cosecha por cuartel">Cosecha por cuartel</span></div>
+        <div class="cos-controls-subtitle" id="cosSubtitulo"></div>
+    </div>
+    <div class="cos-controls-body">
+        <div class="riego-mode-tabs" id="cosTemporadas" role="group" aria-label="Temporada" data-i18n-aria="Temporada"></div>
+
+        <div class="fc-label" style="margin-bottom:5px" data-i18n="Ventana">Ventana</div>
+        <div class="riego-mode-tabs" id="cosVentanas" role="group" aria-label="Ventana temporal" data-i18n-aria="Ventana temporal">
+            <button type="button" class="riego-mode-tab" data-v="temporada" onclick="setCosVentana('temporada')" data-i18n="Temporada">Temporada</button>
+            <button type="button" class="riego-mode-tab" data-v="acumulado" onclick="setCosVentana('acumulado')" title="Todo lo cosechado desde el inicio de la temporada hasta la semana elegida" data-i18n-title="Todo lo cosechado desde el inicio de la temporada hasta la semana elegida" data-i18n="Acumulado">Acumulado</button>
+            <button type="button" class="riego-mode-tab" data-v="semana" onclick="setCosVentana('semana')" data-i18n="Semana">Semana</button>
+        </div>
+
+        <div class="cos-weeks" id="cosWeeks"></div>
+        <div class="riego-nav">
+            <button type="button" onclick="pasoCosSemana(-1)" aria-label="Semana anterior" data-i18n-aria="Semana anterior">‹</button>
+            <div class="cos-ventana" id="cosVentanaLabel" style="flex:1"></div>
+            <button type="button" onclick="pasoCosSemana(1)" aria-label="Semana siguiente" data-i18n-aria="Semana siguiente">›</button>
+        </div>
+
+        <div class="dz-controls" style="margin-top:12px">
+            <div class="fc-group">
+                <label class="fc-label" for="selMetricaCos" data-i18n="Métrica">Métrica</label>
+                <select class="fc-select" id="selMetricaCos" onchange="setMetricaCos(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" for="selDestinoCos" data-i18n="Destino de la fruta">Destino de la fruta</label>
+                <select class="fc-select" id="selDestinoCos" onchange="setDestinoCos(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" for="selCompararCos" data-i18n="Comparar con">Comparar con</label>
+                <select class="fc-select" id="selCompararCos" onchange="setCompararCos(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Capas">Capas</label>
+                <div class="ket-toggles">
+                    <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasCos" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+                </div>
+            </div>
+        </div>
+        <button class="riego-load-btn" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
+        <div class="riego-status" id="cosStatus"></div>
+    </div>
+</div>
+
+<!-- Detalle de cosecha de un cuartel: la evolución semana a semana -->
+<div class="cos-modal" id="cosModal" onclick="if(event.target===this)closeCosModal()">
+    <div class="cos-modal-content">
+        <div class="cos-modal-head">
+            <div>
+                <h2 id="cosModalTitle" data-i18n="Detalle de cosecha">Detalle de cosecha</h2>
+                <div class="rm-sub" id="cosModalSubtitle"></div>
+            </div>
+            <button class="riego-modal-close" onclick="closeCosModal()" aria-label="Cerrar" data-i18n-aria="Cerrar"><svg viewBox="0 0 18 18"><use href="#ic-cerrar"/></svg></button>
+        </div>
+        <div id="cosModalBody"></div>
+    </div>
+</div>
+
 <!-- Detalle de riego de una unidad -->
 <div class="riego-modal" id="riegoModal" onclick="if(event.target===this)closeRiegoModal()">
     <div class="riego-modal-content">
@@ -2866,6 +3051,48 @@ const I18N = {
 'Análisis foliares':'Leaf analyses', 'Análisis de suelo':'Soil analyses',
 'Vista de nutrición':'Nutrition view', 'Análisis':'Analysis', 'Parámetro':'Parameter',
 'Muestreo':'Sampling', 'Profundidad':'Depth', 'Evolución':'Trend', 'Unidad':'Unit',
+// ── Cosecha ──
+'Cosecha':'Harvest', 'Cosecha por cuartel':'Harvest by block',
+'Cosecha por cuartel · planilla de campo':'Harvest by block · field records',
+'Detalle de cosecha':'Harvest detail', 'Ver detalle semanal':'Weekly detail',
+'Ventana temporal':'Time window',
+'Temporada':'Season', 'Acumulado':'Cumulative', 'Semana':'Week', 'Sem.':'Wk',
+'Semanas':'Weeks', 'semana':'week', 'semanas':'weeks',
+'Semana anterior':'Previous week', 'Semana siguiente':'Next week',
+'y anteriores':'and earlier',
+'Todo lo cosechado desde el inicio de la temporada hasta la semana elegida':'Everything harvested from the start of the season up to the chosen week',
+'Destino de la fruta':'Fruit destination', 'Todos los destinos':'All destinations',
+'Exportación':'Export', 'Mercado interno':'Domestic market', 'Desecho':'Waste',
+'Comparar con':'Compare with', 'Sin comparar':'No comparison',
+'ver variación':'show change', 'Variación':'Change', 'variación':'change',
+'Rendimiento':'Yield', 'Kilos cosechados':'Harvested kilos',
+'Kilos por bin':'Kilos per bin', 'Bins':'Bins', 'Cosechado':'Harvested',
+'Cuarteles cosechados':'Blocks harvested', 'cuarteles cosechados':'blocks harvested',
+'Semanas con cosecha':'Weeks with harvest', 'Semana peak':'Peak week',
+'Superficie plantada':'Planted area', 'plantadas':'planted',
+'Variedades':'Varieties',
+'Camote':'Misshapen fruit', 'Recepción':'Reception',
+'Reparto por destino':'Split by destination', 'Evolución semanal':'Weekly evolution',
+'Avance acumulado':'Cumulative progress', 'Avance':'Progress',
+'Sin cosecha':'No harvest', 'sin cosecha en la ventana':'no harvest in this window',
+'Sin cosecha en la ventana elegida.':'No harvest within the chosen window.',
+'Sin registro de cosecha en ninguna temporada.':'No harvest recorded in any season.',
+'Sin registro de cosecha en esta temporada.':'No harvest recorded in this season.',
+'Sin semanas registradas.':'No weeks recorded.',
+'sin cuartel asignado':'with no block assigned',
+'entran en el total del predio pero no pintan ningún polígono.':'they count in the farm total but paint no polygon.',
+'registro':'record', 'registros':'records', 'kilos':'kilos', 'vs':'vs', 'a':'to',
+'filtrado a':'filtered to', 'en la ventana':'in this window',
+'Rendimiento sobre superficie plantada':'Yield over planted area',
+'el registro de cosecha no baja a sector.':'harvest records do not break down to sector.',
+'Cortes fijos cada 20 %, comparables entre semanas y entre temporadas.':'Fixed 20 % breaks, comparable across weeks and seasons.',
+'Cortes por septiles de lo que hay en la ventana: cambian al mover el calendario, para que una semana suelta no caiga entera en la primera banda.':'Breaks are septiles of what is in the window: they shift with the calendar so a single week does not collapse into the first band.',
+'Variación relativa contra':'Relative change against',
+'misma ventana de semanas.':'same week window.',
+'Incluye':'Includes',
+'Clic en una columna para llevar el mapa a esa semana.':'Click a column to take the map to that week.',
+'Las columnas atenuadas quedan fuera de la ventana que el mapa está pintando. Clic en una columna para llevar el mapa a esa semana.':'Dimmed columns fall outside the window the map is painting. Click a column to take the map to that week.',
+'de camote, que es mercado interno de menor calibre y se contabiliza dentro de él.':'of misshapen fruit, which is lower-grade domestic-market fruit and is counted within it.',
 'Programa':'Programme', 'Programa de muestreo':'Sampling programme',
 'Laboratorio':'Laboratory', 'Filtro':'Filter',
 'Sólo con evolución':'Series only',
@@ -3182,6 +3409,8 @@ let NUTRI_SUBMODE = 'foliares';
 const S = {
     gen: { nivel:'sectores', color:'equipo' },
     nut: { prog:null, param:null, fecha:null, prof:null, nivel:'ubicaciones', soloEvo:false },
+    cos: { temporada:null, ventana:'temporada', semana:null, metrica:'kg_ha',
+           destino:null, comparar:null },
     riego: { metrica:'total_m3', nivel:'sectores', modo:'dias', desplazamiento:0 },
     ceres: { param:'water_stress', nivel:'sectores', vuelo:null, vueloB:null },
     capas: { etiquetas:true, valvulas:false, pozos:true, calicatas:false },
@@ -3240,6 +3469,14 @@ function renderStamp(){
                 ? `${t('Vuelo del')} ${fmtFecha(v.date)} · ${antiguedad(v.date)}`
                 : (CERES ? t('Sin dato') : t('Cargando datos del predio…'));
         }
+    }else if(currentMode === 'cosecha'){
+        const t0 = cosTemporada();
+        const vals = window._valsCos || cosValores();
+        const kg = [...vals.values()].reduce((a, d) => a + d.kgF, 0);
+        el.textContent = !COS ? (cosEstado === 'error' ? t('No se pudo cargar') : t('Cargando datos del predio…'))
+            : !t0 ? t('Sin cosecha')
+            : `${cosVentanaTexto()} · ${fmtDec(kg/1000, 1)} t`
+              + (S.cos.destino ? ` ${t('a')} ${t(COS_DEST_ES[S.cos.destino]).toLowerCase()}` : '');
     }else if(currentMode === 'riego'){
         el.textContent = riegoEstado === 'listo'
             ? `${t('Datos en vivo desde DropControl')} · ${ventanaRiego()}`
@@ -3444,6 +3681,11 @@ function tooltipUnidad(nivel, id){
                 [t('Superficie'), `${fmtVal(p.ha)} ha`],
                 [t('Vuelo'), vuelo ? fmtFecha(vuelo.date) : null]
             ]);
+    }
+
+    if(currentMode === 'cosecha'){
+        const d = (window._valsCos || new Map()).get(id);
+        return tooltipCosechaHTML(p, d, (window._valsCosB || new Map()).get(id));
     }
 
     if(currentMode === 'riego'){
@@ -5056,6 +5298,11 @@ function nivelActivo(){
     if(currentMode === 'general') return S.gen.nivel;
     if(currentMode === 'riego')   return S.riego.nivel;
     if(currentMode === 'ceres')   return S.ceres.nivel;
+    // La cosecha se registra por cuartel y no hay forma honesta de bajarla a
+    // sector: un cuartel lo riegan hasta tres sectores y repartir sus kilos
+    // entre ellos por superficie seria inventar el dato. El nivel es fijo y la
+    // leyenda lo dice, en vez de ofrecer un selector que miente.
+    if(currentMode === 'cosecha') return 'cuarteles';
     return S.nut.nivel;
 }
 
@@ -5099,6 +5346,22 @@ function repintar(){
                 : nombreCorto(f.properties));
         });
         window._valsRiego = vals; window._escalaRiego = escala;
+    }else if(currentMode === 'cosecha'){
+        const m = cosMetrica();
+        const vals = cosValores();
+        const valsB = S.cos.comparar ? cosValores(S.cos.comparar) : null;
+        const escala = cosEscala(vals);
+        feats(activo).forEach(f => {
+            const id = f.properties.id;
+            const d = vals.get(id);
+            const b = valsB ? valsB.get(id) : null;
+            const v = valsB ? cosDelta(d, b, m) : cosValor(d, m);
+            exprColor.push(id, d ? cosColor(v, escala) : SEM('--dat-sin-cosecha'));
+            exprLabel.push(id, d && v != null
+                ? `${nombreCorto(f.properties)}\n${valsB ? cosFmtDelta(v) : cosFmt(v, m)}`
+                : nombreCorto(f.properties));
+        });
+        window._valsCos = vals; window._valsCosB = valsB; window._escalaCos = escala;
     }else if(currentMode === 'ceres'){
         const par = ceresParam(), vuelo = ceresVuelo('A');
         const bandas = ceresBandas(par, vuelo);
@@ -5261,6 +5524,7 @@ function renderLegend(){
 
     if(currentMode === 'riego'){ el.innerHTML = legendRiego(activo); return; }
     if(currentMode === 'ceres'){ el.innerHTML = legendCeres(activo); return; }
+    if(currentMode === 'cosecha'){ el.innerHTML = legendCosecha(activo); return; }
 
     const p = paramActual();
     if(!p){ el.innerHTML = cabeceraPrograma()
@@ -6227,6 +6491,11 @@ function renderStats(){
         bar.classList.remove('hidden');
         return;
     }
+    if(currentMode === 'cosecha'){
+        el.innerHTML = statsCosecha();
+        bar.classList.remove('hidden');
+        return;
+    }
 
     const p = paramActual();
     const vals = window._valsNut || valoresNut(activo);
@@ -6308,6 +6577,7 @@ function renderPanel(){
     titEl.textContent = p.name || p.id;
     subEl.textContent = p.etiqueta && p.etiqueta !== p.name ? p.etiqueta : t(NIVELES[S.selNivel].sing);
     bodyEl.innerHTML = currentMode === 'general' ? fichaGeneral(p)
+                     : currentMode === 'cosecha' ? fichaCosecha(p)
                      : currentMode === 'riego'   ? fichaRiego(p)
                      : currentMode === 'ceres'   ? fichaCeres(p)
                      : fichaNutricion(p);
@@ -6645,6 +6915,904 @@ function renderEvo(){
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   COSECHA
+
+   Dos planillas de campo —2025 y 2026— consolidadas por tools/build_cosecha.py
+   en `cosecha_data.json`. Lo que manda el diseño de esta pestaña:
+
+   1. La unidad es el CUARTEL. Las planillas numeran por especie (Limon 1..14,
+      Naranja 1..12, Mandarina 1..4) y el mapa los llama LIM-C1, NAR-C1, MAN-C1.
+      Los 30 cruzan 1 a 1.
+
+   2. La SEMANA es el eje real. Una cosecha de citricos es una curva de varios
+      meses, y "3.370 t en la temporada" no contesta ninguna pregunta operativa.
+      Todo se guarda por cuartel y semana, y las tres ventanas —temporada
+      completa, acumulado hasta una semana, y una semana sola— se calculan
+      siempre sumando semanas. Una sola ruta de codigo para los tres casos.
+
+   3. El destino de la fruta se reduce a TRES clases comparables entre
+      temporadas: exportacion / mercado interno / desecho. 2026 separa ademas el
+      camote y 2025 no; el camote se guarda como desglose del mercado interno,
+      que es lo que agronomicamente es. Si se contara aparte, el mercado interno
+      de 2026 apareceria 5 puntos mas bajo que el de 2025 por un cambio de
+      planilla, no de campo.
+
+   4. El rendimiento usa la superficie PLANTADA del cuadro de plantacion, no la
+      geometrica del KMZ. Difieren un 2 % —cabecera y caminos— y la plantada es
+      la que usa la propia planilla y la que corresponde agronomicamente.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+let COS = null;
+let cosPromesa = null;
+let cosEstado = 'inicial';           // inicial | cargando | listo | error
+
+const COS_DEST = ['exportacion', 'mercado_interno', 'desecho'];
+const COS_DEST_TOKEN = {
+    exportacion:     '--dat-dest-exp',
+    mercado_interno: '--dat-dest-mi',
+    desecho:         '--dat-dest-des'
+};
+const COS_DEST_ES = {exportacion:'Exportación', mercado_interno:'Mercado interno',
+                     desecho:'Desecho'};
+
+/* Rampas. La de magnitud es la de productividad heredada de San Gerardo, ya
+   validada. Las de porcentaje estan ancladas cada una en el color de SU
+   destino, para que la leyenda del "% a exportación" y el segmento de
+   exportación de cualquier barra apilada sean el mismo teal: un solo codigo de
+   color en toda la pestaña. La de variación es divergente. */
+const RAMPA_PROD = ['--dat-p1','--dat-p2','--dat-p3','--dat-p4','--dat-p5','--dat-p6','--dat-p7'];
+const RAMPA_DELTA = ['--dat-fin-1','--dat-fin-2','--dat-fin-3','--dat-fin-4','--dat-fin-5'];
+const RAMPAS_DEST = {
+    exportacion:     ['--dat-exp-1','--dat-exp-2','--dat-exp-3','--dat-exp-4','--dat-exp-5'],
+    mercado_interno: ['--dat-mi-1','--dat-mi-2','--dat-mi-3','--dat-mi-4','--dat-mi-5'],
+    desecho:         ['--dat-des-1','--dat-des-2','--dat-des-3','--dat-des-4','--dat-des-5']
+};
+
+const METRICAS_COS = [
+    {id:'kg_ha',  es:'Rendimiento', en:'Yield', unidad:'kg/ha', tipo:'mag', dec:0,
+     mejorAlto:true},
+    {id:'kg',     es:'Kilos cosechados', en:'Harvested kilos', unidad:'kg', tipo:'mag', dec:0,
+     mejorAlto:true},
+    {id:'bins',   es:'Bins', en:'Bins', unidad:'bins', tipo:'mag', dec:0, mejorAlto:true},
+    {id:'kg_bin', es:'Kilos por bin', en:'Kilos per bin', unidad:'kg/bin', tipo:'mag', dec:0,
+     mejorAlto:true},
+    {id:'pct_exportacion', es:'% a exportación', en:'% to export', unidad:'%',
+     tipo:'pct', dest:'exportacion', dec:1, mejorAlto:true},
+    {id:'pct_mercado_interno', es:'% a mercado interno', en:'% to domestic market',
+     unidad:'%', tipo:'pct', dest:'mercado_interno', dec:1, mejorAlto:false},
+    {id:'pct_desecho', es:'% a desecho', en:'% to waste', unidad:'%',
+     tipo:'pct', dest:'desecho', dec:1, mejorAlto:false}
+];
+
+async function cargarCosecha(){
+    if(COS) return COS;
+    if(!cosPromesa){
+        cosEstado = 'cargando';
+        cosPromesa = loadDataset('cosecha', './cosecha_data.json').then(j => {
+            COS = j;
+            cosEstado = j ? 'listo' : 'error';
+            if(j) cosInicializar();
+            return j;
+        });
+    }
+    return cosPromesa;
+}
+
+/* Primer estado coherente: la temporada mas reciente y su ultima semana con
+   fruta, que es donde el usuario quiere aterrizar. */
+function cosInicializar(){
+    if(!COS || !COS.temporadas.length) return;
+    if(!cosTemporada()) S.cos.temporada = COS.temporadas[0].id;
+    const sems = cosSemanasDe();
+    if(S.cos.semana == null && sems.length) S.cos.semana = sems[sems.length - 1];
+}
+
+function cosTemporadas(){ return COS ? COS.temporadas : []; }
+function cosTemporada(id){
+    const clave = id != null ? id : S.cos.temporada;
+    return cosTemporadas().find(x => x.id === clave) || null;
+}
+function cosMeta(cid){ return (COS && COS.cuarteles[cid]) || null; }
+function cosSemanasDe(id){
+    const t0 = cosTemporada(id);
+    return t0 ? t0.semanas.map(w => w.n) : [];
+}
+function cosMetrica(){
+    return METRICAS_COS.find(m => m.id === S.cos.metrica) || METRICAS_COS[0];
+}
+function cosNombreMetrica(m){ return t((m || cosMetrica())[LANG] || (m || cosMetrica()).es); }
+
+/* La semana activa, acotada a las que existen en la temporada. Al cambiar de
+   temporada el numero se conserva —comparar la semana 28 de un anio con la 28
+   del otro es exactamente el sentido— y solo se ajusta si esa semana no existe. */
+function cosSemanaActiva(id){
+    const sems = cosSemanasDe(id);
+    if(!sems.length) return null;
+    if(S.cos.semana == null) return sems[sems.length - 1];
+    if(sems.includes(S.cos.semana)) return S.cos.semana;
+    // La mas cercana por debajo, o la primera.
+    const previas = sems.filter(n => n <= S.cos.semana);
+    return previas.length ? previas[previas.length - 1] : sems[0];
+}
+
+function cosVentanaSemanas(id){
+    const sems = cosSemanasDe(id);
+    if(S.cos.ventana === 'temporada' || !sems.length) return sems;
+    const s = cosSemanaActiva(id);
+    if(s == null) return sems;
+    return S.cos.ventana === 'semana' ? sems.filter(n => n === s)
+                                      : sems.filter(n => n <= s);
+}
+
+function cosSemanaMeta(n, id){
+    const t0 = cosTemporada(id);
+    return t0 ? t0.semanas.find(w => w.n === n) || null : null;
+}
+
+/* Rotulo de la ventana. Se usa en el panel, en la leyenda y en el sello: los
+   tres tienen que decir lo mismo o el usuario no sabe que esta mirando. */
+function cosVentanaTexto(id){
+    const t0 = cosTemporada(id);
+    if(!t0) return '';
+    if(S.cos.ventana === 'temporada')
+        return `${t0.label} · ${LANG === 'en' ? 'full season' : 'temporada completa'}`;
+    const s = cosSemanaActiva(id);
+    const w = cosSemanaMeta(s, id);
+    const rango = w && w.desde
+        ? `${fmtCorta(w.desde)}${w.hasta && w.hasta !== w.desde ? ' – ' + fmtCorta(w.hasta) : ''}`
+        : '';
+    if(S.cos.ventana === 'semana')
+        return `${t0.label} · ${t('Semana')} ${s}${rango ? ' · ' + rango : ''}`;
+    return `${t0.label} · ${LANG === 'en' ? 'up to week' : 'hasta la semana'} ${s}`
+         + (rango ? ` (${rango})` : '');
+}
+
+function fmtCorta(iso){
+    if(!iso) return '';
+    const [y,m,d] = iso.split('-').map(Number);
+    return new Date(y, m-1, d).toLocaleDateString(LOC(), {day:'numeric', month:'short'});
+}
+
+/* ── Valores por cuartel ─────────────────────────────────────────────────
+   Siempre se suma desde las semanas, incluso con la temporada completa: el
+   build garantiza que las semanas particionan el total (verificado: la suma de
+   semanas iguala el total en los 39 pares cuartel-temporada), y asi las tres
+   ventanas comparten una sola ruta de codigo. */
+function cosValores(id){
+    const out = new Map();
+    const t0 = cosTemporada(id);
+    if(!t0) return out;
+    const dentro = new Set(cosVentanaSemanas(id));
+    const filtro = S.cos.destino;
+
+    Object.entries(t0.cuarteles).forEach(([cid, c]) => {
+        let kg = 0, bins = 0, camote = 0, nSem = 0, desde = null, hasta = null;
+        const dest = {exportacion:0, mercado_interno:0, desecho:0};
+        Object.entries(c.semanas).forEach(([n, w]) => {
+            if(!dentro.has(+n)) return;
+            nSem++;
+            kg += w.kg || 0;
+            bins += w.bins || 0;
+            camote += w.camote || 0;
+            COS_DEST.forEach(d => { dest[d] += (w.dest && w.dest[d]) || 0; });
+            if(w.desde && (!desde || w.desde < desde)) desde = w.desde;
+            if(w.hasta && (!hasta || w.hasta > hasta)) hasta = w.hasta;
+        });
+        // Sin semanas dentro de la ventana el cuartel no rindio cero: no se
+        // cosecho. Son dos cosas distintas y el mapa las pinta distinto.
+        if(!nSem) return;
+        const meta = cosMeta(cid);
+        const ha = meta && meta.ha_plantada;
+        // Con un destino filtrado, los kilos que cuentan son los de ESE destino:
+        // "kg/ha exportables" es la lectura util, no el total repartido.
+        const kgF = filtro ? dest[filtro] : kg;
+        out.set(cid, {
+            kg, kgF, bins, camote, dest, nSem, desde, hasta, ha,
+            kg_ha: ha ? kgF / ha : null,
+            kg_bin: bins ? kg / bins : null,
+            pct: kg ? {exportacion: dest.exportacion / kg,
+                       mercado_interno: dest.mercado_interno / kg,
+                       desecho: dest.desecho / kg}
+                    : {exportacion:0, mercado_interno:0, desecho:0}
+        });
+    });
+    return out;
+}
+
+function cosValor(d, m){
+    if(!d) return null;
+    m = m || cosMetrica();
+    switch(m.id){
+        case 'kg':     return d.kgF;
+        case 'kg_ha':  return d.kg_ha;
+        case 'bins':   return d.bins;
+        case 'kg_bin': return d.kg_bin;
+        default:       return d.kg ? d.pct[m.dest] * 100 : null;
+    }
+}
+
+function cosFmt(v, m){
+    m = m || cosMetrica();
+    if(v == null || Number.isNaN(v)) return '—';
+    if(m.tipo === 'pct') return `${fmtDec(v, m.dec)} %`;
+    if(m.id === 'kg' && Math.abs(v) >= 1000) return `${fmtDec(v/1000, 1)} t`;
+    return fmt(v, m.dec);
+}
+
+/* Variacion relativa entre temporadas para la metrica activa. */
+function cosDelta(a, b, m){
+    const va = cosValor(a, m), vb = cosValor(b, m);
+    if(va == null || vb == null || !vb) return null;
+    return (va - vb) / Math.abs(vb) * 100;
+}
+
+/* ── Escala ──────────────────────────────────────────────────────────────
+   Tres regimenes, y cada uno por una razon distinta:
+
+   · Porcentajes → cortes FIJOS cada 20 %. Son comparables entre semanas y entre
+     temporadas, y unos cortes que se movieran con la seleccion harian que el
+     mismo 60 % cambiara de color al mover el calendario.
+   · Magnitudes → cuantiles de lo que hay EN LA VENTANA. Los kilos de una semana
+     y los de una temporada difieren en dos ordenes de magnitud; con cortes fijos
+     todo caeria en la primera banda al mirar una semana.
+   · Variacion → cortes fijos y simetricos en ±10 % y ±30 %. */
+function cosEscala(vals){
+    const m = cosMetrica();
+
+    if(S.cos.comparar){
+        return {
+            tipo:'delta', unidad:'%',
+            cortes:[-30, -10, 10, 30],
+            colores:RAMPA_DELTA.map(SEM),
+            etiquetas:[`< -30 %`, `-30 – -10 %`, `-10 – +10 %`, `+10 – +30 %`, `> +30 %`]
+        };
+    }
+    if(m.tipo === 'pct'){
+        const rampa = RAMPAS_DEST[m.dest];
+        return {
+            tipo:'pct', unidad:'%',
+            cortes:[20, 40, 60, 80],
+            colores:rampa.map(SEM),
+            etiquetas:['0 – 20 %','20 – 40 %','40 – 60 %','60 – 80 %','80 – 100 %']
+        };
+    }
+    const num = [...vals.values()].map(d => cosValor(d, m))
+        .filter(v => v != null && !Number.isNaN(v) && v > 0).sort((a,b) => a - b);
+    if(!num.length)
+        return {tipo:'mag', unidad:m.unidad, cortes:[], colores:RAMPA_PROD.map(SEM),
+                etiquetas:[], vacia:true};
+    const k = RAMPA_PROD.length, cortes = [];
+    for(let i = 1; i < k; i++) cortes.push(num[Math.floor(i * num.length / k)]);
+    const etiquetas = [];
+    for(let i = 0; i < k; i++){
+        const lo = i === 0 ? num[0] : cortes[i-1];
+        const hi = i === k-1 ? num[num.length-1] : cortes[i];
+        etiquetas.push(`${cosFmt(lo, m)} – ${cosFmt(hi, m)}`);
+    }
+    return {tipo:'mag', unidad:m.unidad, cortes, colores:RAMPA_PROD.map(SEM),
+            etiquetas, min:num[0], max:num[num.length-1]};
+}
+
+function cosColor(v, escala){
+    if(v == null || Number.isNaN(v)) return SEM('--dat-sin-cosecha');
+    let i = 0;
+    while(i < escala.cortes.length && v >= escala.cortes[i]) i++;
+    return escala.colores[i];
+}
+
+/* Barra de reparto por destino. Un solo componente para el tooltip, la ficha,
+   la leyenda y el modal. */
+function cosSplitBar(pct, opts){
+    opts = opts || {};
+    const segs = COS_DEST.filter(d => (pct[d] || 0) > 0.0005).map(d =>
+        `<i style="width:${(pct[d]*100).toFixed(2)}%;background:${SEM(COS_DEST_TOKEN[d])}" `
+        + `title="${esc(t(COS_DEST_ES[d]))} ${fmtDec(pct[d]*100,1)} %"></i>`).join('');
+    let html = `<div class="cos-split${opts.tall ? ' tall' : ''}">${segs}</div>`;
+    if(opts.leyenda){
+        html += `<div class="cos-split-legend">` + COS_DEST.map(d =>
+            `<span><i style="background:${SEM(COS_DEST_TOKEN[d])}"></i>`
+            + `${esc(t(COS_DEST_ES[d]))} ${fmtDec((pct[d]||0)*100, 1)} %</span>`).join('')
+            + `</div>`;
+    }
+    return html;
+}
+
+/* ── Panel de control ────────────────────────────────────────────────────── */
+
+function renderCosControles(){
+    if(!document.getElementById('ctrlCosecha')) return;
+    const sub = document.getElementById('cosSubtitulo');
+    const st = document.getElementById('cosStatus');
+    if(!COS){
+        if(sub) sub.textContent = t(cosEstado === 'error'
+            ? 'No se pudo cargar' : 'Cargando datos del predio…');
+        return;
+    }
+    const t0 = cosTemporada();
+    if(sub) sub.textContent = COS.source.map(s => s.temporada).join(' · ')
+        + ` · ${plural(COS.source.reduce((a,s) => a + s.filas, 0), 'registro', 'registros')}`;
+
+    // Temporadas
+    const tabs = document.getElementById('cosTemporadas');
+    if(tabs) tabs.innerHTML = cosTemporadas().map(x =>
+        `<button type="button" class="riego-mode-tab${x.id === S.cos.temporada ? ' active' : ''}" `
+        + `onclick="setCosTemporada('${esc(x.id)}')">${esc(x.label)}</button>`).join('');
+
+    document.querySelectorAll('#cosVentanas button').forEach(b =>
+        b.classList.toggle('active', b.dataset.v === S.cos.ventana));
+
+    const lbl = document.getElementById('cosVentanaLabel');
+    if(lbl){
+        const sems = cosSemanasDe();
+        const s = cosSemanaActiva();
+        const w = cosSemanaMeta(s);
+        lbl.innerHTML = S.cos.ventana === 'temporada'
+            ? `<div>${esc(t0 ? t0.label : '')}</div><div class="cv-sub">`
+              + `${plural(sems.length, 'semana', 'semanas')} · ${t0 ? fmtCorta(t0.total.desde) : ''}`
+              + ` – ${t0 ? fmtCorta(t0.total.hasta) : ''}</div>`
+            : `<div>${t('Semana')} ${s ?? '—'}${S.cos.ventana === 'acumulado' ? ' ' + t('y anteriores') : ''}</div>`
+              + `<div class="cv-sub">${w && w.desde ? esc(fmtCorta(w.desde) + (w.hasta && w.hasta !== w.desde ? ' – ' + fmtCorta(w.hasta) : '')) : ''}`
+              + `${w ? ' · ' + fmtDec(w.kg/1000, 1) + ' t' : ''}</div>`;
+    }
+    // Los pasos de semana no tienen sentido con la temporada completa.
+    document.querySelectorAll('.riego-nav button').forEach(b => {
+        if(b.closest('#ctrlCosecha')) b.disabled = S.cos.ventana === 'temporada';
+    });
+
+    renderCosSemanas();
+
+    const selM = document.getElementById('selMetricaCos');
+    if(selM) selM.innerHTML = METRICAS_COS.map(m =>
+        `<option value="${m.id}"${m.id === S.cos.metrica ? ' selected' : ''}>`
+        + `${esc(cosNombreMetrica(m))}${m.unidad && m.unidad.includes('/') ? ' (' + esc(m.unidad) + ')' : ''}</option>`).join('');
+
+    const selD = document.getElementById('selDestinoCos');
+    if(selD) selD.innerHTML =
+        `<option value=""${!S.cos.destino ? ' selected' : ''}>${t('Todos los destinos')}</option>`
+        + COS_DEST.map(d => `<option value="${d}"${S.cos.destino === d ? ' selected' : ''}>`
+            + `${esc(t(COS_DEST_ES[d]))}</option>`).join('');
+
+    const selC = document.getElementById('selCompararCos');
+    if(selC) selC.innerHTML =
+        `<option value=""${!S.cos.comparar ? ' selected' : ''}>${t('Sin comparar')}</option>`
+        + cosTemporadas().filter(x => x.id !== S.cos.temporada).map(x =>
+            `<option value="${esc(x.id)}"${S.cos.comparar === x.id ? ' selected' : ''}>`
+            + `${esc(x.label)} · ${t('ver variación')}</option>`).join('');
+
+    if(st){
+        const avisos = [];
+        if(t0 && t0.sin_cuartel)
+            avisos.push(`${plural(t0.sin_cuartel.filas, 'registro', 'registros')} `
+                + `${t('sin cuartel asignado')} (${fmtDec(t0.sin_cuartel.kg/1000,1)} t): `
+                + t('entran en el total del predio pero no pintan ningún polígono.'));
+        st.className = 'riego-status';
+        st.innerHTML = avisos.join('<br>');
+        st.style.display = avisos.length ? '' : 'none';
+    }
+}
+
+/* La franja de semanas. Cada barra es una semana de la temporada, apilada por
+   destino y a escala del pico. Es informacion y control a la vez: se ve donde
+   entro la fruta y se hace click para llevar el mapa ahi. */
+function renderCosSemanas(){
+    const cont = document.getElementById('cosWeeks');
+    const t0 = cosTemporada();
+    if(!cont) return;
+    if(!t0 || !t0.semanas.length){ cont.innerHTML = ''; return; }
+    const pico = Math.max(...t0.semanas.map(w => w.kg)) || 1;
+    const dentro = new Set(cosVentanaSemanas());
+    const activa = cosSemanaActiva();
+    const cada = Math.max(1, Math.ceil(t0.semanas.length / 9));
+
+    cont.innerHTML = t0.semanas.map((w, i) => {
+        const h = Math.max(2, Math.round(52 * w.kg / pico));
+        const segs = COS_DEST.map(d => {
+            const k = (w.dest && w.dest[d]) || 0;
+            if(!k) return '';
+            return `<i style="height:${(h * k / w.kg).toFixed(2)}px;`
+                 + `background:${SEM(COS_DEST_TOKEN[d])}"></i>`;
+        }).join('');
+        const clases = ['cos-wk'];
+        if(!dentro.has(w.n)) clases.push('fuera');
+        if(S.cos.ventana !== 'temporada' && w.n === activa) clases.push('activa');
+        if(!w.kg) clases.push('vacia');
+        const tit = `${t('Semana')} ${w.n} · ${fmtDec(w.kg/1000,1)} t · `
+                  + `${plural(w.cuarteles, 'cuartel', 'cuarteles')}`
+                  + (w.desde ? ` · ${fmtCorta(w.desde)}` : '');
+        return `<button type="button" class="${clases.join(' ')}" title="${esc(tit)}" `
+             + `onclick="setCosSemana(${w.n})">`
+             + `<div class="cos-wk-bar">${segs}</div>`
+             + `<span class="cos-wk-n">${i % cada === 0 || w.n === activa ? w.n : ''}</span>`
+             + `</button>`;
+    }).join('');
+}
+
+/* ── Setters ─────────────────────────────────────────────────────────────── */
+
+function setCosTemporada(id){
+    S.cos.temporada = id;
+    if(S.cos.comparar === id) S.cos.comparar = null;
+    cosRefrescar();
+}
+function setCosVentana(v){
+    S.cos.ventana = v;
+    if(v !== 'temporada' && S.cos.semana == null){
+        const s = cosSemanasDe();
+        S.cos.semana = s.length ? s[s.length - 1] : null;
+    }
+    cosRefrescar();
+}
+function setCosSemana(n){
+    S.cos.semana = n;
+    // Clickear una semana en la franja con la temporada completa activa es una
+    // peticion implicita de mirar esa semana: cambiar de ventana solo aca.
+    if(S.cos.ventana === 'temporada') S.cos.ventana = 'semana';
+    cosRefrescar();
+}
+function pasoCosSemana(paso){
+    const sems = cosSemanasDe();
+    if(!sems.length) return;
+    const i = sems.indexOf(cosSemanaActiva());
+    const j = Math.max(0, Math.min(sems.length - 1, (i < 0 ? sems.length - 1 : i) + paso));
+    S.cos.semana = sems[j];
+    cosRefrescar();
+}
+function setMetricaCos(v){ S.cos.metrica = v; cosRefrescar(); }
+function setDestinoCos(v){ S.cos.destino = v || null; cosRefrescar(); }
+function setCompararCos(v){ S.cos.comparar = v || null; cosRefrescar(); }
+
+function cosRefrescar(){
+    renderCosControles();
+    repintar();                       // repintar() ya rehace leyenda y métricas
+    renderPanel();
+    renderStamp();
+    // El modal puede estar abierto: clickear una columna cambia la ventana y su
+    // atenuación tiene que seguirla, o queda marcando la selección anterior.
+    const mod = document.getElementById('cosModal');
+    if(mod && mod.classList.contains('visible') && cosModalCuartel)
+        abrirCosModal(cosModalCuartel);
+}
+
+/* ── Leyenda, metricas, tooltip y ficha de Cosecha ──────────────────────── */
+
+function cosFmtDelta(v){
+    if(v == null || Number.isNaN(v)) return '—';
+    return `${v > 0 ? '+' : ''}${fmtDec(v, 1)} %`;
+}
+
+/* El signo de una variacion no siempre es una mejora: mas kilos a desecho es
+   peor, no mejor. La metrica declara hacia donde esta lo bueno. */
+function cosClaseDelta(v, m){
+    if(v == null || Math.abs(v) < 0.05) return 'flat';
+    const bueno = (m || cosMetrica()).mejorAlto ? v > 0 : v < 0;
+    return bueno ? 'up' : 'down';
+}
+
+function legendCosecha(activo){
+    if(!COS) return `<div class="legend-label">${t('Cosecha')}</div>`
+        + `<div class="sem-muted-xs">${t(cosEstado === 'error'
+            ? 'No se pudo cargar' : 'Cargando datos del predio…')}</div>`;
+    const t0 = cosTemporada();
+    if(!t0) return `<div class="legend-label">${t('Sin cosecha')}</div>`;
+
+    const m = cosMetrica();
+    const vals = window._valsCos || cosValores();
+    const escala = window._escalaCos || cosEscala(vals);
+    const valsB = window._valsCosB;
+
+    // Conteo y superficie por banda, sobre lo que el mapa esta pintando.
+    const conteo = new Map(), supf = new Map();
+    let haTotal = 0;
+    vals.forEach((d, id) => {
+        const v = valsB ? cosDelta(d, valsB.get(id), m) : cosValor(d, m);
+        if(v == null) return;
+        let i = 0;
+        while(i < escala.cortes.length && v >= escala.cortes[i]) i++;
+        conteo.set(i, (conteo.get(i) || 0) + 1);
+        const ha = (cosMeta(id) || {}).ha_plantada || 0;
+        supf.set(i, (supf.get(i) || 0) + ha);
+        haTotal += ha;
+    });
+
+    const filas = escala.colores.map((col, i) => {
+        const n = conteo.get(i) || 0;
+        const et = escala.etiquetas[i] || '';
+        return `<div class="ket-lg-row"><span class="sw" style="background:${col}"></span>`
+            + `<span class="lb">${esc(et)}</span>`
+            + `<span class="ct">${n}</span></div>`;
+    }).join('');
+
+    const totalPintable = feats(activo).length;
+    const sinCosecha = totalPintable - vals.size;
+
+    // Reparto global de la ventana: el "% de destino del campo" que pidio el
+    // encargo, siempre visible junto a la escala.
+    const acum = {exportacion:0, mercado_interno:0, desecho:0};
+    let kgTot = 0;
+    vals.forEach(d => { COS_DEST.forEach(x => acum[x] += d.dest[x]); kgTot += d.kg; });
+    const pct = kgTot ? {exportacion:acum.exportacion/kgTot,
+                         mercado_interno:acum.mercado_interno/kgTot,
+                         desecho:acum.desecho/kgTot}
+                      : {exportacion:0, mercado_interno:0, desecho:0};
+
+    const titulo = valsB
+        ? `${t('Variación')} · ${cosNombreMetrica(m)}`
+        : cosNombreMetrica(m) + (m.tipo !== 'pct' && m.unidad ? ` <span class="sem-muted-xs">${esc(m.unidad)}</span>` : '');
+
+    return `<div class="nut-prog">`
+        + `<div class="nut-prog-top"><span class="nut-lab">${esc(t0.label)}</span>`
+        + `<span class="nut-prog-mat">${esc(cosVentanaTexto())}</span></div>`
+        + `<div class="nut-prog-meta"><b>${fmtDec(kgTot/1000, 1)}</b> t · `
+        + `<b>${vals.size}</b> ${t('cuarteles cosechados')}`
+        + (S.cos.destino ? ` · ${t('filtrado a')} ${esc(t(COS_DEST_ES[S.cos.destino]).toLowerCase())}` : '')
+        + `</div>`
+        + `<div style="margin-top:6px">${cosSplitBar(pct, {leyenda:true})}</div>`
+        + `</div>`
+        + `<div class="legend-label">${titulo}</div>`
+        + filas
+        + (sinCosecha ? `<div class="ket-lg-row"><span class="sw" style="background:${SEM('--dat-sin-cosecha')}"></span>`
+            + `<span class="lb">${t('sin cosecha en la ventana')}</span><span class="ct">${sinCosecha}</span></div>` : '')
+        + `<div class="ket-lg-foot">`
+        + (valsB
+            ? `${t('Variación relativa contra')} ${esc(valsB === null ? '' : S.cos.comparar)}, ${t('misma ventana de semanas.')}<br>`
+            : escala.tipo === 'mag'
+            ? `${t('Cortes por septiles de lo que hay en la ventana: cambian al mover el calendario, para que una semana suelta no caiga entera en la primera banda.')}<br>`
+            : `${t('Cortes fijos cada 20 %, comparables entre semanas y entre temporadas.')}<br>`)
+        + `${t('Nivel')}: ${t('Cuartel')} · ${t('el registro de cosecha no baja a sector.')}<br>`
+        + `${t('Rendimiento sobre superficie plantada')} · ${fmtVal(haTotal)} ha ${t('en la ventana')}`
+        + `</div>`;
+}
+
+function statsCosecha(){
+    const div = '<div class="stat-div"></div>';
+    if(!COS) return `<div class="stat"><div class="num">—</div><div class="unit">`
+        + `${t('Cargando datos del predio…')}</div></div>`;
+    const t0 = cosTemporada();
+    const vals = window._valsCos || cosValores();
+    if(!t0 || !vals.size) return `<div class="stat"><div class="num">—</div>`
+        + `<div class="unit">${t('Sin cosecha')}</div></div>`;
+
+    let kg = 0, kgF = 0, bins = 0, ha = 0;
+    const acum = {exportacion:0, mercado_interno:0, desecho:0};
+    vals.forEach((d, id) => {
+        kg += d.kg; kgF += d.kgF; bins += d.bins;
+        ha += (cosMeta(id) || {}).ha_plantada || 0;
+        COS_DEST.forEach(x => acum[x] += d.dest[x]);
+    });
+    const pico = t0.semanas.slice().sort((a,b) => b.kg - a.kg)[0];
+    const m = cosMetrica();
+
+    const items = [
+        stat(fmtDec(kgF/1000, 1), `${t('Cosechado')} (t)`
+            + (S.cos.destino ? ` · ${t(COS_DEST_ES[S.cos.destino])}` : '')),
+        stat(ha ? fmt(kgF/ha, 0) : '—', `${t('Rendimiento')} (kg/ha)`),
+        stat(`${fmtDec(acum.exportacion/kg*100, 1)}<span class="sem-muted-xs"> %</span>`,
+             t('Exportación')),
+        stat(`${fmtDec(acum.mercado_interno/kg*100, 1)}<span class="sem-muted-xs"> %</span>`,
+             t('Mercado interno')),
+        stat(`${fmtDec(acum.desecho/kg*100, 1)}<span class="sem-muted-xs"> %</span>`,
+             t('Desecho')),
+        stat(fmt(bins, 0), t('Bins')),
+        stat(`${vals.size}<span class="sem-muted-xs"> / ${feats('cuarteles').length}</span>`,
+             t('Cuarteles cosechados'))
+    ];
+    if(S.cos.ventana === 'temporada' && pico)
+        items.push(stat(`${t('Sem.')} ${pico.n}`,
+            `${t('Semana peak')} · ${fmtDec(pico.kg/1000, 1)} t`));
+    if(S.cos.comparar){
+        const vb = cosValores(S.cos.comparar);
+        let kb = 0;
+        vb.forEach(d => kb += d.kgF);
+        const dl = kb ? (kgF - kb) / kb * 100 : null;
+        items.push(stat(`<span class="cos-delta ${cosClaseDelta(dl, m)}">${cosFmtDelta(dl)}</span>`,
+            `${t('vs')} ${esc(S.cos.comparar)} · ${t('kilos')}`));
+    }
+    return items.join(div);
+}
+
+function tooltipCosechaHTML(p, d, b){
+    const meta = cosMeta(p.id) || {};
+    const sub = [meta.variedades, meta.centro_costo].filter(Boolean).join(' · ');
+    if(!d) return tt(esc(p.name || p.id), esc(sub),
+        [[t('Superficie plantada'), meta.ha_plantada ? `${fmtVal(meta.ha_plantada)} ha` : null]],
+        t(meta.cosechado ? 'Sin cosecha en la ventana elegida.'
+                         : 'Sin registro de cosecha en ninguna temporada.'));
+
+    const m = cosMetrica();
+    const v = b ? cosDelta(d, b, m) : cosValor(d, m);
+    const filas = [
+        [t('Cosechado'), `${fmtDec(d.kg/1000, 2)} t`],
+        [t('Rendimiento'), d.ha ? `${fmt(d.kg/d.ha, 0)} kg/ha` : null],
+        [t('Bins'), fmt(d.bins, 0)],
+        [t('Kilos por bin'), d.kg_bin ? fmt(d.kg_bin, 0) : null],
+        [t('Semanas con cosecha'), d.nSem],
+        [t('Superficie plantada'), d.ha ? `${fmtVal(d.ha)} ha` : null]
+    ];
+    if(b){
+        const vb = cosValor(b, m);
+        filas.unshift([`${cosNombreMetrica(m)} · ${esc(S.cos.comparar)}`, cosFmt(vb, m)]);
+        filas.unshift([`${cosNombreMetrica(m)} · ${esc(S.cos.temporada)}`, cosFmt(cosValor(d, m), m)]);
+    }
+    const cabeza = b
+        ? `${esc(p.name || p.id)} · <strong class="cos-delta ${cosClaseDelta(v, m)}">${cosFmtDelta(v)}</strong>`
+        : `${esc(p.name || p.id)} · <strong>${cosFmt(v, m)}</strong>`
+          + (m.tipo !== 'pct' && m.unidad ? ` <span class="sem-muted-xs">${esc(m.unidad)}</span>` : '');
+
+    return `<div id="ttCosBlock">`
+        + `<div class="ht-head"><div class="ht-title-wrap"><div class="ht-name">${cabeza}</div></div></div>`
+        + (sub ? `<div class="ht-badge" style="margin-bottom:7px">${esc(sub)}</div>` : '')
+        + `<div style="margin:7px 0 3px">${cosSplitBar(d.pct, {leyenda:true})}</div>`
+        + `<div class="ket-tt-rows">`
+        + filas.filter(f => f[1] != null && f[1] !== '').map(f =>
+            `<div class="ket-tt-row"><span>${f[0]}</span><span>${f[1]}</span></div>`).join('')
+        + `</div>`
+        + `<button class="rt-cta" onclick="abrirCosModal('${esc(p.id)}')">`
+        + `${t('Ver detalle semanal')}</button></div>`;
+}
+
+function fichaCosecha(p){
+    if(!COS) return `<div class="ket-empty">${t('Cargando datos del predio…')}</div>`;
+    const meta = cosMeta(p.id) || {};
+    const m = cosMetrica();
+    const vals = window._valsCos || cosValores();
+    const valsB = window._valsCosB;
+    const d = vals.get(p.id);
+
+    let html = '';
+    if(!d){
+        html += `<div class="ket-empty">${t(meta.cosechado
+            ? 'Sin cosecha en la ventana elegida.'
+            : 'Sin registro de cosecha en ninguna temporada.')}</div>`;
+        html += kv([
+            [t('Especie'), meta.especie],
+            [t('Variedades'), meta.variedades],
+            [t('Superficie plantada'), meta.ha_plantada ? `${fmtVal(meta.ha_plantada)} ha` : null],
+            [t('Año de plantación'), meta.anio_plantacion]
+        ]);
+        return html;
+    }
+
+    const v = valsB ? cosDelta(d, valsB.get(p.id), m) : cosValor(d, m);
+    html += `<div class="pv-chart-card" style="display:flex;align-items:baseline;gap:10px">`
+        + `<div style="font-size:26px;font-weight:300;color:var(--sem-ink)">`
+        + (valsB ? `<span class="cos-delta ${cosClaseDelta(v, m)}">${cosFmtDelta(v)}</span>`
+                 : cosFmt(v, m)) + `</div>`
+        + `<div class="sem-muted-xs">${esc(valsB ? t('variación') : (m.tipo === 'pct' ? '' : m.unidad || ''))}</div>`
+        + `<div class="ket-chip" style="margin-left:auto">${esc(cosNombreMetrica(m))}</div>`
+        + `</div>`;
+
+    html += `<div style="margin:10px 0 2px">${cosSplitBar(d.pct, {tall:true, leyenda:true})}</div>`;
+
+    html += kv([
+        [t('Temporada'), cosVentanaTexto()],
+        [t('Cosechado'), `${fmtDec(d.kg/1000, 2)} t`],
+        [t('Rendimiento'), d.ha ? `${fmt(d.kg/d.ha, 0)} kg/ha` : null],
+        [t('Bins'), `${fmt(d.bins, 0)}${d.kg_bin ? ` · ${fmt(d.kg_bin, 0)} kg/bin` : ''}`],
+        [t('Camote'), d.camote ? `${fmtDec(d.camote/1000, 2)} t` : null],
+        [t('Semanas con cosecha'), `${d.nSem}${d.desde ? ` · ${fmtCorta(d.desde)} – ${fmtCorta(d.hasta)}` : ''}`],
+        [t('Variedades'), meta.variedades],
+        [t('Superficie plantada'), d.ha ? `${fmtVal(d.ha)} ha` : null],
+        [t('Año de plantación'), meta.anio_plantacion]
+    ]);
+
+    html += `<div style="margin-top:12px"><button class="riego-load-btn" `
+         + `onclick="abrirCosModal('${esc(p.id)}')">`
+         + `<span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span>`
+         + `<span>${t('Ver detalle semanal')}</span></button></div>`;
+
+    // Ranking de la ventana: que cuartel mirar primero.
+    const arr = [...vals.entries()].map(([id, x]) => {
+        const vv = valsB ? cosDelta(x, valsB.get(id), m) : cosValor(x, m);
+        return [id, x, vv];
+    }).filter(x => x[2] != null).sort((a, b) => b[2] - a[2]);
+    if(arr.length > 1){
+        const escala = window._escalaCos || cosEscala(vals);
+        html += sect(`${t('Ranking')} · ${cosNombreMetrica(m)}`,
+            `<div class="ket-rank">` + arr.map(([id, x, vv]) =>
+                `<div class="ket-row${id === p.id ? ' active' : ''}" `
+                + `onclick="seleccionar('cuarteles','${esc(id)}',true)">`
+                + `<span class="sw" style="background:${cosColor(vv, escala)}"></span>`
+                + `<span class="nm">${esc((cosMeta(id) || {}).name || id)}</span>`
+                + `<span class="vl">${valsB ? cosFmtDelta(vv) : cosFmt(vv, m)}</span></div>`
+            ).join('') + `</div>`);
+    }
+    return html;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODAL DE COSECHA · la evolucion semana a semana de un cuartel
+
+   Es lo que el poligono no puede mostrar: un cuartel con 35 t/ha y 62 % de
+   exportacion puede haber entrado todo en dos semanas o repartido en quince, y
+   puede haber empezado exportando y terminado mandando todo a mercado interno.
+   El grafico apila los kilos por destino semana a semana y superpone la curva
+   de avance acumulado; la de la temporada de comparacion va punteada al lado.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+let cosModalCuartel = null;
+function abrirCosModal(cid){
+    if(!COS) return;
+    cosModalCuartel = cid;
+    ocultarTooltipYa();
+    const meta = cosMeta(cid) || {};
+    const t0 = cosTemporada();
+    const c = t0 && t0.cuarteles[cid];
+
+    document.getElementById('cosModalTitle').textContent =
+        `${meta.name || cid}${meta.variedades ? ' · ' + meta.variedades : ''}`;
+    document.getElementById('cosModalSubtitle').textContent =
+        `${t('Temporada')} ${t0 ? t0.label : '—'}`
+        + (meta.ha_plantada ? ` · ${fmtVal(meta.ha_plantada)} ha ${t('plantadas')}` : '')
+        + (meta.centro_costo ? ` · ${meta.centro_costo}` : '');
+
+    document.getElementById('cosModalBody').innerHTML = c
+        ? cosModalHTML(cid, c, t0, meta)
+        : `<div class="ket-empty">${t('Sin registro de cosecha en esta temporada.')}</div>`;
+    document.getElementById('cosModal').classList.add('visible');
+}
+function closeCosModal(){
+    cosModalCuartel = null;
+    document.getElementById('cosModal').classList.remove('visible');
+}
+
+function cosModalHTML(cid, c, t0, meta){
+    const cb = S.cos.comparar
+        ? ((cosTemporada(S.cos.comparar) || {cuarteles:{}}).cuarteles[cid] || null)
+        : null;
+
+    const kpis = [
+        [t('Cosechado'), fmtDec(c.kg/1000, 1), 't'],
+        [t('Rendimiento'), c.kg_ha != null ? fmt(c.kg_ha, 0) : '—', 'kg/ha'],
+        [t('Bins'), fmt(c.bins, 0), ''],
+        [t('Kilos por bin'), c.kg_bin != null ? fmt(c.kg_bin, 0) : '—', 'kg'],
+        [t('Exportación'), fmtDec((c.pct.exportacion || 0)*100, 1), '%']
+    ].map(([k, v, u]) =>
+        `<div class="cos-kpi"><div class="k">${esc(k)}</div>`
+        + `<div class="v">${v}${u ? `<span class="u">${esc(u)}</span>` : ''}</div></div>`).join('');
+
+    let html = `<div class="cos-modal-kpis">${kpis}</div>`;
+
+    // Reparto del cuartel en la temporada completa.
+    html += `<div class="cos-section-title">${t('Reparto por destino')}</div>`
+         + cosSplitBar(c.pct, {tall:true, leyenda:true})
+         + (c.camote ? `<div class="cos-hint">${t('Incluye')} ${fmtDec(c.camote/1000, 2)} t `
+             + `${t('de camote, que es mercado interno de menor calibre y se contabiliza dentro de él.')}</div>` : '');
+
+    html += `<div class="cos-section-title">${t('Evolución semanal')}</div>`
+         + cosChartSemanal(c, t0, cb);
+
+    html += `<div class="cos-section-title">${t('Semanas')}</div>`
+         + cosTablaSemanas(c, t0, meta);
+
+    if(c.receptores && c.receptores.length){
+        html += `<div class="cos-section-title">${t('Recepción')}</div>`
+             + `<div class="ket-rank">` + c.receptores.map(r =>
+                `<div class="ket-row"><span class="nm">${esc(r.nombre)}</span>`
+                + `<span class="vl">${fmtDec(r.kg/1000, 2)} t</span></div>`).join('')
+             + `</div>`;
+    }
+    return html;
+}
+
+/* Columnas apiladas por destino + curva de avance acumulado. Eje X categorico
+   sobre TODAS las semanas de la temporada, no solo las que tienen fruta: los
+   huecos son informacion (una semana sin cosecha en medio del peak importa). */
+function cosChartSemanal(c, t0, cb){
+    const sems = t0.semanas.map(w => w.n);
+    if(!sems.length) return `<div class="nut-evo-empty">${t('Sin semanas registradas.')}</div>`;
+
+    const W = 900, H = 250, ML = 54, MR = 48, MT = 14, MB = 34;
+    const kgDe = (obj, n) => (obj && obj.semanas[n] ? obj.semanas[n].kg : 0);
+    const pico = Math.max(...sems.map(n => kgDe(c, n)), 1);
+    const total = c.kg || 1;
+
+    const bw = Math.max(2, (W - ML - MR) / sems.length - 2);
+    const x = i => ML + (W - ML - MR) * (i + 0.5) / sems.length;
+    const y = v => MT + (H - MT - MB) * (1 - v / pico);
+    const yPct = q => MT + (H - MT - MB) * (1 - q);
+
+    // Columnas apiladas: exportacion abajo, desecho arriba. Las semanas fuera
+    // de la ventana que el mapa esta pintando se atenuan, para que el grafico y
+    // el mapa se lean como la misma seleccion y no como dos vistas sueltas.
+    const dentro = new Set(cosVentanaSemanas());
+    let cols = '';
+    sems.forEach((n, i) => {
+        const w = c.semanas[n];
+        if(!w || !w.kg) return;
+        const op = dentro.has(n) ? 1 : 0.3;
+        let base = y(0);
+        COS_DEST.forEach(d => {
+            const k = (w.dest && w.dest[d]) || 0;
+            if(!k) return;
+            const h = (H - MT - MB) * k / pico;
+            base -= h;
+            cols += `<rect class="cc-col" x="${(x(i) - bw/2).toFixed(1)}" y="${base.toFixed(1)}" `
+                 + `width="${bw.toFixed(1)}" height="${h.toFixed(1)}" `
+                 + `fill="${SEM(COS_DEST_TOKEN[d])}" opacity="${op}" `
+                 + `onclick="setCosSemana(${n})" style="cursor:pointer">`
+                 + `<title>${t('Semana')} ${n} · ${esc(t(COS_DEST_ES[d]))} · ${fmtDec(k/1000, 2)} t</title>`
+                 + `</rect>`;
+        });
+    });
+
+    // Curva de avance acumulado, en % del total del cuartel.
+    const curva = (obj, tot) => {
+        let a = 0;
+        return sems.map((n, i) => {
+            a += kgDe(obj, n);
+            return `${i ? 'L' : 'M'}${x(i).toFixed(1)},${yPct(a / (tot || 1)).toFixed(1)}`;
+        }).join(' ');
+    };
+    const linea = `<path class="cc-acum" d="${curva(c, total)}"/>`;
+    const lineaB = cb ? `<path class="cc-acum-b" d="${curva(cb, cb.kg || 1)}"/>` : '';
+
+    // Ejes.
+    let grid = '', ticks = '', ticksR = '';
+    for(let q = 0; q <= 1.0001; q += 0.25){
+        const yy = yPct(q);
+        grid += `<line class="cc-grid" x1="${ML}" y1="${yy.toFixed(1)}" x2="${W-MR}" y2="${yy.toFixed(1)}"/>`;
+        ticksR += `<text class="cc-tick" x="${W-MR+5}" y="${(yy+3.5).toFixed(1)}">${Math.round(q*100)} %</text>`;
+    }
+    [0, 0.5, 1].forEach(q => {
+        const yy = y(pico * q);
+        ticks += `<text class="cc-tick" x="${ML-6}" y="${(yy+3.5).toFixed(1)}" text-anchor="end">`
+              + `${fmtDec(pico*q/1000, 1)}</text>`;
+    });
+    const cada = Math.max(1, Math.ceil(sems.length / 14));
+    const xlabs = sems.map((n, i) => i % cada === 0
+        ? `<text class="cc-tick" x="${x(i).toFixed(1)}" y="${H-14}" text-anchor="middle">${n}</text>` : '').join('');
+
+    return `<div class="cos-chart"><svg viewBox="0 0 ${W} ${H}" role="img" `
+        + `aria-label="${esc(t('Evolución semanal'))}">`
+        + grid
+        + `<line class="cc-axis" x1="${ML}" y1="${H-MB}" x2="${W-MR}" y2="${H-MB}"/>`
+        + `<line class="cc-axis" x1="${ML}" y1="${MT}" x2="${ML}" y2="${H-MB}"/>`
+        + cols + lineaB + linea + ticks + ticksR + xlabs
+        + `<text class="cc-tick" x="${ML-6}" y="${H-14}" text-anchor="end">t</text>`
+        + `<text class="cc-tick" x="${(ML+(W-ML-MR)/2).toFixed(0)}" y="${H-2}" text-anchor="middle">`
+        + `${esc(t('Semana'))}</text>`
+        + `</svg></div>`
+        + `<div class="cos-chart-legend">`
+        + COS_DEST.map(d => `<span><i style="background:${SEM(COS_DEST_TOKEN[d])}"></i>`
+            + `${esc(t(COS_DEST_ES[d]))}</span>`).join('')
+        + `<span><i class="linea"></i>${esc(t('Avance acumulado'))} (%)</span>`
+        + (cb ? `<span><i class="linea-b"></i>${esc(t('Avance'))} ${esc(S.cos.comparar)}</span>` : '')
+        + `</div>`
+        + (S.cos.ventana !== 'temporada'
+            ? `<div class="cos-hint">${t('Las columnas atenuadas quedan fuera de la ventana que el mapa está pintando. Clic en una columna para llevar el mapa a esa semana.')}</div>`
+            : `<div class="cos-hint">${t('Clic en una columna para llevar el mapa a esa semana.')}</div>`)
+}
+
+function cosTablaSemanas(c, t0, meta){
+    const ns = Object.keys(c.semanas).map(Number).sort((a, b) => a - b);
+    if(!ns.length) return `<div class="nut-evo-empty">${t('Sin semanas registradas.')}</div>`;
+    const ha = meta.ha_plantada;
+    let acum = 0;
+    const filas = ns.map(n => {
+        const w = c.semanas[n];
+        acum += w.kg;
+        const pd = w.kg ? COS_DEST.map(d => ((w.dest[d] || 0) / w.kg)) : [0, 0, 0];
+        return `<tr><td><strong>${n}</strong></td>`
+            + `<td>${w.desde ? esc(fmtCorta(w.desde) + (w.hasta && w.hasta !== w.desde ? ' – ' + fmtCorta(w.hasta) : '')) : '—'}</td>`
+            + `<td style="text-align:right">${fmt(w.bins, 0)}</td>`
+            + `<td style="text-align:right">${fmtDec(w.kg/1000, 2)}</td>`
+            + `<td style="text-align:right">${ha ? fmt(w.kg/ha, 0) : '—'}</td>`
+            + `<td style="text-align:right">${fmtDec(acum/(c.kg||1)*100, 0)} %</td>`
+            + `<td style="min-width:110px">${cosSplitBar({exportacion:pd[0], mercado_interno:pd[1], desecho:pd[2]})}</td>`
+            + `</tr>`;
+    }).join('');
+
+    return `<div class="cos-events"><table class="cos-events-table">`
+        + `<thead><tr><th>${t('Sem.')}</th><th>${t('Fechas')}</th>`
+        + `<th style="text-align:right">${t('Bins')}</th>`
+        + `<th style="text-align:right">t</th>`
+        + `<th style="text-align:right">kg/ha</th>`
+        + `<th style="text-align:right">${t('Avance')}</th>`
+        + `<th>${t('Destino')}</th></tr></thead>`
+        + `<tbody>${filas}</tbody></table></div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    CONTROLES
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -6672,7 +7840,9 @@ function switchMode(modo){
     document.body.classList.toggle('foliar-active', modo === 'foliares');
     document.body.classList.toggle('soil-active', modo === 'suelo');
     document.body.classList.toggle('riego-active', modo === 'riego');
+    document.body.classList.toggle('cosecha-active', modo === 'cosecha');
     if(modo !== 'riego') closeRiegoModal();
+    if(modo !== 'cosecha') closeCosModal();
     ocultarTooltipYa();
     document.body.classList.toggle('ceres-active', modo === 'ceres');
     // El comparador es de Ceres: salir de la pestaña lo apaga en vez de dejar
@@ -6680,6 +7850,7 @@ function switchMode(modo){
     if(modo !== 'ceres' && compareMode) apagarCompare();
     if(modo !== 'ceres' && celdasOn){ celdasOn = false; celFirma = null; }
     document.getElementById('ctrlGeneral').classList.toggle('visible', modo === 'general');
+    document.getElementById('ctrlCosecha').classList.toggle('visible', modo === 'cosecha');
     document.getElementById('ctrlRiego').classList.toggle('visible', modo === 'riego');
     document.getElementById('ctrlCeres').classList.toggle('visible', modo === 'ceres');
     document.getElementById('ctrlNutricion').classList.toggle('visible',
@@ -6689,6 +7860,16 @@ function switchMode(modo){
     // no en el load inicial, y se cachea en memoria hasta que se pida
     // "Actualizar". El mapa dibuja mientras tanto con el estado "cargando".
     if(modo === 'riego'){ renderRiegoCalendario(); cargarRiego(false); }
+    // cosecha_data.json son ~190 KB: mismo criterio que Ceres, se pide al
+    // entrar a la pestaña y no en el arranque.
+    if(modo === 'cosecha'){
+        renderCosControles();
+        cargarCosecha().then(() => {
+            if(currentMode !== 'cosecha') return;
+            renderCosControles(); repintar(); renderPanel(); renderStamp();
+            renderLegend(); renderStats();
+        });
+    }
     // ceres_data.json pesa ~1 MB: se carga al entrar a la pestaña y no en el
     // load inicial, igual que la consulta de riego.
     if(modo === 'ceres'){
@@ -6763,7 +7944,7 @@ function setProf(v){ S.nut.prof = v || null; repintar(); renderPanel(); }
 function setCapa(capa, on){
     S.capas[capa] = on;
     if(capa === 'etiquetas'){
-        ['chkEtiquetas','chkEtiquetasNut','chkEtiquetasRiego','chkEtiquetasCeres'].forEach(id => {
+        ['chkEtiquetas','chkEtiquetasNut','chkEtiquetasRiego','chkEtiquetasCeres','chkEtiquetasCos'].forEach(id => {
             const el = document.getElementById(id); if(el) el.checked = on;
         });
     }
@@ -6833,6 +8014,8 @@ function poblarSelectores(soloDependientes){
         document.querySelectorAll('#segNivelCeres button').forEach(b =>
             b.classList.toggle('active', b.dataset.v === S.ceres.nivel));
     }
+
+    if(COS) renderCosControles();
 
     const selM = document.getElementById('selMetricaRiego');
     if(selM) selM.innerHTML = METRICAS_RIEGO.map(m =>

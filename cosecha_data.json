@@ -1,0 +1,8790 @@
+{
+ "generated_at": "2026-09-04T00:15:59+00:00",
+ "source": [
+  {
+   "archivo": "Base de datos Cosecha Ketcal_2026.xlsx",
+   "hoja": "BD Ketcal",
+   "temporada": "2026",
+   "filas": 1514
+  },
+  {
+   "archivo": "Base de datos Cosecha Ketcal_2025.xlsx",
+   "hoja": "Cosecha Limones campo",
+   "temporada": "2025",
+   "filas": 687
+  }
+ ],
+ "nota_ha": "El rendimiento usa la superficie PLANTADA del cuadro de plantacion, no la geometrica del KMZ.",
+ "destinos": [
+  {
+   "id": "exportacion",
+   "es": "Exportación",
+   "en": "Export",
+   "token": "--dat-dest-exp"
+  },
+  {
+   "id": "mercado_interno",
+   "es": "Mercado interno",
+   "en": "Domestic market",
+   "token": "--dat-dest-mi"
+  },
+  {
+   "id": "desecho",
+   "es": "Desecho",
+   "en": "Waste",
+   "token": "--dat-dest-des"
+  }
+ ],
+ "cuarteles": {
+  "LIM-C1": {
+   "id": "LIM-C1",
+   "name": "Lim C1",
+   "etiqueta": "Lim C1 - Messina",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 1,
+   "variedades": "Eureka y Messina",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 6.03,
+   "ha_geo": 6.09,
+   "equipos": [
+    "E1"
+   ],
+   "cosechado": true
+  },
+  "LIM-C2": {
+   "id": "LIM-C2",
+   "name": "Lim C2",
+   "etiqueta": "Lim C2 - Eureka / Messina",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 2,
+   "variedades": "Eureka y Messina",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 5.92,
+   "ha_geo": 6.2,
+   "equipos": [
+    "E1"
+   ],
+   "cosechado": true
+  },
+  "LIM-C3": {
+   "id": "LIM-C3",
+   "name": "Lim C3",
+   "etiqueta": "Lim C3 - Fino / Eureka",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 3,
+   "variedades": "Eureka y Fino 49",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 8.35,
+   "ha_geo": 8.49,
+   "equipos": [
+    "E1"
+   ],
+   "cosechado": true
+  },
+  "LIM-C4": {
+   "id": "LIM-C4",
+   "name": "Lim C4",
+   "etiqueta": "Lim C4 - Fino",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 4,
+   "variedades": "Fino 49",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 6.412,
+   "ha_geo": 6.72,
+   "equipos": [
+    "E1"
+   ],
+   "cosechado": true
+  },
+  "LIM-C5": {
+   "id": "LIM-C5",
+   "name": "Lim C5",
+   "etiqueta": "Lim C5 - Messina / Eureka / Fino",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 5,
+   "variedades": "Eureka, Messina y Fino 49",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 10.11,
+   "ha_geo": 10.59,
+   "equipos": [
+    "E1"
+   ],
+   "cosechado": true
+  },
+  "LIM-C6": {
+   "id": "LIM-C6",
+   "name": "Lim C6",
+   "etiqueta": "Lim C6 - Fino",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 6,
+   "variedades": "Fino 49",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 7.44,
+   "ha_geo": 7.39,
+   "equipos": [
+    "E1"
+   ],
+   "cosechado": true
+  },
+  "LIM-C7": {
+   "id": "LIM-C7",
+   "name": "Lim C7",
+   "etiqueta": "Lim C7 - Messina / Fino",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 7,
+   "variedades": "Fino 49",
+   "centro_costo": "Limones 1",
+   "anio_plantacion": "2021/2022",
+   "ha_plantada": 7.511,
+   "ha_geo": 7.61,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "LIM-C8": {
+   "id": "LIM-C8",
+   "name": "Lim C8",
+   "etiqueta": "Lim C8 - Fino / Eureka",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 8,
+   "variedades": "Eureka y Fino 49",
+   "centro_costo": "Limones 1",
+   "anio_plantacion": "2021",
+   "ha_plantada": 7.19,
+   "ha_geo": 7.58,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "LIM-C9": {
+   "id": "LIM-C9",
+   "name": "Lim C9",
+   "etiqueta": "Lim C9 - Eureka",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 9,
+   "variedades": "Eureka",
+   "centro_costo": "Limones 1",
+   "anio_plantacion": "2021",
+   "ha_plantada": 8.423,
+   "ha_geo": 8.5,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "LIM-C10": {
+   "id": "LIM-C10",
+   "name": "Lim C10",
+   "etiqueta": "Lim C10 - Fino",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 10,
+   "variedades": "Fino 49",
+   "centro_costo": "Limones 1",
+   "anio_plantacion": "2021",
+   "ha_plantada": 3.498,
+   "ha_geo": 3.68,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "LIM-C11": {
+   "id": "LIM-C11",
+   "name": "Lim C11",
+   "etiqueta": "Lim C11 - Eureka",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 11,
+   "variedades": "Eureka",
+   "centro_costo": "Limones 1",
+   "anio_plantacion": "2022",
+   "ha_plantada": 5.558,
+   "ha_geo": 5.7,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "LIM-C12": {
+   "id": "LIM-C12",
+   "name": "Lim C12",
+   "etiqueta": "Lim C12 - Messina",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 12,
+   "variedades": "Messina",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.604,
+   "ha_geo": 3.61,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "LIM-C13": {
+   "id": "LIM-C13",
+   "name": "Lim C13",
+   "etiqueta": "Lim C13 - Eureka",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 13,
+   "variedades": "Eureka",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.808,
+   "ha_geo": 3.94,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "LIM-C14": {
+   "id": "LIM-C14",
+   "name": "Lim C14",
+   "etiqueta": "Lim C14 - Eureka",
+   "especie": "Limón",
+   "especie_en": "Lemon",
+   "especie_corta": "Lim",
+   "numero": 14,
+   "variedades": "Eureka",
+   "centro_costo": "Limones 2",
+   "anio_plantacion": "2022",
+   "ha_plantada": 8.984,
+   "ha_geo": 8.98,
+   "equipos": [
+    "E2"
+   ],
+   "cosechado": true
+  },
+  "MAN-C1": {
+   "id": "MAN-C1",
+   "name": "Man C1",
+   "etiqueta": "Man C1 - Tango",
+   "especie": "Mandarina",
+   "especie_en": "Mandarin",
+   "especie_corta": "Man",
+   "numero": 1,
+   "variedades": "Tango",
+   "centro_costo": "Mandarinos 1",
+   "anio_plantacion": "2022",
+   "ha_plantada": 4.46,
+   "ha_geo": 4.57,
+   "equipos": [
+    "E5"
+   ],
+   "cosechado": false
+  },
+  "MAN-C2": {
+   "id": "MAN-C2",
+   "name": "Man C2",
+   "etiqueta": "Man C2 - Tango",
+   "especie": "Mandarina",
+   "especie_en": "Mandarin",
+   "especie_corta": "Man",
+   "numero": 2,
+   "variedades": "Tango",
+   "centro_costo": "Mandarinos 1",
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.56,
+   "ha_geo": 4.07,
+   "equipos": [
+    "E5"
+   ],
+   "cosechado": false
+  },
+  "MAN-C3": {
+   "id": "MAN-C3",
+   "name": "Man C3",
+   "etiqueta": "Man C3 - Tango",
+   "especie": "Mandarina",
+   "especie_en": "Mandarin",
+   "especie_corta": "Man",
+   "numero": 3,
+   "variedades": "Tango",
+   "centro_costo": "Mandarinos 1",
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.08,
+   "ha_geo": 3.2,
+   "equipos": [
+    "E5"
+   ],
+   "cosechado": false
+  },
+  "MAN-C4": {
+   "id": "MAN-C4",
+   "name": "Man C4",
+   "etiqueta": "Man C4 - Tango",
+   "especie": "Mandarina",
+   "especie_en": "Mandarin",
+   "especie_corta": "Man",
+   "numero": 4,
+   "variedades": "Tango",
+   "centro_costo": "Mandarinos 1",
+   "anio_plantacion": "2022",
+   "ha_plantada": 4.02,
+   "ha_geo": 4.52,
+   "equipos": [
+    "E5"
+   ],
+   "cosechado": false
+  },
+  "NAR-C1": {
+   "id": "NAR-C1",
+   "name": "Nar C1",
+   "etiqueta": "Nar C1 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 1,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 1",
+   "anio_plantacion": "2022",
+   "ha_plantada": 7.02,
+   "ha_geo": 7.34,
+   "equipos": [
+    "E3"
+   ],
+   "cosechado": true
+  },
+  "NAR-C2": {
+   "id": "NAR-C2",
+   "name": "Nar C2",
+   "etiqueta": "Nar C2 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 2,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 1",
+   "anio_plantacion": "2022",
+   "ha_plantada": 7.93,
+   "ha_geo": 7.69,
+   "equipos": [
+    "E3"
+   ],
+   "cosechado": true
+  },
+  "NAR-C3": {
+   "id": "NAR-C3",
+   "name": "Nar C3",
+   "etiqueta": "Nar C3 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 3,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 1",
+   "anio_plantacion": "2022/2023",
+   "ha_plantada": 5.69,
+   "ha_geo": 5.86,
+   "equipos": [
+    "E3"
+   ],
+   "cosechado": true
+  },
+  "NAR-C4": {
+   "id": "NAR-C4",
+   "name": "Nar C4",
+   "etiqueta": "Nar C4 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 4,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 1",
+   "anio_plantacion": "2022/2023",
+   "ha_plantada": 6.95,
+   "ha_geo": 6.68,
+   "equipos": [
+    "E3"
+   ],
+   "cosechado": true
+  },
+  "NAR-C5": {
+   "id": "NAR-C5",
+   "name": "Nar C5",
+   "etiqueta": "Nar C5 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 5,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 1",
+   "anio_plantacion": "2023",
+   "ha_plantada": 7.39,
+   "ha_geo": 7.66,
+   "equipos": [
+    "E3"
+   ],
+   "cosechado": true
+  },
+  "NAR-C6": {
+   "id": "NAR-C6",
+   "name": "Nar C6",
+   "etiqueta": "Nar C6 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 6,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 1",
+   "anio_plantacion": "2023",
+   "ha_plantada": 7.48,
+   "ha_geo": 7.2,
+   "equipos": [
+    "E3"
+   ],
+   "cosechado": true
+  },
+  "NAR-C7": {
+   "id": "NAR-C7",
+   "name": "Nar C7",
+   "etiqueta": "Nar C7 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 7,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 2",
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 5.83,
+   "ha_geo": 6.09,
+   "equipos": [
+    "E4"
+   ],
+   "cosechado": true
+  },
+  "NAR-C8": {
+   "id": "NAR-C8",
+   "name": "Nar C8",
+   "etiqueta": "Nar C8 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 8,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 2",
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 7.87,
+   "ha_geo": 8.0,
+   "equipos": [
+    "E4"
+   ],
+   "cosechado": true
+  },
+  "NAR-C9": {
+   "id": "NAR-C9",
+   "name": "Nar C9",
+   "etiqueta": "Nar C9 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 9,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 2",
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 7.64,
+   "ha_geo": 7.65,
+   "equipos": [
+    "E4"
+   ],
+   "cosechado": false
+  },
+  "NAR-C10": {
+   "id": "NAR-C10",
+   "name": "Nar C10",
+   "etiqueta": "Nar C10 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 10,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 2",
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 7.56,
+   "ha_geo": 7.29,
+   "equipos": [
+    "E4"
+   ],
+   "cosechado": true
+  },
+  "NAR-C11": {
+   "id": "NAR-C11",
+   "name": "Nar C11",
+   "etiqueta": "Nar C11 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 11,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 2",
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 5.69,
+   "ha_geo": 6.12,
+   "equipos": [
+    "E4"
+   ],
+   "cosechado": true
+  },
+  "NAR-C12": {
+   "id": "NAR-C12",
+   "name": "Nar C12",
+   "etiqueta": "Nar C12 - Cara Cara",
+   "especie": "Naranja",
+   "especie_en": "Orange",
+   "especie_corta": "Nar",
+   "numero": 12,
+   "variedades": "Cara Cara",
+   "centro_costo": "Naranjas 2",
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 8.05,
+   "ha_geo": 8.22,
+   "equipos": [
+    "E4"
+   ],
+   "cosechado": true
+  }
+ },
+ "temporadas": [
+  {
+   "id": "2026",
+   "label": "2026",
+   "archivo": "Base de datos Cosecha Ketcal_2026.xlsx",
+   "hoja": "BD Ketcal",
+   "n_filas": 1514,
+   "total": {
+    "kg": 4522646.8,
+    "bins": 12268.5,
+    "dest": {
+     "exportacion": 2801908.0,
+     "mercado_interno": 1585775.2,
+     "desecho": 134963.7
+    },
+    "camote": 237642.7,
+    "pct": {
+     "exportacion": 0.6195,
+     "mercado_interno": 0.3506,
+     "desecho": 0.0298
+    },
+    "kg_bin": 368.6,
+    "ha": 170.298,
+    "kg_ha": 26557.3,
+    "desde": "2026-01-01",
+    "hasta": "2026-08-24",
+    "n_dias": 132,
+    "n_semanas": 30,
+    "cuarteles": 25
+   },
+   "semanas": [
+    {
+     "kg": 0.0,
+     "bins": 0.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": null,
+     "desde": "2026-01-01",
+     "hasta": "2026-01-01",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 1,
+     "cuarteles": 1,
+     "mes": "enero"
+    },
+    {
+     "kg": 180023.0,
+     "bins": 473.0,
+     "dest": {
+      "exportacion": 180023.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 380.6,
+     "desde": "2026-01-05",
+     "hasta": "2026-01-09",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 2,
+     "cuarteles": 7,
+     "mes": "enero"
+    },
+    {
+     "kg": 71987.0,
+     "bins": 175.0,
+     "dest": {
+      "exportacion": 71987.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 411.4,
+     "desde": "2026-01-12",
+     "hasta": "2026-01-14",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 3,
+     "cuarteles": 6,
+     "mes": "enero"
+    },
+    {
+     "kg": 79867.0,
+     "bins": 164.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 79867.0,
+      "desecho": 0.0
+     },
+     "camote": 4094.0,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 487.0,
+     "desde": "2026-02-09",
+     "hasta": "2026-02-13",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 7,
+     "cuarteles": 5,
+     "mes": "febrero"
+    },
+    {
+     "kg": 213746.0,
+     "bins": 538.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 213746.0,
+      "desecho": 0.0
+     },
+     "camote": 63995.0,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 397.3,
+     "desde": "2026-02-16",
+     "hasta": "2026-02-21",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 8,
+     "cuarteles": 10,
+     "mes": "febrero"
+    },
+    {
+     "kg": 317139.0,
+     "bins": 796.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 309539.0,
+      "desecho": 7600.0
+     },
+     "camote": 69355.0,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.976,
+      "desecho": 0.024
+     },
+     "kg_bin": 398.4,
+     "desde": "2026-02-23",
+     "hasta": "2026-02-27",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 9,
+     "cuarteles": 12,
+     "mes": "febrero"
+    },
+    {
+     "kg": 97159.6,
+     "bins": 242.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 97159.6,
+      "desecho": 0.0
+     },
+     "camote": 13578.6,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 401.5,
+     "desde": "2026-03-02",
+     "hasta": "2026-03-06",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 10,
+     "cuarteles": 5,
+     "mes": "marzo"
+    },
+    {
+     "kg": 122053.9,
+     "bins": 299.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 120053.9,
+      "desecho": 2000.0
+     },
+     "camote": 15410.6,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.9836,
+      "desecho": 0.0164
+     },
+     "kg_bin": 408.2,
+     "desde": "2026-03-09",
+     "hasta": "2026-03-14",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 11,
+     "cuarteles": 6,
+     "mes": "marzo"
+    },
+    {
+     "kg": 78900.6,
+     "bins": 195.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 78900.6,
+      "desecho": 0.0
+     },
+     "camote": 11330.4,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 404.6,
+     "desde": "2026-03-16",
+     "hasta": "2026-03-20",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 12,
+     "cuarteles": 7,
+     "mes": "marzo"
+    },
+    {
+     "kg": 117018.2,
+     "bins": 288.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 117018.2,
+      "desecho": 0.0
+     },
+     "camote": 17339.7,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 406.3,
+     "desde": "2026-03-23",
+     "hasta": "2026-03-27",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 13,
+     "cuarteles": 6,
+     "mes": "marzo"
+    },
+    {
+     "kg": 59219.6,
+     "bins": 149.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 57219.6,
+      "desecho": 2000.0
+     },
+     "camote": 5919.3,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.9662,
+      "desecho": 0.0338
+     },
+     "kg_bin": 397.4,
+     "desde": "2026-03-31",
+     "hasta": "2026-03-31",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 14,
+     "cuarteles": 4,
+     "mes": "marzo"
+    },
+    {
+     "kg": 20537.0,
+     "bins": 53.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 20106.0,
+      "desecho": 431.0
+     },
+     "camote": 2183.0,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.979,
+      "desecho": 0.021
+     },
+     "kg_bin": 387.5,
+     "desde": "2026-04-06",
+     "hasta": "2026-04-06",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 15,
+     "cuarteles": 3,
+     "mes": "abril"
+    },
+    {
+     "kg": 48819.0,
+     "bins": 120.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 48819.0,
+      "desecho": 0.0
+     },
+     "camote": 5797.0,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 406.8,
+     "desde": "2026-04-15",
+     "hasta": "2026-04-17",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 16,
+     "cuarteles": 5,
+     "mes": "abril"
+    },
+    {
+     "kg": 111494.0,
+     "bins": 277.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 111494.0,
+      "desecho": 0.0
+     },
+     "camote": 14110.0,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 402.5,
+     "desde": "2026-04-20",
+     "hasta": "2026-04-24",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 17,
+     "cuarteles": 12,
+     "mes": "abril"
+    },
+    {
+     "kg": 73681.0,
+     "bins": 183.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 73681.0,
+      "desecho": 0.0
+     },
+     "camote": 6913.0,
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 402.6,
+     "desde": "2026-04-27",
+     "hasta": "2026-04-29",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 18,
+     "cuarteles": 6,
+     "mes": "abril"
+    },
+    {
+     "kg": 89082.0,
+     "bins": 231.0,
+     "dest": {
+      "exportacion": 63593.0,
+      "mercado_interno": 24181.0,
+      "desecho": 1308.0
+     },
+     "camote": 3052.0,
+     "pct": {
+      "exportacion": 0.7139,
+      "mercado_interno": 0.2714,
+      "desecho": 0.0147
+     },
+     "kg_bin": 385.6,
+     "desde": "2026-05-04",
+     "hasta": "2026-05-08",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 19,
+     "cuarteles": 6,
+     "mes": "mayo"
+    },
+    {
+     "kg": 101635.0,
+     "bins": 272.0,
+     "dest": {
+      "exportacion": 76259.0,
+      "mercado_interno": 23381.0,
+      "desecho": 1995.0
+     },
+     "camote": 4565.0,
+     "pct": {
+      "exportacion": 0.7503,
+      "mercado_interno": 0.23,
+      "desecho": 0.0196
+     },
+     "kg_bin": 373.7,
+     "desde": "2026-05-11",
+     "hasta": "2026-05-16",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 20,
+     "cuarteles": 6,
+     "mes": "mayo"
+    },
+    {
+     "kg": 183410.0,
+     "bins": 517.0,
+     "dest": {
+      "exportacion": 159023.0,
+      "mercado_interno": 22913.0,
+      "desecho": 1474.0
+     },
+     "pct": {
+      "exportacion": 0.867,
+      "mercado_interno": 0.1249,
+      "desecho": 0.008
+     },
+     "kg_bin": 354.8,
+     "desde": "2026-05-18",
+     "hasta": "2026-05-22",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 21,
+     "cuarteles": 4,
+     "mes": "mayo"
+    },
+    {
+     "kg": 202842.3,
+     "bins": 559.0,
+     "dest": {
+      "exportacion": 177728.0,
+      "mercado_interno": 24547.3,
+      "desecho": 567.0
+     },
+     "pct": {
+      "exportacion": 0.8762,
+      "mercado_interno": 0.121,
+      "desecho": 0.0028
+     },
+     "kg_bin": 362.9,
+     "desde": "2026-05-25",
+     "hasta": "2026-05-30",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 22,
+     "cuarteles": 7,
+     "mes": "mayo"
+    },
+    {
+     "kg": 149946.0,
+     "bins": 428.0,
+     "dest": {
+      "exportacion": 127710.0,
+      "mercado_interno": 12152.0,
+      "desecho": 10084.0
+     },
+     "pct": {
+      "exportacion": 0.8517,
+      "mercado_interno": 0.081,
+      "desecho": 0.0673
+     },
+     "kg_bin": 350.3,
+     "desde": "2026-06-01",
+     "hasta": "2026-06-05",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 23,
+     "cuarteles": 8,
+     "mes": "junio"
+    },
+    {
+     "kg": 92441.0,
+     "bins": 263.0,
+     "dest": {
+      "exportacion": 90153.0,
+      "mercado_interno": 0.0,
+      "desecho": 2288.0
+     },
+     "pct": {
+      "exportacion": 0.9752,
+      "mercado_interno": 0.0,
+      "desecho": 0.0248
+     },
+     "kg_bin": 351.5,
+     "desde": "2026-06-08",
+     "hasta": "2026-06-13",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 24,
+     "cuarteles": 6,
+     "mes": "junio"
+    },
+    {
+     "kg": 88870.0,
+     "bins": 256.0,
+     "dest": {
+      "exportacion": 87770.0,
+      "mercado_interno": 0.0,
+      "desecho": 1100.0
+     },
+     "pct": {
+      "exportacion": 0.9876,
+      "mercado_interno": 0.0,
+      "desecho": 0.0124
+     },
+     "kg_bin": 347.1,
+     "desde": "2026-06-15",
+     "hasta": "2026-06-20",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 25,
+     "cuarteles": 5,
+     "mes": "junio"
+    },
+    {
+     "kg": 194055.0,
+     "bins": 565.0,
+     "dest": {
+      "exportacion": 185681.0,
+      "mercado_interno": 6414.0,
+      "desecho": 1960.0
+     },
+     "pct": {
+      "exportacion": 0.9568,
+      "mercado_interno": 0.0331,
+      "desecho": 0.0101
+     },
+     "kg_bin": 343.5,
+     "desde": "2026-06-22",
+     "hasta": "2026-06-27",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 26,
+     "cuarteles": 10,
+     "mes": "junio"
+    },
+    {
+     "kg": 218794.0,
+     "bins": 664.0,
+     "dest": {
+      "exportacion": 208563.0,
+      "mercado_interno": 5653.0,
+      "desecho": 4578.0
+     },
+     "pct": {
+      "exportacion": 0.9532,
+      "mercado_interno": 0.0258,
+      "desecho": 0.0209
+     },
+     "kg_bin": 329.5,
+     "desde": "2026-06-30",
+     "hasta": "2026-07-04",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 27,
+     "cuarteles": 10,
+     "mes": "junio"
+    },
+    {
+     "kg": 250892.0,
+     "bins": 741.0,
+     "dest": {
+      "exportacion": 229716.0,
+      "mercado_interno": 18304.0,
+      "desecho": 2872.0
+     },
+     "pct": {
+      "exportacion": 0.9156,
+      "mercado_interno": 0.073,
+      "desecho": 0.0114
+     },
+     "kg_bin": 338.6,
+     "desde": "2026-07-06",
+     "hasta": "2026-07-11",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 28,
+     "cuarteles": 13,
+     "mes": "julio"
+    },
+    {
+     "kg": 210856.0,
+     "bins": 617.0,
+     "dest": {
+      "exportacion": 184955.0,
+      "mercado_interno": 23953.0,
+      "desecho": 1948.0
+     },
+     "pct": {
+      "exportacion": 0.8772,
+      "mercado_interno": 0.1136,
+      "desecho": 0.0092
+     },
+     "kg_bin": 341.7,
+     "desde": "2026-07-13",
+     "hasta": "2026-07-15",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 29,
+     "cuarteles": 17,
+     "mes": "julio"
+    },
+    {
+     "kg": 495837.0,
+     "bins": 1428.0,
+     "dest": {
+      "exportacion": 428457.0,
+      "mercado_interno": 56919.0,
+      "desecho": 10461.0
+     },
+     "pct": {
+      "exportacion": 0.8641,
+      "mercado_interno": 0.1148,
+      "desecho": 0.0211
+     },
+     "kg_bin": 347.2,
+     "desde": "2026-08-03",
+     "hasta": "2026-08-09",
+     "n_dias": 7,
+     "n_semanas": 1,
+     "n": 32,
+     "cuarteles": 19,
+     "mes": "agosto"
+    },
+    {
+     "kg": 346604.0,
+     "bins": 950.0,
+     "dest": {
+      "exportacion": 287412.0,
+      "mercado_interno": 32312.0,
+      "desecho": 26880.0
+     },
+     "pct": {
+      "exportacion": 0.8292,
+      "mercado_interno": 0.0932,
+      "desecho": 0.0776
+     },
+     "kg_bin": 364.8,
+     "desde": "2026-08-10",
+     "hasta": "2026-08-14",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 33,
+     "cuarteles": 13,
+     "mes": "agosto"
+    },
+    {
+     "kg": 283897.7,
+     "bins": 777.5,
+     "dest": {
+      "exportacion": 242878.0,
+      "mercado_interno": 7442.0,
+      "desecho": 33577.7
+     },
+     "pct": {
+      "exportacion": 0.8555,
+      "mercado_interno": 0.0262,
+      "desecho": 0.1183
+     },
+     "kg_bin": 365.1,
+     "desde": "2026-08-17",
+     "hasta": "2026-08-22",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 34,
+     "cuarteles": 11,
+     "mes": "agosto"
+    },
+    {
+     "kg": 21840.0,
+     "bins": 48.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.0,
+      "desecho": 21840.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.0,
+      "desecho": 1.0
+     },
+     "kg_bin": 455.0,
+     "desde": "2026-08-24",
+     "hasta": "2026-08-24",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 35,
+     "cuarteles": 4,
+     "mes": "agosto"
+    }
+   ],
+   "cuarteles": {
+    "LIM-C1": {
+     "kg": 191456.8,
+     "bins": 502.0,
+     "dest": {
+      "exportacion": 113993.0,
+      "mercado_interno": 73653.8,
+      "desecho": 3810.0
+     },
+     "camote": 16053.8,
+     "pct": {
+      "exportacion": 0.5954,
+      "mercado_interno": 0.3847,
+      "desecho": 0.0199
+     },
+     "kg_bin": 381.4,
+     "ha": 6.03,
+     "kg_ha": 31750.7,
+     "desde": "2026-01-01",
+     "hasta": "2026-08-14",
+     "n_dias": 24,
+     "n_semanas": 12,
+     "variedades": [
+      "Eureka y Messina"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 160860.8
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 26786.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 3810.0
+      }
+     ],
+     "semanas": {
+      "1": {
+       "kg": 0.0,
+       "bins": 0.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-01",
+       "hasta": "2026-01-01"
+      },
+      "3": {
+       "kg": 16332.0,
+       "bins": 39.0,
+       "dest": {
+        "exportacion": 16332.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-12",
+       "hasta": "2026-01-14"
+      },
+      "8": {
+       "kg": 19404.0,
+       "bins": 62.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 19404.0,
+        "desecho": 0.0
+       },
+       "camote": 6041.0,
+       "desde": "2026-02-19",
+       "hasta": "2026-02-21"
+      },
+      "9": {
+       "kg": 14502.0,
+       "bins": 37.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 14502.0,
+        "desecho": 0.0
+       },
+       "camote": 4680.0,
+       "desde": "2026-02-24",
+       "hasta": "2026-02-24"
+      },
+      "13": {
+       "kg": 12781.5,
+       "bins": 31.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 12781.5,
+        "desecho": 0.0
+       },
+       "camote": 2000.2,
+       "desde": "2026-03-26",
+       "hasta": "2026-03-27"
+      },
+      "14": {
+       "kg": 11824.3,
+       "bins": 30.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 9824.3,
+        "desecho": 2000.0
+       },
+       "camote": 1825.5,
+       "desde": "2026-03-31",
+       "hasta": "2026-03-31"
+      },
+      "17": {
+       "kg": 8551.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 8551.0,
+        "desecho": 0.0
+       },
+       "camote": 799.0,
+       "desde": "2026-04-22",
+       "hasta": "2026-04-24"
+      },
+      "20": {
+       "kg": 28370.0,
+       "bins": 77.0,
+       "dest": {
+        "exportacion": 23429.0,
+        "mercado_interno": 4666.0,
+        "desecho": 275.0
+       },
+       "camote": 708.0,
+       "desde": "2026-05-16",
+       "hasta": "2026-05-16"
+      },
+      "25": {
+       "kg": 10494.0,
+       "bins": 31.0,
+       "dest": {
+        "exportacion": 10348.0,
+        "mercado_interno": 0.0,
+        "desecho": 146.0
+       },
+       "desde": "2026-06-19",
+       "hasta": "2026-06-20"
+      },
+      "26": {
+       "kg": 17414.0,
+       "bins": 50.0,
+       "dest": {
+        "exportacion": 17096.0,
+        "mercado_interno": 0.0,
+        "desecho": 318.0
+       },
+       "desde": "2026-06-22",
+       "hasta": "2026-06-23"
+      },
+      "28": {
+       "kg": 17211.0,
+       "bins": 52.0,
+       "dest": {
+        "exportacion": 17007.0,
+        "mercado_interno": 0.0,
+        "desecho": 204.0
+       },
+       "desde": "2026-07-08",
+       "hasta": "2026-07-10"
+      },
+      "33": {
+       "kg": 34573.0,
+       "bins": 72.0,
+       "dest": {
+        "exportacion": 29781.0,
+        "mercado_interno": 3925.0,
+        "desecho": 867.0
+       },
+       "desde": "2026-08-12",
+       "hasta": "2026-08-14"
+      }
+     }
+    },
+    "LIM-C2": {
+     "kg": 227909.6,
+     "bins": 613.0,
+     "dest": {
+      "exportacion": 150385.0,
+      "mercado_interno": 75333.6,
+      "desecho": 2191.0
+     },
+     "camote": 26121.2,
+     "pct": {
+      "exportacion": 0.6598,
+      "mercado_interno": 0.3305,
+      "desecho": 0.0096
+     },
+     "kg_bin": 371.8,
+     "ha": 5.92,
+     "kg_ha": 38498.2,
+     "desde": "2026-01-12",
+     "hasta": "2026-08-14",
+     "n_dias": 22,
+     "n_semanas": 11,
+     "variedades": [
+      "Eureka y Messina"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 194694.6
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 31024.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 2191.0
+      }
+     ],
+     "semanas": {
+      "3": {
+       "kg": 28670.0,
+       "bins": 70.0,
+       "dest": {
+        "exportacion": 28670.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-12",
+       "hasta": "2026-01-14"
+      },
+      "8": {
+       "kg": 20237.0,
+       "bins": 52.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 20237.0,
+        "desecho": 0.0
+       },
+       "camote": 12745.0,
+       "desde": "2026-02-19",
+       "hasta": "2026-02-21"
+      },
+      "9": {
+       "kg": 13801.0,
+       "bins": 35.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 13801.0,
+        "desecho": 0.0
+       },
+       "camote": 6491.0,
+       "desde": "2026-02-23",
+       "hasta": "2026-02-24"
+      },
+      "13": {
+       "kg": 12649.9,
+       "bins": 30.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 12649.9,
+        "desecho": 0.0
+       },
+       "camote": 1215.2,
+       "desde": "2026-03-26",
+       "hasta": "2026-03-27"
+      },
+      "14": {
+       "kg": 3193.7,
+       "bins": 8.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 3193.7,
+        "desecho": 0.0
+       },
+       "desde": "2026-03-31",
+       "hasta": "2026-03-31"
+      },
+      "17": {
+       "kg": 11965.0,
+       "bins": 29.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11965.0,
+        "desecho": 0.0
+       },
+       "camote": 3753.0,
+       "desde": "2026-04-21",
+       "hasta": "2026-04-23"
+      },
+      "20": {
+       "kg": 19640.0,
+       "bins": 55.0,
+       "dest": {
+        "exportacion": 13417.0,
+        "mercado_interno": 5985.0,
+        "desecho": 238.0
+       },
+       "camote": 1917.0,
+       "desde": "2026-05-13",
+       "hasta": "2026-05-16"
+      },
+      "21": {
+       "kg": 48363.0,
+       "bins": 138.0,
+       "dest": {
+        "exportacion": 42176.0,
+        "mercado_interno": 5918.0,
+        "desecho": 269.0
+       },
+       "desde": "2026-05-22",
+       "hasta": "2026-05-22"
+      },
+      "26": {
+       "kg": 12500.0,
+       "bins": 37.0,
+       "dest": {
+        "exportacion": 12414.0,
+        "mercado_interno": 0.0,
+        "desecho": 86.0
+       },
+       "desde": "2026-06-25",
+       "hasta": "2026-06-25"
+      },
+      "28": {
+       "kg": 13885.0,
+       "bins": 42.0,
+       "dest": {
+        "exportacion": 13718.0,
+        "mercado_interno": 0.0,
+        "desecho": 167.0
+       },
+       "desde": "2026-07-07",
+       "hasta": "2026-07-08"
+      },
+      "33": {
+       "kg": 43005.0,
+       "bins": 117.0,
+       "dest": {
+        "exportacion": 39990.0,
+        "mercado_interno": 1584.0,
+        "desecho": 1431.0
+       },
+       "desde": "2026-08-13",
+       "hasta": "2026-08-14"
+      }
+     }
+    },
+    "LIM-C3": {
+     "kg": 240615.9,
+     "bins": 647.0,
+     "dest": {
+      "exportacion": 133365.0,
+      "mercado_interno": 105028.9,
+      "desecho": 2222.0
+     },
+     "camote": 20193.0,
+     "pct": {
+      "exportacion": 0.5543,
+      "mercado_interno": 0.4365,
+      "desecho": 0.0092
+     },
+     "kg_bin": 371.9,
+     "ha": 8.35,
+     "kg_ha": 28816.3,
+     "desde": "2026-01-13",
+     "hasta": "2026-08-14",
+     "n_dias": 30,
+     "n_semanas": 13,
+     "variedades": [
+      "Eureka y Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 187934.9
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 50459.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 2222.0
+      }
+     ],
+     "semanas": {
+      "3": {
+       "kg": 8391.0,
+       "bins": 20.0,
+       "dest": {
+        "exportacion": 8391.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-13",
+       "hasta": "2026-01-14"
+      },
+      "8": {
+       "kg": 13644.0,
+       "bins": 35.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 13644.0,
+        "desecho": 0.0
+       },
+       "camote": 6877.0,
+       "desde": "2026-02-20",
+       "hasta": "2026-02-21"
+      },
+      "9": {
+       "kg": 23710.0,
+       "bins": 60.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 23710.0,
+        "desecho": 0.0
+       },
+       "camote": 4220.0,
+       "desde": "2026-02-23",
+       "hasta": "2026-02-25"
+      },
+      "12": {
+       "kg": 13904.6,
+       "bins": 34.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 13904.6,
+        "desecho": 0.0
+       },
+       "camote": 1554.1,
+       "desde": "2026-03-20",
+       "hasta": "2026-03-20"
+      },
+      "13": {
+       "kg": 29701.3,
+       "bins": 74.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 29701.3,
+        "desecho": 0.0
+       },
+       "camote": 6323.9,
+       "desde": "2026-03-23",
+       "hasta": "2026-03-27"
+      },
+      "17": {
+       "kg": 3305.0,
+       "bins": 8.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 3305.0,
+        "desecho": 0.0
+       },
+       "camote": 424.0,
+       "desde": "2026-04-23",
+       "hasta": "2026-04-24"
+      },
+      "18": {
+       "kg": 8072.0,
+       "bins": 20.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 8072.0,
+        "desecho": 0.0
+       },
+       "camote": 794.0,
+       "desde": "2026-04-27",
+       "hasta": "2026-04-28"
+      },
+      "19": {
+       "kg": 7435.0,
+       "bins": 19.0,
+       "dest": {
+        "exportacion": 5244.0,
+        "mercado_interno": 2033.0,
+        "desecho": 158.0
+       },
+       "desde": "2026-05-07",
+       "hasta": "2026-05-07"
+      },
+      "22": {
+       "kg": 29465.0,
+       "bins": 79.0,
+       "dest": {
+        "exportacion": 23963.0,
+        "mercado_interno": 5420.0,
+        "desecho": 82.0
+       },
+       "desde": "2026-05-27",
+       "hasta": "2026-05-29"
+      },
+      "26": {
+       "kg": 38155.0,
+       "bins": 111.0,
+       "dest": {
+        "exportacion": 37667.0,
+        "mercado_interno": 0.0,
+        "desecho": 488.0
+       },
+       "desde": "2026-06-23",
+       "hasta": "2026-06-25"
+      },
+      "28": {
+       "kg": 30078.0,
+       "bins": 85.0,
+       "dest": {
+        "exportacion": 29721.0,
+        "mercado_interno": 0.0,
+        "desecho": 357.0
+       },
+       "desde": "2026-07-09",
+       "hasta": "2026-07-10"
+      },
+      "29": {
+       "kg": 2397.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 2397.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-07-15",
+       "hasta": "2026-07-15"
+      },
+      "33": {
+       "kg": 32358.0,
+       "bins": 95.0,
+       "dest": {
+        "exportacion": 28379.0,
+        "mercado_interno": 2842.0,
+        "desecho": 1137.0
+       },
+       "desde": "2026-08-11",
+       "hasta": "2026-08-14"
+      }
+     }
+    },
+    "LIM-C4": {
+     "kg": 201994.7,
+     "bins": 566.0,
+     "dest": {
+      "exportacion": 85054.0,
+      "mercado_interno": 115630.2,
+      "desecho": 1310.6
+     },
+     "camote": 14786.2,
+     "pct": {
+      "exportacion": 0.4211,
+      "mercado_interno": 0.5724,
+      "desecho": 0.0065
+     },
+     "kg_bin": 356.9,
+     "ha": 6.412,
+     "kg_ha": 31502.6,
+     "desde": "2026-01-08",
+     "hasta": "2026-08-22",
+     "n_dias": 31,
+     "n_semanas": 14,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 184101.2
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 16583.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 1310.6
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 9522.0,
+       "bins": 53.0,
+       "dest": {
+        "exportacion": 9522.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-08",
+       "hasta": "2026-01-09"
+      },
+      "3": {
+       "kg": 10257.0,
+       "bins": 26.0,
+       "dest": {
+        "exportacion": 10257.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-12",
+       "hasta": "2026-01-13"
+      },
+      "8": {
+       "kg": 10324.0,
+       "bins": 25.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 10324.0,
+        "desecho": 0.0
+       },
+       "camote": 1959.0,
+       "desde": "2026-02-20",
+       "hasta": "2026-02-21"
+      },
+      "9": {
+       "kg": 38506.0,
+       "bins": 97.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 38506.0,
+        "desecho": 0.0
+       },
+       "camote": 5388.0,
+       "desde": "2026-02-23",
+       "hasta": "2026-02-25"
+      },
+      "13": {
+       "kg": 39071.2,
+       "bins": 97.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 39071.2,
+        "desecho": 0.0
+       },
+       "camote": 5434.2,
+       "desde": "2026-03-23",
+       "hasta": "2026-03-27"
+      },
+      "17": {
+       "kg": 2769.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 2769.0,
+        "desecho": 0.0
+       },
+       "camote": 388.0,
+       "desde": "2026-04-24",
+       "hasta": "2026-04-24"
+      },
+      "18": {
+       "kg": 13362.0,
+       "bins": 33.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 13362.0,
+        "desecho": 0.0
+       },
+       "camote": 1617.0,
+       "desde": "2026-04-27",
+       "hasta": "2026-04-29"
+      },
+      "20": {
+       "kg": 8148.0,
+       "bins": 22.0,
+       "dest": {
+        "exportacion": 4337.0,
+        "mercado_interno": 3576.0,
+        "desecho": 235.0
+       },
+       "desde": "2026-05-12",
+       "hasta": "2026-05-13"
+      },
+      "22": {
+       "kg": 17257.0,
+       "bins": 47.0,
+       "dest": {
+        "exportacion": 13751.0,
+        "mercado_interno": 3451.0,
+        "desecho": 55.0
+       },
+       "desde": "2026-05-27",
+       "hasta": "2026-05-29"
+      },
+      "26": {
+       "kg": 1742.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 1726.0,
+        "mercado_interno": 0.0,
+        "desecho": 16.0
+       },
+       "desde": "2026-06-25",
+       "hasta": "2026-06-25"
+      },
+      "28": {
+       "kg": 20483.0,
+       "bins": 61.0,
+       "dest": {
+        "exportacion": 20270.0,
+        "mercado_interno": 0.0,
+        "desecho": 213.0
+       },
+       "desde": "2026-07-06",
+       "hasta": "2026-07-08"
+      },
+      "29": {
+       "kg": 1872.0,
+       "bins": 5.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 1872.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-07-15",
+       "hasta": "2026-07-15"
+      },
+      "33": {
+       "kg": 27928.0,
+       "bins": 82.0,
+       "dest": {
+        "exportacion": 24842.0,
+        "mercado_interno": 2313.0,
+        "desecho": 773.0
+       },
+       "desde": "2026-08-11",
+       "hasta": "2026-08-14"
+      },
+      "34": {
+       "kg": 753.6,
+       "bins": 4.0,
+       "dest": {
+        "exportacion": 349.0,
+        "mercado_interno": 386.0,
+        "desecho": 18.6
+       },
+       "desde": "2026-08-21",
+       "hasta": "2026-08-22"
+      }
+     }
+    },
+    "LIM-C5": {
+     "kg": 376456.6,
+     "bins": 996.0,
+     "dest": {
+      "exportacion": 223934.0,
+      "mercado_interno": 144158.6,
+      "desecho": 8364.0
+     },
+     "camote": 18619.0,
+     "pct": {
+      "exportacion": 0.5948,
+      "mercado_interno": 0.3829,
+      "desecho": 0.0222
+     },
+     "kg_bin": 378.0,
+     "ha": 10.11,
+     "kg_ha": 37236.1,
+     "desde": "2026-01-14",
+     "hasta": "2026-08-11",
+     "n_dias": 31,
+     "n_semanas": 12,
+     "variedades": [
+      "Eureka, Messina y Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 315002.6
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 53090.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 8364.0
+      }
+     ],
+     "semanas": {
+      "3": {
+       "kg": 7517.0,
+       "bins": 18.0,
+       "dest": {
+        "exportacion": 7517.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-14",
+       "hasta": "2026-01-14"
+      },
+      "8": {
+       "kg": 56547.0,
+       "bins": 133.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 56547.0,
+        "desecho": 0.0
+       },
+       "camote": 7460.0,
+       "desde": "2026-02-17",
+       "hasta": "2026-02-20"
+      },
+      "11": {
+       "kg": 40937.6,
+       "bins": 101.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 40937.6,
+        "desecho": 0.0
+       },
+       "camote": 5124.0,
+       "desde": "2026-03-09",
+       "hasta": "2026-03-13"
+      },
+      "16": {
+       "kg": 11084.0,
+       "bins": 27.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11084.0,
+        "desecho": 0.0
+       },
+       "camote": 2139.0,
+       "desde": "2026-04-16",
+       "hasta": "2026-04-17"
+      },
+      "17": {
+       "kg": 16364.0,
+       "bins": 41.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 16364.0,
+        "desecho": 0.0
+       },
+       "camote": 2014.0,
+       "desde": "2026-04-20",
+       "hasta": "2026-04-21"
+      },
+      "18": {
+       "kg": 6499.0,
+       "bins": 16.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 6499.0,
+        "desecho": 0.0
+       },
+       "camote": 704.0,
+       "desde": "2026-04-28",
+       "hasta": "2026-04-29"
+      },
+      "19": {
+       "kg": 33015.0,
+       "bins": 82.0,
+       "dest": {
+        "exportacion": 23540.0,
+        "mercado_interno": 8957.0,
+        "desecho": 518.0
+       },
+       "camote": 1178.0,
+       "desde": "2026-05-06",
+       "hasta": "2026-05-07"
+      },
+      "23": {
+       "kg": 45984.0,
+       "bins": 127.0,
+       "dest": {
+        "exportacion": 40035.0,
+        "mercado_interno": 2268.0,
+        "desecho": 3681.0
+       },
+       "desde": "2026-06-03",
+       "hasta": "2026-06-05"
+      },
+      "25": {
+       "kg": 43644.0,
+       "bins": 123.0,
+       "dest": {
+        "exportacion": 43062.0,
+        "mercado_interno": 0.0,
+        "desecho": 582.0
+       },
+       "desde": "2026-06-17",
+       "hasta": "2026-06-20"
+      },
+      "26": {
+       "kg": 22078.0,
+       "bins": 63.0,
+       "dest": {
+        "exportacion": 21604.0,
+        "mercado_interno": 0.0,
+        "desecho": 474.0
+       },
+       "desde": "2026-06-22",
+       "hasta": "2026-06-23"
+      },
+      "27": {
+       "kg": 41750.0,
+       "bins": 121.0,
+       "dest": {
+        "exportacion": 40368.0,
+        "mercado_interno": 0.0,
+        "desecho": 1382.0
+       },
+       "desde": "2026-07-03",
+       "hasta": "2026-07-04"
+      },
+      "33": {
+       "kg": 51037.0,
+       "bins": 144.0,
+       "dest": {
+        "exportacion": 47808.0,
+        "mercado_interno": 1502.0,
+        "desecho": 1727.0
+       },
+       "desde": "2026-08-10",
+       "hasta": "2026-08-11"
+      }
+     }
+    },
+    "LIM-C6": {
+     "kg": 267744.0,
+     "bins": 723.0,
+     "dest": {
+      "exportacion": 161508.0,
+      "mercado_interno": 97351.0,
+      "desecho": 8885.0
+     },
+     "camote": 20285.8,
+     "pct": {
+      "exportacion": 0.6032,
+      "mercado_interno": 0.3636,
+      "desecho": 0.0332
+     },
+     "kg_bin": 370.3,
+     "ha": 7.44,
+     "kg_ha": 35987.1,
+     "desde": "2026-01-08",
+     "hasta": "2026-08-11",
+     "n_dias": 35,
+     "n_semanas": 16,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 228838.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 30021.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 8885.0
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 18769.0,
+       "bins": 46.0,
+       "dest": {
+        "exportacion": 18769.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-08",
+       "hasta": "2026-01-09"
+      },
+      "3": {
+       "kg": 820.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 820.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-12",
+       "hasta": "2026-01-12"
+      },
+      "8": {
+       "kg": 38694.0,
+       "bins": 95.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 38694.0,
+        "desecho": 0.0
+       },
+       "camote": 8940.0,
+       "desde": "2026-02-16",
+       "hasta": "2026-02-20"
+      },
+      "9": {
+       "kg": 21220.0,
+       "bins": 53.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 18420.0,
+        "desecho": 2800.0
+       },
+       "camote": 6645.0,
+       "desde": "2026-02-24",
+       "hasta": "2026-02-27"
+      },
+      "10": {
+       "kg": 1588.1,
+       "bins": 4.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 1588.1,
+        "desecho": 0.0
+       },
+       "camote": 415.8,
+       "desde": "2026-03-06",
+       "hasta": "2026-03-06"
+      },
+      "11": {
+       "kg": 11869.2,
+       "bins": 29.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11869.2,
+        "desecho": 0.0
+       },
+       "camote": 1569.2,
+       "desde": "2026-03-09",
+       "hasta": "2026-03-13"
+      },
+      "12": {
+       "kg": 1168.8,
+       "bins": 3.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 1168.8,
+        "desecho": 0.0
+       },
+       "camote": 374.8,
+       "desde": "2026-03-16",
+       "hasta": "2026-03-16"
+      },
+      "16": {
+       "kg": 6872.0,
+       "bins": 17.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 6872.0,
+        "desecho": 0.0
+       },
+       "camote": 775.0,
+       "desde": "2026-04-16",
+       "hasta": "2026-04-17"
+      },
+      "17": {
+       "kg": 7275.0,
+       "bins": 18.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 7275.0,
+        "desecho": 0.0
+       },
+       "camote": 391.0,
+       "desde": "2026-04-20",
+       "hasta": "2026-04-21"
+      },
+      "18": {
+       "kg": 5620.0,
+       "bins": 14.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5620.0,
+        "desecho": 0.0
+       },
+       "camote": 1175.0,
+       "desde": "2026-04-29",
+       "hasta": "2026-04-29"
+      },
+      "21": {
+       "kg": 34540.0,
+       "bins": 99.0,
+       "dest": {
+        "exportacion": 30349.0,
+        "mercado_interno": 3958.0,
+        "desecho": 233.0
+       },
+       "desde": "2026-05-21",
+       "hasta": "2026-05-22"
+      },
+      "23": {
+       "kg": 19004.0,
+       "bins": 54.0,
+       "dest": {
+        "exportacion": 15938.0,
+        "mercado_interno": 0.0,
+        "desecho": 3066.0
+       },
+       "desde": "2026-06-04",
+       "hasta": "2026-06-05"
+      },
+      "27": {
+       "kg": 18231.0,
+       "bins": 52.0,
+       "dest": {
+        "exportacion": 17474.0,
+        "mercado_interno": 0.0,
+        "desecho": 757.0
+       },
+       "desde": "2026-07-04",
+       "hasta": "2026-07-04"
+      },
+      "28": {
+       "kg": 25643.0,
+       "bins": 76.0,
+       "dest": {
+        "exportacion": 25341.0,
+        "mercado_interno": 0.0,
+        "desecho": 302.0
+       },
+       "desde": "2026-07-06",
+       "hasta": "2026-07-10"
+      },
+      "32": {
+       "kg": 11328.0,
+       "bins": 34.0,
+       "dest": {
+        "exportacion": 11046.0,
+        "mercado_interno": 0.0,
+        "desecho": 282.0
+       },
+       "desde": "2026-08-09",
+       "hasta": "2026-08-09"
+      },
+      "33": {
+       "kg": 45102.0,
+       "bins": 127.0,
+       "dest": {
+        "exportacion": 41771.0,
+        "mercado_interno": 1886.0,
+        "desecho": 1445.0
+       },
+       "desde": "2026-08-10",
+       "hasta": "2026-08-11"
+      }
+     }
+    },
+    "LIM-C7": {
+     "kg": 339908.8,
+     "bins": 909.0,
+     "dest": {
+      "exportacion": 206300.0,
+      "mercado_interno": 129098.5,
+      "desecho": 4510.2
+     },
+     "camote": 21882.6,
+     "pct": {
+      "exportacion": 0.6069,
+      "mercado_interno": 0.3798,
+      "desecho": 0.0133
+     },
+     "kg_bin": 373.9,
+     "ha": 7.511,
+     "kg_ha": 45254.8,
+     "desde": "2026-01-05",
+     "hasta": "2026-08-22",
+     "n_dias": 28,
+     "n_semanas": 15,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 250557.5
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 82514.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 4510.2
+      },
+      {
+       "nombre": "Propal",
+       "kg": 2327.0
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 19207.0,
+       "bins": 48.0,
+       "dest": {
+        "exportacion": 19207.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-05",
+       "hasta": "2026-01-05"
+      },
+      "7": {
+       "kg": 12241.0,
+       "bins": 29.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 12241.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-02-12",
+       "hasta": "2026-02-13"
+      },
+      "9": {
+       "kg": 62829.0,
+       "bins": 157.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 61629.0,
+        "desecho": 1200.0
+       },
+       "camote": 15906.0,
+       "desde": "2026-02-25",
+       "hasta": "2026-02-27"
+      },
+      "10": {
+       "kg": 9571.6,
+       "bins": 24.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 9571.6,
+        "desecho": 0.0
+       },
+       "camote": 740.3,
+       "desde": "2026-03-02",
+       "hasta": "2026-03-02"
+      },
+      "14": {
+       "kg": 17349.0,
+       "bins": 43.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 17349.0,
+        "desecho": 0.0
+       },
+       "camote": 2450.2,
+       "desde": "2026-03-31",
+       "hasta": "2026-03-31"
+      },
+      "15": {
+       "kg": 6662.0,
+       "bins": 17.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 6523.0,
+        "desecho": 139.0
+       },
+       "camote": 1141.0,
+       "desde": "2026-04-06",
+       "hasta": "2026-04-06"
+      },
+      "16": {
+       "kg": 13715.0,
+       "bins": 34.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 13715.0,
+        "desecho": 0.0
+       },
+       "camote": 1228.0,
+       "desde": "2026-04-15",
+       "hasta": "2026-04-17"
+      },
+      "19": {
+       "kg": 3212.0,
+       "bins": 9.0,
+       "dest": {
+        "exportacion": 1941.0,
+        "mercado_interno": 1216.0,
+        "desecho": 55.0
+       },
+       "camote": 417.0,
+       "desde": "2026-05-05",
+       "hasta": "2026-05-05"
+      },
+      "22": {
+       "kg": 68424.0,
+       "bins": 185.0,
+       "dest": {
+        "exportacion": 62143.0,
+        "mercado_interno": 6089.0,
+        "desecho": 192.0
+       },
+       "desde": "2026-05-26",
+       "hasta": "2026-05-29"
+      },
+      "24": {
+       "kg": 22632.0,
+       "bins": 62.0,
+       "dest": {
+        "exportacion": 21926.0,
+        "mercado_interno": 0.0,
+        "desecho": 706.0
+       },
+       "desde": "2026-06-10",
+       "hasta": "2026-06-11"
+      },
+      "27": {
+       "kg": 29135.0,
+       "bins": 87.0,
+       "dest": {
+        "exportacion": 28581.0,
+        "mercado_interno": 0.0,
+        "desecho": 554.0
+       },
+       "desde": "2026-07-01",
+       "hasta": "2026-07-03"
+      },
+      "28": {
+       "kg": 32913.0,
+       "bins": 92.0,
+       "dest": {
+        "exportacion": 32523.0,
+        "mercado_interno": 0.0,
+        "desecho": 390.0
+       },
+       "desde": "2026-07-10",
+       "hasta": "2026-07-11"
+      },
+      "32": {
+       "kg": 12251.0,
+       "bins": 35.0,
+       "dest": {
+        "exportacion": 11795.0,
+        "mercado_interno": 0.0,
+        "desecho": 456.0
+       },
+       "desde": "2026-08-09",
+       "hasta": "2026-08-09"
+      },
+      "33": {
+       "kg": 3741.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 3635.0,
+        "mercado_interno": 0.0,
+        "desecho": 106.0
+       },
+       "desde": "2026-08-10",
+       "hasta": "2026-08-10"
+      },
+      "34": {
+       "kg": 26026.2,
+       "bins": 75.0,
+       "dest": {
+        "exportacion": 24549.0,
+        "mercado_interno": 765.0,
+        "desecho": 712.2
+       },
+       "desde": "2026-08-21",
+       "hasta": "2026-08-22"
+      }
+     }
+    },
+    "LIM-C8": {
+     "kg": 354770.5,
+     "bins": 962.0,
+     "dest": {
+      "exportacion": 209546.0,
+      "mercado_interno": 140874.3,
+      "desecho": 4350.2
+     },
+     "camote": 17054.0,
+     "pct": {
+      "exportacion": 0.5907,
+      "mercado_interno": 0.3971,
+      "desecho": 0.0123
+     },
+     "kg_bin": 368.8,
+     "ha": 7.19,
+     "kg_ha": 49342.2,
+     "desde": "2026-02-11",
+     "hasta": "2026-08-22",
+     "n_dias": 36,
+     "n_semanas": 14,
+     "variedades": [
+      "Eureka y Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 259672.3
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 72422.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 18326.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 4350.2
+      }
+     ],
+     "semanas": {
+      "7": {
+       "kg": 17252.0,
+       "bins": 41.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 17252.0,
+        "desecho": 0.0
+       },
+       "camote": 899.0,
+       "desde": "2026-02-11",
+       "hasta": "2026-02-13"
+      },
+      "8": {
+       "kg": 19540.0,
+       "bins": 45.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 19540.0,
+        "desecho": 0.0
+       },
+       "camote": 3506.0,
+       "desde": "2026-02-16",
+       "hasta": "2026-02-19"
+      },
+      "10": {
+       "kg": 50318.6,
+       "bins": 125.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 50318.6,
+        "desecho": 0.0
+       },
+       "camote": 7595.3,
+       "desde": "2026-03-02",
+       "hasta": "2026-03-06"
+      },
+      "13": {
+       "kg": 20333.7,
+       "bins": 50.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 20333.7,
+        "desecho": 0.0
+       },
+       "camote": 1964.7,
+       "desde": "2026-03-23",
+       "hasta": "2026-03-26"
+      },
+      "16": {
+       "kg": 6066.0,
+       "bins": 15.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 6066.0,
+        "desecho": 0.0
+       },
+       "camote": 404.0,
+       "desde": "2026-04-16",
+       "hasta": "2026-04-17"
+      },
+      "17": {
+       "kg": 18466.0,
+       "bins": 47.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 18466.0,
+        "desecho": 0.0
+       },
+       "camote": 2685.0,
+       "desde": "2026-04-23",
+       "hasta": "2026-04-24"
+      },
+      "19": {
+       "kg": 23074.0,
+       "bins": 59.0,
+       "dest": {
+        "exportacion": 17876.0,
+        "mercado_interno": 4821.0,
+        "desecho": 377.0
+       },
+       "desde": "2026-05-04",
+       "hasta": "2026-05-05"
+      },
+      "22": {
+       "kg": 29898.0,
+       "bins": 87.0,
+       "dest": {
+        "exportacion": 27905.0,
+        "mercado_interno": 1840.0,
+        "desecho": 153.0
+       },
+       "desde": "2026-05-25",
+       "hasta": "2026-05-26"
+      },
+      "24": {
+       "kg": 21625.0,
+       "bins": 62.0,
+       "dest": {
+        "exportacion": 21276.0,
+        "mercado_interno": 0.0,
+        "desecho": 349.0
+       },
+       "desde": "2026-06-09",
+       "hasta": "2026-06-11"
+      },
+      "27": {
+       "kg": 27961.0,
+       "bins": 86.0,
+       "dest": {
+        "exportacion": 27520.0,
+        "mercado_interno": 0.0,
+        "desecho": 441.0
+       },
+       "desde": "2026-06-30",
+       "hasta": "2026-07-03"
+      },
+      "28": {
+       "kg": 822.0,
+       "bins": 3.0,
+       "dest": {
+        "exportacion": 812.0,
+        "mercado_interno": 0.0,
+        "desecho": 10.0
+       },
+       "desde": "2026-07-11",
+       "hasta": "2026-07-11"
+      },
+      "32": {
+       "kg": 52369.0,
+       "bins": 148.0,
+       "dest": {
+        "exportacion": 51009.0,
+        "mercado_interno": 0.0,
+        "desecho": 1360.0
+       },
+       "desde": "2026-08-08",
+       "hasta": "2026-08-09"
+      },
+      "33": {
+       "kg": 17318.0,
+       "bins": 56.0,
+       "dest": {
+        "exportacion": 16025.0,
+        "mercado_interno": 735.0,
+        "desecho": 558.0
+       },
+       "desde": "2026-08-10",
+       "hasta": "2026-08-13"
+      },
+      "34": {
+       "kg": 49727.2,
+       "bins": 138.0,
+       "dest": {
+        "exportacion": 47123.0,
+        "mercado_interno": 1502.0,
+        "desecho": 1102.2
+       },
+       "desde": "2026-08-21",
+       "hasta": "2026-08-22"
+      }
+     }
+    },
+    "LIM-C9": {
+     "kg": 296432.2,
+     "bins": 766.0,
+     "dest": {
+      "exportacion": 150850.0,
+      "mercado_interno": 141140.5,
+      "desecho": 4441.7
+     },
+     "camote": 9149.4,
+     "pct": {
+      "exportacion": 0.5089,
+      "mercado_interno": 0.4761,
+      "desecho": 0.015
+     },
+     "kg_bin": 387.0,
+     "ha": 8.423,
+     "kg_ha": 35193.2,
+     "desde": "2026-02-09",
+     "hasta": "2026-08-22",
+     "n_dias": 29,
+     "n_semanas": 15,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 187586.5
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 83987.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 20417.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 4441.7
+      }
+     ],
+     "semanas": {
+      "7": {
+       "kg": 30767.0,
+       "bins": 46.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 30767.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-02-09",
+       "hasta": "2026-02-11"
+      },
+      "9": {
+       "kg": 15401.0,
+       "bins": 38.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 15401.0,
+        "desecho": 0.0
+       },
+       "camote": 1590.0,
+       "desde": "2026-02-27",
+       "hasta": "2026-02-27"
+      },
+      "10": {
+       "kg": 28750.2,
+       "bins": 72.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 28750.2,
+        "desecho": 0.0
+       },
+       "camote": 3594.4,
+       "desde": "2026-03-02",
+       "hasta": "2026-03-06"
+      },
+      "13": {
+       "kg": 2480.6,
+       "bins": 6.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 2480.6,
+        "desecho": 0.0
+       },
+       "camote": 401.4,
+       "desde": "2026-03-27",
+       "hasta": "2026-03-27"
+      },
+      "14": {
+       "kg": 26852.6,
+       "bins": 68.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 26852.6,
+        "desecho": 0.0
+       },
+       "camote": 1643.5,
+       "desde": "2026-03-31",
+       "hasta": "2026-03-31"
+      },
+      "15": {
+       "kg": 5710.0,
+       "bins": 15.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5655.0,
+        "desecho": 55.0
+       },
+       "camote": 320.0,
+       "desde": "2026-04-06",
+       "hasta": "2026-04-06"
+      },
+      "17": {
+       "kg": 7688.0,
+       "bins": 19.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 7688.0,
+        "desecho": 0.0
+       },
+       "camote": 807.0,
+       "desde": "2026-04-24",
+       "hasta": "2026-04-24"
+      },
+      "18": {
+       "kg": 20082.0,
+       "bins": 49.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 20082.0,
+        "desecho": 0.0
+       },
+       "camote": 793.0,
+       "desde": "2026-04-27",
+       "hasta": "2026-04-28"
+      },
+      "21": {
+       "kg": 36590.0,
+       "bins": 104.0,
+       "dest": {
+        "exportacion": 34601.0,
+        "mercado_interno": 1561.0,
+        "desecho": 428.0
+       },
+       "desde": "2026-05-18",
+       "hasta": "2026-05-21"
+      },
+      "23": {
+       "kg": 4233.0,
+       "bins": 13.0,
+       "dest": {
+        "exportacion": 2693.0,
+        "mercado_interno": 0.0,
+        "desecho": 1540.0
+       },
+       "desde": "2026-06-05",
+       "hasta": "2026-06-05"
+      },
+      "24": {
+       "kg": 14810.0,
+       "bins": 43.0,
+       "dest": {
+        "exportacion": 14373.0,
+        "mercado_interno": 0.0,
+        "desecho": 437.0
+       },
+       "desde": "2026-06-08",
+       "hasta": "2026-06-09"
+      },
+      "26": {
+       "kg": 34889.0,
+       "bins": 100.0,
+       "dest": {
+        "exportacion": 34790.0,
+        "mercado_interno": 0.0,
+        "desecho": 99.0
+       },
+       "desde": "2026-06-27",
+       "hasta": "2026-06-27"
+      },
+      "27": {
+       "kg": 4534.0,
+       "bins": 14.0,
+       "dest": {
+        "exportacion": 4489.0,
+        "mercado_interno": 0.0,
+        "desecho": 45.0
+       },
+       "desde": "2026-06-30",
+       "hasta": "2026-06-30"
+      },
+      "32": {
+       "kg": 37057.0,
+       "bins": 105.0,
+       "dest": {
+        "exportacion": 36013.0,
+        "mercado_interno": 0.0,
+        "desecho": 1044.0
+       },
+       "desde": "2026-08-05",
+       "hasta": "2026-08-09"
+      },
+      "34": {
+       "kg": 26587.7,
+       "bins": 74.0,
+       "dest": {
+        "exportacion": 23891.0,
+        "mercado_interno": 1903.0,
+        "desecho": 793.7
+       },
+       "desde": "2026-08-21",
+       "hasta": "2026-08-22"
+      }
+     }
+    },
+    "LIM-C10": {
+     "kg": 184988.8,
+     "bins": 526.0,
+     "dest": {
+      "exportacion": 112531.0,
+      "mercado_interno": 70206.6,
+      "desecho": 2251.1
+     },
+     "camote": 7199.7,
+     "pct": {
+      "exportacion": 0.6083,
+      "mercado_interno": 0.3795,
+      "desecho": 0.0122
+     },
+     "kg_bin": 351.7,
+     "ha": 3.498,
+     "kg_ha": 52884.2,
+     "desde": "2026-02-12",
+     "hasta": "2026-08-22",
+     "n_dias": 33,
+     "n_semanas": 15,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 135484.6
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 39635.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 7618.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 2251.1
+      }
+     ],
+     "semanas": {
+      "7": {
+       "kg": 10919.0,
+       "bins": 27.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 10919.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-02-12",
+       "hasta": "2026-02-13"
+      },
+      "8": {
+       "kg": 6367.0,
+       "bins": 18.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 6367.0,
+        "desecho": 0.0
+       },
+       "camote": 1292.0,
+       "desde": "2026-02-16",
+       "hasta": "2026-02-19"
+      },
+      "9": {
+       "kg": 22093.0,
+       "bins": 55.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 22093.0,
+        "desecho": 0.0
+       },
+       "camote": 1932.0,
+       "desde": "2026-02-24",
+       "hasta": "2026-02-25"
+      },
+      "12": {
+       "kg": 10789.6,
+       "bins": 27.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 10789.6,
+        "desecho": 0.0
+       },
+       "camote": 1958.7,
+       "desde": "2026-03-17",
+       "hasta": "2026-03-20"
+      },
+      "17": {
+       "kg": 14074.0,
+       "bins": 35.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 14074.0,
+        "desecho": 0.0
+       },
+       "camote": 1617.0,
+       "desde": "2026-04-22",
+       "hasta": "2026-04-22"
+      },
+      "19": {
+       "kg": 408.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 400.0,
+        "desecho": 8.0
+       },
+       "camote": 400.0,
+       "desde": "2026-05-08",
+       "hasta": "2026-05-08"
+      },
+      "20": {
+       "kg": 764.0,
+       "bins": 3.0,
+       "dest": {
+        "exportacion": 366.0,
+        "mercado_interno": 366.0,
+        "desecho": 32.0
+       },
+       "desde": "2026-05-11",
+       "hasta": "2026-05-11"
+      },
+      "22": {
+       "kg": 18454.0,
+       "bins": 51.0,
+       "dest": {
+        "exportacion": 16501.0,
+        "mercado_interno": 1953.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-05-30",
+       "hasta": "2026-05-30"
+      },
+      "23": {
+       "kg": 14009.0,
+       "bins": 43.0,
+       "dest": {
+        "exportacion": 12734.0,
+        "mercado_interno": 1118.0,
+        "desecho": 157.0
+       },
+       "desde": "2026-06-01",
+       "hasta": "2026-06-02"
+      },
+      "24": {
+       "kg": 5524.0,
+       "bins": 18.0,
+       "dest": {
+        "exportacion": 5296.0,
+        "mercado_interno": 0.0,
+        "desecho": 228.0
+       },
+       "desde": "2026-06-10",
+       "hasta": "2026-06-13"
+      },
+      "25": {
+       "kg": 3336.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 3251.0,
+        "mercado_interno": 0.0,
+        "desecho": 85.0
+       },
+       "desde": "2026-06-15",
+       "hasta": "2026-06-17"
+      },
+      "27": {
+       "kg": 11877.0,
+       "bins": 39.0,
+       "dest": {
+        "exportacion": 11656.0,
+        "mercado_interno": 0.0,
+        "desecho": 221.0
+       },
+       "desde": "2026-07-01",
+       "hasta": "2026-07-04"
+      },
+      "29": {
+       "kg": 3833.0,
+       "bins": 11.0,
+       "dest": {
+        "exportacion": 3788.0,
+        "mercado_interno": 0.0,
+        "desecho": 45.0
+       },
+       "desde": "2026-07-14",
+       "hasta": "2026-07-14"
+      },
+      "32": {
+       "kg": 29268.0,
+       "bins": 88.0,
+       "dest": {
+        "exportacion": 28690.0,
+        "mercado_interno": 0.0,
+        "desecho": 578.0
+       },
+       "desde": "2026-08-03",
+       "hasta": "2026-08-09"
+      },
+      "34": {
+       "kg": 33273.1,
+       "bins": 97.0,
+       "dest": {
+        "exportacion": 30249.0,
+        "mercado_interno": 2127.0,
+        "desecho": 897.1
+       },
+       "desde": "2026-08-20",
+       "hasta": "2026-08-22"
+      }
+     }
+    },
+    "LIM-C11": {
+     "kg": 302361.8,
+     "bins": 806.0,
+     "dest": {
+      "exportacion": 212284.0,
+      "mercado_interno": 86926.2,
+      "desecho": 3151.6
+     },
+     "camote": 7687.2,
+     "pct": {
+      "exportacion": 0.7021,
+      "mercado_interno": 0.2875,
+      "desecho": 0.0104
+     },
+     "kg_bin": 375.1,
+     "ha": 5.558,
+     "kg_ha": 54401.2,
+     "desde": "2026-01-05",
+     "hasta": "2026-08-21",
+     "n_dias": 28,
+     "n_semanas": 13,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 201179.2
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 81704.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 16327.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 3151.6
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 31434.0,
+       "bins": 77.0,
+       "dest": {
+        "exportacion": 31434.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-05",
+       "hasta": "2026-01-08"
+      },
+      "9": {
+       "kg": 29239.0,
+       "bins": 73.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 29239.0,
+        "desecho": 0.0
+       },
+       "camote": 3487.0,
+       "desde": "2026-02-24",
+       "hasta": "2026-02-25"
+      },
+      "11": {
+       "kg": 11004.7,
+       "bins": 27.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11004.7,
+        "desecho": 0.0
+       },
+       "camote": 740.0,
+       "desde": "2026-03-13",
+       "hasta": "2026-03-14"
+      },
+      "12": {
+       "kg": 24680.5,
+       "bins": 60.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 24680.5,
+        "desecho": 0.0
+       },
+       "camote": 2403.2,
+       "desde": "2026-03-16",
+       "hasta": "2026-03-20"
+      },
+      "17": {
+       "kg": 8924.0,
+       "bins": 22.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 8924.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-04-20",
+       "hasta": "2026-04-21"
+      },
+      "19": {
+       "kg": 21938.0,
+       "bins": 60.0,
+       "dest": {
+        "exportacion": 14992.0,
+        "mercado_interno": 6754.0,
+        "desecho": 192.0
+       },
+       "camote": 1057.0,
+       "desde": "2026-05-08",
+       "hasta": "2026-05-08"
+      },
+      "20": {
+       "kg": 13879.0,
+       "bins": 36.0,
+       "dest": {
+        "exportacion": 10738.0,
+        "mercado_interno": 2858.0,
+        "desecho": 283.0
+       },
+       "desde": "2026-05-11",
+       "hasta": "2026-05-12"
+      },
+      "23": {
+       "kg": 31135.0,
+       "bins": 85.0,
+       "dest": {
+        "exportacion": 27505.0,
+        "mercado_interno": 3466.0,
+        "desecho": 164.0
+       },
+       "desde": "2026-06-02",
+       "hasta": "2026-06-03"
+      },
+      "25": {
+       "kg": 26627.0,
+       "bins": 75.0,
+       "dest": {
+        "exportacion": 26376.0,
+        "mercado_interno": 0.0,
+        "desecho": 251.0
+       },
+       "desde": "2026-06-15",
+       "hasta": "2026-06-16"
+      },
+      "27": {
+       "kg": 11543.0,
+       "bins": 37.0,
+       "dest": {
+        "exportacion": 11383.0,
+        "mercado_interno": 0.0,
+        "desecho": 160.0
+       },
+       "desde": "2026-06-30",
+       "hasta": "2026-07-01"
+      },
+      "29": {
+       "kg": 5987.0,
+       "bins": 17.0,
+       "dest": {
+        "exportacion": 5982.0,
+        "mercado_interno": 0.0,
+        "desecho": 5.0
+       },
+       "desde": "2026-07-14",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 48801.0,
+       "bins": 136.0,
+       "dest": {
+        "exportacion": 48035.0,
+        "mercado_interno": 0.0,
+        "desecho": 766.0
+       },
+       "desde": "2026-08-05",
+       "hasta": "2026-08-08"
+      },
+      "34": {
+       "kg": 37169.6,
+       "bins": 101.0,
+       "dest": {
+        "exportacion": 35839.0,
+        "mercado_interno": 0.0,
+        "desecho": 1330.6
+       },
+       "desde": "2026-08-20",
+       "hasta": "2026-08-21"
+      }
+     }
+    },
+    "LIM-C12": {
+     "kg": 172704.4,
+     "bins": 457.0,
+     "dest": {
+      "exportacion": 109152.0,
+      "mercado_interno": 60002.4,
+      "desecho": 3550.0
+     },
+     "camote": 21583.3,
+     "pct": {
+      "exportacion": 0.632,
+      "mercado_interno": 0.3474,
+      "desecho": 0.0206
+     },
+     "kg_bin": 377.9,
+     "ha": 3.604,
+     "kg_ha": 47920.2,
+     "desde": "2026-01-08",
+     "hasta": "2026-08-08",
+     "n_dias": 18,
+     "n_semanas": 11,
+     "variedades": [
+      "Messina"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 133501.4
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 27973.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 7680.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 3550.0
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 26315.0,
+       "bins": 65.0,
+       "dest": {
+        "exportacion": 26315.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-08",
+       "hasta": "2026-01-09"
+      },
+      "7": {
+       "kg": 8688.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 8688.0,
+        "desecho": 0.0
+       },
+       "camote": 3195.0,
+       "desde": "2026-02-11",
+       "hasta": "2026-02-11"
+      },
+      "9": {
+       "kg": 27272.0,
+       "bins": 68.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 25272.0,
+        "desecho": 2000.0
+       },
+       "camote": 11713.0,
+       "desde": "2026-02-24",
+       "hasta": "2026-02-27"
+      },
+      "11": {
+       "kg": 1258.2,
+       "bins": 3.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 1258.2,
+        "desecho": 0.0
+       },
+       "desde": "2026-03-14",
+       "hasta": "2026-03-14"
+      },
+      "12": {
+       "kg": 7165.2,
+       "bins": 18.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 7165.2,
+        "desecho": 0.0
+       },
+       "camote": 3938.3,
+       "desde": "2026-03-19",
+       "hasta": "2026-03-19"
+      },
+      "17": {
+       "kg": 11317.0,
+       "bins": 28.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11317.0,
+        "desecho": 0.0
+       },
+       "camote": 797.0,
+       "desde": "2026-04-20",
+       "hasta": "2026-04-20"
+      },
+      "20": {
+       "kg": 30834.0,
+       "bins": 79.0,
+       "dest": {
+        "exportacion": 23972.0,
+        "mercado_interno": 5930.0,
+        "desecho": 932.0
+       },
+       "camote": 1940.0,
+       "desde": "2026-05-13",
+       "hasta": "2026-05-15"
+      },
+      "23": {
+       "kg": 8540.0,
+       "bins": 25.0,
+       "dest": {
+        "exportacion": 8067.0,
+        "mercado_interno": 372.0,
+        "desecho": 101.0
+       },
+       "desde": "2026-06-03",
+       "hasta": "2026-06-03"
+      },
+      "27": {
+       "kg": 23837.0,
+       "bins": 72.0,
+       "dest": {
+        "exportacion": 23661.0,
+        "mercado_interno": 0.0,
+        "desecho": 176.0
+       },
+       "desde": "2026-06-30",
+       "hasta": "2026-07-01"
+      },
+      "29": {
+       "kg": 4336.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 4336.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-07-15",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 23142.0,
+       "bins": 66.0,
+       "dest": {
+        "exportacion": 22801.0,
+        "mercado_interno": 0.0,
+        "desecho": 341.0
+       },
+       "desde": "2026-08-05",
+       "hasta": "2026-08-08"
+      }
+     }
+    },
+    "LIM-C13": {
+     "kg": 211617.3,
+     "bins": 570.0,
+     "dest": {
+      "exportacion": 140649.0,
+      "mercado_interno": 68586.7,
+      "desecho": 2381.6
+     },
+     "camote": 7130.1,
+     "pct": {
+      "exportacion": 0.6646,
+      "mercado_interno": 0.3241,
+      "desecho": 0.0113
+     },
+     "kg_bin": 371.3,
+     "ha": 3.808,
+     "kg_ha": 55571.8,
+     "desde": "2026-01-05",
+     "hasta": "2026-08-20",
+     "n_dias": 31,
+     "n_semanas": 14,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 159783.7
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 34979.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 14473.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 2381.6
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 28032.0,
+       "bins": 69.0,
+       "dest": {
+        "exportacion": 28032.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-05",
+       "hasta": "2026-01-08"
+      },
+      "8": {
+       "kg": 16188.0,
+       "bins": 40.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 16188.0,
+        "desecho": 0.0
+       },
+       "camote": 2374.0,
+       "desde": "2026-02-16",
+       "hasta": "2026-02-21"
+      },
+      "9": {
+       "kg": 19050.0,
+       "bins": 48.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 19050.0,
+        "desecho": 0.0
+       },
+       "camote": 2670.0,
+       "desde": "2026-02-23",
+       "hasta": "2026-02-24"
+      },
+      "11": {
+       "kg": 16157.1,
+       "bins": 39.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 16157.1,
+        "desecho": 0.0
+       },
+       "camote": 1271.5,
+       "desde": "2026-03-12",
+       "hasta": "2026-03-14"
+      },
+      "12": {
+       "kg": 11717.2,
+       "bins": 29.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11717.2,
+        "desecho": 0.0
+       },
+       "camote": 379.6,
+       "desde": "2026-03-16",
+       "hasta": "2026-03-17"
+      },
+      "17": {
+       "kg": 796.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 796.0,
+        "desecho": 0.0
+       },
+       "camote": 435.0,
+       "desde": "2026-04-24",
+       "hasta": "2026-04-24"
+      },
+      "22": {
+       "kg": 27777.3,
+       "bins": 79.0,
+       "dest": {
+        "exportacion": 24567.0,
+        "mercado_interno": 3125.3,
+        "desecho": 85.0
+       },
+       "desde": "2026-05-25",
+       "hasta": "2026-05-30"
+      },
+      "23": {
+       "kg": 10549.0,
+       "bins": 32.0,
+       "dest": {
+        "exportacion": 7839.0,
+        "mercado_interno": 1553.0,
+        "desecho": 1157.0
+       },
+       "desde": "2026-06-01",
+       "hasta": "2026-06-05"
+      },
+      "24": {
+       "kg": 8599.0,
+       "bins": 24.0,
+       "dest": {
+        "exportacion": 8531.0,
+        "mercado_interno": 0.0,
+        "desecho": 68.0
+       },
+       "desde": "2026-06-13",
+       "hasta": "2026-06-13"
+      },
+      "25": {
+       "kg": 4769.0,
+       "bins": 15.0,
+       "dest": {
+        "exportacion": 4733.0,
+        "mercado_interno": 0.0,
+        "desecho": 36.0
+       },
+       "desde": "2026-06-15",
+       "hasta": "2026-06-16"
+      },
+      "26": {
+       "kg": 5822.0,
+       "bins": 18.0,
+       "dest": {
+        "exportacion": 5778.0,
+        "mercado_interno": 0.0,
+        "desecho": 44.0
+       },
+       "desde": "2026-06-26",
+       "hasta": "2026-06-26"
+      },
+      "29": {
+       "kg": 7843.0,
+       "bins": 22.0,
+       "dest": {
+        "exportacion": 7807.0,
+        "mercado_interno": 0.0,
+        "desecho": 36.0
+       },
+       "desde": "2026-07-14",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 33889.0,
+       "bins": 96.0,
+       "dest": {
+        "exportacion": 33334.0,
+        "mercado_interno": 0.0,
+        "desecho": 555.0
+       },
+       "desde": "2026-08-03",
+       "hasta": "2026-08-05"
+      },
+      "34": {
+       "kg": 20428.6,
+       "bins": 57.0,
+       "dest": {
+        "exportacion": 20028.0,
+        "mercado_interno": 0.0,
+        "desecho": 400.6
+       },
+       "desde": "2026-08-20",
+       "hasta": "2026-08-20"
+      }
+     }
+    },
+    "LIM-C14": {
+     "kg": 427762.0,
+     "bins": 1142.0,
+     "dest": {
+      "exportacion": 266475.0,
+      "mercado_interno": 153663.7,
+      "desecho": 7623.2
+     },
+     "camote": 29897.4,
+     "pct": {
+      "exportacion": 0.623,
+      "mercado_interno": 0.3592,
+      "desecho": 0.0178
+     },
+     "kg_bin": 374.6,
+     "ha": 8.984,
+     "kg_ha": 47613.8,
+     "desde": "2026-01-06",
+     "hasta": "2026-08-22",
+     "n_dias": 38,
+     "n_semanas": 18,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 351279.8
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 47949.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 20910.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 7623.2
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 46744.0,
+       "bins": 115.0,
+       "dest": {
+        "exportacion": 46744.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-01-06",
+       "hasta": "2026-01-08"
+      },
+      "8": {
+       "kg": 12801.0,
+       "bins": 33.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 12801.0,
+        "desecho": 0.0
+       },
+       "camote": 12801.0,
+       "desde": "2026-02-19",
+       "hasta": "2026-02-19"
+      },
+      "9": {
+       "kg": 29516.0,
+       "bins": 75.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 27916.0,
+        "desecho": 1600.0
+       },
+       "camote": 4633.0,
+       "desde": "2026-02-25",
+       "hasta": "2026-02-27"
+      },
+      "10": {
+       "kg": 6931.1,
+       "bins": 17.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 6931.1,
+        "desecho": 0.0
+       },
+       "camote": 1232.8,
+       "desde": "2026-03-06",
+       "hasta": "2026-03-06"
+      },
+      "11": {
+       "kg": 40827.1,
+       "bins": 100.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 38827.1,
+        "desecho": 2000.0
+       },
+       "camote": 6705.7,
+       "desde": "2026-03-09",
+       "hasta": "2026-03-14"
+      },
+      "12": {
+       "kg": 9474.6,
+       "bins": 24.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 9474.6,
+        "desecho": 0.0
+       },
+       "camote": 721.8,
+       "desde": "2026-03-16",
+       "hasta": "2026-03-17"
+      },
+      "15": {
+       "kg": 8165.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 7928.0,
+        "desecho": 237.0
+       },
+       "camote": 722.0,
+       "desde": "2026-04-06",
+       "hasta": "2026-04-06"
+      },
+      "16": {
+       "kg": 11082.0,
+       "bins": 27.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11082.0,
+        "desecho": 0.0
+       },
+       "camote": 1251.0,
+       "desde": "2026-04-15",
+       "hasta": "2026-04-16"
+      },
+      "18": {
+       "kg": 20046.0,
+       "bins": 51.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 20046.0,
+        "desecho": 0.0
+       },
+       "camote": 1830.0,
+       "desde": "2026-04-28",
+       "hasta": "2026-04-29"
+      },
+      "21": {
+       "kg": 63917.0,
+       "bins": 176.0,
+       "dest": {
+        "exportacion": 51897.0,
+        "mercado_interno": 11476.0,
+        "desecho": 544.0
+       },
+       "desde": "2026-05-18",
+       "hasta": "2026-05-20"
+      },
+      "22": {
+       "kg": 11567.0,
+       "bins": 31.0,
+       "dest": {
+        "exportacion": 8898.0,
+        "mercado_interno": 2669.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-05-30",
+       "hasta": "2026-05-30"
+      },
+      "23": {
+       "kg": 16492.0,
+       "bins": 49.0,
+       "dest": {
+        "exportacion": 12899.0,
+        "mercado_interno": 3375.0,
+        "desecho": 218.0
+       },
+       "desde": "2026-06-01",
+       "hasta": "2026-06-03"
+      },
+      "24": {
+       "kg": 19251.0,
+       "bins": 54.0,
+       "dest": {
+        "exportacion": 18751.0,
+        "mercado_interno": 0.0,
+        "desecho": 500.0
+       },
+       "desde": "2026-06-12",
+       "hasta": "2026-06-13"
+      },
+      "26": {
+       "kg": 33807.0,
+       "bins": 97.0,
+       "dest": {
+        "exportacion": 33648.0,
+        "mercado_interno": 0.0,
+        "desecho": 159.0
+       },
+       "desde": "2026-06-25",
+       "hasta": "2026-06-26"
+      },
+      "29": {
+       "kg": 755.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 755.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2026-07-15",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 26223.0,
+       "bins": 76.0,
+       "dest": {
+        "exportacion": 25648.0,
+        "mercado_interno": 0.0,
+        "desecho": 575.0
+       },
+       "desde": "2026-08-03",
+       "hasta": "2026-08-06"
+      },
+      "33": {
+       "kg": 6970.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 6385.0,
+        "mercado_interno": 379.0,
+        "desecho": 206.0
+       },
+       "desde": "2026-08-14",
+       "hasta": "2026-08-14"
+      },
+      "34": {
+       "kg": 63193.2,
+       "bins": 173.0,
+       "dest": {
+        "exportacion": 60850.0,
+        "mercado_interno": 759.0,
+        "desecho": 1584.2
+       },
+       "desde": "2026-08-19",
+       "hasta": "2026-08-22"
+      }
+     }
+    },
+    "NAR-C1": {
+     "kg": 161373.0,
+     "bins": 455.0,
+     "dest": {
+      "exportacion": 120451.0,
+      "mercado_interno": 19222.0,
+      "desecho": 21700.0
+     },
+     "pct": {
+      "exportacion": 0.7464,
+      "mercado_interno": 0.1191,
+      "desecho": 0.1345
+     },
+     "kg_bin": 354.7,
+     "ha": 7.02,
+     "kg_ha": 22987.6,
+     "desde": "2026-07-02",
+     "hasta": "2026-08-24",
+     "n_dias": 15,
+     "n_semanas": 7,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 50613.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 44723.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 44337.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 21700.0
+      }
+     ],
+     "semanas": {
+      "27": {
+       "kg": 9929.0,
+       "bins": 32.0,
+       "dest": {
+        "exportacion": 8771.0,
+        "mercado_interno": 987.0,
+        "desecho": 171.0
+       },
+       "desde": "2026-07-02",
+       "hasta": "2026-07-03"
+      },
+      "28": {
+       "kg": 41672.0,
+       "bins": 126.0,
+       "dest": {
+        "exportacion": 35952.0,
+        "mercado_interno": 5308.0,
+        "desecho": 412.0
+       },
+       "desde": "2026-07-06",
+       "hasta": "2026-07-10"
+      },
+      "29": {
+       "kg": 20783.0,
+       "bins": 60.0,
+       "dest": {
+        "exportacion": 20620.0,
+        "mercado_interno": 0.0,
+        "desecho": 163.0
+       },
+       "desde": "2026-07-15",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 30314.0,
+       "bins": 88.0,
+       "dest": {
+        "exportacion": 24390.0,
+        "mercado_interno": 5234.0,
+        "desecho": 690.0
+       },
+       "desde": "2026-08-04",
+       "hasta": "2026-08-07"
+      },
+      "33": {
+       "kg": 45935.0,
+       "bins": 121.0,
+       "dest": {
+        "exportacion": 30718.0,
+        "mercado_interno": 7693.0,
+        "desecho": 7524.0
+       },
+       "desde": "2026-08-12",
+       "hasta": "2026-08-14"
+      },
+      "34": {
+       "kg": 7280.0,
+       "bins": 16.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 7280.0
+       },
+       "desde": "2026-08-19",
+       "hasta": "2026-08-19"
+      },
+      "35": {
+       "kg": 5460.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 5460.0
+       },
+       "desde": "2026-08-24",
+       "hasta": "2026-08-24"
+      }
+     }
+    },
+    "NAR-C2": {
+     "kg": 150755.5,
+     "bins": 421.5,
+     "dest": {
+      "exportacion": 101346.0,
+      "mercado_interno": 21389.0,
+      "desecho": 28020.5
+     },
+     "pct": {
+      "exportacion": 0.6723,
+      "mercado_interno": 0.1419,
+      "desecho": 0.1859
+     },
+     "kg_bin": 357.7,
+     "ha": 7.93,
+     "kg_ha": 19010.8,
+     "desde": "2026-07-02",
+     "hasta": "2026-08-24",
+     "n_dias": 14,
+     "n_semanas": 7,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 68333.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 40285.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 28020.5
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 14117.0
+      }
+     ],
+     "semanas": {
+      "27": {
+       "kg": 39997.0,
+       "bins": 124.0,
+       "dest": {
+        "exportacion": 34660.0,
+        "mercado_interno": 4666.0,
+        "desecho": 671.0
+       },
+       "desde": "2026-07-02",
+       "hasta": "2026-07-03"
+      },
+      "28": {
+       "kg": 6467.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 5625.0,
+        "mercado_interno": 760.0,
+        "desecho": 82.0
+       },
+       "desde": "2026-07-07",
+       "hasta": "2026-07-10"
+      },
+      "29": {
+       "kg": 14963.0,
+       "bins": 44.0,
+       "dest": {
+        "exportacion": 14821.0,
+        "mercado_interno": 0.0,
+        "desecho": 142.0
+       },
+       "desde": "2026-07-15",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 60296.0,
+       "bins": 167.0,
+       "dest": {
+        "exportacion": 43963.0,
+        "mercado_interno": 15187.0,
+        "desecho": 1146.0
+       },
+       "desde": "2026-08-04",
+       "hasta": "2026-08-06"
+      },
+      "33": {
+       "kg": 13669.0,
+       "bins": 32.0,
+       "dest": {
+        "exportacion": 2277.0,
+        "mercado_interno": 776.0,
+        "desecho": 10616.0
+       },
+       "desde": "2026-08-12",
+       "hasta": "2026-08-13"
+      },
+      "34": {
+       "kg": 9903.5,
+       "bins": 21.5,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 9903.5
+       },
+       "desde": "2026-08-17",
+       "hasta": "2026-08-21"
+      },
+      "35": {
+       "kg": 5460.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 5460.0
+       },
+       "desde": "2026-08-24",
+       "hasta": "2026-08-24"
+      }
+     }
+    },
+    "NAR-C3": {
+     "kg": 63175.0,
+     "bins": 185.0,
+     "dest": {
+      "exportacion": 46139.0,
+      "mercado_interno": 10746.0,
+      "desecho": 6290.0
+     },
+     "pct": {
+      "exportacion": 0.7303,
+      "mercado_interno": 0.1701,
+      "desecho": 0.0996
+     },
+     "kg_bin": 341.5,
+     "ha": 5.69,
+     "kg_ha": 11102.8,
+     "desde": "2026-07-07",
+     "hasta": "2026-08-24",
+     "n_dias": 11,
+     "n_semanas": 5,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 26626.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 23617.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 6290.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 4671.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 1971.0
+      }
+     ],
+     "semanas": {
+      "28": {
+       "kg": 2378.0,
+       "bins": 9.0,
+       "dest": {
+        "exportacion": 1971.0,
+        "mercado_interno": 376.0,
+        "desecho": 31.0
+       },
+       "desde": "2026-07-07",
+       "hasta": "2026-07-10"
+      },
+      "29": {
+       "kg": 28417.0,
+       "bins": 84.0,
+       "dest": {
+        "exportacion": 26073.0,
+        "mercado_interno": 2081.0,
+        "desecho": 263.0
+       },
+       "desde": "2026-07-14",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 13268.0,
+       "bins": 41.0,
+       "dest": {
+        "exportacion": 9600.0,
+        "mercado_interno": 3400.0,
+        "desecho": 268.0
+       },
+       "desde": "2026-08-05",
+       "hasta": "2026-08-08"
+      },
+      "33": {
+       "kg": 13652.0,
+       "bins": 39.0,
+       "dest": {
+        "exportacion": 8495.0,
+        "mercado_interno": 4889.0,
+        "desecho": 268.0
+       },
+       "desde": "2026-08-12",
+       "hasta": "2026-08-13"
+      },
+      "35": {
+       "kg": 5460.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 5460.0
+       },
+       "desde": "2026-08-24",
+       "hasta": "2026-08-24"
+      }
+     }
+    },
+    "NAR-C4": {
+     "kg": 102764.0,
+     "bins": 283.0,
+     "dest": {
+      "exportacion": 74225.0,
+      "mercado_interno": 12433.0,
+      "desecho": 16106.0
+     },
+     "pct": {
+      "exportacion": 0.7223,
+      "mercado_interno": 0.121,
+      "desecho": 0.1567
+     },
+     "kg_bin": 363.1,
+     "ha": 6.95,
+     "kg_ha": 14786.2,
+     "desde": "2026-07-14",
+     "hasta": "2026-08-24",
+     "n_dias": 10,
+     "n_semanas": 5,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 42365.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 35590.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 16106.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 8703.0
+      }
+     ],
+     "semanas": {
+      "29": {
+       "kg": 49200.0,
+       "bins": 139.0,
+       "dest": {
+        "exportacion": 47198.0,
+        "mercado_interno": 1539.0,
+        "desecho": 463.0
+       },
+       "desde": "2026-07-14",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 27233.0,
+       "bins": 79.0,
+       "dest": {
+        "exportacion": 19721.0,
+        "mercado_interno": 7106.0,
+        "desecho": 406.0
+       },
+       "desde": "2026-08-04",
+       "hasta": "2026-08-06"
+      },
+      "33": {
+       "kg": 11316.0,
+       "bins": 32.0,
+       "dest": {
+        "exportacion": 7306.0,
+        "mercado_interno": 3788.0,
+        "desecho": 222.0
+       },
+       "desde": "2026-08-12",
+       "hasta": "2026-08-13"
+      },
+      "34": {
+       "kg": 9555.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 9555.0
+       },
+       "desde": "2026-08-21",
+       "hasta": "2026-08-22"
+      },
+      "35": {
+       "kg": 5460.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 5460.0
+       },
+       "desde": "2026-08-24",
+       "hasta": "2026-08-24"
+      }
+     }
+    },
+    "NAR-C5": {
+     "kg": 27113.0,
+     "bins": 78.0,
+     "dest": {
+      "exportacion": 17531.0,
+      "mercado_interno": 8857.0,
+      "desecho": 725.0
+     },
+     "pct": {
+      "exportacion": 0.6466,
+      "mercado_interno": 0.3267,
+      "desecho": 0.0267
+     },
+     "kg_bin": 347.6,
+     "ha": 7.39,
+     "kg_ha": 3668.9,
+     "desde": "2026-08-07",
+     "hasta": "2026-08-08",
+     "n_dias": 2,
+     "n_semanas": 1,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 26388.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 725.0
+      }
+     ],
+     "semanas": {
+      "32": {
+       "kg": 27113.0,
+       "bins": 78.0,
+       "dest": {
+        "exportacion": 17531.0,
+        "mercado_interno": 8857.0,
+        "desecho": 725.0
+       },
+       "desde": "2026-08-07",
+       "hasta": "2026-08-08"
+      }
+     }
+    },
+    "NAR-C6": {
+     "kg": 64544.0,
+     "bins": 189.0,
+     "dest": {
+      "exportacion": 46358.0,
+      "mercado_interno": 17083.0,
+      "desecho": 1103.0
+     },
+     "pct": {
+      "exportacion": 0.7182,
+      "mercado_interno": 0.2647,
+      "desecho": 0.0171
+     },
+     "kg_bin": 341.5,
+     "ha": 7.48,
+     "kg_ha": 8628.9,
+     "desde": "2026-07-09",
+     "hasta": "2026-08-08",
+     "n_dias": 7,
+     "n_semanas": 3,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 37874.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 25567.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 1103.0
+      }
+     ],
+     "semanas": {
+      "28": {
+       "kg": 27050.0,
+       "bins": 79.0,
+       "dest": {
+        "exportacion": 20955.0,
+        "mercado_interno": 5773.0,
+        "desecho": 322.0
+       },
+       "desde": "2026-07-09",
+       "hasta": "2026-07-10"
+      },
+      "29": {
+       "kg": 6994.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 4612.0,
+        "mercado_interno": 2299.0,
+        "desecho": 83.0
+       },
+       "desde": "2026-07-13",
+       "hasta": "2026-07-14"
+      },
+      "32": {
+       "kg": 30500.0,
+       "bins": 89.0,
+       "dest": {
+        "exportacion": 20791.0,
+        "mercado_interno": 9011.0,
+        "desecho": 698.0
+       },
+       "desde": "2026-08-06",
+       "hasta": "2026-08-08"
+      }
+     }
+    },
+    "NAR-C7": {
+     "kg": 38414.0,
+     "bins": 113.0,
+     "dest": {
+      "exportacion": 31646.0,
+      "mercado_interno": 6281.0,
+      "desecho": 487.0
+     },
+     "pct": {
+      "exportacion": 0.8238,
+      "mercado_interno": 0.1635,
+      "desecho": 0.0127
+     },
+     "kg_bin": 339.9,
+     "ha": 5.83,
+     "kg_ha": 6589.0,
+     "desde": "2026-07-09",
+     "hasta": "2026-08-08",
+     "n_dias": 5,
+     "n_semanas": 3,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Gesex",
+       "kg": 21506.0
+      },
+      {
+       "nombre": "Rosales",
+       "kg": 16421.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 487.0
+      }
+     ],
+     "semanas": {
+      "28": {
+       "kg": 23803.0,
+       "bins": 69.0,
+       "dest": {
+        "exportacion": 21131.0,
+        "mercado_interno": 2390.0,
+        "desecho": 282.0
+       },
+       "desde": "2026-07-09",
+       "hasta": "2026-07-10"
+      },
+      "29": {
+       "kg": 380.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 375.0,
+        "mercado_interno": 0.0,
+        "desecho": 5.0
+       },
+       "desde": "2026-07-13",
+       "hasta": "2026-07-13"
+      },
+      "32": {
+       "kg": 14231.0,
+       "bins": 42.0,
+       "dest": {
+        "exportacion": 10140.0,
+        "mercado_interno": 3891.0,
+        "desecho": 200.0
+       },
+       "desde": "2026-08-07",
+       "hasta": "2026-08-08"
+      }
+     }
+    },
+    "NAR-C8": {
+     "kg": 58788.0,
+     "bins": 175.0,
+     "dest": {
+      "exportacion": 46391.0,
+      "mercado_interno": 11706.0,
+      "desecho": 691.0
+     },
+     "pct": {
+      "exportacion": 0.7891,
+      "mercado_interno": 0.1991,
+      "desecho": 0.0118
+     },
+     "kg_bin": 335.9,
+     "ha": 7.87,
+     "kg_ha": 7469.9,
+     "desde": "2026-06-24",
+     "hasta": "2026-08-08",
+     "n_dias": 6,
+     "n_semanas": 3,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Gesex",
+       "kg": 37917.0
+      },
+      {
+       "nombre": "Rosales",
+       "kg": 20180.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 691.0
+      }
+     ],
+     "semanas": {
+      "26": {
+       "kg": 20075.0,
+       "bins": 59.0,
+       "dest": {
+        "exportacion": 14584.0,
+        "mercado_interno": 5348.0,
+        "desecho": 143.0
+       },
+       "desde": "2026-06-24",
+       "hasta": "2026-06-24"
+      },
+      "29": {
+       "kg": 29275.0,
+       "bins": 86.0,
+       "dest": {
+        "exportacion": 23698.0,
+        "mercado_interno": 5234.0,
+        "desecho": 343.0
+       },
+       "desde": "2026-07-13",
+       "hasta": "2026-07-15"
+      },
+      "32": {
+       "kg": 9438.0,
+       "bins": 30.0,
+       "dest": {
+        "exportacion": 8109.0,
+        "mercado_interno": 1124.0,
+        "desecho": 205.0
+       },
+       "desde": "2026-08-07",
+       "hasta": "2026-08-08"
+      }
+     }
+    },
+    "NAR-C10": {
+     "kg": 23858.0,
+     "bins": 73.0,
+     "dest": {
+      "exportacion": 16519.0,
+      "mercado_interno": 7058.0,
+      "desecho": 281.0
+     },
+     "pct": {
+      "exportacion": 0.6924,
+      "mercado_interno": 0.2958,
+      "desecho": 0.0118
+     },
+     "kg_bin": 326.8,
+     "ha": 7.56,
+     "kg_ha": 3155.8,
+     "desde": "2026-07-10",
+     "hasta": "2026-07-14",
+     "n_dias": 3,
+     "n_semanas": 2,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Gesex",
+       "kg": 16519.0
+      },
+      {
+       "nombre": "Rosales",
+       "kg": 7058.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 281.0
+      }
+     ],
+     "semanas": {
+      "28": {
+       "kg": 8487.0,
+       "bins": 26.0,
+       "dest": {
+        "exportacion": 4690.0,
+        "mercado_interno": 3697.0,
+        "desecho": 100.0
+       },
+       "desde": "2026-07-10",
+       "hasta": "2026-07-10"
+      },
+      "29": {
+       "kg": 15371.0,
+       "bins": 47.0,
+       "dest": {
+        "exportacion": 11829.0,
+        "mercado_interno": 3361.0,
+        "desecho": 181.0
+       },
+       "desde": "2026-07-13",
+       "hasta": "2026-07-14"
+      }
+     }
+    },
+    "NAR-C11": {
+     "kg": 15749.0,
+     "bins": 49.0,
+     "dest": {
+      "exportacion": 10726.0,
+      "mercado_interno": 4811.0,
+      "desecho": 212.0
+     },
+     "pct": {
+      "exportacion": 0.6811,
+      "mercado_interno": 0.3055,
+      "desecho": 0.0135
+     },
+     "kg_bin": 321.4,
+     "ha": 5.69,
+     "kg_ha": 2767.8,
+     "desde": "2026-07-13",
+     "hasta": "2026-08-08",
+     "n_dias": 4,
+     "n_semanas": 2,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Gesex",
+       "kg": 9258.0
+      },
+      {
+       "nombre": "Rosales",
+       "kg": 6279.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 212.0
+      }
+     ],
+     "semanas": {
+      "29": {
+       "kg": 14238.0,
+       "bins": 42.0,
+       "dest": {
+        "exportacion": 9258.0,
+        "mercado_interno": 4811.0,
+        "desecho": 169.0
+       },
+       "desde": "2026-07-13",
+       "hasta": "2026-07-14"
+      },
+      "32": {
+       "kg": 1511.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 1468.0,
+        "mercado_interno": 0.0,
+        "desecho": 43.0
+       },
+       "desde": "2026-08-07",
+       "hasta": "2026-08-08"
+      }
+     }
+    },
+    "NAR-C12": {
+     "kg": 19390.0,
+     "bins": 62.0,
+     "dest": {
+      "exportacion": 14550.0,
+      "mercado_interno": 4534.0,
+      "desecho": 306.0
+     },
+     "pct": {
+      "exportacion": 0.7504,
+      "mercado_interno": 0.2338,
+      "desecho": 0.0158
+     },
+     "kg_bin": 312.7,
+     "ha": 8.05,
+     "kg_ha": 2408.7,
+     "desde": "2026-06-24",
+     "hasta": "2026-08-08",
+     "n_dias": 5,
+     "n_semanas": 3,
+     "variedades": [
+      "Cara Cara"
+     ],
+     "receptores": [
+      {
+       "nombre": "Gesex",
+       "kg": 10177.0
+      },
+      {
+       "nombre": "Rosales",
+       "kg": 8907.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 306.0
+      }
+     ],
+     "semanas": {
+      "26": {
+       "kg": 7573.0,
+       "bins": 23.0,
+       "dest": {
+        "exportacion": 6374.0,
+        "mercado_interno": 1066.0,
+        "desecho": 133.0
+       },
+       "desde": "2026-06-24",
+       "hasta": "2026-06-24"
+      },
+      "29": {
+       "kg": 4212.0,
+       "bins": 16.0,
+       "dest": {
+        "exportacion": 3803.0,
+        "mercado_interno": 359.0,
+        "desecho": 50.0
+       },
+       "desde": "2026-07-13",
+       "hasta": "2026-07-14"
+      },
+      "32": {
+       "kg": 7605.0,
+       "bins": 23.0,
+       "dest": {
+        "exportacion": 4373.0,
+        "mercado_interno": 3109.0,
+        "desecho": 123.0
+       },
+       "desde": "2026-08-07",
+       "hasta": "2026-08-08"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "2025",
+   "label": "2025",
+   "archivo": "Base de datos Cosecha Ketcal_2025.xlsx",
+   "hoja": "Cosecha Limones campo",
+   "n_filas": 687,
+   "total": {
+    "kg": 3370056.6,
+    "bins": 9007.0,
+    "dest": {
+     "exportacion": 2128958.0,
+     "mercado_interno": 1138798.6,
+     "desecho": 102300.0
+    },
+    "pct": {
+     "exportacion": 0.6317,
+     "mercado_interno": 0.3379,
+     "desecho": 0.0304
+    },
+    "kg_bin": 374.2,
+    "ha": 92.838,
+    "kg_ha": 36300.4,
+    "desde": "2025-01-03",
+    "hasta": "2025-09-26",
+    "n_dias": 131,
+    "n_semanas": 36,
+    "cuarteles": 14
+   },
+   "sin_cuartel": {
+    "kg": 13808.6,
+    "bins": 0.0,
+    "filas": 1
+   },
+   "semanas": [
+    {
+     "kg": 29709.0,
+     "bins": 74.0,
+     "dest": {
+      "exportacion": 22902.0,
+      "mercado_interno": 5607.0,
+      "desecho": 1200.0
+     },
+     "pct": {
+      "exportacion": 0.7709,
+      "mercado_interno": 0.1887,
+      "desecho": 0.0404
+     },
+     "kg_bin": 401.5,
+     "desde": "2025-01-03",
+     "hasta": "2025-01-03",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 1,
+     "cuarteles": 1,
+     "mes": "enero"
+    },
+    {
+     "kg": 92071.0,
+     "bins": 202.0,
+     "dest": {
+      "exportacion": 36961.0,
+      "mercado_interno": 40310.0,
+      "desecho": 14800.0
+     },
+     "pct": {
+      "exportacion": 0.4014,
+      "mercado_interno": 0.4378,
+      "desecho": 0.1607
+     },
+     "kg_bin": 455.8,
+     "desde": "2025-01-06",
+     "hasta": "2025-01-10",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 2,
+     "cuarteles": 3,
+     "mes": "enero"
+    },
+    {
+     "kg": 88118.0,
+     "bins": 214.0,
+     "dest": {
+      "exportacion": 63124.0,
+      "mercado_interno": 24994.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.7164,
+      "mercado_interno": 0.2836,
+      "desecho": 0.0
+     },
+     "kg_bin": 411.8,
+     "desde": "2025-01-14",
+     "hasta": "2025-01-17",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 3,
+     "cuarteles": 2,
+     "mes": "enero"
+    },
+    {
+     "kg": 91368.0,
+     "bins": 222.0,
+     "dest": {
+      "exportacion": 67442.0,
+      "mercado_interno": 20326.0,
+      "desecho": 3600.0
+     },
+     "pct": {
+      "exportacion": 0.7381,
+      "mercado_interno": 0.2225,
+      "desecho": 0.0394
+     },
+     "kg_bin": 411.6,
+     "desde": "2025-01-21",
+     "hasta": "2025-01-24",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 4,
+     "cuarteles": 2,
+     "mes": "enero"
+    },
+    {
+     "kg": 106895.0,
+     "bins": 256.0,
+     "dest": {
+      "exportacion": 55965.0,
+      "mercado_interno": 41730.0,
+      "desecho": 9200.0
+     },
+     "pct": {
+      "exportacion": 0.5236,
+      "mercado_interno": 0.3904,
+      "desecho": 0.0861
+     },
+     "kg_bin": 417.6,
+     "desde": "2025-01-28",
+     "hasta": "2025-01-31",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 5,
+     "cuarteles": 4,
+     "mes": "enero"
+    },
+    {
+     "kg": 12133.0,
+     "bins": 30.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 8133.0,
+      "desecho": 4000.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.6703,
+      "desecho": 0.3297
+     },
+     "kg_bin": 404.4,
+     "desde": "2025-02-04",
+     "hasta": "2025-02-05",
+     "n_dias": 2,
+     "n_semanas": 1,
+     "n": 6,
+     "cuarteles": 2,
+     "mes": "febrero"
+    },
+    {
+     "kg": 161300.0,
+     "bins": 383.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 155300.0,
+      "desecho": 6000.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.9628,
+      "desecho": 0.0372
+     },
+     "kg_bin": 421.1,
+     "desde": "2025-02-25",
+     "hasta": "2025-03-01",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 9,
+     "cuarteles": 4,
+     "mes": "febrero"
+    },
+    {
+     "kg": 250751.0,
+     "bins": 599.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 240351.0,
+      "desecho": 10400.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.9585,
+      "desecho": 0.0415
+     },
+     "kg_bin": 418.6,
+     "desde": "2025-03-04",
+     "hasta": "2025-03-08",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 10,
+     "cuarteles": 8,
+     "mes": "marzo"
+    },
+    {
+     "kg": 174637.0,
+     "bins": 410.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 171037.0,
+      "desecho": 3600.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.9794,
+      "desecho": 0.0206
+     },
+     "kg_bin": 425.9,
+     "desde": "2025-03-11",
+     "hasta": "2025-03-15",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 11,
+     "cuarteles": 7,
+     "mes": "marzo"
+    },
+    {
+     "kg": 125309.0,
+     "bins": 296.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 116109.0,
+      "desecho": 9200.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.9266,
+      "desecho": 0.0734
+     },
+     "kg_bin": 423.3,
+     "desde": "2025-03-17",
+     "hasta": "2025-03-21",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 12,
+     "cuarteles": 8,
+     "mes": "marzo"
+    },
+    {
+     "kg": 56395.0,
+     "bins": 137.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 56395.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 411.6,
+     "desde": "2025-03-24",
+     "hasta": "2025-03-28",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 13,
+     "cuarteles": 5,
+     "mes": "marzo"
+    },
+    {
+     "kg": 7224.0,
+     "bins": 17.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 7224.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 1.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 424.9,
+     "desde": "2025-04-02",
+     "hasta": "2025-04-02",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 14,
+     "cuarteles": 2,
+     "mes": "abril"
+    },
+    {
+     "kg": 25086.0,
+     "bins": 61.0,
+     "dest": {
+      "exportacion": 18649.0,
+      "mercado_interno": 6437.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.7434,
+      "mercado_interno": 0.2566,
+      "desecho": 0.0
+     },
+     "kg_bin": 411.2,
+     "desde": "2025-04-08",
+     "hasta": "2025-04-11",
+     "n_dias": 2,
+     "n_semanas": 1,
+     "n": 15,
+     "cuarteles": 3,
+     "mes": "abril"
+    },
+    {
+     "kg": 62566.0,
+     "bins": 151.0,
+     "dest": {
+      "exportacion": 28025.0,
+      "mercado_interno": 34541.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.4479,
+      "mercado_interno": 0.5521,
+      "desecho": 0.0
+     },
+     "kg_bin": 414.3,
+     "desde": "2025-04-15",
+     "hasta": "2025-04-17",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 16,
+     "cuarteles": 9,
+     "mes": "abril"
+    },
+    {
+     "kg": 27749.0,
+     "bins": 66.0,
+     "dest": {
+      "exportacion": 0.0,
+      "mercado_interno": 23749.0,
+      "desecho": 4000.0
+     },
+     "pct": {
+      "exportacion": 0.0,
+      "mercado_interno": 0.8559,
+      "desecho": 0.1441
+     },
+     "kg_bin": 420.4,
+     "desde": "2025-04-22",
+     "hasta": "2025-04-25",
+     "n_dias": 2,
+     "n_semanas": 1,
+     "n": 17,
+     "cuarteles": 7,
+     "mes": "abril"
+    },
+    {
+     "kg": 10287.0,
+     "bins": 24.0,
+     "dest": {
+      "exportacion": 2934.0,
+      "mercado_interno": 7353.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.2852,
+      "mercado_interno": 0.7148,
+      "desecho": 0.0
+     },
+     "kg_bin": 428.6,
+     "desde": "2025-05-09",
+     "hasta": "2025-05-09",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 19,
+     "cuarteles": 1,
+     "mes": "mayo"
+    },
+    {
+     "kg": 21290.0,
+     "bins": 52.0,
+     "dest": {
+      "exportacion": 16302.0,
+      "mercado_interno": 4988.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.7657,
+      "mercado_interno": 0.2343,
+      "desecho": 0.0
+     },
+     "kg_bin": 409.4,
+     "desde": "2025-05-14",
+     "hasta": "2025-05-17",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 20,
+     "cuarteles": 3,
+     "mes": "mayo"
+    },
+    {
+     "kg": 39783.0,
+     "bins": 100.0,
+     "dest": {
+      "exportacion": 31279.0,
+      "mercado_interno": 8504.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.7862,
+      "mercado_interno": 0.2138,
+      "desecho": 0.0
+     },
+     "kg_bin": 397.8,
+     "desde": "2025-05-19",
+     "hasta": "2025-05-23",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 21,
+     "cuarteles": 2,
+     "mes": "mayo"
+    },
+    {
+     "kg": 109289.0,
+     "bins": 295.0,
+     "dest": {
+      "exportacion": 79670.0,
+      "mercado_interno": 29619.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.729,
+      "mercado_interno": 0.271,
+      "desecho": 0.0
+     },
+     "kg_bin": 370.5,
+     "desde": "2025-05-26",
+     "hasta": "2025-05-31",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 22,
+     "cuarteles": 7,
+     "mes": "mayo"
+    },
+    {
+     "kg": 104287.6,
+     "bins": 263.0,
+     "dest": {
+      "exportacion": 66011.0,
+      "mercado_interno": 38276.6,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.633,
+      "mercado_interno": 0.367,
+      "desecho": 0.0
+     },
+     "kg_bin": 396.5,
+     "desde": "2025-06-02",
+     "hasta": "2025-06-07",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 23,
+     "cuarteles": 8,
+     "mes": "junio"
+    },
+    {
+     "kg": 89743.0,
+     "bins": 262.0,
+     "dest": {
+      "exportacion": 53112.0,
+      "mercado_interno": 36631.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.5918,
+      "mercado_interno": 0.4082,
+      "desecho": 0.0
+     },
+     "kg_bin": 342.5,
+     "desde": "2025-06-09",
+     "hasta": "2025-06-14",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 24,
+     "cuarteles": 7,
+     "mes": "junio"
+    },
+    {
+     "kg": 85688.0,
+     "bins": 256.0,
+     "dest": {
+      "exportacion": 59921.0,
+      "mercado_interno": 21367.0,
+      "desecho": 4400.0
+     },
+     "pct": {
+      "exportacion": 0.6993,
+      "mercado_interno": 0.2494,
+      "desecho": 0.0513
+     },
+     "kg_bin": 334.7,
+     "desde": "2025-06-19",
+     "hasta": "2025-06-21",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 25,
+     "cuarteles": 3,
+     "mes": "junio"
+    },
+    {
+     "kg": 188521.0,
+     "bins": 551.0,
+     "dest": {
+      "exportacion": 159007.0,
+      "mercado_interno": 25114.0,
+      "desecho": 4400.0
+     },
+     "pct": {
+      "exportacion": 0.8434,
+      "mercado_interno": 0.1332,
+      "desecho": 0.0233
+     },
+     "kg_bin": 342.1,
+     "desde": "2025-06-23",
+     "hasta": "2025-06-28",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 26,
+     "cuarteles": 8,
+     "mes": "junio"
+    },
+    {
+     "kg": 215131.0,
+     "bins": 632.0,
+     "dest": {
+      "exportacion": 202776.0,
+      "mercado_interno": 9555.0,
+      "desecho": 2800.0
+     },
+     "pct": {
+      "exportacion": 0.9426,
+      "mercado_interno": 0.0444,
+      "desecho": 0.013
+     },
+     "kg_bin": 340.4,
+     "desde": "2025-06-30",
+     "hasta": "2025-07-05",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 27,
+     "cuarteles": 10,
+     "mes": "junio"
+    },
+    {
+     "kg": 161430.0,
+     "bins": 479.0,
+     "dest": {
+      "exportacion": 161430.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 337.0,
+     "desde": "2025-07-07",
+     "hasta": "2025-07-12",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 28,
+     "cuarteles": 8,
+     "mes": "julio"
+    },
+    {
+     "kg": 167877.0,
+     "bins": 501.0,
+     "dest": {
+      "exportacion": 167877.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 335.1,
+     "desde": "2025-07-14",
+     "hasta": "2025-07-19",
+     "n_dias": 6,
+     "n_semanas": 1,
+     "n": 29,
+     "cuarteles": 8,
+     "mes": "julio"
+    },
+    {
+     "kg": 111008.0,
+     "bins": 326.0,
+     "dest": {
+      "exportacion": 102268.0,
+      "mercado_interno": 0.0,
+      "desecho": 8740.0
+     },
+     "pct": {
+      "exportacion": 0.9213,
+      "mercado_interno": 0.0,
+      "desecho": 0.0787
+     },
+     "kg_bin": 340.5,
+     "desde": "2025-07-21",
+     "hasta": "2025-07-26",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 30,
+     "cuarteles": 6,
+     "mes": "julio"
+    },
+    {
+     "kg": 43549.0,
+     "bins": 122.0,
+     "dest": {
+      "exportacion": 27589.0,
+      "mercado_interno": 0.0,
+      "desecho": 15960.0
+     },
+     "pct": {
+      "exportacion": 0.6335,
+      "mercado_interno": 0.0,
+      "desecho": 0.3665
+     },
+     "kg_bin": 357.0,
+     "desde": "2025-07-27",
+     "hasta": "2025-07-30",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 31,
+     "cuarteles": 4,
+     "mes": "julio"
+    },
+    {
+     "kg": 27230.0,
+     "bins": 76.0,
+     "dest": {
+      "exportacion": 27230.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 358.3,
+     "desde": "2025-08-07",
+     "hasta": "2025-08-09",
+     "n_dias": 3,
+     "n_semanas": 1,
+     "n": 32,
+     "cuarteles": 1,
+     "mes": "agosto"
+    },
+    {
+     "kg": 46276.0,
+     "bins": 132.0,
+     "dest": {
+      "exportacion": 46276.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 350.6,
+     "desde": "2025-08-13",
+     "hasta": "2025-08-16",
+     "n_dias": 2,
+     "n_semanas": 1,
+     "n": 33,
+     "cuarteles": 2,
+     "mes": "agosto"
+    },
+    {
+     "kg": 167690.0,
+     "bins": 480.0,
+     "dest": {
+      "exportacion": 167690.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 349.4,
+     "desde": "2025-08-18",
+     "hasta": "2025-08-23",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 34,
+     "cuarteles": 6,
+     "mes": "agosto"
+    },
+    {
+     "kg": 151797.0,
+     "bins": 431.0,
+     "dest": {
+      "exportacion": 151797.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 352.2,
+     "desde": "2025-08-25",
+     "hasta": "2025-08-30",
+     "n_dias": 5,
+     "n_semanas": 1,
+     "n": 35,
+     "cuarteles": 7,
+     "mes": "agosto"
+    },
+    {
+     "kg": 145370.0,
+     "bins": 420.0,
+     "dest": {
+      "exportacion": 143822.0,
+      "mercado_interno": 1548.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.9894,
+      "mercado_interno": 0.0106,
+      "desecho": 0.0
+     },
+     "kg_bin": 346.1,
+     "desde": "2025-09-02",
+     "hasta": "2025-09-05",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 36,
+     "cuarteles": 7,
+     "mes": "septiembre"
+    },
+    {
+     "kg": 114636.0,
+     "bins": 334.0,
+     "dest": {
+      "exportacion": 114636.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 343.2,
+     "desde": "2025-09-09",
+     "hasta": "2025-09-12",
+     "n_dias": 4,
+     "n_semanas": 1,
+     "n": 37,
+     "cuarteles": 10,
+     "mes": "septiembre"
+    },
+    {
+     "kg": 16835.0,
+     "bins": 41.0,
+     "dest": {
+      "exportacion": 16835.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 1.0,
+      "mercado_interno": 0.0,
+      "desecho": 0.0
+     },
+     "kg_bin": 410.6,
+     "desde": "2025-09-16",
+     "hasta": "2025-09-16",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 38,
+     "cuarteles": 4,
+     "mes": "septiembre"
+    },
+    {
+     "kg": 41028.0,
+     "bins": 112.0,
+     "dest": {
+      "exportacion": 37428.0,
+      "mercado_interno": 3600.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.9123,
+      "mercado_interno": 0.0877,
+      "desecho": 0.0
+     },
+     "kg_bin": 366.3,
+     "desde": "2025-09-26",
+     "hasta": "2025-09-26",
+     "n_dias": 1,
+     "n_semanas": 1,
+     "n": 39,
+     "cuarteles": 3,
+     "mes": "septiembre"
+    }
+   ],
+   "cuarteles": {
+    "LIM-C1": {
+     "kg": 109787.0,
+     "bins": 294.0,
+     "dest": {
+      "exportacion": 52476.0,
+      "mercado_interno": 56511.0,
+      "desecho": 800.0
+     },
+     "pct": {
+      "exportacion": 0.478,
+      "mercado_interno": 0.5147,
+      "desecho": 0.0073
+     },
+     "kg_bin": 373.4,
+     "ha": 6.03,
+     "kg_ha": 18206.8,
+     "desde": "2025-03-04",
+     "hasta": "2025-09-03",
+     "n_dias": 21,
+     "n_semanas": 9,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 68263.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 17268.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 7722.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 6860.0
+      },
+      {
+       "nombre": "Rio Blanco",
+       "kg": 6594.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 2280.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 800.0
+      }
+     ],
+     "semanas": {
+      "10": {
+       "kg": 33244.0,
+       "bins": 79.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 33244.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-04",
+       "hasta": "2025-03-06"
+      },
+      "14": {
+       "kg": 1275.0,
+       "bins": 3.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 1275.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-02",
+       "hasta": "2025-04-02"
+      },
+      "16": {
+       "kg": 17352.0,
+       "bins": 43.0,
+       "dest": {
+        "exportacion": 6594.0,
+        "mercado_interno": 10758.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-16",
+       "hasta": "2025-04-16"
+      },
+      "17": {
+       "kg": 800.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 800.0
+       },
+       "desde": "2025-04-25",
+       "hasta": "2025-04-25"
+      },
+      "23": {
+       "kg": 330.0,
+       "bins": 1.0,
+       "dest": {
+        "exportacion": 330.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-07",
+       "hasta": "2025-06-07"
+      },
+      "24": {
+       "kg": 21026.0,
+       "bins": 61.0,
+       "dest": {
+        "exportacion": 9792.0,
+        "mercado_interno": 11234.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-09",
+       "hasta": "2025-06-14"
+      },
+      "27": {
+       "kg": 8512.0,
+       "bins": 25.0,
+       "dest": {
+        "exportacion": 8512.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-02",
+       "hasta": "2025-07-05"
+      },
+      "29": {
+       "kg": 14427.0,
+       "bins": 43.0,
+       "dest": {
+        "exportacion": 14427.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-14",
+       "hasta": "2025-07-17"
+      },
+      "36": {
+       "kg": 12821.0,
+       "bins": 37.0,
+       "dest": {
+        "exportacion": 12821.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-03",
+       "hasta": "2025-09-03"
+      }
+     }
+    },
+    "LIM-C2": {
+     "kg": 153286.0,
+     "bins": 412.0,
+     "dest": {
+      "exportacion": 65498.0,
+      "mercado_interno": 80588.0,
+      "desecho": 7200.0
+     },
+     "pct": {
+      "exportacion": 0.4273,
+      "mercado_interno": 0.5257,
+      "desecho": 0.047
+     },
+     "kg_bin": 372.1,
+     "ha": 5.92,
+     "kg_ha": 25892.9,
+     "desde": "2025-02-27",
+     "hasta": "2025-09-03",
+     "n_dias": 24,
+     "n_semanas": 9,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 93309.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 25975.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 13232.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 8500.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 7200.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 5070.0
+      }
+     ],
+     "semanas": {
+      "9": {
+       "kg": 46133.0,
+       "bins": 110.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 42133.0,
+        "desecho": 4000.0
+       },
+       "desde": "2025-02-27",
+       "hasta": "2025-03-01"
+      },
+      "10": {
+       "kg": 12601.0,
+       "bins": 30.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 12601.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-04",
+       "hasta": "2025-03-07"
+      },
+      "12": {
+       "kg": 9670.0,
+       "bins": 23.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 7670.0,
+        "desecho": 2000.0
+       },
+       "desde": "2025-03-20",
+       "hasta": "2025-03-20"
+      },
+      "16": {
+       "kg": 3319.0,
+       "bins": 8.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 3319.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-16",
+       "hasta": "2025-04-16"
+      },
+      "17": {
+       "kg": 1200.0,
+       "bins": 3.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 1200.0
+       },
+       "desde": "2025-04-25",
+       "hasta": "2025-04-25"
+      },
+      "24": {
+       "kg": 31847.0,
+       "bins": 93.0,
+       "dest": {
+        "exportacion": 16982.0,
+        "mercado_interno": 14865.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-09",
+       "hasta": "2025-06-14"
+      },
+      "28": {
+       "kg": 10168.0,
+       "bins": 31.0,
+       "dest": {
+        "exportacion": 10168.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-09",
+       "hasta": "2025-07-11"
+      },
+      "29": {
+       "kg": 25699.0,
+       "bins": 77.0,
+       "dest": {
+        "exportacion": 25699.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-14",
+       "hasta": "2025-07-18"
+      },
+      "36": {
+       "kg": 12649.0,
+       "bins": 37.0,
+       "dest": {
+        "exportacion": 12649.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-03",
+       "hasta": "2025-09-03"
+      }
+     }
+    },
+    "LIM-C3": {
+     "kg": 229717.0,
+     "bins": 615.0,
+     "dest": {
+      "exportacion": 146165.0,
+      "mercado_interno": 81152.0,
+      "desecho": 2400.0
+     },
+     "pct": {
+      "exportacion": 0.6363,
+      "mercado_interno": 0.3533,
+      "desecho": 0.0104
+     },
+     "kg_bin": 373.5,
+     "ha": 8.35,
+     "kg_ha": 27511.0,
+     "desde": "2025-01-17",
+     "hasta": "2025-09-12",
+     "n_dias": 32,
+     "n_semanas": 12,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 134023.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 46350.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 23559.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 11847.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 10264.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 2400.0
+      },
+      {
+       "nombre": "Rio Blanco",
+       "kg": 1274.0
+      }
+     ],
+     "semanas": {
+      "3": {
+       "kg": 14303.0,
+       "bins": 34.0,
+       "dest": {
+        "exportacion": 8832.0,
+        "mercado_interno": 5471.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-01-17",
+       "hasta": "2025-01-17"
+      },
+      "4": {
+       "kg": 13543.0,
+       "bins": 33.0,
+       "dest": {
+        "exportacion": 8240.0,
+        "mercado_interno": 4503.0,
+        "desecho": 800.0
+       },
+       "desde": "2025-01-21",
+       "hasta": "2025-01-24"
+      },
+      "10": {
+       "kg": 50569.0,
+       "bins": 119.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 48969.0,
+        "desecho": 1600.0
+       },
+       "desde": "2025-03-05",
+       "hasta": "2025-03-07"
+      },
+      "12": {
+       "kg": 9772.0,
+       "bins": 23.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 9772.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-18",
+       "hasta": "2025-03-20"
+      },
+      "16": {
+       "kg": 6225.0,
+       "bins": 15.0,
+       "dest": {
+        "exportacion": 1274.0,
+        "mercado_interno": 4951.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-15",
+       "hasta": "2025-04-16"
+      },
+      "22": {
+       "kg": 9232.0,
+       "bins": 25.0,
+       "dest": {
+        "exportacion": 6530.0,
+        "mercado_interno": 2702.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-30",
+       "hasta": "2025-05-31"
+      },
+      "23": {
+       "kg": 14684.0,
+       "bins": 43.0,
+       "dest": {
+        "exportacion": 10620.0,
+        "mercado_interno": 4064.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-04",
+       "hasta": "2025-06-07"
+      },
+      "24": {
+       "kg": 720.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 720.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-09",
+       "hasta": "2025-06-09"
+      },
+      "27": {
+       "kg": 19922.0,
+       "bins": 59.0,
+       "dest": {
+        "exportacion": 19922.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-30",
+       "hasta": "2025-07-05"
+      },
+      "28": {
+       "kg": 18681.0,
+       "bins": 55.0,
+       "dest": {
+        "exportacion": 18681.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-07",
+       "hasta": "2025-07-11"
+      },
+      "34": {
+       "kg": 44028.0,
+       "bins": 125.0,
+       "dest": {
+        "exportacion": 44028.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-20",
+       "hasta": "2025-08-23"
+      },
+      "37": {
+       "kg": 28038.0,
+       "bins": 82.0,
+       "dest": {
+        "exportacion": 28038.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-09",
+       "hasta": "2025-09-12"
+      }
+     }
+    },
+    "LIM-C4": {
+     "kg": 184043.0,
+     "bins": 506.0,
+     "dest": {
+      "exportacion": 112402.0,
+      "mercado_interno": 71641.0,
+      "desecho": 0.0
+     },
+     "pct": {
+      "exportacion": 0.6107,
+      "mercado_interno": 0.3893,
+      "desecho": 0.0
+     },
+     "kg_bin": 363.7,
+     "ha": 6.412,
+     "kg_ha": 28702.9,
+     "desde": "2025-03-05",
+     "hasta": "2025-09-10",
+     "n_dias": 23,
+     "n_semanas": 11,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 93766.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 38553.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 23504.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 17635.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 9837.0
+      },
+      {
+       "nombre": "Inversion Cordillera",
+       "kg": 748.0
+      }
+     ],
+     "semanas": {
+      "10": {
+       "kg": 23922.0,
+       "bins": 57.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 23922.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-05",
+       "hasta": "2025-03-08"
+      },
+      "11": {
+       "kg": 32443.0,
+       "bins": 77.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 32443.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-11",
+       "hasta": "2025-03-11"
+      },
+      "16": {
+       "kg": 4153.0,
+       "bins": 10.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 4153.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-16",
+       "hasta": "2025-04-16"
+      },
+      "17": {
+       "kg": 3825.0,
+       "bins": 9.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 3825.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-22",
+       "hasta": "2025-04-22"
+      },
+      "23": {
+       "kg": 17100.0,
+       "bins": 51.0,
+       "dest": {
+        "exportacion": 13402.0,
+        "mercado_interno": 3698.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-05",
+       "hasta": "2025-06-07"
+      },
+      "24": {
+       "kg": 3947.0,
+       "bins": 11.0,
+       "dest": {
+        "exportacion": 2130.0,
+        "mercado_interno": 1817.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-09",
+       "hasta": "2025-06-09"
+      },
+      "26": {
+       "kg": 1035.0,
+       "bins": 3.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 1035.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-28",
+       "hasta": "2025-06-28"
+      },
+      "27": {
+       "kg": 21732.0,
+       "bins": 65.0,
+       "dest": {
+        "exportacion": 21732.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-02",
+       "hasta": "2025-07-05"
+      },
+      "28": {
+       "kg": 38736.0,
+       "bins": 114.0,
+       "dest": {
+        "exportacion": 38736.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-07",
+       "hasta": "2025-07-12"
+      },
+      "36": {
+       "kg": 35758.0,
+       "bins": 105.0,
+       "dest": {
+        "exportacion": 35010.0,
+        "mercado_interno": 748.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-03",
+       "hasta": "2025-09-05"
+      },
+      "37": {
+       "kg": 1392.0,
+       "bins": 4.0,
+       "dest": {
+        "exportacion": 1392.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-10",
+       "hasta": "2025-09-10"
+      }
+     }
+    },
+    "LIM-C5": {
+     "kg": 393329.0,
+     "bins": 1058.0,
+     "dest": {
+      "exportacion": 226894.0,
+      "mercado_interno": 158835.0,
+      "desecho": 7600.0
+     },
+     "pct": {
+      "exportacion": 0.5769,
+      "mercado_interno": 0.4038,
+      "desecho": 0.0193
+     },
+     "kg_bin": 371.8,
+     "ha": 10.11,
+     "kg_ha": 38904.9,
+     "desde": "2025-02-25",
+     "hasta": "2025-09-26",
+     "n_dias": 40,
+     "n_semanas": 16,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 265574.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 46862.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 41767.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 17328.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 12998.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 8800.0
+      }
+     ],
+     "semanas": {
+      "9": {
+       "kg": 100915.0,
+       "bins": 239.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 98915.0,
+        "desecho": 2000.0
+       },
+       "desde": "2025-02-25",
+       "hasta": "2025-03-01"
+      },
+      "12": {
+       "kg": 34736.0,
+       "bins": 82.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 31536.0,
+        "desecho": 3200.0
+       },
+       "desde": "2025-03-18",
+       "hasta": "2025-03-20"
+      },
+      "16": {
+       "kg": 5430.0,
+       "bins": 13.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5430.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-17",
+       "hasta": "2025-04-17"
+      },
+      "17": {
+       "kg": 5943.0,
+       "bins": 14.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5943.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-22",
+       "hasta": "2025-04-25"
+      },
+      "22": {
+       "kg": 2454.0,
+       "bins": 6.0,
+       "dest": {
+        "exportacion": 2454.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-30",
+       "hasta": "2025-05-30"
+      },
+      "23": {
+       "kg": 20865.0,
+       "bins": 61.0,
+       "dest": {
+        "exportacion": 15317.0,
+        "mercado_interno": 5548.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-04",
+       "hasta": "2025-06-07"
+      },
+      "24": {
+       "kg": 7419.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 5235.0,
+        "mercado_interno": 2184.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-09",
+       "hasta": "2025-06-11"
+      },
+      "26": {
+       "kg": 38756.0,
+       "bins": 112.0,
+       "dest": {
+        "exportacion": 33596.0,
+        "mercado_interno": 2760.0,
+        "desecho": 2400.0
+       },
+       "desde": "2025-06-28",
+       "hasta": "2025-06-28"
+      },
+      "27": {
+       "kg": 23187.0,
+       "bins": 68.0,
+       "dest": {
+        "exportacion": 17868.0,
+        "mercado_interno": 5319.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-30",
+       "hasta": "2025-07-03"
+      },
+      "28": {
+       "kg": 15263.0,
+       "bins": 46.0,
+       "dest": {
+        "exportacion": 15263.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-10",
+       "hasta": "2025-07-12"
+      },
+      "29": {
+       "kg": 37083.0,
+       "bins": 110.0,
+       "dest": {
+        "exportacion": 37083.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-17",
+       "hasta": "2025-07-19"
+      },
+      "30": {
+       "kg": 7119.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 7119.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-21",
+       "hasta": "2025-07-21"
+      },
+      "34": {
+       "kg": 17481.0,
+       "bins": 49.0,
+       "dest": {
+        "exportacion": 17481.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-21",
+       "hasta": "2025-08-23"
+      },
+      "35": {
+       "kg": 47003.0,
+       "bins": 130.0,
+       "dest": {
+        "exportacion": 47003.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-25",
+       "hasta": "2025-08-28"
+      },
+      "37": {
+       "kg": 25217.0,
+       "bins": 74.0,
+       "dest": {
+        "exportacion": 25217.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-09",
+       "hasta": "2025-09-10"
+      },
+      "39": {
+       "kg": 4458.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 3258.0,
+        "mercado_interno": 1200.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-26",
+       "hasta": "2025-09-26"
+      }
+     }
+    },
+    "LIM-C6": {
+     "kg": 235379.0,
+     "bins": 646.0,
+     "dest": {
+      "exportacion": 150546.0,
+      "mercado_interno": 78833.0,
+      "desecho": 6000.0
+     },
+     "pct": {
+      "exportacion": 0.6396,
+      "mercado_interno": 0.3349,
+      "desecho": 0.0255
+     },
+     "kg_bin": 364.4,
+     "ha": 7.44,
+     "kg_ha": 31637.0,
+     "desde": "2025-03-01",
+     "hasta": "2025-09-16",
+     "n_dias": 27,
+     "n_semanas": 13,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 97091.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 46547.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 38795.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 28748.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 18198.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 6000.0
+      }
+     ],
+     "semanas": {
+      "9": {
+       "kg": 10520.0,
+       "bins": 25.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 10520.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-01",
+       "hasta": "2025-03-01"
+      },
+      "10": {
+       "kg": 50492.0,
+       "bins": 117.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 45292.0,
+        "desecho": 5200.0
+       },
+       "desde": "2025-03-04",
+       "hasta": "2025-03-05"
+      },
+      "13": {
+       "kg": 5980.0,
+       "bins": 16.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5980.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-28",
+       "hasta": "2025-03-28"
+      },
+      "14": {
+       "kg": 5949.0,
+       "bins": 14.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5949.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-02",
+       "hasta": "2025-04-02"
+      },
+      "16": {
+       "kg": 418.0,
+       "bins": 1.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 418.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-17",
+       "hasta": "2025-04-17"
+      },
+      "24": {
+       "kg": 24418.0,
+       "bins": 73.0,
+       "dest": {
+        "exportacion": 18973.0,
+        "mercado_interno": 5445.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-09",
+       "hasta": "2025-06-14"
+      },
+      "26": {
+       "kg": 37954.0,
+       "bins": 112.0,
+       "dest": {
+        "exportacion": 31925.0,
+        "mercado_interno": 5229.0,
+        "desecho": 800.0
+       },
+       "desde": "2025-06-23",
+       "hasta": "2025-06-28"
+      },
+      "29": {
+       "kg": 11312.0,
+       "bins": 34.0,
+       "dest": {
+        "exportacion": 11312.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-18",
+       "hasta": "2025-07-19"
+      },
+      "30": {
+       "kg": 37477.0,
+       "bins": 111.0,
+       "dest": {
+        "exportacion": 37477.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-21",
+       "hasta": "2025-07-25"
+      },
+      "34": {
+       "kg": 2864.0,
+       "bins": 8.0,
+       "dest": {
+        "exportacion": 2864.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-18",
+       "hasta": "2025-08-18"
+      },
+      "35": {
+       "kg": 1883.0,
+       "bins": 5.0,
+       "dest": {
+        "exportacion": 1883.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-25",
+       "hasta": "2025-08-25"
+      },
+      "36": {
+       "kg": 43242.0,
+       "bins": 123.0,
+       "dest": {
+        "exportacion": 43242.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-02",
+       "hasta": "2025-09-03"
+      },
+      "38": {
+       "kg": 2870.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 2870.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-16",
+       "hasta": "2025-09-16"
+      }
+     }
+    },
+    "LIM-C7": {
+     "kg": 275250.0,
+     "bins": 739.0,
+     "dest": {
+      "exportacion": 194542.0,
+      "mercado_interno": 70308.0,
+      "desecho": 10400.0
+     },
+     "pct": {
+      "exportacion": 0.7068,
+      "mercado_interno": 0.2554,
+      "desecho": 0.0378
+     },
+     "kg_bin": 372.5,
+     "ha": 7.511,
+     "kg_ha": 36646.3,
+     "desde": "2025-01-28",
+     "hasta": "2025-09-16",
+     "n_dias": 34,
+     "n_semanas": 14,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 170711.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 31475.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 20805.0
+      },
+      {
+       "nombre": "Rio Blanco",
+       "kg": 17613.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 15274.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 10400.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 8972.0
+      }
+     ],
+     "semanas": {
+      "5": {
+       "kg": 44400.0,
+       "bins": 107.0,
+       "dest": {
+        "exportacion": 32921.0,
+        "mercado_interno": 5879.0,
+        "desecho": 5600.0
+       },
+       "desde": "2025-01-28",
+       "hasta": "2025-01-31"
+      },
+      "10": {
+       "kg": 25387.0,
+       "bins": 68.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 21787.0,
+        "desecho": 3600.0
+       },
+       "desde": "2025-03-07",
+       "hasta": "2025-03-08"
+      },
+      "11": {
+       "kg": 14699.0,
+       "bins": 35.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 14699.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-11",
+       "hasta": "2025-03-11"
+      },
+      "12": {
+       "kg": 9246.0,
+       "bins": 22.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 9246.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-20",
+       "hasta": "2025-03-21"
+      },
+      "13": {
+       "kg": 5128.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5128.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-24",
+       "hasta": "2025-03-25"
+      },
+      "16": {
+       "kg": 19325.0,
+       "bins": 46.0,
+       "dest": {
+        "exportacion": 17613.0,
+        "mercado_interno": 1712.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-15",
+       "hasta": "2025-04-16"
+      },
+      "20": {
+       "kg": 17063.0,
+       "bins": 41.0,
+       "dest": {
+        "exportacion": 12896.0,
+        "mercado_interno": 4167.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-14",
+       "hasta": "2025-05-16"
+      },
+      "25": {
+       "kg": 17122.0,
+       "bins": 50.0,
+       "dest": {
+        "exportacion": 13515.0,
+        "mercado_interno": 2407.0,
+        "desecho": 1200.0
+       },
+       "desde": "2025-06-20",
+       "hasta": "2025-06-21"
+      },
+      "26": {
+       "kg": 44149.0,
+       "bins": 130.0,
+       "dest": {
+        "exportacion": 38866.0,
+        "mercado_interno": 5283.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-23",
+       "hasta": "2025-06-28"
+      },
+      "28": {
+       "kg": 27288.0,
+       "bins": 81.0,
+       "dest": {
+        "exportacion": 27288.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-09",
+       "hasta": "2025-07-12"
+      },
+      "29": {
+       "kg": 10247.0,
+       "bins": 31.0,
+       "dest": {
+        "exportacion": 10247.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-14",
+       "hasta": "2025-07-17"
+      },
+      "34": {
+       "kg": 24249.0,
+       "bins": 71.0,
+       "dest": {
+        "exportacion": 24249.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-20",
+       "hasta": "2025-08-21"
+      },
+      "37": {
+       "kg": 8312.0,
+       "bins": 24.0,
+       "dest": {
+        "exportacion": 8312.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-11",
+       "hasta": "2025-09-12"
+      },
+      "38": {
+       "kg": 8635.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 8635.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-16",
+       "hasta": "2025-09-16"
+      }
+     }
+    },
+    "LIM-C8": {
+     "kg": 357722.0,
+     "bins": 961.0,
+     "dest": {
+      "exportacion": 273042.0,
+      "mercado_interno": 80680.0,
+      "desecho": 4000.0
+     },
+     "pct": {
+      "exportacion": 0.7633,
+      "mercado_interno": 0.2255,
+      "desecho": 0.0112
+     },
+     "kg_bin": 372.2,
+     "ha": 7.19,
+     "kg_ha": 49752.7,
+     "desde": "2025-01-21",
+     "hasta": "2025-09-26",
+     "n_dias": 44,
+     "n_semanas": 20,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 208769.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 42765.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 38103.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 32875.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 18268.0
+      },
+      {
+       "nombre": "Rio Blanco",
+       "kg": 12942.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 4000.0
+      }
+     ],
+     "semanas": {
+      "4": {
+       "kg": 77825.0,
+       "bins": 189.0,
+       "dest": {
+        "exportacion": 59202.0,
+        "mercado_interno": 15823.0,
+        "desecho": 2800.0
+       },
+       "desde": "2025-01-21",
+       "hasta": "2025-01-24"
+      },
+      "11": {
+       "kg": 35257.0,
+       "bins": 81.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 35257.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-13",
+       "hasta": "2025-03-15"
+      },
+      "12": {
+       "kg": 16186.0,
+       "bins": 38.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 16186.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-17",
+       "hasta": "2025-03-18"
+      },
+      "15": {
+       "kg": 13574.0,
+       "bins": 33.0,
+       "dest": {
+        "exportacion": 10398.0,
+        "mercado_interno": 3176.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-11",
+       "hasta": "2025-04-11"
+      },
+      "16": {
+       "kg": 3419.0,
+       "bins": 8.0,
+       "dest": {
+        "exportacion": 2544.0,
+        "mercado_interno": 875.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-15",
+       "hasta": "2025-04-16"
+      },
+      "20": {
+       "kg": 1669.0,
+       "bins": 4.0,
+       "dest": {
+        "exportacion": 1249.0,
+        "mercado_interno": 420.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-16",
+       "hasta": "2025-05-16"
+      },
+      "22": {
+       "kg": 11670.0,
+       "bins": 32.0,
+       "dest": {
+        "exportacion": 9354.0,
+        "mercado_interno": 2316.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-30",
+       "hasta": "2025-05-31"
+      },
+      "23": {
+       "kg": 6190.0,
+       "bins": 18.0,
+       "dest": {
+        "exportacion": 5446.0,
+        "mercado_interno": 744.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-04",
+       "hasta": "2025-06-06"
+      },
+      "25": {
+       "kg": 19987.0,
+       "bins": 60.0,
+       "dest": {
+        "exportacion": 15508.0,
+        "mercado_interno": 4479.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-19",
+       "hasta": "2025-06-21"
+      },
+      "26": {
+       "kg": 7161.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 6816.0,
+        "mercado_interno": 345.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-28",
+       "hasta": "2025-06-28"
+      },
+      "27": {
+       "kg": 21393.0,
+       "bins": 63.0,
+       "dest": {
+        "exportacion": 19134.0,
+        "mercado_interno": 1059.0,
+        "desecho": 1200.0
+       },
+       "desde": "2025-06-30",
+       "hasta": "2025-07-05"
+      },
+      "28": {
+       "kg": 30421.0,
+       "bins": 90.0,
+       "dest": {
+        "exportacion": 30421.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-07",
+       "hasta": "2025-07-12"
+      },
+      "29": {
+       "kg": 31342.0,
+       "bins": 94.0,
+       "dest": {
+        "exportacion": 31342.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-14",
+       "hasta": "2025-07-17"
+      },
+      "32": {
+       "kg": 27230.0,
+       "bins": 76.0,
+       "dest": {
+        "exportacion": 27230.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-07",
+       "hasta": "2025-08-09"
+      },
+      "33": {
+       "kg": 13750.0,
+       "bins": 40.0,
+       "dest": {
+        "exportacion": 13750.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-13",
+       "hasta": "2025-08-13"
+      },
+      "35": {
+       "kg": 15254.0,
+       "bins": 44.0,
+       "dest": {
+        "exportacion": 15254.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-30",
+       "hasta": "2025-08-30"
+      },
+      "36": {
+       "kg": 8260.0,
+       "bins": 24.0,
+       "dest": {
+        "exportacion": 8260.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-02",
+       "hasta": "2025-09-03"
+      },
+      "37": {
+       "kg": 2778.0,
+       "bins": 8.0,
+       "dest": {
+        "exportacion": 2778.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-10",
+       "hasta": "2025-09-12"
+      },
+      "38": {
+       "kg": 4920.0,
+       "bins": 12.0,
+       "dest": {
+        "exportacion": 4920.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-16",
+       "hasta": "2025-09-16"
+      },
+      "39": {
+       "kg": 9436.0,
+       "bins": 26.0,
+       "dest": {
+        "exportacion": 9436.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-26",
+       "hasta": "2025-09-26"
+      }
+     }
+    },
+    "LIM-C9": {
+     "kg": 412257.0,
+     "bins": 1113.0,
+     "dest": {
+      "exportacion": 249559.0,
+      "mercado_interno": 139418.0,
+      "desecho": 23280.0
+     },
+     "pct": {
+      "exportacion": 0.6053,
+      "mercado_interno": 0.3382,
+      "desecho": 0.0565
+     },
+     "kg_bin": 370.4,
+     "ha": 8.423,
+     "kg_ha": 48944.2,
+     "desde": "2025-01-03",
+     "hasta": "2025-09-26",
+     "n_dias": 34,
+     "n_semanas": 16,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 260356.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 50540.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 38026.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 26480.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 25305.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 11550.0
+      }
+     ],
+     "semanas": {
+      "1": {
+       "kg": 29709.0,
+       "bins": 74.0,
+       "dest": {
+        "exportacion": 22902.0,
+        "mercado_interno": 5607.0,
+        "desecho": 1200.0
+       },
+       "desde": "2025-01-03",
+       "hasta": "2025-01-03"
+      },
+      "5": {
+       "kg": 22694.0,
+       "bins": 53.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 22694.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-01-31",
+       "hasta": "2025-01-31"
+      },
+      "6": {
+       "kg": 4000.0,
+       "bins": 10.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 4000.0
+       },
+       "desde": "2025-02-05",
+       "hasta": "2025-02-05"
+      },
+      "9": {
+       "kg": 3732.0,
+       "bins": 9.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 3732.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-02-25",
+       "hasta": "2025-02-25"
+      },
+      "11": {
+       "kg": 64978.0,
+       "bins": 152.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 64978.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-11",
+       "hasta": "2025-03-14"
+      },
+      "13": {
+       "kg": 11901.0,
+       "bins": 30.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 11901.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-26",
+       "hasta": "2025-03-28"
+      },
+      "22": {
+       "kg": 21474.0,
+       "bins": 58.0,
+       "dest": {
+        "exportacion": 12133.0,
+        "mercado_interno": 9341.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-28",
+       "hasta": "2025-05-31"
+      },
+      "23": {
+       "kg": 680.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 680.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-04",
+       "hasta": "2025-06-04"
+      },
+      "25": {
+       "kg": 48579.0,
+       "bins": 146.0,
+       "dest": {
+        "exportacion": 30898.0,
+        "mercado_interno": 14481.0,
+        "desecho": 3200.0
+       },
+       "desde": "2025-06-19",
+       "hasta": "2025-06-21"
+      },
+      "26": {
+       "kg": 34393.0,
+       "bins": 100.0,
+       "dest": {
+        "exportacion": 29709.0,
+        "mercado_interno": 3484.0,
+        "desecho": 1200.0
+       },
+       "desde": "2025-06-23",
+       "hasta": "2025-06-28"
+      },
+      "31": {
+       "kg": 23725.0,
+       "bins": 65.0,
+       "dest": {
+        "exportacion": 10045.0,
+        "mercado_interno": 0.0,
+        "desecho": 13680.0
+       },
+       "desde": "2025-07-27",
+       "hasta": "2025-07-30"
+      },
+      "33": {
+       "kg": 32526.0,
+       "bins": 92.0,
+       "dest": {
+        "exportacion": 32526.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-13",
+       "hasta": "2025-08-16"
+      },
+      "34": {
+       "kg": 57658.0,
+       "bins": 164.0,
+       "dest": {
+        "exportacion": 57658.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-18",
+       "hasta": "2025-08-20"
+      },
+      "36": {
+       "kg": 26673.0,
+       "bins": 77.0,
+       "dest": {
+        "exportacion": 25873.0,
+        "mercado_interno": 800.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-04",
+       "hasta": "2025-09-05"
+      },
+      "37": {
+       "kg": 2401.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 2401.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-09",
+       "hasta": "2025-09-09"
+      },
+      "39": {
+       "kg": 27134.0,
+       "bins": 74.0,
+       "dest": {
+        "exportacion": 24734.0,
+        "mercado_interno": 2400.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-26",
+       "hasta": "2025-09-26"
+      }
+     }
+    },
+    "LIM-C10": {
+     "kg": 167746.2,
+     "bins": 466.0,
+     "dest": {
+      "exportacion": 137076.2,
+      "mercado_interno": 29070.0,
+      "desecho": 1600.0
+     },
+     "pct": {
+      "exportacion": 0.8172,
+      "mercado_interno": 0.1733,
+      "desecho": 0.0095
+     },
+     "kg_bin": 360.0,
+     "ha": 3.498,
+     "kg_ha": 47954.9,
+     "desde": "2025-01-29",
+     "hasta": "2025-09-12",
+     "n_dias": 27,
+     "n_semanas": 13,
+     "variedades": [
+      "Fino 49"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 87105.2
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 23640.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 20958.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 18442.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 10228.0
+      },
+      {
+       "nombre": "Rio Blanco",
+       "kg": 5773.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 1600.0
+      }
+     ],
+     "semanas": {
+      "5": {
+       "kg": 16811.2,
+       "bins": 41.0,
+       "dest": {
+        "exportacion": 15211.2,
+        "mercado_interno": 0.0,
+        "desecho": 1600.0
+       },
+       "desde": "2025-01-29",
+       "hasta": "2025-01-31"
+      },
+      "10": {
+       "kg": 14564.0,
+       "bins": 35.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 14564.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-07",
+       "hasta": "2025-03-08"
+      },
+      "11": {
+       "kg": 2949.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 2949.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-11",
+       "hasta": "2025-03-11"
+      },
+      "15": {
+       "kg": 7801.0,
+       "bins": 19.0,
+       "dest": {
+        "exportacion": 5773.0,
+        "mercado_interno": 2028.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-08",
+       "hasta": "2025-04-11"
+      },
+      "21": {
+       "kg": 10695.0,
+       "bins": 27.0,
+       "dest": {
+        "exportacion": 9062.0,
+        "mercado_interno": 1633.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-19",
+       "hasta": "2025-05-19"
+      },
+      "23": {
+       "kg": 16762.0,
+       "bins": 48.0,
+       "dest": {
+        "exportacion": 13046.0,
+        "mercado_interno": 3716.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-04",
+       "hasta": "2025-06-07"
+      },
+      "26": {
+       "kg": 20510.0,
+       "bins": 60.0,
+       "dest": {
+        "exportacion": 18095.0,
+        "mercado_interno": 2415.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-28",
+       "hasta": "2025-06-28"
+      },
+      "27": {
+       "kg": 17398.0,
+       "bins": 52.0,
+       "dest": {
+        "exportacion": 15633.0,
+        "mercado_interno": 1765.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-30",
+       "hasta": "2025-07-05"
+      },
+      "28": {
+       "kg": 7112.0,
+       "bins": 21.0,
+       "dest": {
+        "exportacion": 7112.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-07",
+       "hasta": "2025-07-09"
+      },
+      "30": {
+       "kg": 19229.0,
+       "bins": 57.0,
+       "dest": {
+        "exportacion": 19229.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-21",
+       "hasta": "2025-07-24"
+      },
+      "34": {
+       "kg": 21410.0,
+       "bins": 63.0,
+       "dest": {
+        "exportacion": 21410.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-20",
+       "hasta": "2025-08-21"
+      },
+      "36": {
+       "kg": 5967.0,
+       "bins": 17.0,
+       "dest": {
+        "exportacion": 5967.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-05",
+       "hasta": "2025-09-05"
+      },
+      "37": {
+       "kg": 6538.0,
+       "bins": 19.0,
+       "dest": {
+        "exportacion": 6538.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-09",
+       "hasta": "2025-09-12"
+      }
+     }
+    },
+    "LIM-C11": {
+     "kg": 262588.8,
+     "bins": 704.0,
+     "dest": {
+      "exportacion": 156476.8,
+      "mercado_interno": 91492.0,
+      "desecho": 14620.0
+     },
+     "pct": {
+      "exportacion": 0.5959,
+      "mercado_interno": 0.3484,
+      "desecho": 0.0557
+     },
+     "kg_bin": 373.0,
+     "ha": 5.558,
+     "kg_ha": 47245.2,
+     "desde": "2025-01-30",
+     "hasta": "2025-09-12",
+     "n_dias": 36,
+     "n_semanas": 14,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 128619.8
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 39969.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 31613.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 26203.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 21564.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 14620.0
+      }
+     ],
+     "semanas": {
+      "5": {
+       "kg": 22989.8,
+       "bins": 55.0,
+       "dest": {
+        "exportacion": 7832.8,
+        "mercado_interno": 13157.0,
+        "desecho": 2000.0
+       },
+       "desde": "2025-01-30",
+       "hasta": "2025-01-31"
+      },
+      "6": {
+       "kg": 8133.0,
+       "bins": 20.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 8133.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-02-04",
+       "hasta": "2025-02-04"
+      },
+      "10": {
+       "kg": 39972.0,
+       "bins": 94.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 39972.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-05",
+       "hasta": "2025-03-07"
+      },
+      "13": {
+       "kg": 18076.0,
+       "bins": 42.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 18076.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-24",
+       "hasta": "2025-03-26"
+      },
+      "16": {
+       "kg": 2925.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 2925.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-17",
+       "hasta": "2025-04-17"
+      },
+      "17": {
+       "kg": 3816.0,
+       "bins": 9.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 3816.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-25",
+       "hasta": "2025-04-25"
+      },
+      "22": {
+       "kg": 12887.0,
+       "bins": 35.0,
+       "dest": {
+        "exportacion": 8886.0,
+        "mercado_interno": 4001.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-26",
+       "hasta": "2025-05-31"
+      },
+      "27": {
+       "kg": 43852.0,
+       "bins": 126.0,
+       "dest": {
+        "exportacion": 40840.0,
+        "mercado_interno": 1412.0,
+        "desecho": 1600.0
+       },
+       "desde": "2025-06-30",
+       "hasta": "2025-07-02"
+      },
+      "28": {
+       "kg": 13761.0,
+       "bins": 41.0,
+       "dest": {
+        "exportacion": 13761.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-09",
+       "hasta": "2025-07-12"
+      },
+      "29": {
+       "kg": 23059.0,
+       "bins": 69.0,
+       "dest": {
+        "exportacion": 23059.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-14",
+       "hasta": "2025-07-17"
+      },
+      "30": {
+       "kg": 8740.0,
+       "bins": 23.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 0.0,
+        "desecho": 8740.0
+       },
+       "desde": "2025-07-26",
+       "hasta": "2025-07-26"
+      },
+      "31": {
+       "kg": 3660.0,
+       "bins": 10.0,
+       "dest": {
+        "exportacion": 1380.0,
+        "mercado_interno": 0.0,
+        "desecho": 2280.0
+       },
+       "desde": "2025-07-27",
+       "hasta": "2025-07-30"
+      },
+      "35": {
+       "kg": 40970.0,
+       "bins": 116.0,
+       "dest": {
+        "exportacion": 40970.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-27",
+       "hasta": "2025-08-30"
+      },
+      "37": {
+       "kg": 19748.0,
+       "bins": 57.0,
+       "dest": {
+        "exportacion": 19748.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-10",
+       "hasta": "2025-09-12"
+      }
+     }
+    },
+    "LIM-C12": {
+     "kg": 134812.0,
+     "bins": 321.0,
+     "dest": {
+      "exportacion": 68079.0,
+      "mercado_interno": 51133.0,
+      "desecho": 15600.0
+     },
+     "pct": {
+      "exportacion": 0.505,
+      "mercado_interno": 0.3793,
+      "desecho": 0.1157
+     },
+     "kg_bin": 420.0,
+     "ha": 3.604,
+     "kg_ha": 37406.2,
+     "desde": "2025-01-06",
+     "hasta": "2025-08-27",
+     "n_dias": 18,
+     "n_semanas": 11,
+     "variedades": [
+      "Messina"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 92506.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 15600.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 12105.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 10261.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 3650.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 690.0
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 41057.0,
+       "bins": 76.0,
+       "dest": {
+        "exportacion": 10645.0,
+        "mercado_interno": 18412.0,
+        "desecho": 12000.0
+       },
+       "desde": "2025-01-06",
+       "hasta": "2025-01-07"
+      },
+      "11": {
+       "kg": 5702.0,
+       "bins": 14.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 2102.0,
+        "desecho": 3600.0
+       },
+       "desde": "2025-03-14",
+       "hasta": "2025-03-14"
+      },
+      "12": {
+       "kg": 2112.0,
+       "bins": 5.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 2112.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-21",
+       "hasta": "2025-03-21"
+      },
+      "13": {
+       "kg": 15310.0,
+       "bins": 37.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 15310.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-24",
+       "hasta": "2025-03-25"
+      },
+      "17": {
+       "kg": 5925.0,
+       "bins": 14.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5925.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-25",
+       "hasta": "2025-04-25"
+      },
+      "20": {
+       "kg": 2558.0,
+       "bins": 7.0,
+       "dest": {
+        "exportacion": 2157.0,
+        "mercado_interno": 401.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-17",
+       "hasta": "2025-05-17"
+      },
+      "21": {
+       "kg": 29088.0,
+       "bins": 73.0,
+       "dest": {
+        "exportacion": 22217.0,
+        "mercado_interno": 6871.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-20",
+       "hasta": "2025-05-23"
+      },
+      "27": {
+       "kg": 7401.0,
+       "bins": 22.0,
+       "dest": {
+        "exportacion": 7401.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-01",
+       "hasta": "2025-07-02"
+      },
+      "29": {
+       "kg": 14708.0,
+       "bins": 43.0,
+       "dest": {
+        "exportacion": 14708.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-17",
+       "hasta": "2025-07-19"
+      },
+      "31": {
+       "kg": 690.0,
+       "bins": 2.0,
+       "dest": {
+        "exportacion": 690.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-30",
+       "hasta": "2025-07-30"
+      },
+      "35": {
+       "kg": 10261.0,
+       "bins": 28.0,
+       "dest": {
+        "exportacion": 10261.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-27",
+       "hasta": "2025-08-27"
+      }
+     }
+    },
+    "LIM-C13": {
+     "kg": 170166.0,
+     "bins": 454.0,
+     "dest": {
+      "exportacion": 112441.0,
+      "mercado_interno": 55725.0,
+      "desecho": 2000.0
+     },
+     "pct": {
+      "exportacion": 0.6608,
+      "mercado_interno": 0.3275,
+      "desecho": 0.0118
+     },
+     "kg_bin": 374.8,
+     "ha": 3.808,
+     "kg_ha": 44686.4,
+     "desde": "2025-01-08",
+     "hasta": "2025-09-12",
+     "n_dias": 24,
+     "n_semanas": 10,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 101224.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 30322.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 21692.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 6850.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 5600.0
+      },
+      {
+       "nombre": "Rio Blanco",
+       "kg": 2478.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 2000.0
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 49390.0,
+       "bins": 122.0,
+       "dest": {
+        "exportacion": 25492.0,
+        "mercado_interno": 21898.0,
+        "desecho": 2000.0
+       },
+       "desde": "2025-01-08",
+       "hasta": "2025-01-10"
+      },
+      "11": {
+       "kg": 18609.0,
+       "bins": 44.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 18609.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-14",
+       "hasta": "2025-03-15"
+      },
+      "12": {
+       "kg": 5512.0,
+       "bins": 13.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 5512.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-03-17",
+       "hasta": "2025-03-17"
+      },
+      "15": {
+       "kg": 3711.0,
+       "bins": 9.0,
+       "dest": {
+        "exportacion": 2478.0,
+        "mercado_interno": 1233.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-04-08",
+       "hasta": "2025-04-08"
+      },
+      "22": {
+       "kg": 27325.0,
+       "bins": 74.0,
+       "dest": {
+        "exportacion": 23415.0,
+        "mercado_interno": 3910.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-26",
+       "hasta": "2025-05-29"
+      },
+      "26": {
+       "kg": 4563.0,
+       "bins": 13.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 4563.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-28",
+       "hasta": "2025-06-28"
+      },
+      "27": {
+       "kg": 23114.0,
+       "bins": 68.0,
+       "dest": {
+        "exportacion": 23114.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-01",
+       "hasta": "2025-07-05"
+      },
+      "30": {
+       "kg": 16331.0,
+       "bins": 49.0,
+       "dest": {
+        "exportacion": 16331.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-23",
+       "hasta": "2025-07-25"
+      },
+      "35": {
+       "kg": 14086.0,
+       "bins": 40.0,
+       "dest": {
+        "exportacion": 14086.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-27",
+       "hasta": "2025-08-28"
+      },
+      "37": {
+       "kg": 7525.0,
+       "bins": 22.0,
+       "dest": {
+        "exportacion": 7525.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-10",
+       "hasta": "2025-09-12"
+      }
+     }
+    },
+    "LIM-C14": {
+     "kg": 270165.0,
+     "bins": 718.0,
+     "dest": {
+      "exportacion": 183761.0,
+      "mercado_interno": 79604.0,
+      "desecho": 6800.0
+     },
+     "pct": {
+      "exportacion": 0.6802,
+      "mercado_interno": 0.2946,
+      "desecho": 0.0252
+     },
+     "kg_bin": 376.3,
+     "ha": 8.984,
+     "kg_ha": 30071.8,
+     "desde": "2025-01-10",
+     "hasta": "2025-09-16",
+     "n_dias": 32,
+     "n_semanas": 14,
+     "variedades": [
+      "Eureka"
+     ],
+     "receptores": [
+      {
+       "nombre": "Rosales",
+       "kg": 181844.0
+      },
+      {
+       "nombre": "Propal",
+       "kg": 22556.0
+      },
+      {
+       "nombre": "El Parque",
+       "kg": 22507.0
+      },
+      {
+       "nombre": "Gesex",
+       "kg": 19453.0
+      },
+      {
+       "nombre": "Westfalia",
+       "kg": 17005.0
+      },
+      {
+       "nombre": "Botadero",
+       "kg": 6800.0
+      }
+     ],
+     "semanas": {
+      "2": {
+       "kg": 1624.0,
+       "bins": 4.0,
+       "dest": {
+        "exportacion": 824.0,
+        "mercado_interno": 0.0,
+        "desecho": 800.0
+       },
+       "desde": "2025-01-10",
+       "hasta": "2025-01-10"
+      },
+      "3": {
+       "kg": 73815.0,
+       "bins": 180.0,
+       "dest": {
+        "exportacion": 54292.0,
+        "mercado_interno": 19523.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-01-14",
+       "hasta": "2025-01-17"
+      },
+      "12": {
+       "kg": 38075.0,
+       "bins": 90.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 34075.0,
+        "desecho": 4000.0
+       },
+       "desde": "2025-03-18",
+       "hasta": "2025-03-21"
+      },
+      "17": {
+       "kg": 6240.0,
+       "bins": 15.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 4240.0,
+        "desecho": 2000.0
+       },
+       "desde": "2025-04-25",
+       "hasta": "2025-04-25"
+      },
+      "19": {
+       "kg": 10287.0,
+       "bins": 24.0,
+       "dest": {
+        "exportacion": 2934.0,
+        "mercado_interno": 7353.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-09",
+       "hasta": "2025-05-09"
+      },
+      "22": {
+       "kg": 24247.0,
+       "bins": 65.0,
+       "dest": {
+        "exportacion": 16898.0,
+        "mercado_interno": 7349.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-05-28",
+       "hasta": "2025-05-31"
+      },
+      "23": {
+       "kg": 13868.0,
+       "bins": 39.0,
+       "dest": {
+        "exportacion": 7170.0,
+        "mercado_interno": 6698.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-04",
+       "hasta": "2025-06-07"
+      },
+      "24": {
+       "kg": 366.0,
+       "bins": 1.0,
+       "dest": {
+        "exportacion": 0.0,
+        "mercado_interno": 366.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-06-11",
+       "hasta": "2025-06-11"
+      },
+      "27": {
+       "kg": 28620.0,
+       "bins": 84.0,
+       "dest": {
+        "exportacion": 28620.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-02",
+       "hasta": "2025-07-05"
+      },
+      "30": {
+       "kg": 22112.0,
+       "bins": 65.0,
+       "dest": {
+        "exportacion": 22112.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-25",
+       "hasta": "2025-07-26"
+      },
+      "31": {
+       "kg": 15474.0,
+       "bins": 45.0,
+       "dest": {
+        "exportacion": 15474.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-07-29",
+       "hasta": "2025-07-30"
+      },
+      "35": {
+       "kg": 22340.0,
+       "bins": 68.0,
+       "dest": {
+        "exportacion": 22340.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-08-27",
+       "hasta": "2025-08-28"
+      },
+      "37": {
+       "kg": 12687.0,
+       "bins": 37.0,
+       "dest": {
+        "exportacion": 12687.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-11",
+       "hasta": "2025-09-12"
+      },
+      "38": {
+       "kg": 410.0,
+       "bins": 1.0,
+       "dest": {
+        "exportacion": 410.0,
+        "mercado_interno": 0.0,
+        "desecho": 0.0
+       },
+       "desde": "2025-09-16",
+       "hasta": "2025-09-16"
+      }
+     }
+    }
+   }
+  }
+ ],
+ "issues": [
+  {
+   "nivel": "warn",
+   "temporada": "2025",
+   "msg": "1 fila(s) sin cuartel asignado (13,809 kg): entran en el total del predio pero no pintan ningun poligono"
+  },
+  {
+   "nivel": "info",
+   "temporada": "2025",
+   "msg": "2 fila(s) con semana declarada distinta de la ISO de su fecha; manda la declarada, que es la convencion del packing"
+  },
+  {
+   "nivel": "warn",
+   "temporada": "2025",
+   "msg": "1 fila(s) con fecha fuera del anio de la temporada",
+   "detalle": [
+    {
+     "fila": 3,
+     "fecha": "2023-07-31",
+     "semana": 31,
+     "kg": 3040.0,
+     "cuartel": "LIM-C9"
+    }
+   ]
+  },
+  {
+   "nivel": "warn",
+   "temporada": "2026",
+   "msg": "23 fila(s) donde `Cuartel Real` difiere de `Cuartel`. Se usa `Cuartel`: la superficie y el kg/ha de la fila lo siguen siempre. Revisar en la planilla.",
+   "detalle": [
+    {
+     "fila": 1421,
+     "fecha": "2026-08-19",
+     "cuartel": "LIM-C14",
+     "cuartel_real": 10,
+     "kg": 786.2
+    },
+    {
+     "fila": 1422,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C14",
+     "cuartel_real": 11,
+     "kg": 391.0
+    },
+    {
+     "fila": 1423,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C10",
+     "cuartel_real": 13,
+     "kg": 1853.0
+    },
+    {
+     "fila": 1424,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C11",
+     "cuartel_real": 14,
+     "kg": 5256.0
+    },
+    {
+     "fila": 1425,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C13",
+     "cuartel_real": 10,
+     "kg": 13482.0
+    },
+    {
+     "fila": 1426,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C14",
+     "cuartel_real": 11,
+     "kg": 5965.0
+    },
+    {
+     "fila": 1427,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C10",
+     "cuartel_real": 13,
+     "kg": 8272.0
+    },
+    {
+     "fila": 1428,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C11",
+     "cuartel_real": 14,
+     "kg": 10158.0
+    },
+    {
+     "fila": 1429,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C13",
+     "cuartel_real": 11,
+     "kg": 6546.0
+    },
+    {
+     "fila": 1430,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C14",
+     "cuartel_real": 10,
+     "kg": 1514.0
+    },
+    {
+     "fila": 1431,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C14",
+     "cuartel_real": 10,
+     "kg": 15.6
+    },
+    {
+     "fila": 1432,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C10",
+     "cuartel_real": 11,
+     "kg": 74.1
+    },
+    {
+     "fila": 1433,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C11",
+     "cuartel_real": 8,
+     "kg": 157.7
+    },
+    {
+     "fila": 1434,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C13",
+     "cuartel_real": 4,
+     "kg": 269.6
+    },
+    {
+     "fila": 1435,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C14",
+     "cuartel_real": 15,
+     "kg": 178.9
+    },
+    {
+     "fila": 1436,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C10",
+     "cuartel_real": 20,
+     "kg": 248.2
+    },
+    {
+     "fila": 1437,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C11",
+     "cuartel_real": 29,
+     "kg": 406.3
+    },
+    {
+     "fila": 1438,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C13",
+     "cuartel_real": 1,
+     "kg": 130.9
+    },
+    {
+     "fila": 1439,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C14",
+     "cuartel_real": 3,
+     "kg": 45.4
+    },
+    {
+     "fila": 1440,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C11",
+     "cuartel_real": 2,
+     "kg": 1939.0
+    },
+    {
+     "fila": 1441,
+     "fecha": "2026-08-20",
+     "cuartel": "LIM-C10",
+     "cuartel_real": 2,
+     "kg": 3288.0
+    },
+    {
+     "fila": 1442,
+     "fecha": "2026-08-21",
+     "cuartel": "LIM-C10",
+     "cuartel_real": 1,
+     "kg": 10659.0
+    },
+    {
+     "fila": 1443,
+     "fecha": "2026-08-21",
+     "cuartel": "LIM-C11",
+     "cuartel_real": 2,
+     "kg": 9777.0
+    }
+   ]
+  },
+  {
+   "nivel": "info",
+   "msg": "5 cuartel(es) sin ninguna fila de cosecha en ninguna temporada: MAN-C1, MAN-C2, MAN-C3, MAN-C4, NAR-C9"
+  }
+ ]
+}

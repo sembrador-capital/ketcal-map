@@ -20,3 +20,9 @@ venv/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# ── Insumos de cosecha ────────────────────────────────────────────────────
+# Las planillas traen guías, facturas y rendimientos por exportadora: detalle
+# comercial que el mapa no muestra y este repo es público. Se versiona el JSON
+# derivado (cosecha_data.json), no la planilla.
+datos_fuente/

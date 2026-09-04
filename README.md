@@ -68,6 +68,7 @@ contar bordes de digitalización como si fueran riego real.
 index.html                  ← TODO el mapa: HTML + CSS + JS en un archivo
 geo_data.json               ← geometría (generado)
 nutricion_data.json         ← análisis de suelo y foliares (generado)
+cosecha_data.json           ← cosecha por cuartel y semana (generado)
 ceres_data.json             ← vuelos de Ceres Imaging (generado)
 umbrales_nutricion.json     ← umbrales agronómicos — SE EDITA A MANO
 ceres_predio.json           ← identificadores de Ketcal en Ceres (descubierto)
@@ -75,6 +76,7 @@ data-version.json           ← cache-busting por dataset
 
 tools/kmz_to_geojson.py     ← Ketcal KMZ.kmz  → geo_data.json
 tools/build_nutricion.py    ← Excel + umbrales → nutricion_data.json
+tools/build_cosecha.py      ← planillas + KMZ  → cosecha_data.json
 tools/fetch_ceres.py        ← API de Ceres    → ceres_data.json
 .github/workflows/ceres.yml ← refresco semanal de Ceres
 
@@ -83,13 +85,23 @@ tools/fetch_ceres.py        ← API de Ceres    → ceres_data.json
 Ketcal KMZ.kmz                                       ← insumo
 Base_Datos_Suelos_Foliares_Ketcal_SEMBRADOR_v2.xlsx  ← insumo
 AGQ Labs …/  Laboquim …/  Analisis Suelos AgroLab/   ← informes de origen (PDF)
+datos_fuente/Base de datos Cosecha Ketcal_20xx.xlsx  ← insumo, NO versionado
 ```
+
+`datos_fuente/` está en `.gitignore` a propósito. Las planillas de cosecha
+traen, además de los eventos de campo, guías y facturas, kilos recepcionados por
+exportadora y rendimientos de proceso: detalle comercial que el mapa nunca
+muestra y que este repositorio es **público**. Lo que sí se versiona es
+`cosecha_data.json`, que es exactamente lo que el sitio sirve. Las planillas
+viven en la carpeta compartida del portal; para regenerar hay que copiarlas a
+`datos_fuente/`.
 
 ### Regenerar los datos
 
 ```bash
 python tools/kmz_to_geojson.py
 python tools/build_nutricion.py
+python tools/build_cosecha.py "datos_fuente/*.xlsx"
 python tools/fetch_ceres.py            # incremental; --full para rehacer todo
 ```
 
@@ -126,6 +138,131 @@ foliares. Cambiarlos es editar el JSON y volver a correr
 
 La escala relativa es deliberadamente morada, no verde/rojo: un umbral inventado
 se lee igual que uno validado y hace tomar decisiones equivocadas.
+
+---
+
+## Cosecha: el cuartel y la semana
+
+Dos planillas de campo —temporadas **2025** y **2026**— consolidadas por
+`tools/build_cosecha.py`. Lo que hubo que resolver antes de dibujar nada:
+
+### El cruce con la geometría
+
+Las planillas numeran los cuarteles **por especie** (Limón 1-14, Naranja 1-12,
+Mandarina 1-4) y el mapa los llama `LIM-C1`, `NAR-C1`, `MAN-C1`. Los 30 cruzan
+1 a 1, y las superficies declaradas calzan con la geometría del KMZ dentro del
+2 % —la diferencia es cabecera y caminos, que el polígono incluye y la
+plantación no—, así que la clave `(especie, número)` es segura.
+
+| | 2025 | 2026 |
+|---|---|---|
+| Registros | 687 | 1.514 |
+| Cosechado | 3.370 t | 4.523 t (+34,8 %) |
+| Bins | 9.007 | 12.268 |
+| Cuarteles | 14 (sólo limones) | 25 (limones + naranjas) |
+| Semanas | 36 | 30 |
+| Exportación | 63,2 % | 62,0 % |
+| Mercado interno | 33,8 % | 35,1 % |
+| Desecho | 3,0 % | 3,0 % |
+
+Mandarinas (4 cuarteles) y `NAR-C9` no tienen ninguna cosecha registrada: se
+pintan con el beige de ausencia, que **no** es el extremo bajo de la rampa.
+
+### Cuatro decisiones que conviene no revertir
+
+1. **Las hectáreas del rendimiento son las PLANTADAS**, del cuadro de
+   plantación, no las geométricas del KMZ. Es el denominador que usa la propia
+   planilla en su columna `Kg / Ha` y el agronómicamente correcto. Se usa el
+   mismo valor en las dos temporadas para que kg/ha sea comparable entre años:
+   2025 y 2026 traen la misma superficie redondeada distinto (5,91 vs 5,92).
+
+2. **La semana sale de la columna `Semana`, no del calendario ISO** de la fecha.
+   Difieren en 2 filas de 687 en 2025, ambas domingos que el packing cuenta en
+   la semana siguiente. Manda la convención operativa del campo; las
+   discrepancias quedan en `issues`.
+
+3. **El destino se reduce a tres clases comparables**: exportación / mercado
+   interno / desecho. 2026 separa además el *camote* y 2025 no. El camote se
+   guarda como desglose del mercado interno —que es lo que agronómicamente es,
+   fruta de menor calibre que se vende igual—: contarlo aparte dejaría el
+   mercado interno de 2026 cinco puntos por debajo del de 2025 por un cambio de
+   planilla, no de campo.
+
+4. **`Cuartel Real` (sólo en 2026) NO se usa como clave.** En las 23 filas donde
+   difiere de `Cuartel`, la superficie y el `Kg / Ha` de la propia fila siguen
+   **siempre** a `Cuartel` (23 de 23, verificado), y `Cuartel Real` trae valores
+   que no existen en limones (15, 20, 29). Las 23 caen en un único bloque de
+   tres días: tiene la firma de un arrastre de fórmula. Quedan listadas en
+   `issues` para que agronomía las revise; el script no las corrige.
+
+Las otras incidencias que el build reporta: una fila de 2025 sin cuartel
+asignado (13.809 kg de mercado interno, guía 663) que entra en el total del
+predio pero no pinta ningún polígono, y una fila fechada `2023-07-31` cuya
+semana declarada (31) coincide con `2025-07-31` — se conservan sus kilos y su
+semana, y se descarta sólo la fecha, que si no arrancaba la temporada 2025 en
+julio de 2023.
+
+### La pestaña
+
+El nivel es **cuartel y sólo cuartel**. Un cuartel lo riegan hasta tres
+sectores; repartir sus kilos entre ellos por superficie sería inventar el dato.
+La leyenda lo dice en vez de ofrecer un selector que miente.
+
+**La franja de semanas** es el control central, no un adorno. Cada barra es una
+semana de la temporada, apilada por destino y a escala del pico, y se puede
+clickear para llevar el mapa ahí. Un stepper solo obligaba a adivinar dónde
+estaba el peak (2026: semana 32, 495,8 t).
+
+Tres **ventanas**, calculadas siempre sumando semanas —el build garantiza que
+las semanas particionan el total, así que hay una sola ruta de código:
+
+| Ventana | Qué pinta |
+|---|---|
+| Temporada | todo el año |
+| Acumulado | desde el inicio hasta la semana elegida |
+| Semana | sólo esa semana |
+
+**Siete métricas**: rendimiento (kg/ha), kilos, bins, kilos por bin, y el % a
+cada uno de los tres destinos. Más un **filtro por destino** que cambia el
+numerador: con "Exportación" puesto, el rendimiento pasa a ser *kg/ha
+exportables* (2026: 16.453 kg/ha de los 26.557 totales).
+
+**Comparar con otra temporada** pinta la **variación relativa** de la métrica
+activa contra la misma ventana de semanas del otro año, con rampa divergente.
+
+### Las escalas de color
+
+| Régimen | Cortes | Rampa | Por qué |
+|---|---|---|---|
+| Magnitud (kg/ha, kg, bins, kg/bin) | septiles de lo que hay en la ventana | productividad (beige → morado) | los kilos de una semana y los de una temporada difieren en dos órdenes de magnitud; con cortes fijos, mirar una semana metería todo en la primera banda |
+| Porcentaje de destino | fijos cada 20 % | la del propio destino | comparables entre semanas y entre temporadas; unos cortes móviles harían que el mismo 60 % cambiara de color al mover el calendario |
+| Variación | fijos en ±10 % y ±30 % | divergente | simétrica alrededor de "sin cambio" |
+
+Los **tres colores de destino** —teal, oro, tierra— se eligieron por separación
+de tono *y* de luminosidad, no por el reflejo verde-amarillo-rojo: bajo
+deuteranopia ese trío colapsa a tres olivas y el reparto de la fruta deja de
+leerse, que es justo lo único que la pestaña tiene que comunicar de un vistazo.
+El mismo color identifica al destino en todas partes —barra del tooltip, franja
+de semanas, columnas del modal, leyenda—, y la rampa del "% a exportación"
+termina en el mismo teal que el segmento de exportación, para no tener que
+explicar dos códigos de color distintos.
+
+### El detalle semanal
+
+Es lo que el polígono no puede mostrar. Un cuartel con 35 t/ha y 62 % de
+exportación puede haber entrado todo en dos semanas o repartido en quince, y
+puede haber empezado exportando y terminado mandando todo a mercado interno.
+
+El modal trae, para el cuartel elegido: cinco KPI, el reparto por destino de la
+temporada, un gráfico de **columnas apiladas por destino semana a semana** con
+la **curva de avance acumulado** superpuesta (y la de la temporada de
+comparación punteada al lado), la tabla de semanas con fechas, bins, toneladas,
+kg/ha, avance y reparto, y los **kilos por receptor** (Rosales, Gesex, Propal,
+El Parque, Westfalia, Botadero).
+
+Las columnas fuera de la ventana que el mapa está pintando se atenúan, y
+clickear una lleva el mapa a esa semana: el gráfico y el mapa son la misma
+selección, no dos vistas sueltas.
 
 ---
 
@@ -261,6 +398,10 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   de plantación, portainjerto, análisis disponibles), capas de válvulas (150),
   pozos (3) y etiquetas, buscador, tooltip, ficha lateral con el cruce
   sector↔cuartel navegable.
+- **Cosecha** — dos temporadas (2025 y 2026) por cuartel y **por semana**, con
+  ventana de temporada / acumulado / semana suelta, siete métricas, filtro por
+  destino de la fruta, comparación entre temporadas y detalle semanal por
+  cuartel. Ver la sección de abajo.
 - **Nutrición** — subpestañas foliares / suelo, **6 programas de muestreo**
   (matriz × laboratorio), selector de profundidad para los que la tienen,
   filtro "sólo con evolución", pintado por banda de umbral, leyenda encabezada
