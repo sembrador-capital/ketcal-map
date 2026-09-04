@@ -1414,13 +1414,13 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 #ttRiegoBlock .rt-detail .v, #ttCeresBlock .rt-detail .v, #ttAgroBlock .agro-tooltip-detail .v, #ttFinBlock .fin-tooltip-detail .v {
     font-size:12.5px; font-weight:500; color:var(--sem-ink); line-height:1.3;
 }
-#ttRiegoBlock .rt-cta, #ttCeresBlock .rt-cta, #ttCosBlock .rt-cta, #ttAgroBlock .agro-tooltip-cta, #ttFinBlock .fin-tooltip-cta {
+.hover-tooltip .rt-cta, #ttAgroBlock .agro-tooltip-cta, #ttFinBlock .fin-tooltip-cta {
     display:block; width:100%; margin-top:11px; padding:8px;
     background:var(--sem-navy); color:var(--sem-surface); border:none;
     border-radius:var(--sem-radius); font-size:12px; font-weight:500;
     cursor:pointer; font-family:inherit;
 }
-#ttRiegoBlock .rt-cta:hover, #ttCeresBlock .rt-cta:hover, #ttCosBlock .rt-cta:hover, #ttAgroBlock .agro-tooltip-cta:hover, #ttFinBlock .fin-tooltip-cta:hover {
+.hover-tooltip .rt-cta:hover, #ttAgroBlock .agro-tooltip-cta:hover, #ttFinBlock .fin-tooltip-cta:hover {
     background:var(--sem-navy-dark);
 }
 #ttRiegoBlock .rt-source, #ttCeresBlock .rt-source { font-size:11px; color:var(--sem-text-3); margin-top:9px; }
@@ -2571,17 +2571,33 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 .pye-per.activa .pye-per-bar { box-shadow:0 0 0 1.5px var(--sem-navy); }
 .pye-per.activa .pye-per-n { color:var(--sem-navy); font-weight:700; }
 
-/* Lista de plagas de un cuartel: barra de incidencia con su pastilla. */
-.pye-lista { display:flex; flex-direction:column; gap:6px; }
-.pye-row { display:grid; grid-template-columns:1fr auto; gap:4px 8px;
+/* Lista de plagas de un cuartel. Dos líneas por agente: arriba el nombre y su
+   valor, abajo la barra y el dato secundario —la pastilla de alerta en Planta,
+   los frutos en Fruto—. Antes la barra ocupaba las dos columnas y el nivel sólo
+   estaba en el color de la barra, que es justo lo que no se puede pedir que se
+   distinga a 6 px de alto. */
+.pye-lista { display:flex; flex-direction:column; gap:8px; }
+.pye-row { display:grid; grid-template-columns:1fr auto; gap:3px 8px;
     align-items:center; }
-.pye-row .nm { font-size:11.5px; color:var(--sem-ink); overflow:hidden;
-    text-overflow:ellipsis; white-space:nowrap; }
-.pye-row .bar { grid-column:1 / -1; height:6px; border-radius:3px;
+.pye-row .nm { grid-column:1; font-size:11.5px; color:var(--sem-ink);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pye-row .vl { grid-column:2; font-size:11.5px; font-weight:600;
+    color:var(--sem-ink); font-variant-numeric:tabular-nums; }
+.pye-row .bar { grid-column:1; height:6px; border-radius:3px;
     background:var(--sem-line-soft); overflow:hidden; }
 .pye-row .bar > i { display:block; height:100%; border-radius:3px; }
-.pye-row .vl { font-size:11px; font-weight:500; color:var(--sem-ink);
-    font-variant-numeric:tabular-nums; }
+.pye-row .sub { grid-column:2; font-size:10px; color:var(--sem-text-3);
+    font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
+
+/* Cabecera de bloque dentro del tooltip. */
+.tt-sect { font-size:9.5px; font-weight:600; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--sem-text-3);
+    margin:11px 0 6px; padding-top:9px; border-top:var(--sem-border-soft); }
+.tt-sect:first-child { margin-top:0; padding-top:0; border-top:none; }
+.ht-caption { font-size:11px; color:var(--sem-text-2); margin-top:3px; }
+/* El tooltip de PyE lleva lista de agentes: 230 px lo dejaban con los nombres
+   cortados en dos líneas. */
+#ttPyeBlock { min-width:262px; }
 
 /* Barras horizontales del ranking del panorama. */
 .pye-rank { display:flex; flex-direction:column; gap:7px; }
@@ -3410,6 +3426,9 @@ const I18N = {
 'Sin registro':'No record', 'Sin registros.':'No records.',
 'Sin registros en la ventana.':'No records in this window.',
 'sin defectos':'no defects',
+'Defectos detectados':'Defects found', 'Resumen':'Summary',
+'incidencia':'incidence', 'de los frutos evaluados':'of the fruit assessed',
+'plagas más':'more pests', 'defectos más':'more defects',
 'En negrita, los frutos de la selección activa; en gris, el resto de los defectos de la muestra.':'In bold, the fruit in the active selection; in grey, the rest of the defects in the sample.',
 'Cuarteles monitoreados':'Blocks monitored',
 'cuarteles con monitoreo':'blocks monitored',
@@ -9267,47 +9286,78 @@ function statsPye(){
 
 /* Lista de agentes de un cuartel, con su barra de incidencia y su pastilla.
    Se usa en el tooltip, en la ficha y en el modal. */
+/* `max` recorta la lista; devuelve también cuántos quedaron fuera para poder
+   decirlo en vez de que el tooltip mienta por omisión. */
 function pyeListaAgentes(d, max){
     const planta = pyeFuente() === 'planta';
-    const filas = d.agentesOrden.slice(0, max || 99).map(([id, x]) => {
+    const todos = d.agentesOrden;
+    const lista = todos.slice(0, max || 99);
+    const tope = planta ? 100
+        : Math.max(...todos.map(([,y]) => d.ev ? y/d.ev*100 : 0), 0.1);
+    const filas = lista.map(([id, x]) => {
         const ag = pyeAgente(id);
         const v = planta ? x.i : (d.ev ? x / d.ev * 100 : 0);
-        const nivel = planta ? x.a : null;
-        const tope = planta ? 100 : Math.max(...d.agentesOrden.map(([,y]) => d.ev ? y/d.ev*100 : 0), 0.1);
-        const col = planta ? SEM(PYE_NIVEL_TOKEN[nivel])
+        const col = planta ? SEM(PYE_NIVEL_TOKEN[x.a])
                            : SEM(PYE_CLASE_TOKEN[(ag && ag.clase) || 'otro']);
+        // El dato secundario cambia con la fuente: en Planta el nivel de alerta
+        // escrito (no sólo el color de la barra), en Fruto los frutos contados.
+        const sec = planta
+            ? pyeChip(x.a)
+            : `<span class="sub">${fmtDec(x, x % 1 ? 1 : 0)} ${t('frutos')}</span>`;
         return `<div class="pye-row">`
-            + `<span class="nm">${esc(pyeNombre(ag) || id)}</span>`
-            + `<span class="vl">${planta ? fmtDec(v,1) + ' %' : fmt(x,0) + ' ' + t('frutos')}</span>`
+            + `<span class="nm" title="${esc(pyeNombre(ag) || id)}">${esc(pyeNombre(ag) || id)}</span>`
+            + `<span class="vl">${fmtDec(v, planta ? 1 : 2)} %</span>`
             + `<span class="bar"><i style="width:${Math.max(2, v/tope*100).toFixed(1)}%;background:${col}"></i></span>`
+            + (planta ? `<span class="sub">${sec}</span>` : sec)
             + `</div>`;
     }).join('');
-    return `<div class="pye-lista">${filas}</div>`;
+    const resto = todos.length - lista.length;
+    return `<div class="pye-lista">${filas}</div>`
+        + (resto > 0 ? `<div class="cos-hint">+ ${resto} `
+            + `${t(planta ? 'plagas más' : 'defectos más')}</div>` : '');
 }
 
+/* La cifra grande arriba con lo que significa debajo, la lista de agentes bajo
+   su propio rótulo y el resumen al final. Antes el valor iba pegado al nombre
+   del cuartel —"Lim C12 · 28,00 %"— y había que adivinar de qué era ese 28 %. */
 function tooltipPyeHTML(p, d){
     const meta = pyeCuartel(p.id) || {};
-    const sub = [meta.variedades, `${fmtVal(p.ha)} ha`].filter(Boolean).join(' · ');
-    if(!d) return tt(esc(p.name || p.id), esc(sub), [],
-        t('Sin monitoreo en la ventana elegida.'));
+    const badge = meta.variedades || (p.especies || []).join(' / ') || '';
+    const cabeza = `<div class="ht-head"><div class="ht-title-wrap">`
+        + `<div class="ht-name">${esc(p.name || p.id)}</div></div>`
+        + (badge ? `<div class="ht-badge">${esc(badge)}</div>` : '') + `</div>`;
+
+    if(!d) return `<div id="ttPyeBlock">${cabeza}`
+        + `<div class="ket-note">${t('Sin monitoreo en la ventana elegida.')}</div></div>`;
 
     const planta = pyeFuente() === 'planta';
-    const cabeza = planta
-        ? `${esc(p.name || p.id)} ${pyeChip(d.nivel)}`
-        : `${esc(p.name || p.id)} · <strong>${fmtDec(d.pct, 2)} %</strong>`;
+    const peor = pyeNombre(pyeAgente(d.peor));
+    const cifra = planta ? fmtDec(d.inc, 1) : fmtDec(d.pct, 2);
+    const pie = planta
+        ? `${t('incidencia')}${peor ? ` · ${esc(peor)}` : ''}`
+        : t('de los frutos evaluados');
+
     const filas = planta
-        ? [[t('Peor lectura'), `${fmtDec(d.inc,1)} % · ${esc(pyeNombre(pyeAgente(d.peor)))}`],
-           [t('Plagas en alerta'), `${d.nAlertas} ${t('de')} ${d.agentes.size}`],
+        ? [[t('Plagas en alerta'), `${d.nAlertas} ${t('de')} ${d.agentes.size}`],
            [t('Meses en alerta'), d.meses > 1 ? `${d.mesesAlerta} ${t('de')} ${d.meses}` : null],
-           [t('Lecturas'), d.n]]
-        : [[t('Frutos afectados'), `${fmt(d.af,0)} ${t('de')} ${fmt(d.ev,0)}`],
+           [t('Lecturas'), d.n],
+           [t('Superficie'), `${fmtVal(p.ha)} ha`]]
+        : [[t('Frutos afectados'), `${fmtDec(d.af, d.af % 1 ? 1 : 0)} ${t('de')} ${fmt(d.ev,0)}`],
            [t('Muestras'), d.nm],
-           [t('Defectos distintos'), d.nDefectos]];
+           [t('Defectos distintos'), d.nDefectos],
+           [t('Superficie'), `${fmtVal(p.ha)} ha`]];
 
     return `<div id="ttPyeBlock">`
-        + `<div class="ht-head"><div class="ht-title-wrap"><div class="ht-name">${cabeza}</div></div></div>`
-        + (sub ? `<div class="ht-badge" style="margin-bottom:7px">${esc(sub)}</div>` : '')
-        + `<div style="margin:8px 0 2px">${pyeListaAgentes(d, 4)}</div>`
+        + cabeza
+        + `<div class="ht-metric"><span class="ht-value">${cifra}</span>`
+        + `<span class="ht-unit">%</span>`
+        + (planta ? `<span style="margin-left:auto">${pyeChip(d.nivel)}</span>` : '')
+        + `</div><div class="ht-caption">${pie}</div>`
+        + `<div class="tt-sect">${t(planta ? 'Plagas detectadas' : 'Defectos detectados')}</div>`
+        // Tres y no más: con nueve plagas el tooltip pasaba de 600 px de alto y
+        // se salía por abajo del canvas. El resto está a un clic, en el modal.
+        + pyeListaAgentes(d, 3)
+        + `<div class="tt-sect">${t('Resumen')}</div>`
         + `<div class="ket-tt-rows">`
         + filas.filter(f => f[1] != null && f[1] !== '').map(f =>
             `<div class="ket-tt-row"><span>${f[0]}</span><span>${f[1]}</span></div>`).join('')

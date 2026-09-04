@@ -261,6 +261,18 @@ pastilla de alerta, la evolución de cada una **en ese cuartel**, y el registro
 crudo — mes, plaga, especie observada, árboles con presencia sobre revisados,
 incidencia, abundancia y alerta.
 
+El **tooltip** lleva la cifra grande arriba con lo que significa debajo
+("28,00 % · de los frutos evaluados"), la pastilla de alerta al lado, y las tres
+plagas de más presión con su barra y su nivel **escrito**, no sólo en el color de
+una barra de 6 px. Se corta en tres y dice cuántas quedan: con nueve plagas pasaba
+de 600 px de alto y se salía del canvas.
+
+Una nota de mantenimiento: el botón "Ver detalle" del tooltip estaba estilado
+enumerando ids (`#ttRiegoBlock .rt-cta, #ttCeresBlock .rt-cta, …`), así que cada
+pestaña nueva que añadía un tooltip con botón se olvidaba de sumar el suyo y
+salía el `<button>` pelado del navegador. Pasó dos veces. Ahora la regla se ancla
+al contenedor —`.hover-tooltip .rt-cta`—, que es lo único que todos comparten.
+
 En la tabla de Fruto la columna "Afectados" muestra **los frutos de la selección
 activa en negrita sobre el total de la muestra**: los KPI cuentan sólo PyE y la
 tabla es el registro completo, y sin marcarlo se leían como una contradicción.
