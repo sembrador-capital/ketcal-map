@@ -80,6 +80,7 @@ tools/kmz_to_geojson.py     ← Ketcal KMZ.kmz  → geo_data.json
 tools/build_nutricion.py    ← Excel + umbrales → nutricion_data.json
 tools/build_cosecha.py      ← planillas + KMZ  → cosecha_data.json
 tools/build_pye.py          ← monitoreos + KMZ  → pye_data.json
+tools/trim_logos.py         ← recorta el margen de los logos de exportadora
 tools/fetch_ceres.py        ← API de Ceres    → ceres_data.json
 .github/workflows/ceres.yml ← refresco semanal de Ceres
 
@@ -456,7 +457,14 @@ de las cinco son verdes y en un anillo de seis porciones no se distinguirían. E
 logo lleva la identidad; el color sólo tiene que separar las porciones.
 
 Los logos viven en `assets/exportadoras/<id>.png`, donde `<id>` es el que emite
-`tools/build_cosecha.py`. Si el archivo no está, el `onerror` del `<img>` lo
+`tools/build_cosecha.py` (`el_parque`, no `elparque`). Van **recortados al ras**:
+la caja mide 58×22 px y ajusta con `object-fit: contain`, así que todo el margen
+que traiga el archivo se descuenta del tamaño útil. El Parque llegaba ocupando el
+50 % de su lienzo y Gesex el 62 %, y se veían la mitad de grandes de lo que
+podían; `python tools/trim_logos.py` los recorta —ignorando lo transparente *y*
+lo casi blanco, porque no todos traen canal alfa— sin reescalar ni recomprimir la
+marca, y es idempotente. El aire alrededor lo pone el CSS, que es donde
+corresponde: así es el mismo para todos. Si el archivo no está, el `onerror` del `<img>` lo
 quita del DOM y el monograma que va detrás queda visible — el selector
 `img + b` sólo lo oculta *mientras* el `img` exista, así que el respaldo es CSS
 puro sin JavaScript de por medio. Un detalle que costó descubrir: con
