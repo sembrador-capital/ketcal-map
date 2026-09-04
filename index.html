@@ -412,6 +412,7 @@ body.foliar-active .stats-bar,
 body.ceres-active .stats-bar,
 body.riego-active .stats-bar,
 body.cosecha-active .stats-bar,
+body.pye-active .stats-bar,
 body.prod-active .stats-bar,
 body.soil-active .stats-bar,
 body.agro-active .stats-bar,
@@ -424,6 +425,7 @@ body.foliar-active .mapboxgl-ctrl-bottom-right,
 body.ceres-active .mapboxgl-ctrl-bottom-right,
 body.riego-active .mapboxgl-ctrl-bottom-right,
 body.cosecha-active .mapboxgl-ctrl-bottom-right,
+body.pye-active .mapboxgl-ctrl-bottom-right,
 body.prod-active .mapboxgl-ctrl-bottom-right,
 body.soil-active .mapboxgl-ctrl-bottom-right,
 body.agro-active .mapboxgl-ctrl-bottom-right,
@@ -629,7 +631,7 @@ body.compare-mode .foliar-controls-B { display:flex; gap:14px; align-items:cente
 .mapboxgl-ctrl-attrib, .mapboxgl-ctrl-attrib a { color:var(--sem-text-2); font-size:11px; }
 
 /* ── COMPONENTE 4 · Paneles laterales ───────────────────────────────────── */
-.ceres-controls, .riego-controls, .cos-controls, .agro-controls, .fin-controls, .pest-controls {
+.ceres-controls, .riego-controls, .cos-controls, .pye-controls, .agro-controls, .fin-controls, .pest-controls {
     position:absolute; z-index:var(--z-panel); display:none; overflow:hidden;
     background:var(--sem-surface); color:var(--sem-ink);
     border:var(--sem-border-hair);
@@ -647,24 +649,26 @@ body.compare-mode .foliar-controls-B { display:flex; gap:14px; align-items:cente
 .fin-controls   { top:60px; right:16px; width:336px; max-height:calc(100vh - 146px); overflow:auto; }
 .pest-controls  { top:60px; right:16px; width:336px; max-height:calc(100vh - 146px); overflow:auto; }
 .cos-controls   { top:60px; right:16px; width:342px; max-height:calc(100vh - 146px); overflow:auto; }
-.ceres-controls.visible, .riego-controls.visible, .cos-controls.visible, .agro-controls.visible, .fin-controls.visible, .pest-controls.visible { display:block; }
+.pye-controls   { top:60px; right:16px; width:342px; max-height:calc(100vh - 146px); overflow:auto; }
+.ceres-controls.visible, .riego-controls.visible, .cos-controls.visible, .pye-controls.visible, .agro-controls.visible, .fin-controls.visible, .pest-controls.visible { display:block; }
 
-.ceres-controls-header, .riego-controls-header, .cos-controls-header, .agro-controls-header, .fin-controls-header, .pest-controls-header {
+.ceres-controls-header, .riego-controls-header, .cos-controls-header, .pye-controls-header, .agro-controls-header, .fin-controls-header, .pest-controls-header {
     padding:10px 14px 9px; background:var(--sem-beige-wash);
     border-bottom:var(--sem-border-soft);
 }
-.ceres-controls-title, .riego-controls-title, .cos-controls-title, .agro-controls-title, .fin-controls-title, .pest-controls-title {
+.ceres-controls-title, .riego-controls-title, .cos-controls-title, .pye-controls-title, .agro-controls-title, .fin-controls-title, .pest-controls-title {
     font-size:11px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
     color:var(--sem-navy); display:flex; align-items:center; gap:7px;
 }
 .ceres-controls-title .cs-dot, .riego-controls-title .rc-dot, .cos-controls-title .cc-dot,
+.pye-controls-title .py-dot,
 .agro-controls-title .ac-dot, .fin-controls-title .fc-dot, .pest-controls-title .pc-dot {
     width:7px; height:7px; border-radius:50%; background:var(--sem-green); flex:0 0 7px;
 }
-.ceres-controls-subtitle, .riego-controls-subtitle, .cos-controls-subtitle, .agro-controls-subtitle, .fin-controls-subtitle, .pest-controls-subtitle {
+.ceres-controls-subtitle, .riego-controls-subtitle, .cos-controls-subtitle, .pye-controls-subtitle, .agro-controls-subtitle, .fin-controls-subtitle, .pest-controls-subtitle {
     font-size:11px; color:var(--sem-text-2); margin-top:4px; line-height:1.35;
 }
-.ceres-controls-body, .riego-controls-body, .cos-controls-body, .agro-controls-body, .fin-controls-body, .pest-controls-body { padding:11px 13px 13px; }
+.ceres-controls-body, .riego-controls-body, .cos-controls-body, .pye-controls-body, .agro-controls-body, .fin-controls-body, .pest-controls-body { padding:11px 13px 13px; }
 
 /* Sub-pestañas del panel de riego */
 .riego-mode-tabs {
@@ -1292,14 +1296,14 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 .soil-controls .soil-param-select { min-width:210px; }
 
 /* ── Modales ────────────────────────────────────────────────────────────── */
-.riego-modal, .cos-modal, .agro-modal, .fin-modal, .pest-modal {
+.riego-modal, .cos-modal, .pye-modal, .agro-modal, .fin-modal, .pest-modal {
     position:fixed; inset:0; z-index:var(--z-modal); display:none;
     align-items:center; justify-content:center;
     background:var(--sem-scrim);
     backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
 }
-.riego-modal.visible, .cos-modal.visible, .agro-modal.visible, .fin-modal.visible, .pest-modal.visible { display:flex; }
-.riego-modal-content, .cos-modal-content, .agro-modal-content, .fin-modal-content, .pest-modal-content {
+.riego-modal.visible, .cos-modal.visible, .pye-modal.visible, .agro-modal.visible, .fin-modal.visible, .pest-modal.visible { display:flex; }
+.riego-modal-content, .cos-modal-content, .pye-modal-content, .agro-modal-content, .fin-modal-content, .pest-modal-content {
     background:var(--sem-surface); color:var(--sem-ink);
     border-radius:var(--sem-radius-lg); padding:22px 24px 24px;
     max-height:90vh; overflow:auto; box-shadow:var(--sem-shadow-lg);
@@ -1307,17 +1311,19 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 .riego-modal-content { width:min(820px,calc(100vw - 40px)); }
 .cos-modal-content   { width:min(980px,calc(100vw - 36px)); }
 .cos-modal-content.ancho { width:min(1240px,calc(100vw - 36px)); }
+.pye-modal-content   { width:min(1000px,calc(100vw - 36px)); }
+.pye-modal-content.ancho { width:min(1280px,calc(100vw - 36px)); }
 .agro-modal-content  { width:min(1120px,calc(100vw - 36px)); }
 .fin-modal-content   { width:min(940px,calc(100vw - 36px)); }
 .pest-modal-content  { width:min(980px,calc(100vw - 36px)); }
-.riego-modal-head, .cos-modal-head, .agro-modal-head, .fin-modal-head, .pest-modal-head {
+.riego-modal-head, .cos-modal-head, .pye-modal-head, .agro-modal-head, .fin-modal-head, .pest-modal-head {
     display:flex; justify-content:space-between; align-items:flex-start;
     padding-bottom:14px; margin-bottom:16px; border-bottom:var(--sem-border-soft);
 }
-.riego-modal-head h2, .cos-modal-head h2, .agro-modal-head h2, .fin-modal-head h2, .pest-modal-head h2 {
+.riego-modal-head h2, .cos-modal-head h2, .pye-modal-head h2, .agro-modal-head h2, .fin-modal-head h2, .pest-modal-head h2 {
     font-size:19px; font-weight:600; color:var(--sem-navy); letter-spacing:-0.01em;
 }
-.riego-modal-head .rm-sub, .cos-modal-head .rm-sub, .agro-modal-sub, .fin-modal-sub, .pest-modal-sub {
+.riego-modal-head .rm-sub, .cos-modal-head .rm-sub, .pye-modal-head .rm-sub, .agro-modal-sub, .fin-modal-sub, .pest-modal-sub {
     font-size:11px; color:var(--sem-text-2); margin-top:5px;
     text-transform:uppercase; letter-spacing:0.05em;
 }
@@ -1326,31 +1332,33 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 /* Métricas de modal: cifra grande en peso 300 sobre fondo beige, sin borde */
 .riego-modal-kpis { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:18px; }
 .cos-modal-kpis { display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; margin-bottom:18px; }
+.pye-modal-kpis { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:18px; }
 .agro-modal-kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:16px; }
 .fin-modal-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
 .pest-modal-meta { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:18px; }
-.rm-kpi, .cos-kpi, .agro-kpi, .fin-kpi, .pest-meta-card {
+.rm-kpi, .cos-kpi, .pye-kpi, .agro-kpi, .fin-kpi, .pest-meta-card {
     background:var(--sem-beige-wash); border:none;
     border-radius:var(--sem-radius); padding:11px 13px;
 }
-.rm-kpi .k, .cos-kpi .k, .agro-kpi .k, .fin-kpi .k, .pest-meta-card .k {
+.rm-kpi .k, .cos-kpi .k, .pye-kpi .k, .agro-kpi .k, .fin-kpi .k, .pest-meta-card .k {
     font-size:11px; font-weight:400; color:var(--sem-text-2);
     text-transform:uppercase; letter-spacing:0.05em; margin-bottom:5px;
 }
-.rm-kpi .v, .cos-kpi .v, .agro-kpi .v, .fin-kpi .v, .pest-meta-card .v {
+.rm-kpi .v, .cos-kpi .v, .pye-kpi .v, .agro-kpi .v, .fin-kpi .v, .pest-meta-card .v {
     font-size:20px; font-weight:300; color:var(--sem-ink); line-height:1.15;
 }
-.rm-kpi .u, .cos-kpi .u { font-size:11px; font-weight:400; color:var(--sem-text-2); margin-left:3px; }
+.rm-kpi .u, .cos-kpi .u, .pye-kpi .u { font-size:11px; font-weight:400; color:var(--sem-text-2); margin-left:3px; }
 .pest-meta-card .v { font-size:14px; font-weight:500; }
-.rm-section-title, .cos-section-title, .agro-modal-section-title, .pest-modal-section-title {
+.rm-section-title, .cos-section-title, .pye-section-title, .agro-modal-section-title, .pest-modal-section-title {
     font-size:12px; font-weight:600; color:var(--sem-navy);
     text-transform:uppercase; letter-spacing:0.05em;
     margin:18px 0 10px; padding-bottom:6px; border-bottom:var(--sem-border-soft);
 }
 /* Tablas: sin bordes verticales, sólo divisores horizontales */
-.rm-events, .cos-events, .agro-events {
+.rm-events, .cos-events, .pye-events, .agro-events {
     border:var(--sem-border-hair); border-radius:var(--sem-radius); overflow:auto;
 }
+.pye-events { max-height:320px; }
 .cos-events { max-height:300px; }
 .cos-events-table tbody tr:hover { background:var(--sem-beige-wash); }
 .cos-events-table tbody tr.activa { background:var(--sem-navy-wash); }
@@ -1358,15 +1366,15 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 .cos-events-table tbody tr.fuera { opacity:0.5; }
 .rm-events { max-height:220px; }
 .agro-events { max-height:52vh; }
-.rm-events-table, .cos-events-table, .agro-events-table, .fin-detail-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+.rm-events-table, .cos-events-table, .pye-events-table, .agro-events-table, .fin-detail-table { width:100%; border-collapse:collapse; font-size:12.5px; }
 .agro-events-table { min-width:1000px; }
-.rm-events-table th, .cos-events-table th, .agro-events-table th, .fin-detail-table th {
+.rm-events-table th, .cos-events-table th, .pye-events-table th, .agro-events-table th, .fin-detail-table th {
     text-align:left; padding:9px 12px; background:var(--sem-beige-wash); color:var(--sem-navy);
     font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;
     border-bottom:var(--sem-border-soft);
 }
 .agro-events-table th { position:sticky; top:0; z-index:var(--z-map); }
-.rm-events-table td, .cos-events-table td, .agro-events-table td, .fin-detail-table td {
+.rm-events-table td, .cos-events-table td, .pye-events-table td, .agro-events-table td, .fin-detail-table td {
     padding:9px 12px; border-top:var(--sem-border-soft); vertical-align:top;
 }
 .rm-events-table tr:hover td, .agro-events-table tr:hover td, .fin-detail-table tr:hover td {
@@ -2232,6 +2240,28 @@ body.pest-active #dataStamp { top:56px; }
        un cuartel que no se cosechó esta semana no rindió cero, no se tocó. */
     --dat-sin-cosecha: #D2CEC5;
 
+    /* ── Control de PyE ─────────────────────────────────────────────────
+       Nivel de alerta del monitoreo. Son CUATRO clases ordinales con un
+       sentido claro —más es peor— así que van en una progresión de tono y
+       de luminosidad a la vez, y no sólo de tono: bajo protanopia el paso
+       de ámbar a rojo casi no se distingue, y la luminosidad decreciente
+       mantiene el orden legible aunque el color se pierda.
+       Se declaran aparte de los `--dat-st-*` de Nutrición a propósito: esos
+       son un rango con óptimo en el medio, y esto es una escala de daño. */
+    --dat-pye-normal: #4E8C6A;
+    --dat-pye-bajo:   #C9B458;
+    --dat-pye-medio:  #D97B2A;
+    --dat-pye-alto:   #A8261F;
+
+    /* Y una rampa secuencial para la incidencia y el % de frutos dañados,
+       que terminan en el mismo rojo de la alerta alta. */
+    --dat-pye-1:#F4EFE9; --dat-pye-2:#E7CFAE; --dat-pye-3:#D99C6E;
+    --dat-pye-4:#C05F3C; --dat-pye-5:var(--dat-pye-alto);
+
+    /* "Sin monitoreo en el periodo": el cuartel no se revisó, no es que no
+       tuviera plagas. Beige de ausencia, igual que el resto del mapa. */
+    --dat-sin-monitoreo: #D2CEC5;
+
     /* "Sin riego en la ventana": no es el extremo bajo de la rampa de riego,
        es una clase aparte. Beige de marca, para que se lea como ausencia de
        dato de riego y no como "regó poquito". */
@@ -2506,6 +2536,87 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 .ch-hit { fill:transparent; cursor:pointer; }
 .ch-hit:hover { fill:var(--sem-hover-a); }
 
+/* ══ CONTROL DE PyE ════════════════════════════════════════════════════════ */
+
+/* Pastilla de nivel de alerta. Lleva SIEMPRE el texto además del color: el
+   nivel es la conclusión del monitoreo y no puede depender de distinguir
+   ámbar de naranja. */
+.pye-chip {
+    display:inline-flex; align-items:center; gap:5px; padding:2px 8px;
+    border-radius:var(--sem-radius-pill); font-size:10px; font-weight:600;
+    color:var(--sem-surface); white-space:nowrap;
+}
+.pye-chip.normal { background:var(--dat-pye-normal); }
+.pye-chip.bajo   { background:var(--dat-pye-bajo); color:var(--sem-ink); }
+.pye-chip.medio  { background:var(--dat-pye-medio); }
+.pye-chip.alto   { background:var(--dat-pye-alto); }
+.pye-chip.sin    { background:var(--sem-line); color:var(--sem-text-2); }
+
+/* Franja de periodos: meses en Planta, semanas en Fruto. Mismo papel que la
+   de Cosecha —ver y elegir a la vez—, pero apilada por nivel de alerta. */
+.pye-periodos { display:flex; align-items:flex-end; gap:3px; height:74px;
+    padding:6px 2px 0; margin:2px 0 10px; border-bottom:var(--sem-border-soft);
+    overflow:hidden; }
+.pye-per { flex:1 1 0; min-width:0; display:flex; flex-direction:column;
+    gap:3px; cursor:pointer; background:none; border:none; padding:0;
+    font-family:inherit; }
+.pye-per-bar { height:52px; display:flex; flex-direction:column-reverse;
+    border-radius:2px 2px 0 0; overflow:hidden; background:var(--sem-line-soft);
+    transition:opacity 0.15s; }
+.pye-per-bar i { display:block; width:100%; }
+.pye-per-n { font-size:8.5px; line-height:1; color:var(--sem-text-3);
+    text-align:center; height:9px; overflow:hidden; }
+.pye-per:hover .pye-per-bar { opacity:0.72; }
+.pye-per.fuera .pye-per-bar { opacity:0.28; }
+.pye-per.activa .pye-per-bar { box-shadow:0 0 0 1.5px var(--sem-navy); }
+.pye-per.activa .pye-per-n { color:var(--sem-navy); font-weight:700; }
+
+/* Lista de plagas de un cuartel: barra de incidencia con su pastilla. */
+.pye-lista { display:flex; flex-direction:column; gap:6px; }
+.pye-row { display:grid; grid-template-columns:1fr auto; gap:4px 8px;
+    align-items:center; }
+.pye-row .nm { font-size:11.5px; color:var(--sem-ink); overflow:hidden;
+    text-overflow:ellipsis; white-space:nowrap; }
+.pye-row .bar { grid-column:1 / -1; height:6px; border-radius:3px;
+    background:var(--sem-line-soft); overflow:hidden; }
+.pye-row .bar > i { display:block; height:100%; border-radius:3px; }
+.pye-row .vl { font-size:11px; font-weight:500; color:var(--sem-ink);
+    font-variant-numeric:tabular-nums; }
+
+/* Barras horizontales del ranking del panorama. */
+.pye-rank { display:flex; flex-direction:column; gap:7px; }
+.pye-rank-row { display:grid; grid-template-columns:150px 1fr 74px;
+    gap:10px; align-items:center; font-size:12px; }
+.pye-rank-row .nm { color:var(--sem-ink); overflow:hidden;
+    text-overflow:ellipsis; white-space:nowrap; }
+.pye-rank-row .track { height:15px; background:var(--sem-line-soft);
+    border-radius:3px; overflow:hidden; display:flex; }
+.pye-rank-row .track i { display:block; height:100%; }
+.pye-rank-row .vl { text-align:right; font-variant-numeric:tabular-nums;
+    color:var(--sem-text-2); }
+
+/* Mapa de calor cuartel x plaga. Una celda por cruce, con el color del nivel
+   de alerta; el gris es "no se monitoreó", que no es lo mismo que "sin plaga". */
+.pye-heat { overflow:auto; border:var(--sem-border-hair);
+    border-radius:var(--sem-radius); }
+.pye-heat table { border-collapse:separate; border-spacing:2px; font-size:11px; }
+.pye-heat th { font-weight:500; color:var(--sem-text-2); padding:2px 6px;
+    white-space:nowrap; text-align:left; position:sticky; background:var(--sem-surface); }
+.pye-heat thead th { top:0; z-index:var(--z-map); font-size:10px;
+    writing-mode:vertical-rl; transform:rotate(180deg); padding:6px 2px;
+    text-align:right; }
+.pye-heat tbody th { left:0; z-index:var(--z-map); font-size:11px; }
+.pye-heat thead th:first-child { writing-mode:horizontal-tb; transform:none;
+    left:0; z-index:var(--z-legend); }
+.pye-heat td { width:22px; height:20px; border-radius:3px;
+    background:var(--dat-sin-monitoreo); }
+.pye-heat td.tiene { cursor:pointer; }
+.pye-heat td.tiene:hover { outline:2px solid var(--sem-navy); }
+
+/* Cabecera de la franja, con su botón de agrandar. */
+.pye-head { display:flex; align-items:center; justify-content:space-between;
+    gap:8px; margin-bottom:1px; }
+
 /* Cabecera de la franja de semanas, con el botón de agrandar. */
 .cos-weeks-head {
     display:flex; align-items:center; justify-content:space-between; gap:8px;
@@ -2656,6 +2767,7 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
          los dos: data-modes le dice a la barra cuándo pintarse activa. -->
     <button class="tab-btn" data-mode="cosecha" onclick="switchMode('cosecha')" title="Cosecha por cuartel · planilla de campo" data-i18n-title="Cosecha por cuartel · planilla de campo"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Cosecha">Cosecha</span></button>
     <button class="tab-btn" data-mode="nutricion" data-modes="foliares suelo" onclick="switchMode(NUTRI_SUBMODE)"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-hoja"/></svg></span><span data-i18n="Nutrición">Nutrición</span></button>
+    <button class="tab-btn" data-mode="pye" data-modes="pye-planta pye-fruto" onclick="switchMode(PYE_SUBMODE)" title="Monitoreo de plagas y enfermedades" data-i18n-title="Monitoreo de plagas y enfermedades"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-insecto"/></svg></span><span data-i18n="Control de PyE">Control de PyE</span></button>
     <span class="tabs-sep" aria-hidden="true"></span>
     <!-- Pendientes. Se muestran deshabilitadas a propósito: la hoja de ruta es
          parte de la información, y una pestaña que aparece de la nada más
@@ -2961,6 +3073,92 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     </div>
 </div>
 
+<!-- ── Controles · Control de PyE ──────────────────────────────────────────
+     Dos monitoreos que no se mezclan: PLANTA mide incidencia sobre el árbol,
+     mes a mes; FRUTO mide defectos sobre 50 frutos por muestra, semana a
+     semana en cosecha. Comparten cuartel y poco más, así que el selector de
+     fuente manda sobre todo lo demás, igual que el de programa en Nutrición. -->
+<div class="pye-controls" id="ctrlPye">
+    <div class="pye-controls-header">
+        <div class="pye-controls-title"><span class="py-dot"></span><span data-i18n="Control de PyE">Control de PyE</span></div>
+        <div class="pye-controls-subtitle" id="pyeSubtitulo"></div>
+    </div>
+    <div class="pye-controls-body">
+        <div class="riego-mode-tabs" id="pyeFuentes" role="group" aria-label="Fuente de monitoreo" data-i18n-aria="Fuente de monitoreo">
+            <button type="button" class="riego-mode-tab" data-v="planta" onclick="switchMode('pye-planta')" title="Monitoreo mensual sobre el árbol" data-i18n-title="Monitoreo mensual sobre el árbol" data-i18n="Planta">Planta</button>
+            <button type="button" class="riego-mode-tab" data-v="fruto" onclick="switchMode('pye-fruto')" title="Control de calidad de fruta en cosecha" data-i18n-title="Control de calidad de fruta en cosecha" data-i18n="Fruto">Fruto</button>
+        </div>
+
+        <div class="pye-head">
+            <span class="fc-label" id="pyePeriodoLabel" data-i18n="Periodo">Periodo</span>
+            <button type="button" class="cos-expand" onclick="abrirPyePanorama()"
+                    title="Panorama: evolución de la presión, ranking y mapa de calor"
+                    data-i18n-title="Panorama: evolución de la presión, ranking y mapa de calor"
+                    aria-label="Panorama"
+                    data-i18n-aria="Panorama">
+                <svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg>
+            </button>
+        </div>
+        <div class="pye-periodos" id="pyePeriodos"></div>
+        <div class="riego-nav">
+            <button type="button" onclick="pasoPyePeriodo(-1)" aria-label="Periodo anterior" data-i18n-aria="Periodo anterior">‹</button>
+            <div class="cos-ventana" id="pyeVentanaLabel" style="flex:1"></div>
+            <button type="button" onclick="pasoPyePeriodo(1)" aria-label="Periodo siguiente" data-i18n-aria="Periodo siguiente">›</button>
+        </div>
+        <div class="riego-mode-tabs" id="pyeVentanas" role="group" aria-label="Ventana temporal" data-i18n-aria="Ventana temporal">
+            <button type="button" class="riego-mode-tab" data-v="temporada" onclick="setPyeVentana('temporada')" data-i18n="Todo">Todo</button>
+            <button type="button" class="riego-mode-tab" data-v="periodo" onclick="setPyeVentana('periodo')" data-i18n="Un periodo">Un periodo</button>
+        </div>
+
+        <div class="dz-controls" style="margin-top:12px">
+            <div class="fc-group">
+                <label class="fc-label" for="selPyePlaga" id="lblPyePlaga" data-i18n="Plaga">Plaga</label>
+                <select class="fc-select" id="selPyePlaga" onchange="setPyePlaga(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" for="selPyeMetrica" data-i18n="Métrica">Métrica</label>
+                <select class="fc-select" id="selPyeMetrica" onchange="setPyeMetrica(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Capas">Capas</label>
+                <div class="ket-toggles">
+                    <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasPye" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+                </div>
+            </div>
+        </div>
+        <button class="riego-load-btn" onclick="abrirPyePanorama()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Ver panorama">Ver panorama</span></button>
+        <div class="riego-status" id="pyeStatus"></div>
+    </div>
+</div>
+
+<!-- Panorama: los gráficos generales del predio -->
+<div class="pye-modal" id="pyePanorama" onclick="if(event.target===this)closePyePanorama()">
+    <div class="pye-modal-content ancho">
+        <div class="pye-modal-head">
+            <div>
+                <h2 id="pyePanoTitle" data-i18n="Panorama de plagas y enfermedades">Panorama de plagas y enfermedades</h2>
+                <div class="rm-sub" id="pyePanoSub"></div>
+            </div>
+            <button class="riego-modal-close" onclick="closePyePanorama()" aria-label="Cerrar" data-i18n-aria="Cerrar"><svg viewBox="0 0 18 18"><use href="#ic-cerrar"/></svg></button>
+        </div>
+        <div id="pyePanoBody"></div>
+    </div>
+</div>
+
+<!-- Detalle de un cuartel -->
+<div class="pye-modal" id="pyeModal" onclick="if(event.target===this)closePyeModal()">
+    <div class="pye-modal-content">
+        <div class="pye-modal-head">
+            <div>
+                <h2 id="pyeModalTitle" data-i18n="Detalle de monitoreo">Detalle de monitoreo</h2>
+                <div class="rm-sub" id="pyeModalSub"></div>
+            </div>
+            <button class="riego-modal-close" onclick="closePyeModal()" aria-label="Cerrar" data-i18n-aria="Cerrar"><svg viewBox="0 0 18 18"><use href="#ic-cerrar"/></svg></button>
+        </div>
+        <div id="pyeModalBody"></div>
+    </div>
+</div>
+
 <!-- Evolución de la temporada, en grande. La franja del panel mide 312 px para
      36 semanas: sirve para ver la forma de la curva y elegir, no para leerla. -->
 <div class="cos-modal" id="cosTempModal" onclick="if(event.target===this)closeCosTemporadaModal()">
@@ -3175,6 +3373,77 @@ const I18N = {
 'Variación relativa contra':'Relative change against',
 'misma ventana de semanas.':'same week window.',
 'Incluye':'Includes',
+// ── Control de PyE ──
+'Control de PyE':'Pest & disease', 'Monitoreo de plagas y enfermedades':'Pest and disease monitoring',
+'Panorama de plagas y enfermedades':'Pest and disease overview',
+'Panorama':'Overview', 'Ver panorama':'View overview',
+'Panorama: evolución de la presión, ranking y mapa de calor':'Overview: pressure trend, ranking and heat map',
+'Fuente de monitoreo':'Monitoring source',
+'Planta':'Tree', 'Fruto':'Fruit',
+'Monitoreo mensual sobre el árbol':'Monthly monitoring on the tree',
+'Control de calidad de fruta en cosecha':'Fruit quality control at harvest',
+'Monitoreo de planta':'Tree monitoring', 'Monitoreo de fruto':'Fruit monitoring',
+'Monitoreo mensual sobre el árbol · ':'Monthly monitoring on the tree · ',
+'Control de calidad en cosecha':'Quality control at harvest',
+'Detalle de monitoreo':'Monitoring detail',
+'Ver detalle del cuartel':'Block detail',
+'Periodo':'Period', 'Un periodo':'One period', 'Todo':'All',
+'Todo el registro':'The whole record',
+'Presión por mes':'Pressure by month', 'Presión por semana':'Pressure by week',
+'Plaga':'Pest', 'Plagas':'Pests', 'plagas':'pests', 'Defecto':'Defect',
+'Defectos':'Defects', 'defectos':'defects',
+'Plagas y enfermedades':'Pests and diseases', 'Todos los defectos':'All defects',
+'Enfermedad':'Disease', 'Otro defecto':'Other defect',
+'Nivel de alerta':'Alert level', 'Plagas en alerta':'Pests on alert',
+'Persistencia de la alerta':'Alert persistence', 'Meses en alerta':'Months on alert',
+'En qué proporción de los meses monitoreados el cuartel estuvo en Medio o Alto. Sobre una ventana larga, la peor lectura satura y esto no.':'The share of monitored months in which the block was at Medium or High. Over a long window the worst reading saturates and this does not.',
+'Nivel de abundancia':'Abundance level',
+'% de frutos afectados':'% of fruit affected', 'Frutos afectados':'Fruit affected',
+'Defectos distintos':'Distinct defects', 'Frutos evaluados':'Fruit assessed',
+'frutos evaluados':'fruit assessed', 'afectados':'affected', 'Afectados':'Affected',
+'frutos':'fruit', 'Frutos':'Fruit', 'Fruto':'Fruit',
+'Incidencia':'Incidence', 'Incidencia media':'Mean incidence',
+'Incidencia mediana':'Median incidence', 'Abundancia':'Abundance',
+'Alerta':'Alert', 'Árboles':'Trees', 'Especie':'Species',
+'Contratista':'Contractor', 'Muestras':'Samples', 'muestra':'sample', 'muestras':'samples',
+'Lecturas':'Readings', 'lecturas':'readings', 'Registro':'Record',
+'Sin registro':'No record', 'Sin registros.':'No records.',
+'Sin registros en la ventana.':'No records in this window.',
+'sin defectos':'no defects',
+'En negrita, los frutos de la selección activa; en gris, el resto de los defectos de la muestra.':'In bold, the fruit in the active selection; in grey, the rest of the defects in the sample.',
+'Cuarteles monitoreados':'Blocks monitored',
+'cuarteles con monitoreo':'blocks monitored',
+'cuarteles con monitoreo en la ventana':'blocks monitored in this window',
+'sin monitoreo en la ventana':'not monitored in this window',
+'Sin monitoreo en la ventana':'No monitoring in this window',
+'Sin monitoreo en la ventana elegida.':'No monitoring within the chosen window.',
+'Sin monitoreo en este periodo.':'No monitoring in this period.',
+'Este cuartel no aparece en este monitoreo.':'This block does not appear in this monitoring.',
+'En alerta alta':'On high alert', 'En alerta Medio o Alto':'On Medium or High alert',
+'Plaga dominante':'Dominant pest', 'Defecto dominante':'Dominant defect',
+'Peor cuartel':'Worst block', 'Peor lectura':'Worst reading',
+'Peor plaga':'Worst pest', 'Peor defecto':'Worst defect',
+'Plagas detectadas':'Pests detected', 'Nivel':'Level',
+'Plagas del cuartel':'Pests in this block', 'Defectos del cuartel':'Defects in this block',
+'plagas en el catálogo':'pests in the catalogue',
+'Evolución de la presión':'Pressure trend',
+'Evolución de la presión por plaga':'Pressure trend by pest',
+'Ranking de plagas':'Pest ranking', 'Ranking de defectos':'Defect ranking',
+'Mapa de calor por cuartel':'Heat map by block',
+'Se necesitan al menos dos periodos.':'At least two periods are needed.',
+'Cortes del informe de campo, no del mapa.':'Cuts from the field report, not from the map.',
+'Cortes por quintiles de lo que hay en la ventana.':'Quintile cuts of what is in the window.',
+'la peor lectura del periodo por cuartel.':'the worst reading of the period per block.',
+'muestras de 50 frutos.':'samples of 50 fruit.',
+'Incidencia cortada por los umbrales del informe de campo.':'Incidence cut by the field report thresholds.',
+'Cuántas plagas distintas llegaron a Medio o Alto en el periodo.':'How many distinct pests reached Medium or High in the period.',
+'Índice de densidad del monitoreo, independiente de la incidencia.':'Monitoring density index, independent of incidence.',
+'Sobre los frutos evaluados en el periodo, a 50 por muestra.':'Over the fruit assessed in the period, 50 per sample.',
+'Clic en una fila para pintar el mapa con ese agente.':'Click a row to paint the map with that agent.',
+'Gris = no se monitoreó ese cruce, que no es lo mismo que sin presencia. Clic en una celda para ir al cuartel.':'Grey = that pairing was not monitored, which is not the same as absent. Click a cell to go to the block.',
+'Incidencia media del predio por plaga. Las franjas de fondo son los umbrales de alerta del informe. Clic en un mes para llevar el mapa ahí.':'Farm mean incidence by pest. The background bands are the report alert thresholds. Click a month to take the map there.',
+'Porcentaje de frutos afectados por defecto. Clic en una semana para llevar el mapa ahí.':'Percentage of fruit affected by defect. Click a week to take the map there.',
+'cuart.':'blocks', 'Mes':'Month', 'Medio':'Medium',
 'Evolución de la temporada':'Season evolution',
 'Agrandar el gráfico de la temporada':'Enlarge the season chart',
 'Sin cosecha esta semana.':'No harvest this week.',
@@ -3504,6 +3773,7 @@ const S = {
     nut: { prog:null, param:null, fecha:null, prof:null, nivel:'ubicaciones', soloEvo:false },
     cos: { temporada:null, ventana:'temporada', semana:null, metrica:'kg_ha',
            destino:null, comparar:null },
+    pye: { periodo:null, ventana:'temporada', plaga:null, metrica:null },
     riego: { metrica:'total_m3', nivel:'sectores', modo:'dias', desplazamiento:0 },
     ceres: { param:'water_stress', nivel:'sectores', vuelo:null, vueloB:null },
     capas: { etiquetas:true, valvulas:false, pozos:true, calicatas:false },
@@ -3562,6 +3832,12 @@ function renderStamp(){
                 ? `${t('Vuelo del')} ${fmtFecha(v.date)} · ${antiguedad(v.date)}`
                 : (CERES ? t('Sin dato') : t('Cargando datos del predio…'));
         }
+    }else if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
+        const vals = window._valsPye || (PYE ? pyeValores() : new Map());
+        el.textContent = !PYE
+            ? (pyeEstado === 'error' ? t('No se pudo cargar') : t('Cargando datos del predio…'))
+            : `${t(pyeFuente() === 'planta' ? 'Monitoreo de planta' : 'Monitoreo de fruto')}`
+              + ` · ${pyeVentanaTexto()} · ${plural(vals.size, 'cuartel', 'cuarteles')}`;
     }else if(currentMode === 'cosecha'){
         const t0 = cosTemporada();
         const vals = window._valsCos || cosValores();
@@ -3779,6 +4055,10 @@ function tooltipUnidad(nivel, id){
     if(currentMode === 'cosecha'){
         const d = (window._valsCos || new Map()).get(id);
         return tooltipCosechaHTML(p, d, (window._valsCosB || new Map()).get(id));
+    }
+
+    if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
+        return tooltipPyeHTML(p, (window._valsPye || new Map()).get(id));
     }
 
     if(currentMode === 'riego'){
@@ -5599,6 +5879,8 @@ function nivelActivo(){
     // entre ellos por superficie seria inventar el dato. El nivel es fijo y la
     // leyenda lo dice, en vez de ofrecer un selector que miente.
     if(currentMode === 'cosecha') return 'cuarteles';
+    // Los dos monitoreos se registran por cuartel y ninguno baja a sector.
+    if(currentMode === 'pye-planta' || currentMode === 'pye-fruto') return 'cuarteles';
     return S.nut.nivel;
 }
 
@@ -5642,6 +5924,20 @@ function repintar(){
                 : nombreCorto(f.properties));
         });
         window._valsRiego = vals; window._escalaRiego = escala;
+    }else if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
+        const m = pyeMetrica();
+        const vals = pyeValores();
+        const escala = pyeEscala(vals);
+        feats(activo).forEach(f => {
+            const id = f.properties.id;
+            const d = vals.get(id);
+            const v = pyeValor(d, m);
+            exprColor.push(id, d ? pyeColor(v, escala) : SEM('--dat-sin-monitoreo'));
+            exprLabel.push(id, d && v != null
+                ? `${nombreCorto(f.properties)}\n${pyeFmt(v, m)}`
+                : nombreCorto(f.properties));
+        });
+        window._valsPye = vals; window._escalaPye = escala;
     }else if(currentMode === 'cosecha'){
         const m = cosMetrica();
         const vals = cosValores();
@@ -5822,6 +6118,8 @@ function renderLegend(){
     if(currentMode === 'riego'){ el.innerHTML = legendRiego(activo); return; }
     if(currentMode === 'ceres'){ el.innerHTML = legendCeres(activo); return; }
     if(currentMode === 'cosecha'){ el.innerHTML = legendCosecha(activo); return; }
+    if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
+        el.innerHTML = legendPye(activo); return; }
 
     const p = paramActual();
     if(!p){ el.innerHTML = cabeceraPrograma()
@@ -6795,6 +7093,11 @@ function renderStats(){
         bar.classList.remove('hidden');
         return;
     }
+    if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
+        el.innerHTML = statsPye();
+        bar.classList.remove('hidden');
+        return;
+    }
 
     const p = paramActual();
     const vals = window._valsNut || valoresNut(activo);
@@ -6877,6 +7180,7 @@ function renderPanel(){
     subEl.textContent = p.etiqueta && p.etiqueta !== p.name ? p.etiqueta : t(NIVELES[S.selNivel].sing);
     bodyEl.innerHTML = currentMode === 'general' ? fichaGeneral(p)
                      : currentMode === 'cosecha' ? fichaCosecha(p)
+                     : (currentMode === 'pye-planta' || currentMode === 'pye-fruto') ? fichaPye(p)
                      : currentMode === 'riego'   ? fichaRiego(p)
                      : currentMode === 'ceres'   ? fichaCeres(p)
                      : fichaNutricion(p);
@@ -7503,16 +7807,9 @@ function cosEscala(vals){
     if(!num.length)
         return {tipo:'mag', unidad:m.unidad, cortes:[], colores:RAMPA_PROD.map(SEM),
                 etiquetas:[], vacia:true};
-    const k = RAMPA_PROD.length, cortes = [];
-    for(let i = 1; i < k; i++) cortes.push(num[Math.floor(i * num.length / k)]);
-    const etiquetas = [];
-    for(let i = 0; i < k; i++){
-        const lo = i === 0 ? num[0] : cortes[i-1];
-        const hi = i === k-1 ? num[num.length-1] : cortes[i];
-        etiquetas.push(`${cosFmt(lo, m)} – ${cosFmt(hi, m)}`);
-    }
-    return {tipo:'mag', unidad:m.unidad, cortes, colores:RAMPA_PROD.map(SEM),
-            etiquetas, min:num[0], max:num[num.length-1]};
+    return Object.assign({tipo:'mag', unidad:m.unidad,
+                          min:num[0], max:num[num.length-1]},
+        cuantiles(num, RAMPA_PROD, v => cosFmt(v, m)));
 }
 
 function cosColor(v, escala){
@@ -8283,11 +8580,1257 @@ function cosTablaSemanas(c, t0, meta){
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   CONTROL DE PLAGAS Y ENFERMEDADES
+
+   Dos monitoreos que comparten el cuartel y poco más, consolidados por
+   tools/build_pye.py en `pye_data.json`. NO se mezclan en un solo número:
+
+   · PLANTA — mensual, sobre el árbol, los 30 cuarteles, 14 plagas. La medida
+     es la INCIDENCIA: qué porcentaje de los árboles revisados tiene la plaga.
+     El monitoreador entrega además un nivel de alerta que resultó ser una
+     función determinista de la incidencia (comprobado sobre las 455 filas, sin
+     un solo solapamiento): Normal < 6 %, Bajo 6-10 %, Medio 10-20 %, Alto ≥ 20.
+     Esos cortes vienen en el JSON y son los que pinta el mapa, para que la
+     escala del mapa sea la MISMA que la del informe de campo y no una que el
+     mapa se inventó.
+
+   · FRUTO — semanal, en cosecha, sobre muestras de 50 frutos por cuartel,
+     contratista y mercado. La medida es el porcentaje de frutos con cada
+     defecto. Es un registro de CALIDAD, no de plagas: de sus 38 defectos sólo
+     11 son de plaga o enfermedad y el resto son fisiológicos o de manejo, así
+     que el selector los separa por clase y por defecto agrega sólo los de PyE.
+     Contar un golpe de sol como presión de plaga sería un error de lectura.
+
+   Un cuartel sin registro en el periodo no tiene presión cero: no se monitoreó.
+   Se pinta con el beige de ausencia, como el "sin riego" y el "sin cosecha".
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+let PYE = null;
+let pyePromesa = null;
+let pyeEstado = 'inicial';
+let PYE_SUBMODE = 'pye-planta';
+
+const PYE_NIVELES = ['normal', 'bajo', 'medio', 'alto'];
+const PYE_NIVEL_TOKEN = {normal:'--dat-pye-normal', bajo:'--dat-pye-bajo',
+                         medio:'--dat-pye-medio', alto:'--dat-pye-alto'};
+const PYE_NIVEL_ES = {normal:'Normal', bajo:'Bajo', medio:'Medio', alto:'Alto'};
+const RAMPA_PYE = ['--dat-pye-1','--dat-pye-2','--dat-pye-3','--dat-pye-4','--dat-pye-5'];
+const PYE_CLASE_TOKEN = {plaga:'--dat-pye-medio', enfermedad:'--dat-pye-alto',
+                         otro:'--dat-ha-3'};
+const PYE_CLASE_ES = {plaga:'Plaga', enfermedad:'Enfermedad', otro:'Otro defecto'};
+
+/* Métricas por fuente. La incidencia no aparece como métrica aparte de la
+   alerta porque son el mismo número con distinto vestido: la alerta ES la
+   incidencia cortada por los umbrales del informe. */
+const METRICAS_PYE = {
+    planta: [
+        {id:'alerta', es:'Nivel de alerta', en:'Alert level', tipo:'nivel',
+         nota:'Incidencia cortada por los umbrales del informe de campo.'},
+        {id:'n_alertas', es:'Plagas en alerta', en:'Pests on alert', tipo:'mag',
+         unidad:'plagas', dec:0,
+         nota:'Cuántas plagas distintas llegaron a Medio o Alto en el periodo.'},
+        {id:'persistencia', es:'Persistencia de la alerta', en:'Alert persistence',
+         tipo:'mag', unidad:'%', dec:0,
+         nota:'En qué proporción de los meses monitoreados el cuartel estuvo en Medio o Alto. Sobre una ventana larga, la peor lectura satura y esto no.'},
+        {id:'abundancia', es:'Nivel de abundancia', en:'Abundance level',
+         tipo:'mag', unidad:'', dec:3,
+         nota:'Índice de densidad del monitoreo, independiente de la incidencia.'}
+    ],
+    fruto: [
+        {id:'pct', es:'% de frutos afectados', en:'% of fruit affected',
+         tipo:'mag', unidad:'%', dec:2,
+         nota:'Sobre los frutos evaluados en el periodo, a 50 por muestra.'},
+        {id:'frutos', es:'Frutos afectados', en:'Fruit affected', tipo:'mag',
+         unidad:'frutos', dec:0},
+        {id:'n_defectos', es:'Defectos distintos', en:'Distinct defects',
+         tipo:'mag', unidad:'', dec:0}
+    ]
+};
+
+async function cargarPye(){
+    if(PYE) return PYE;
+    if(!pyePromesa){
+        pyeEstado = 'cargando';
+        pyePromesa = loadDataset('pye', './pye_data.json').then(j => {
+            PYE = j;
+            pyeEstado = j ? 'listo' : 'error';
+            return j;
+        });
+    }
+    return pyePromesa;
+}
+
+function pyeFuente(){ return currentMode === 'pye-fruto' ? 'fruto' : 'planta'; }
+function pyeBloque(){ return PYE ? PYE[pyeFuente()] : null; }
+function pyeCuartel(cid){ return (PYE && PYE.cuarteles[cid]) || null; }
+
+/* Los dos bloques hablan de periodos distintos —meses y semanas— y todo el
+   resto del código sólo necesita {id, etiqueta}. Se normaliza acá una vez. */
+function pyePeriodos(){
+    const b = pyeBloque();
+    if(!b) return [];
+    if(pyeFuente() === 'planta')
+        return b.meses.map(m => ({id:m.id, es:m.es, en:m.en, n:m.n,
+                                  cuarteles:m.cuarteles, extra:m.plagas}));
+    return b.semanas.map(w => ({id:String(w.n), es:`${t('Semana')} ${w.n}`,
+        en:`Week ${w.n}`, n:w.muestras, cuarteles:w.cuarteles,
+        extra:w.frutos, desde:w.desde, hasta:w.hasta}));
+}
+function pyePeriodoEtiqueta(p){ return p ? (LANG === 'en' ? p.en : p.es) : ''; }
+function pyePeriodoActivo(){
+    const ps = pyePeriodos();
+    if(!ps.length) return null;
+    const hay = ps.find(p => p.id === S.pye.periodo);
+    return hay ? hay.id : ps[ps.length - 1].id;
+}
+function pyeVentanaIds(){
+    const ps = pyePeriodos().map(p => p.id);
+    if(S.pye.ventana === 'temporada') return ps;
+    const a = pyePeriodoActivo();
+    return a == null ? ps : ps.filter(x => x === a);
+}
+function pyeVentanaTexto(){
+    const ps = pyePeriodos();
+    if(!ps.length) return '';
+    if(S.pye.ventana === 'temporada')
+        return `${pyePeriodoEtiqueta(ps[0])} – ${pyePeriodoEtiqueta(ps[ps.length-1])}`;
+    const p = ps.find(x => x.id === pyePeriodoActivo());
+    return pyePeriodoEtiqueta(p) + (p && p.desde
+        ? ` · ${fmtCorta(p.desde)}${p.hasta && p.hasta !== p.desde ? ' – ' + fmtCorta(p.hasta) : ''}` : '');
+}
+
+/* Índice: se recorre el JSON una vez y se deja todo agrupado. Son 455 y 1.100
+   registros, así que cabe entero en memoria y evita recorrerlo en cada
+   repintado, que es lo que pasa al mover el calendario. */
+let PYE_IDX = null;
+function pyeIdx(){
+    if(PYE_IDX) return PYE_IDX;
+    // Sin datos NO se memoriza: la pestaña pinta una vez antes de que llegue el
+    // JSON, y cachear el índice vacío en ese primer pintado dejaba el mapa en
+    // gris para siempre aunque el fetch terminara bien.
+    if(!PYE) return {planta:null, fruto:null};
+    PYE_IDX = {planta:null, fruto:null};
+
+    if(PYE.planta){
+        const porC = new Map();          // cuartel -> periodo -> plaga -> reg
+        const porPlaga = new Map();      // plaga -> periodo -> [regs]
+        PYE.planta.registros.forEach(r => {
+            if(!porC.has(r.c)) porC.set(r.c, new Map());
+            const mc = porC.get(r.c);
+            if(!mc.has(r.m)) mc.set(r.m, new Map());
+            mc.get(r.m).set(r.p, r);
+            if(!porPlaga.has(r.p)) porPlaga.set(r.p, new Map());
+            const mp = porPlaga.get(r.p);
+            if(!mp.has(r.m)) mp.set(r.m, []);
+            mp.get(r.m).push(r);
+        });
+        PYE_IDX.planta = {porC, porPlaga,
+            cat: new Map(PYE.planta.plagas.map(p => [p.id, p]))};
+    }
+    if(PYE.fruto){
+        const porC = new Map();          // cuartel -> semana -> [indices]
+        PYE.fruto.muestras.forEach((m, i) => {
+            if(!porC.has(m.c)) porC.set(m.c, new Map());
+            const mc = porC.get(m.c);
+            const k = String(m.s);
+            if(!mc.has(k)) mc.set(k, []);
+            mc.get(k).push(i);
+        });
+        const porMuestra = new Map();    // indice de muestra -> [registros]
+        PYE.fruto.registros.forEach(r => {
+            if(!porMuestra.has(r.mi)) porMuestra.set(r.mi, []);
+            porMuestra.get(r.mi).push(r);
+        });
+        PYE_IDX.fruto = {porC, porMuestra,
+            cat: new Map(PYE.fruto.defectos.map(d => [d.id, d]))};
+    }
+    return PYE_IDX;
+}
+
+function pyeCatalogo(){
+    const b = pyeBloque();
+    if(!b) return [];
+    return pyeFuente() === 'planta' ? b.plagas : b.defectos;
+}
+function pyeAgente(id){
+    const ix = pyeIdx()[pyeFuente()];
+    return ix ? ix.cat.get(id) || null : null;
+}
+function pyeNombre(a){ return a ? (LANG === 'en' ? a.en : a.es) : ''; }
+
+/* El conjunto de agentes que cuenta el agregado. `null` significa "todo lo que
+   es plaga o enfermedad": en Fruto eso deja fuera los 27 defectos fisiológicos,
+   que es lo correcto en una pestaña de PyE. */
+function pyeSeleccion(){
+    if(S.pye.plaga && S.pye.plaga !== '*pye' && S.pye.plaga !== '*todos')
+        return new Set([S.pye.plaga]);
+    const cat = pyeCatalogo();
+    if(S.pye.plaga === '*todos') return new Set(cat.map(a => a.id));
+    return new Set(cat.filter(a => a.clase !== 'otro').map(a => a.id));
+}
+
+function pyeMetricas(){ return METRICAS_PYE[pyeFuente()]; }
+function pyeMetrica(){
+    const ms = pyeMetricas();
+    return ms.find(m => m.id === S.pye.metrica) || ms[0];
+}
+
+function pyeNivelDe(inc){
+    if(inc == null) return null;
+    const ns = (PYE && PYE.planta && PYE.planta.niveles) || [];
+    for(const n of ns)
+        if(inc >= n.min && (n.max == null || inc < n.max)) return n.id;
+    return ns.length ? ns[ns.length-1].id : null;
+}
+function pyeNivelIdx(n){ return PYE_NIVELES.indexOf(n); }
+
+/* ── Valores por cuartel ────────────────────────────────────────────────── */
+function pyeValores(){
+    const out = new Map();
+    const ix = pyeIdx()[pyeFuente()];
+    if(!ix) return out;
+    const dentro = new Set(pyeVentanaIds());
+    const sel = pyeSeleccion();
+
+    if(pyeFuente() === 'planta'){
+        ix.porC.forEach((porMes, cid) => {
+            let peor = null, incMax = null, nLect = 0, abMax = null;
+            const agentes = new Map();     // plaga -> {i, a, m, n}
+            const mesesVistos = new Set(), mesesEnAlerta = new Set();
+            porMes.forEach((porPlaga, mes) => {
+                if(!dentro.has(mes)) return;
+                porPlaga.forEach((r, pid) => {
+                    if(!sel.has(pid)) return;
+                    nLect++;
+                    mesesVistos.add(mes);
+                    if(pyeNivelIdx(r.a) >= 2) mesesEnAlerta.add(mes);
+                    if(incMax == null || r.i > incMax){ incMax = r.i; peor = pid; }
+                    if(r.ab != null && (abMax == null || r.ab > abMax)) abMax = r.ab;
+                    const prev = agentes.get(pid);
+                    if(!prev || r.i > prev.i) agentes.set(pid, {i:r.i, a:r.a, m:mes, ab:r.ab});
+                });
+            });
+            if(!nLect) return;
+            const nAlertas = [...agentes.values()]
+                .filter(x => pyeNivelIdx(x.a) >= 2).length;
+            out.set(cid, {
+                inc: incMax, nivel: pyeNivelDe(incMax), peor, n: nLect,
+                nAlertas, ab: abMax, agentes,
+                meses: mesesVistos.size, mesesAlerta: mesesEnAlerta.size,
+                persistencia: mesesVistos.size
+                    ? mesesEnAlerta.size / mesesVistos.size * 100 : null,
+                agentesOrden: [...agentes.entries()].sort((a,b) => b[1].i - a[1].i)
+            });
+        });
+        return out;
+    }
+
+    ix.porC.forEach((porSem, cid) => {
+        let ev = 0, af = 0, nm = 0;
+        const agentes = new Map();
+        porSem.forEach((idxs, sem) => {
+            if(!dentro.has(sem)) return;
+            idxs.forEach(i => {
+                const m = PYE.fruto.muestras[i];
+                ev += m.n; nm++;
+                (ix.porMuestra.get(i) || []).forEach(r => {
+                    if(!sel.has(r.d)) return;
+                    af += r.n;
+                    agentes.set(r.d, (agentes.get(r.d) || 0) + r.n);
+                });
+            });
+        });
+        if(!nm) return;
+        const orden = [...agentes.entries()].sort((a,b) => b[1] - a[1]);
+        out.set(cid, {
+            ev, af, nm, pct: ev ? af / ev * 100 : 0,
+            nDefectos: agentes.size, peor: orden.length ? orden[0][0] : null,
+            agentes, agentesOrden: orden
+        });
+    });
+    return out;
+}
+
+function pyeValor(d, m){
+    if(!d) return null;
+    m = m || pyeMetrica();
+    switch(m.id){
+        case 'alerta':     return d.inc;
+        case 'n_alertas':  return d.nAlertas;
+        case 'persistencia': return d.persistencia;
+        case 'abundancia': return d.ab;
+        case 'pct':        return d.pct;
+        case 'frutos':     return d.af;
+        case 'n_defectos': return d.nDefectos;
+    }
+    return null;
+}
+function pyeFmt(v, m){
+    m = m || pyeMetrica();
+    if(v == null || Number.isNaN(v)) return '—';
+    if(m.id === 'alerta') return `${fmtDec(v, 1)} %`;
+    if(m.id === 'pct') return `${fmtDec(v, 2)} %`;
+    if(m.id === 'persistencia') return `${fmtDec(v, 0)} %`;
+    return fmtDec(v, m.dec || 0);
+}
+
+/* Cortes por cuantiles, con los empates colapsados. Un parámetro donde la
+   mitad de las unidades comparte valor —la persistencia de la alerta llega a
+   100 % en 27 de 30 cuarteles— generaba bandas idénticas y vacías. Devuelve
+   tantos colores como bandas reales queden, repartidos por la rampa. */
+function cuantiles(num, rampa, fmtFn){
+    const k = rampa.length, cortes = [];
+    for(let i = 1; i < k; i++){
+        const c = num[Math.floor(i * num.length / k)];
+        if(!cortes.length || c > cortes[cortes.length-1]) cortes.push(c);
+    }
+    const nb = cortes.length + 1;
+    const colores = nb === k ? rampa.map(SEM)
+        : Array.from({length:nb}, (_, i) =>
+            SEM(rampa[nb === 1 ? rampa.length-1 : Math.round(i * (k-1) / (nb-1))]));
+    const etiquetas = [];
+    for(let i = 0; i < nb; i++){
+        const lo = i === 0 ? num[0] : cortes[i-1];
+        const hi = i === nb-1 ? num[num.length-1] : cortes[i];
+        etiquetas.push(lo === hi ? fmtFn(lo) : `${fmtFn(lo)} – ${fmtFn(hi)}`);
+    }
+    return {cortes, colores, etiquetas};
+}
+
+/* ── Escala ─────────────────────────────────────────────────────────────
+   La alerta usa los cortes del informe de campo, no unos propios: es el punto
+   entero de esta pestaña. El resto usa cuantiles de lo que hay en la ventana,
+   porque el % de frutos dañados de una semana y el de la temporada difieren en
+   un orden de magnitud. */
+function pyeEscala(vals){
+    const m = pyeMetrica();
+    if(m.tipo === 'nivel'){
+        const ns = (PYE && PYE.planta && PYE.planta.niveles) || [];
+        return {
+            tipo:'nivel',
+            cortes: ns.slice(1).map(n => n.min),
+            colores: ns.map(n => SEM(PYE_NIVEL_TOKEN[n.id])),
+            claves: ns.map(n => n.id),
+            etiquetas: ns.map(n => `${t(n.es)} · `
+                + (n.max == null ? `≥ ${fmtDec(n.min,0)} %`
+                   : `${fmtDec(n.min,0)} – ${fmtDec(n.max,0)} %`))
+        };
+    }
+    const num = [...vals.values()].map(d => pyeValor(d, m))
+        .filter(v => v != null && !Number.isNaN(v) && v > 0).sort((a,b) => a - b);
+    if(!num.length)
+        return {tipo:'mag', cortes:[], colores:RAMPA_PYE.map(SEM), etiquetas:[], vacia:true};
+    return Object.assign({tipo:'mag'},
+        cuantiles(num, RAMPA_PYE, v => pyeFmt(v, m)));
+}
+function pyeColor(v, escala){
+    if(v == null || Number.isNaN(v)) return SEM('--dat-sin-monitoreo');
+    let i = 0;
+    while(i < escala.cortes.length && v >= escala.cortes[i]) i++;
+    return escala.colores[i];
+}
+function pyeChip(nivel, texto){
+    if(!nivel) return `<span class="pye-chip sin">${esc(texto || t('Sin registro'))}</span>`;
+    return `<span class="pye-chip ${nivel}">${esc(texto || t(PYE_NIVEL_ES[nivel]))}</span>`;
+}
+
+/* ── Panel de control ───────────────────────────────────────────────────── */
+
+function renderPyeControles(){
+    if(!document.getElementById('ctrlPye')) return;
+    const sub = document.getElementById('pyeSubtitulo');
+    if(!PYE){
+        if(sub) sub.textContent = t(pyeEstado === 'error'
+            ? 'No se pudo cargar' : 'Cargando datos del predio…');
+        return;
+    }
+    const fuente = pyeFuente();
+    const b = pyeBloque();
+    document.querySelectorAll('#pyeFuentes button').forEach(x =>
+        x.classList.toggle('active', x.dataset.v === fuente));
+    document.querySelectorAll('#pyeVentanas button').forEach(x =>
+        x.classList.toggle('active', x.dataset.v === S.pye.ventana));
+
+    if(sub) sub.textContent = fuente === 'planta'
+        ? `${t('Monitoreo mensual sobre el árbol')} · ${plural(b.n_registros, 'registro', 'registros')}`
+        : `${t('Control de calidad en cosecha')} · `
+          + `${plural(b.muestras.length, 'muestra', 'muestras')} · `
+          + `${fmt(b.muestras.reduce((a,m) => a + m.n, 0), 0)} ${t('frutos')}`;
+
+    const lblP = document.getElementById('pyePeriodoLabel');
+    if(lblP) lblP.textContent = t(fuente === 'planta' ? 'Presión por mes' : 'Presión por semana');
+    const lblAg = document.getElementById('lblPyePlaga');
+    if(lblAg) lblAg.textContent = t(fuente === 'planta' ? 'Plaga' : 'Defecto');
+
+    // Selector de plaga o defecto, agrupado por clase.
+    const cat = pyeCatalogo();
+    const sel = document.getElementById('selPyePlaga');
+    if(sel){
+        const grupos = ['plaga','enfermedad','otro'].map(cl => {
+            const ops = cat.filter(a => a.clase === cl).map(a =>
+                `<option value="${esc(a.id)}"${a.id === S.pye.plaga ? ' selected' : ''}>`
+                + `${esc(pyeNombre(a))} (${fuente === 'planta' ? a.cuarteles + ' ' + t('cuart.') : fmt(a.frutos,0)})`
+                + `</option>`).join('');
+            return ops ? `<optgroup label="${esc(t(PYE_CLASE_ES[cl]))}">${ops}</optgroup>` : '';
+        }).join('');
+        sel.innerHTML =
+            `<option value=""${!S.pye.plaga ? ' selected' : ''}>`
+            + `${t('Plagas y enfermedades')}</option>`
+            + (cat.some(a => a.clase === 'otro')
+                ? `<option value="*todos"${S.pye.plaga === '*todos' ? ' selected' : ''}>`
+                  + `${t('Todos los defectos')}</option>` : '')
+            + grupos;
+    }
+
+    const selM = document.getElementById('selPyeMetrica');
+    if(selM) selM.innerHTML = pyeMetricas().map(m =>
+        `<option value="${m.id}"${m.id === pyeMetrica().id ? ' selected' : ''}>`
+        + `${esc(t(m[LANG] || m.es))}</option>`).join('');
+
+    const lbl = document.getElementById('pyeVentanaLabel');
+    if(lbl){
+        const ps = pyePeriodos();
+        const a = ps.find(x => x.id === pyePeriodoActivo());
+        lbl.innerHTML = S.pye.ventana === 'temporada'
+            ? `<div>${esc(t('Todo el registro'))}</div>`
+              + `<div class="cv-sub">${esc(pyeVentanaTexto())}</div>`
+            : `<div>${esc(pyePeriodoEtiqueta(a))}</div>`
+              + `<div class="cv-sub">${a ? plural(a.cuarteles, 'cuartel', 'cuarteles') : ''}`
+              + `${a && a.desde ? ' · ' + esc(fmtCorta(a.desde)) : ''}</div>`;
+    }
+    document.querySelectorAll('#ctrlPye .riego-nav button').forEach(x =>
+        x.disabled = S.pye.ventana === 'temporada');
+
+    renderPyePeriodos();
+
+    const st = document.getElementById('pyeStatus');
+    if(st){
+        const vals = window._valsPye || pyeValores();
+        const total = feats('cuarteles').length;
+        st.className = 'riego-status';
+        st.innerHTML = `${vals.size} ${t('de')} ${total} ${t('cuarteles con monitoreo en la ventana')}`;
+    }
+}
+
+/* Franja de periodos: cuánta presión hubo en cada mes o semana, apilada por
+   nivel de alerta (Planta) o por clase de defecto (Fruto). Es información y
+   control a la vez, igual que la franja de semanas de Cosecha. */
+function renderPyePeriodos(){
+    const cont = document.getElementById('pyePeriodos');
+    if(!cont) return;
+    const ps = pyePeriodos();
+    if(!ps.length){ cont.innerHTML = ''; return; }
+    const series = pyeSeriePeriodos();
+    const pico = Math.max(...series.map(s => s.total), 1);
+    const dentro = new Set(pyeVentanaIds());
+    const activo = pyePeriodoActivo();
+    const cada = Math.max(1, Math.ceil(ps.length / 8));
+
+    cont.innerHTML = series.map((s, i) => {
+        const h = Math.max(2, Math.round(52 * s.total / pico));
+        const segs = s.partes.map(p => p.v
+            ? `<i style="height:${(h * p.v / s.total).toFixed(2)}px;background:${SEM(p.token)}"></i>`
+            : '').join('');
+        const clases = ['pye-per'];
+        if(!dentro.has(s.id)) clases.push('fuera');
+        if(S.pye.ventana !== 'temporada' && s.id === activo) clases.push('activa');
+        return `<button type="button" class="${clases.join(' ')}" `
+             + `data-tip="${tipAttr(pyeTipPeriodo(s))}" `
+             + `aria-label="${esc(s.etiqueta)}" onclick="setPyePeriodo('${esc(s.id)}')">`
+             + `<div class="pye-per-bar">${segs}</div>`
+             + `<span class="pye-per-n">${i % cada === 0 || s.id === activo ? esc(s.corta) : ''}</span>`
+             + `</button>`;
+    }).join('');
+}
+
+/* Serie por periodo del predio entero. En Planta cuenta lecturas por nivel de
+   alerta; en Fruto suma frutos afectados por clase. Las dos responden lo
+   mismo: cuánta presión hubo, y de qué tipo. */
+function pyeSeriePeriodos(){
+    const ix = pyeIdx()[pyeFuente()];
+    const ps = pyePeriodos();
+    if(!ix) return [];
+    const sel = pyeSeleccion();
+
+    if(pyeFuente() === 'planta'){
+        return ps.map(p => {
+            const cuenta = {normal:0, bajo:0, medio:0, alto:0};
+            let inc = 0, n = 0, cu = new Set();
+            ix.porC.forEach((porMes, cid) => {
+                const pm = porMes.get(p.id);
+                if(!pm) return;
+                pm.forEach((r, pid) => {
+                    if(!sel.has(pid)) return;
+                    cuenta[r.a] = (cuenta[r.a] || 0) + 1;
+                    inc += r.i; n++; cu.add(cid);
+                });
+            });
+            return {
+                id:p.id, etiqueta:pyePeriodoEtiqueta(p), corta:p.id.slice(5),
+                total: n, cuarteles: cu.size, media: n ? inc/n : 0,
+                cuenta,
+                partes: PYE_NIVELES.map(k => ({k, v:cuenta[k] || 0,
+                                               token:PYE_NIVEL_TOKEN[k]}))
+            };
+        });
+    }
+    return ps.map(p => {
+        let ev = 0, af = 0; const porClase = {plaga:0, enfermedad:0, otro:0};
+        const cu = new Set();
+        ix.porC.forEach((porSem, cid) => {
+            const idxs = porSem.get(p.id);
+            if(!idxs) return;
+            cu.add(cid);
+            idxs.forEach(i => {
+                ev += PYE.fruto.muestras[i].n;
+                (ix.porMuestra.get(i) || []).forEach(r => {
+                    if(!sel.has(r.d)) return;
+                    af += r.n;
+                    const a = ix.cat.get(r.d);
+                    porClase[(a && a.clase) || 'otro'] += r.n;
+                });
+            });
+        });
+        return {
+            id:p.id, etiqueta:pyePeriodoEtiqueta(p), corta:p.id,
+            total: af, cuarteles: cu.size, evaluados: ev,
+            media: ev ? af/ev*100 : 0, cuenta: porClase,
+            partes: ['plaga','enfermedad','otro'].map(k =>
+                ({k, v:porClase[k] || 0, token:PYE_CLASE_TOKEN[k]}))
+        };
+    });
+}
+
+function pyeTipPeriodo(s){
+    const planta = pyeFuente() === 'planta';
+    let html = `<div class="ch-tip-t">${esc(s.etiqueta)}</div>`
+        + `<div class="ch-tip-hr"></div>`;
+    if(!s.total && !s.cuarteles)
+        return html + `<div class="ch-tip-s">${t('Sin monitoreo en este periodo.')}</div>`;
+    html += `<div class="ch-tip-big">${planta
+        ? `${fmtDec(s.media,1)} %` : `${fmtDec(s.media,2)} %`}</div>`
+        + `<div class="ch-tip-s">${t(planta ? 'Incidencia media' : 'Frutos afectados')}</div>`;
+    html += (planta ? PYE_NIVELES : ['plaga','enfermedad','otro']).map(k => {
+        const v = s.cuenta[k] || 0;
+        if(!v) return '';
+        return `<div class="ch-tip-row"><i style="background:${SEM(planta ? PYE_NIVEL_TOKEN[k] : PYE_CLASE_TOKEN[k])}"></i>`
+            + `<span class="n">${esc(t(planta ? PYE_NIVEL_ES[k] : PYE_CLASE_ES[k]))}</span>`
+            + `<span class="v">${fmt(v, 0)}</span></div>`;
+    }).join('');
+    const pie = [plural(s.cuarteles, 'cuartel', 'cuarteles')];
+    if(!planta && s.evaluados) pie.push(`${fmt(s.evaluados,0)} ${t('frutos evaluados')}`);
+    if(planta && s.total) pie.push(`${s.total} ${t('lecturas')}`);
+    return html + `<div class="ch-tip-foot">${pie.join(' · ')}</div>`;
+}
+
+/* ── Setters ────────────────────────────────────────────────────────────── */
+function setPyePeriodo(id){
+    S.pye.periodo = id;
+    if(S.pye.ventana === 'temporada') S.pye.ventana = 'periodo';
+    pyeRefrescar();
+}
+function setPyeVentana(v){ S.pye.ventana = v; pyeRefrescar(); }
+function pasoPyePeriodo(paso){
+    const ps = pyePeriodos().map(p => p.id);
+    if(!ps.length) return;
+    const i = ps.indexOf(pyePeriodoActivo());
+    S.pye.periodo = ps[Math.max(0, Math.min(ps.length-1, (i < 0 ? ps.length-1 : i) + paso))];
+    pyeRefrescar();
+}
+function setPyePlaga(v){ S.pye.plaga = v || null; pyeRefrescar(); }
+function setPyeMetrica(v){ S.pye.metrica = v; pyeRefrescar(); }
+
+function pyeRefrescar(){
+    renderPyeControles();
+    repintar();
+    renderPanel();
+    renderStamp();
+    const pano = document.getElementById('pyePanorama');
+    if(pano && pano.classList.contains('visible')) abrirPyePanorama();
+    const mod = document.getElementById('pyeModal');
+    if(mod && mod.classList.contains('visible') && pyeModalCuartel)
+        abrirPyeModal(pyeModalCuartel);
+}
+
+/* ── Leyenda, métricas, tooltip y ficha de PyE ──────────────────────────── */
+
+function legendPye(activo){
+    if(!PYE) return `<div class="legend-label">${t('Control de PyE')}</div>`
+        + `<div class="sem-muted-xs">${t(pyeEstado === 'error'
+            ? 'No se pudo cargar' : 'Cargando datos del predio…')}</div>`;
+    const fuente = pyeFuente();
+    const m = pyeMetrica();
+    const vals = window._valsPye || pyeValores();
+    const escala = window._escalaPye || pyeEscala(vals);
+    const ag = S.pye.plaga && !S.pye.plaga.startsWith('*') ? pyeAgente(S.pye.plaga) : null;
+
+    const conteo = new Map();
+    vals.forEach(d => {
+        const v = pyeValor(d, m);
+        if(v == null) return;
+        let i = 0;
+        while(i < escala.cortes.length && v >= escala.cortes[i]) i++;
+        conteo.set(i, (conteo.get(i) || 0) + 1);
+    });
+    const filas = escala.colores.map((col, i) =>
+        `<div class="ket-lg-row"><span class="sw" style="background:${col}"></span>`
+        + `<span class="lb">${esc(escala.etiquetas[i] || '')}</span>`
+        + `<span class="ct">${conteo.get(i) || 0}</span></div>`).join('');
+    const sinDato = feats(activo).length - vals.size;
+
+    // Cabecera: qué monitoreo, qué periodo y sobre qué agente.
+    const b = pyeBloque();
+    const cab = `<div class="nut-prog">`
+        + `<div class="nut-prog-top"><span class="nut-lab">`
+        + `${t(fuente === 'planta' ? 'Planta' : 'Fruto')}</span>`
+        + `<span class="nut-prog-mat">${esc(pyeVentanaTexto())}</span></div>`
+        + `<div class="nut-prog-meta"><b>${esc(ag ? pyeNombre(ag)
+            : (S.pye.plaga === '*todos' ? t('Todos los defectos') : t('Plagas y enfermedades')))}</b>`
+        + ` · <b>${vals.size}</b> ${t('cuarteles con monitoreo').toLowerCase()}</div>`
+        + (fuente === 'fruto'
+            ? `<div class="nut-prog-meta">${fmt([...vals.values()].reduce((a,d) => a + d.ev, 0), 0)}`
+              + ` ${t('frutos evaluados')} · ${fmt([...vals.values()].reduce((a,d) => a + d.af, 0), 0)}`
+              + ` ${t('afectados')}</div>`
+            : `<div class="nut-prog-meta">${[...vals.values()].reduce((a,d) => a + d.n, 0)}`
+              + ` ${t('lecturas')} · ${b ? b.plagas.length : 0} ${t('plagas en el catálogo')}</div>`)
+        + `</div>`;
+
+    return cab
+        + `<div class="legend-label">${esc(t(m[LANG] || m.es))}</div>`
+        + filas
+        + (sinDato ? `<div class="ket-lg-row"><span class="sw" style="background:${SEM('--dat-sin-monitoreo')}"></span>`
+            + `<span class="lb">${t('sin monitoreo en la ventana')}</span><span class="ct">${sinDato}</span></div>` : '')
+        + `<div class="ket-lg-foot">`
+        + (m.nota ? `${esc(t(m.nota))}<br>` : '')
+        + (escala.tipo === 'nivel'
+            ? `${t('Cortes del informe de campo, no del mapa.')}<br>`
+            : `${t('Cortes por quintiles de lo que hay en la ventana.')}<br>`)
+        + `${t('Nivel')}: ${t('Cuartel')} · `
+        + `${t(fuente === 'planta' ? 'la peor lectura del periodo por cuartel.' : 'muestras de 50 frutos.')}`
+        + `</div>`;
+}
+
+function statsPye(){
+    const div = '<div class="stat-div"></div>';
+    if(!PYE) return `<div class="stat"><div class="num">—</div><div class="unit">`
+        + `${t('Cargando datos del predio…')}</div></div>`;
+    const vals = window._valsPye || pyeValores();
+    if(!vals.size) return `<div class="stat"><div class="num">—</div>`
+        + `<div class="unit">${t('Sin monitoreo en la ventana')}</div></div>`;
+    const total = feats('cuarteles').length;
+    const items = [];
+
+    if(pyeFuente() === 'planta'){
+        const enAlerta = [...vals.values()].filter(d => pyeNivelIdx(d.nivel) >= 2).length;
+        const altos = [...vals.values()].filter(d => d.nivel === 'alto').length;
+        const incs = [...vals.values()].map(d => d.inc).filter(v => v != null).sort((a,b) => a-b);
+        const peor = [...vals.entries()].sort((a,b) => b[1].inc - a[1].inc)[0];
+        // Plaga dominante: la que más cuarteles pone en alerta.
+        const porPlaga = new Map();
+        vals.forEach(d => d.agentes.forEach((x, pid) => {
+            if(pyeNivelIdx(x.a) < 2) return;
+            porPlaga.set(pid, (porPlaga.get(pid) || 0) + 1);
+        }));
+        const dom = [...porPlaga.entries()].sort((a,b) => b[1] - a[1])[0];
+        items.push(
+            stat(`${vals.size}<span class="sem-muted-xs"> / ${total}</span>`, t('Cuarteles monitoreados')),
+            stat(`${altos}<span class="sem-muted-xs"> / ${vals.size}</span>`, t('En alerta alta')),
+            stat(String(enAlerta), t('En alerta Medio o Alto')),
+            stat(`${fmtDec(incs[Math.floor(incs.length/2)], 1)}<span class="sem-muted-xs"> %</span>`,
+                 t('Incidencia mediana')),
+            stat(dom ? `<span style="font-size:12.5px">${esc(pyeNombre(pyeAgente(dom[0])))}</span>` : '—',
+                 `${t('Plaga dominante')}${dom ? ` · ${dom[1]} ${t('cuart.')}` : ''}`),
+            stat(peor ? `<span style="font-size:12.5px">${esc(peor[0])}</span>` : '—',
+                 `${t('Peor cuartel')}${peor ? ` · ${fmtDec(peor[1].inc,1)} %` : ''}`)
+        );
+    }else{
+        let ev = 0, af = 0, nm = 0;
+        vals.forEach(d => { ev += d.ev; af += d.af; nm += d.nm; });
+        const peor = [...vals.entries()].sort((a,b) => b[1].pct - a[1].pct)[0];
+        const porDef = new Map();
+        vals.forEach(d => d.agentes.forEach((v, id) => porDef.set(id, (porDef.get(id) || 0) + v)));
+        const dom = [...porDef.entries()].sort((a,b) => b[1] - a[1])[0];
+        items.push(
+            stat(`${vals.size}<span class="sem-muted-xs"> / ${total}</span>`, t('Cuarteles monitoreados')),
+            stat(fmt(nm, 0), t('Muestras')),
+            stat(fmt(ev, 0), t('Frutos evaluados')),
+            stat(`${fmtDec(ev ? af/ev*100 : 0, 2)}<span class="sem-muted-xs"> %</span>`,
+                 t('Frutos afectados')),
+            stat(dom ? `<span style="font-size:12.5px">${esc(pyeNombre(pyeAgente(dom[0])))}</span>` : '—',
+                 `${t('Defecto dominante')}${dom ? ` · ${fmt(dom[1],0)} ${t('frutos')}` : ''}`),
+            stat(peor ? `<span style="font-size:12.5px">${esc(peor[0])}</span>` : '—',
+                 `${t('Peor cuartel')}${peor ? ` · ${fmtDec(peor[1].pct,2)} %` : ''}`)
+        );
+    }
+    return items.join(div);
+}
+
+/* Lista de agentes de un cuartel, con su barra de incidencia y su pastilla.
+   Se usa en el tooltip, en la ficha y en el modal. */
+function pyeListaAgentes(d, max){
+    const planta = pyeFuente() === 'planta';
+    const filas = d.agentesOrden.slice(0, max || 99).map(([id, x]) => {
+        const ag = pyeAgente(id);
+        const v = planta ? x.i : (d.ev ? x / d.ev * 100 : 0);
+        const nivel = planta ? x.a : null;
+        const tope = planta ? 100 : Math.max(...d.agentesOrden.map(([,y]) => d.ev ? y/d.ev*100 : 0), 0.1);
+        const col = planta ? SEM(PYE_NIVEL_TOKEN[nivel])
+                           : SEM(PYE_CLASE_TOKEN[(ag && ag.clase) || 'otro']);
+        return `<div class="pye-row">`
+            + `<span class="nm">${esc(pyeNombre(ag) || id)}</span>`
+            + `<span class="vl">${planta ? fmtDec(v,1) + ' %' : fmt(x,0) + ' ' + t('frutos')}</span>`
+            + `<span class="bar"><i style="width:${Math.max(2, v/tope*100).toFixed(1)}%;background:${col}"></i></span>`
+            + `</div>`;
+    }).join('');
+    return `<div class="pye-lista">${filas}</div>`;
+}
+
+function tooltipPyeHTML(p, d){
+    const meta = pyeCuartel(p.id) || {};
+    const sub = [meta.variedades, `${fmtVal(p.ha)} ha`].filter(Boolean).join(' · ');
+    if(!d) return tt(esc(p.name || p.id), esc(sub), [],
+        t('Sin monitoreo en la ventana elegida.'));
+
+    const planta = pyeFuente() === 'planta';
+    const cabeza = planta
+        ? `${esc(p.name || p.id)} ${pyeChip(d.nivel)}`
+        : `${esc(p.name || p.id)} · <strong>${fmtDec(d.pct, 2)} %</strong>`;
+    const filas = planta
+        ? [[t('Peor lectura'), `${fmtDec(d.inc,1)} % · ${esc(pyeNombre(pyeAgente(d.peor)))}`],
+           [t('Plagas en alerta'), `${d.nAlertas} ${t('de')} ${d.agentes.size}`],
+           [t('Meses en alerta'), d.meses > 1 ? `${d.mesesAlerta} ${t('de')} ${d.meses}` : null],
+           [t('Lecturas'), d.n]]
+        : [[t('Frutos afectados'), `${fmt(d.af,0)} ${t('de')} ${fmt(d.ev,0)}`],
+           [t('Muestras'), d.nm],
+           [t('Defectos distintos'), d.nDefectos]];
+
+    return `<div id="ttPyeBlock">`
+        + `<div class="ht-head"><div class="ht-title-wrap"><div class="ht-name">${cabeza}</div></div></div>`
+        + (sub ? `<div class="ht-badge" style="margin-bottom:7px">${esc(sub)}</div>` : '')
+        + `<div style="margin:8px 0 2px">${pyeListaAgentes(d, 4)}</div>`
+        + `<div class="ket-tt-rows">`
+        + filas.filter(f => f[1] != null && f[1] !== '').map(f =>
+            `<div class="ket-tt-row"><span>${f[0]}</span><span>${f[1]}</span></div>`).join('')
+        + `</div>`
+        + `<button class="rt-cta" onclick="abrirPyeModal('${esc(p.id)}')">`
+        + `${t('Ver detalle del cuartel')}</button></div>`;
+}
+
+function fichaPye(p){
+    if(!PYE) return `<div class="ket-empty">${t('Cargando datos del predio…')}</div>`;
+    const meta = pyeCuartel(p.id) || {};
+    const vals = window._valsPye || pyeValores();
+    const d = vals.get(p.id);
+    const planta = pyeFuente() === 'planta';
+
+    if(!d){
+        return `<div class="ket-empty">${t(
+            (planta ? meta.planta : meta.fruto)
+            ? 'Sin monitoreo en la ventana elegida.'
+            : 'Este cuartel no aparece en este monitoreo.')}</div>`
+            + kv([[t('Variedades'), meta.variedades],
+                  [t('Superficie'), `${fmtVal(p.ha)} ha`]]);
+    }
+
+    let html = `<div class="pv-chart-card" style="display:flex;align-items:baseline;gap:10px">`
+        + `<div style="font-size:26px;font-weight:300;color:var(--sem-ink)">`
+        + (planta ? `${fmtDec(d.inc,1)}` : `${fmtDec(d.pct,2)}`) + `</div>`
+        + `<div class="sem-muted-xs">%</div>`
+        + `<div style="margin-left:auto">${planta ? pyeChip(d.nivel)
+            : `<span class="ket-chip">${fmt(d.af,0)} / ${fmt(d.ev,0)} ${t('frutos')}</span>`}</div>`
+        + `</div>`;
+
+    html += kv(planta
+        ? [[t('Periodo'), pyeVentanaTexto()],
+           [t('Peor plaga'), pyeNombre(pyeAgente(d.peor))],
+           [t('Plagas detectadas'), d.agentes.size],
+           [t('Plagas en alerta'), d.nAlertas],
+           [t('Meses en alerta'), d.meses > 1 ? `${d.mesesAlerta} ${t('de')} ${d.meses}` : null],
+           [t('Lecturas'), d.n],
+           [t('Variedades'), meta.variedades],
+           [t('Superficie'), `${fmtVal(p.ha)} ha`]]
+        : [[t('Periodo'), pyeVentanaTexto()],
+           [t('Muestras'), `${d.nm} · ${fmt(d.ev,0)} ${t('frutos')}`],
+           [t('Peor defecto'), pyeNombre(pyeAgente(d.peor))],
+           [t('Defectos distintos'), d.nDefectos],
+           [t('Variedades'), meta.variedades],
+           [t('Superficie'), `${fmtVal(p.ha)} ha`]]);
+
+    html += sect(t(planta ? 'Plagas del cuartel' : 'Defectos del cuartel'),
+                 pyeListaAgentes(d));
+
+    html += `<div style="margin-top:12px"><button class="riego-load-btn" `
+         + `onclick="abrirPyeModal('${esc(p.id)}')">`
+         + `<span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span>`
+         + `<span>${t('Ver detalle del cuartel')}</span></button></div>`;
+
+    // Ranking de cuarteles por la métrica activa.
+    const m = pyeMetrica();
+    const arr = [...vals.entries()].map(([id, x]) => [id, x, pyeValor(x, m)])
+        .filter(x => x[2] != null).sort((a, b) => b[2] - a[2]);
+    if(arr.length > 1){
+        const escala = window._escalaPye || pyeEscala(vals);
+        html += sect(`${t('Ranking')} · ${t(m[LANG] || m.es)}`,
+            `<div class="ket-rank">` + arr.map(([id, x, v]) =>
+                `<div class="ket-row${id === p.id ? ' active' : ''}" `
+                + `onclick="seleccionar('cuarteles','${esc(id)}',true)">`
+                + `<span class="sw" style="background:${pyeColor(v, escala)}"></span>`
+                + `<span class="nm">${esc((pyeCuartel(id) || {}).name || id)}</span>`
+                + `<span class="vl">${pyeFmt(v, m)}</span></div>`).join('')
+            + `</div>`);
+    }
+    return html;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GRÁFICOS DE PyE
+
+   Dos que el mapa no puede dar: la EVOLUCIÓN de cada plaga a lo largo del
+   registro —una plaga que sube tres meses seguidos importa más que una que
+   estuvo alta una vez— y el MAPA DE CALOR cuartel x plaga, que contesta de un
+   vistazo dónde está cada problema y qué cuarteles están limpios.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Serie por agente y periodo: incidencia media (Planta) o % de frutos
+   afectados (Fruto), sobre el predio o sobre un cuartel. */
+function pyeSerieAgente(agId, cid){
+    const ix = pyeIdx()[pyeFuente()];
+    const ps = pyePeriodos();
+    if(!ix) return [];
+    if(pyeFuente() === 'planta'){
+        return ps.map(p => {
+            let s = 0, n = 0;
+            ix.porC.forEach((porMes, c) => {
+                if(cid && c !== cid) return;
+                const pm = porMes.get(p.id);
+                const r = pm && pm.get(agId);
+                if(!r) return;
+                s += r.i; n++;
+            });
+            return {id:p.id, et:pyePeriodoEtiqueta(p), v:n ? s/n : null, n};
+        });
+    }
+    return ps.map(p => {
+        let ev = 0, af = 0;
+        ix.porC.forEach((porSem, c) => {
+            if(cid && c !== cid) return;
+            const idxs = porSem.get(p.id);
+            if(!idxs) return;
+            idxs.forEach(i => {
+                ev += PYE.fruto.muestras[i].n;
+                (ix.porMuestra.get(i) || []).forEach(r => { if(r.d === agId) af += r.n; });
+            });
+        });
+        return {id:p.id, et:pyePeriodoEtiqueta(p), v:ev ? af/ev*100 : null, n:ev};
+    });
+}
+
+/* Colores de las líneas del gráfico de evolución. Categórico: son identidades,
+   no magnitudes. Se reusa el set de equipos, que ya está validado, y se
+   extiende con el de plagas de San Gerardo cuando hay más de cinco. */
+const PYE_LINEAS = ['--dat-eq-1','--dat-eq-2','--dat-eq-3','--dat-eq-4','--dat-eq-5',
+                    '--dat-pest-acaros','--dat-pest-escamas','--dat-pest-conchuelas',
+                    '--dat-pest-trips','--dat-pest-chanchito','--dat-pest-pulgon-nogal',
+                    '--dat-pest-capachitos','--dat-pest-pulgon-avellano','--dat-pest-default'];
+
+/* Evolución de la presión: una línea por agente sobre el eje de periodos. En
+   Planta lleva de fondo las cuatro franjas de alerta, que es lo que convierte
+   una curva en una decisión. */
+function pyeChartEvolucion(series, opts){
+    opts = opts || {};
+    const ps = pyePeriodos();
+    if(ps.length < 2 || !series.length)
+        return `<div class="nut-evo-empty">${t('Se necesitan al menos dos periodos.')}</div>`;
+
+    const W = opts.w || 1180, H = opts.h || 330;
+    const ML = 46, MR = 168, MT = 14, MB = 34;
+    const planta = pyeFuente() === 'planta';
+    const vs = series.flatMap(s => s.pts.map(p => p.v)).filter(v => v != null);
+    let hi = Math.max(...vs, planta ? 25 : 1);
+    hi = hi * 1.08;
+    const x = i => ML + (W - ML - MR) * (ps.length === 1 ? 0.5 : i / (ps.length - 1));
+    const y = v => MT + (H - MT - MB) * (1 - v / hi);
+
+    // Franjas de alerta de fondo, sólo en Planta: son sus umbrales reales.
+    let franjas = '';
+    if(planta){
+        ((PYE.planta && PYE.planta.niveles) || []).forEach(n => {
+            const y0 = y(Math.min(n.max == null ? hi : n.max, hi));
+            const y1 = y(Math.min(n.min, hi));
+            if(y1 - y0 <= 0) return;
+            franjas += `<rect x="${ML}" y="${y0.toFixed(1)}" width="${W-ML-MR}" `
+                + `height="${(y1-y0).toFixed(1)}" fill="${SEM(PYE_NIVEL_TOKEN[n.id])}" opacity="0.13"/>`;
+        });
+    }
+
+    let lineas = '', puntos = '', leyenda = '';
+    series.forEach((s, k) => {
+        const col = SEM(PYE_LINEAS[k % PYE_LINEAS.length]);
+        // Los huecos cortan la línea: un mes sin monitoreo no es un cero, y
+        // unirlo dibujaría una caída que no ocurrió.
+        let d = '', abierto = false;
+        s.pts.forEach((p, i) => {
+            if(p.v == null){ abierto = false; return; }
+            d += `${abierto ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.v).toFixed(1)} `;
+            abierto = true;
+            puntos += `<circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="2.6" fill="${col}"/>`;
+        });
+        lineas += `<path d="${d.trim()}" fill="none" stroke="${col}" stroke-width="1.8" `
+            + `stroke-linejoin="round" stroke-linecap="round"/>`;
+        const ult = [...s.pts].reverse().find(p => p.v != null);
+        leyenda += `<g transform="translate(${W-MR+10},${MT + 6 + k*17})">`
+            + `<rect width="10" height="3" y="4" rx="1.5" fill="${col}"/>`
+            + `<text class="cc-tick" x="15" y="9">${esc(s.nombre.slice(0,18))}`
+            + `${ult ? ` · ${fmtDec(ult.v, planta ? 1 : 2)} %` : ''}</text></g>`;
+    });
+
+    // Zonas de captura: una por periodo, con todas las series de ese periodo.
+    const paso = ps.length > 1 ? (W - ML - MR) / (ps.length - 1) : (W - ML - MR);
+    const hits = ps.map((p, i) => {
+        let tip = `<div class="ch-tip-t">${esc(pyePeriodoEtiqueta(p))}</div>`
+            + `<div class="ch-tip-hr"></div>`;
+        const conDato = series.map((s, k) => [s, k, s.pts[i]]).filter(z => z[2] && z[2].v != null)
+            .sort((a, b) => b[2].v - a[2].v);
+        tip += conDato.length ? conDato.map(([s, k, pt]) =>
+            `<div class="ch-tip-row"><i style="background:${SEM(PYE_LINEAS[k % PYE_LINEAS.length])}"></i>`
+            + `<span class="n">${esc(s.nombre)}</span>`
+            + `<span class="v">${fmtDec(pt.v, planta ? 1 : 2)} %</span>`
+            + (planta ? `<span class="p">${esc(t(PYE_NIVEL_ES[pyeNivelDe(pt.v)]))}</span>` : '')
+            + `</div>`).join('')
+            : `<div class="ch-tip-s">${t('Sin monitoreo en este periodo.')}</div>`;
+        return `<rect class="ch-hit" x="${Math.max(ML, x(i) - paso/2).toFixed(1)}" y="${MT}" `
+            + `width="${Math.min(paso, W - MR - Math.max(ML, x(i)-paso/2)).toFixed(1)}" `
+            + `height="${(H-MT-MB).toFixed(1)}" data-tip="${tipAttr(tip)}" `
+            + `onclick="setPyePeriodo('${esc(p.id)}')"/>`;
+    }).join('');
+
+    let ticks = '';
+    [0, 0.5, 1].forEach(q => {
+        ticks += `<text class="cc-tick" x="${ML-6}" y="${(y(hi*q)+3.5).toFixed(1)}" `
+            + `text-anchor="end">${fmtDec(hi*q, planta ? 0 : 1)}</text>`;
+    });
+    const cada = Math.max(1, Math.ceil(ps.length / 12));
+    const xlabs = ps.map((p, i) => i % cada === 0
+        ? `<text class="cc-tick" x="${x(i).toFixed(1)}" y="${H-14}" text-anchor="middle">`
+          + `${esc(pyeFuente() === 'planta' ? p.id.slice(2) : p.id)}</text>` : '').join('');
+
+    return `<div class="cos-chart"><svg viewBox="0 0 ${W} ${H}" role="img" `
+        + `aria-label="${esc(t('Evolución de la presión'))}">`
+        + franjas
+        + `<line class="cc-axis" x1="${ML}" y1="${H-MB}" x2="${W-MR}" y2="${H-MB}"/>`
+        + `<line class="cc-axis" x1="${ML}" y1="${MT}" x2="${ML}" y2="${H-MB}"/>`
+        + lineas + puntos + ticks + xlabs + leyenda + hits
+        + `<text class="cc-tick" x="${ML-6}" y="${H-14}" text-anchor="end">%</text>`
+        + `</svg></div>`
+        + `<div class="cos-hint">${t(planta
+            ? 'Incidencia media del predio por plaga. Las franjas de fondo son los umbrales de alerta del informe. Clic en un mes para llevar el mapa ahí.'
+            : 'Porcentaje de frutos afectados por defecto. Clic en una semana para llevar el mapa ahí.')}</div>`;
+}
+
+/* Ranking de agentes: barra apilada por nivel de alerta (Planta) o por frutos
+   (Fruto). Contesta "qué plaga tengo" antes que "dónde". */
+function pyeChartRanking(){
+    const ix = pyeIdx()[pyeFuente()];
+    if(!ix) return '';
+    const dentro = new Set(pyeVentanaIds());
+    const planta = pyeFuente() === 'planta';
+    const filas = [];
+
+    if(planta){
+        const acum = new Map();
+        ix.porC.forEach(porMes => porMes.forEach((porPlaga, mes) => {
+            if(!dentro.has(mes)) return;
+            porPlaga.forEach((r, pid) => {
+                if(!acum.has(pid)) acum.set(pid, {n:0, inc:0, cuenta:{normal:0,bajo:0,medio:0,alto:0}, cu:new Set()});
+                const a = acum.get(pid);
+                a.n++; a.inc += r.i; a.cuenta[r.a]++; a.cu.add(r.c);
+            });
+        }));
+        const arr = [...acum.entries()].sort((a,b) =>
+            (b[1].cuenta.alto - a[1].cuenta.alto) || (b[1].inc/b[1].n - a[1].inc/a[1].n));
+        arr.forEach(([pid, a]) => {
+            const segs = PYE_NIVELES.map(k => a.cuenta[k]
+                ? `<i style="width:${(a.cuenta[k]/a.n*100).toFixed(1)}%;background:${SEM(PYE_NIVEL_TOKEN[k])}"></i>` : '').join('');
+            const tip = `<div class="ch-tip-t">${esc(pyeNombre(pyeAgente(pid)))}</div>`
+                + `<div class="ch-tip-hr"></div>`
+                + `<div class="ch-tip-big">${fmtDec(a.inc/a.n, 1)} %</div>`
+                + `<div class="ch-tip-s">${t('Incidencia media')}</div>`
+                + PYE_NIVELES.map(k => a.cuenta[k]
+                    ? `<div class="ch-tip-row"><i style="background:${SEM(PYE_NIVEL_TOKEN[k])}"></i>`
+                      + `<span class="n">${esc(t(PYE_NIVEL_ES[k]))}</span>`
+                      + `<span class="v">${a.cuenta[k]}</span></div>` : '').join('')
+                + `<div class="ch-tip-foot">${plural(a.cu.size, 'cuartel', 'cuarteles')} · `
+                + `${a.n} ${t('lecturas')}</div>`;
+            filas.push(`<div class="pye-rank-row" data-tip="${tipAttr(tip)}" `
+                + `style="cursor:pointer" onclick="setPyePlaga('${esc(pid)}')">`
+                + `<span class="nm">${esc(pyeNombre(pyeAgente(pid)))}</span>`
+                + `<span class="track">${segs}</span>`
+                + `<span class="vl">${fmtDec(a.inc/a.n,1)} %</span></div>`);
+        });
+    }else{
+        const acum = new Map();
+        let evTot = 0;
+        ix.porC.forEach(porSem => porSem.forEach((idxs, sem) => {
+            if(!dentro.has(sem)) return;
+            idxs.forEach(i => {
+                evTot += PYE.fruto.muestras[i].n;
+                (ix.porMuestra.get(i) || []).forEach(r => {
+                    if(!acum.has(r.d)) acum.set(r.d, {n:0, cu:new Set()});
+                    const a = acum.get(r.d);
+                    a.n += r.n; a.cu.add(PYE.fruto.muestras[i].c);
+                });
+            });
+        }));
+        const arr = [...acum.entries()].sort((a,b) => b[1].n - a[1].n);
+        const tope = arr.length ? arr[0][1].n : 1;
+        arr.forEach(([did, a]) => {
+            const ag = pyeAgente(did);
+            const col = SEM(PYE_CLASE_TOKEN[(ag && ag.clase) || 'otro']);
+            const tip = `<div class="ch-tip-t">${esc(pyeNombre(ag))}</div>`
+                + `<div class="ch-tip-s">${esc(t(PYE_CLASE_ES[(ag && ag.clase) || 'otro']))}</div>`
+                + `<div class="ch-tip-hr"></div>`
+                + `<div class="ch-tip-big">${fmtDec(evTot ? a.n/evTot*100 : 0, 2)} %</div>`
+                + `<div class="ch-tip-foot">${fmt(a.n,0)} ${t('frutos')} ${t('de')} ${fmt(evTot,0)} · `
+                + `${plural(a.cu.size, 'cuartel', 'cuarteles')}</div>`;
+            filas.push(`<div class="pye-rank-row" data-tip="${tipAttr(tip)}" `
+                + `style="cursor:pointer" onclick="setPyePlaga('${esc(did)}')">`
+                + `<span class="nm">${esc(pyeNombre(ag))}</span>`
+                + `<span class="track"><i style="width:${(a.n/tope*100).toFixed(1)}%;background:${col}"></i></span>`
+                + `<span class="vl">${fmtDec(evTot ? a.n/evTot*100 : 0, 2)} %</span></div>`);
+        });
+    }
+    if(!filas.length) return `<div class="nut-evo-empty">${t('Sin registros en la ventana.')}</div>`;
+    return `<div class="pye-rank">${filas.join('')}</div>`
+        + `<div class="cos-hint">${t('Clic en una fila para pintar el mapa con ese agente.')}</div>`;
+}
+
+/* Mapa de calor cuartel x agente. En Planta la celda es el nivel de alerta; en
+   Fruto es el % de frutos afectados sobre la rampa. El gris es "no se
+   monitoreó", que NO es lo mismo que "sin plaga". */
+function pyeChartHeatmap(){
+    const ix = pyeIdx()[pyeFuente()];
+    if(!ix) return '';
+    const dentro = new Set(pyeVentanaIds());
+    const planta = pyeFuente() === 'planta';
+    const vals = pyeValores();
+    if(!vals.size) return `<div class="nut-evo-empty">${t('Sin registros en la ventana.')}</div>`;
+
+    // Agentes ordenados por presencia, cuarteles por su peor lectura.
+    const agentes = pyeCatalogo()
+        .filter(a => [...vals.values()].some(d => d.agentes.has(a.id)))
+        .slice(0, 20);
+    const cuarteles = [...vals.keys()].sort((a, b) => {
+        const va = planta ? vals.get(b).inc - vals.get(a).inc
+                          : vals.get(b).pct - vals.get(a).pct;
+        return va || a.localeCompare(b);
+    });
+    const maxPct = Math.max(...[...vals.values()].flatMap(d =>
+        [...d.agentes.values()].map(v => d.ev ? v/d.ev*100 : 0)), 0.01);
+
+    const head = `<tr><th>${t('Cuartel')}</th>`
+        + agentes.map(a => `<th>${esc(pyeNombre(a))}</th>`).join('') + `</tr>`;
+    const filas = cuarteles.map(cid => {
+        const d = vals.get(cid);
+        return `<tr><th>${esc((pyeCuartel(cid) || {}).name || cid)}</th>`
+            + agentes.map(a => {
+                const x = d.agentes.get(a.id);
+                if(x === undefined) return `<td title="${esc(t('Sin registro'))}"></td>`;
+                const v = planta ? x.i : (d.ev ? x/d.ev*100 : 0);
+                const col = planta ? SEM(PYE_NIVEL_TOKEN[x.a])
+                                   : pyeColor(v, {cortes:[maxPct*.2,maxPct*.4,maxPct*.6,maxPct*.8],
+                                                  colores:RAMPA_PYE.map(SEM)});
+                const tip = `<div class="ch-tip-t">${esc((pyeCuartel(cid)||{}).name || cid)}</div>`
+                    + `<div class="ch-tip-s">${esc(pyeNombre(a))}</div>`
+                    + `<div class="ch-tip-hr"></div>`
+                    + `<div class="ch-tip-big">${planta ? fmtDec(x.i,1) + ' %' : fmt(x,0) + ' ' + t('frutos')}</div>`
+                    + (planta ? `<div class="ch-tip-row"><i style="background:${SEM(PYE_NIVEL_TOKEN[x.a])}"></i>`
+                        + `<span class="n">${esc(t(PYE_NIVEL_ES[x.a]))}</span></div>` : '')
+                    + (planta && x.m ? `<div class="ch-tip-foot">${esc(x.m)}</div>` : '');
+                return `<td class="tiene" style="background:${col}" data-tip="${tipAttr(tip)}" `
+                    + `onclick="seleccionar('cuarteles','${esc(cid)}',true)"></td>`;
+            }).join('') + `</tr>`;
+    }).join('');
+
+    return `<div class="pye-heat"><table><thead>${head}</thead><tbody>${filas}</tbody></table></div>`
+        + `<div class="cos-hint">${t('Gris = no se monitoreó ese cruce, que no es lo mismo que sin presencia. Clic en una celda para ir al cuartel.')}</div>`;
+}
+
+/* ── Modal Panorama ─────────────────────────────────────────────────────── */
+
+function abrirPyePanorama(){
+    if(!PYE) return;
+    ocultarTooltipYa();
+    const planta = pyeFuente() === 'planta';
+    const b = pyeBloque();
+    document.getElementById('pyePanoTitle').textContent =
+        `${t('Panorama de plagas y enfermedades')} · ${t(planta ? 'Planta' : 'Fruto')}`;
+    document.getElementById('pyePanoSub').textContent = pyeVentanaTexto()
+        + ` · ${pyePeriodos().length} ${LANG === 'en' ? (planta ? 'months' : 'weeks')
+                                                        : (planta ? 'meses' : 'semanas')}`
+        + ` · ${(planta ? b.plagas : b.defectos).length} ${t(planta ? 'plagas' : 'defectos')}`;
+
+    // Las líneas: los agentes seleccionados, o los seis de más presión.
+    const sel = pyeSeleccion();
+    const cat = pyeCatalogo().filter(a => sel.has(a.id));
+    const orden = planta ? cat.slice().sort((a,b2) => b2.n - a.n)
+                         : cat.slice().sort((a,b2) => b2.frutos - a.frutos);
+    const lista = (S.pye.plaga && !S.pye.plaga.startsWith('*')) ? orden : orden.slice(0, 6);
+    const series = lista.map(a => ({nombre: pyeNombre(a), id: a.id,
+                                    pts: pyeSerieAgente(a.id)}));
+
+    document.getElementById('pyePanoBody').innerHTML =
+        `<div class="pye-section-title">${t('Evolución de la presión por plaga')}</div>`
+        + pyeChartEvolucion(series)
+        + `<div class="pye-section-title">${t(planta ? 'Ranking de plagas' : 'Ranking de defectos')}</div>`
+        + pyeChartRanking()
+        + `<div class="pye-section-title">${t('Mapa de calor por cuartel')}</div>`
+        + pyeChartHeatmap();
+    document.getElementById('pyePanorama').classList.add('visible');
+}
+function closePyePanorama(){
+    ocultarChartTip();
+    document.getElementById('pyePanorama').classList.remove('visible');
+}
+
+/* ── Modal de un cuartel ────────────────────────────────────────────────── */
+
+let pyeModalCuartel = null;
+function abrirPyeModal(cid){
+    if(!PYE) return;
+    ocultarTooltipYa();
+    pyeModalCuartel = cid;
+    const meta = pyeCuartel(cid) || {};
+    const planta = pyeFuente() === 'planta';
+    const d = (window._valsPye || pyeValores()).get(cid);
+
+    document.getElementById('pyeModalTitle').textContent =
+        `${meta.name || cid}${meta.variedades ? ' · ' + meta.variedades : ''}`;
+    document.getElementById('pyeModalSub').textContent =
+        `${t(planta ? 'Monitoreo de planta' : 'Monitoreo de fruto')} · ${pyeVentanaTexto()}`;
+
+    const body = document.getElementById('pyeModalBody');
+    if(!d){
+        body.innerHTML = `<div class="ket-empty">${t('Sin monitoreo en la ventana elegida.')}</div>`;
+        document.getElementById('pyeModal').classList.add('visible');
+        return;
+    }
+
+    const kpis = (planta
+        ? [[t('Peor lectura'), fmtDec(d.inc, 1), '%'],
+           [t('Nivel'), t(PYE_NIVEL_ES[d.nivel]), ''],
+           [t('Plagas en alerta'), `${d.nAlertas}`, `/ ${d.agentes.size}`],
+           [t('Lecturas'), String(d.n), '']]
+        : [[t('Frutos afectados'), fmtDec(d.pct, 2), '%'],
+           [t('Frutos'), `${fmt(d.af,0)}`, `/ ${fmt(d.ev,0)}`],
+           [t('Muestras'), String(d.nm), ''],
+           [t('Defectos distintos'), String(d.nDefectos), '']]
+    ).map(([k, v, u]) =>
+        `<div class="pye-kpi"><div class="k">${esc(k)}</div>`
+        + `<div class="v">${esc(v)}${u ? `<span class="u">${esc(u)}</span>` : ''}</div></div>`).join('');
+
+    // Una línea por agente presente en el cuartel, sobre todo el registro.
+    const series = d.agentesOrden.slice(0, 8).map(([id]) =>
+        ({nombre: pyeNombre(pyeAgente(id)), id, pts: pyeSerieAgente(id, cid)}));
+
+    body.innerHTML = `<div class="pye-modal-kpis">${kpis}</div>`
+        + `<div class="pye-section-title">${t(planta ? 'Plagas del cuartel' : 'Defectos del cuartel')}</div>`
+        + pyeListaAgentes(d)
+        + `<div class="pye-section-title">${t('Evolución de la presión')}</div>`
+        + pyeChartEvolucion(series, {w:900, h:280})
+        + `<div class="pye-section-title">${t('Registro')}</div>`
+        + pyeTablaCuartel(cid);
+    document.getElementById('pyeModal').classList.add('visible');
+}
+function closePyeModal(){
+    ocultarChartTip();
+    pyeModalCuartel = null;
+    document.getElementById('pyeModal').classList.remove('visible');
+}
+
+function pyeTablaCuartel(cid){
+    const ix = pyeIdx()[pyeFuente()];
+    const planta = pyeFuente() === 'planta';
+    const ps = pyePeriodos();
+    const filas = [];
+
+    if(planta){
+        const porMes = ix.porC.get(cid);
+        if(!porMes) return `<div class="nut-evo-empty">${t('Sin registros.')}</div>`;
+        ps.forEach(p => {
+            const pm = porMes.get(p.id);
+            if(!pm) return;
+            [...pm.values()].sort((a,b) => b.i - a.i).forEach(r => {
+                filas.push(`<tr><td>${esc(pyePeriodoEtiqueta(p))}</td>`
+                    + `<td>${esc(pyeNombre(pyeAgente(r.p)))}</td>`
+                    + `<td>${esc(r.esp || '')}</td>`
+                    + `<td style="text-align:right">${r.pr} / ${r.n}</td>`
+                    + `<td style="text-align:right">${fmtDec(r.i,1)} %</td>`
+                    + `<td style="text-align:right">${r.ab != null ? fmtDec(r.ab,3) : '—'}</td>`
+                    + `<td>${pyeChip(r.a)}</td></tr>`);
+            });
+        });
+        return filas.length
+            ? `<div class="pye-events"><table class="pye-events-table"><thead><tr>`
+              + `<th>${t('Mes')}</th><th>${t('Plaga')}</th><th>${t('Especie')}</th>`
+              + `<th style="text-align:right">${t('Árboles')}</th>`
+              + `<th style="text-align:right">${t('Incidencia')}</th>`
+              + `<th style="text-align:right">${t('Abundancia')}</th>`
+              + `<th>${t('Alerta')}</th></tr></thead><tbody>${filas.join('')}</tbody></table></div>`
+            : `<div class="nut-evo-empty">${t('Sin registros.')}</div>`;
+    }
+
+    const porSem = ix.porC.get(cid);
+    if(!porSem) return `<div class="nut-evo-empty">${t('Sin registros.')}</div>`;
+    const sel = pyeSeleccion();
+    ps.forEach(p => {
+        const idxs = porSem.get(p.id);
+        if(!idxs) return;
+        idxs.forEach(i => {
+            const m = PYE.fruto.muestras[i];
+            const regs = (ix.porMuestra.get(i) || []).slice().sort((a,b) => b.n - a.n);
+            const total = regs.reduce((a,r) => a + r.n, 0);
+            const propios = regs.filter(r => sel.has(r.d));
+            const enSel = propios.reduce((a,r) => a + r.n, 0);
+            filas.push(`<tr><td>${p.id}</td><td>${esc(fmtCorta(m.f))}</td>`
+                + `<td>${esc(m.ct || '—')}</td>`
+                + `<td style="text-align:right">${m.n}</td>`
+                + `<td style="text-align:right"><strong>${fmtDec(enSel,1)}</strong>`
+                + `<span class="sem-muted-xs"> / ${fmtDec(total,1)}</span></td>`
+                + `<td>${regs.slice(0,5).map(r =>
+                        `<span${sel.has(r.d) ? '' : ' class="sem-muted-xs"'}>`
+                        + `${esc(pyeNombre(pyeAgente(r.d)))} (${fmtDec(r.n,1)})</span>`).join(', ')
+                       || '<span class="sem-muted-xs">' + t('sin defectos') + '</span>'}</td></tr>`);
+        });
+    });
+    return filas.length
+        ? `<div class="pye-events"><table class="pye-events-table"><thead><tr>`
+          + `<th>${t('Sem.')}</th><th>${t('Fecha')}</th><th>${t('Contratista')}</th>`
+          + `<th style="text-align:right">${t('Frutos')}</th>`
+          + `<th style="text-align:right">${t('Afectados')}</th>`
+          + `<th>${t('Defectos')}</th></tr></thead><tbody>${filas.join('')}</tbody></table></div>`
+          + `<div class="cos-hint">${t('En negrita, los frutos de la selección activa; en gris, el resto de los defectos de la muestra.')}</div>`
+        : `<div class="nut-evo-empty">${t('Sin registros.')}</div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    CONTROLES
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function switchMode(modo){
     currentMode = modo;
+    // La pestaña de PyE tiene dos fuentes que no se mezclan; el submodo se
+    // recuerda para que volver a la pestaña deje la que estaba mirando, igual
+    // que en Nutrición.
+    if(modo === 'pye-planta' || modo === 'pye-fruto'){
+        PYE_SUBMODE = modo;
+        // Métrica y agente son de la fuente: arrastrarlos al cambiar dejaba el
+        // mapa gris con un id que no existe en el otro catálogo.
+        const ms = METRICAS_PYE[modo === 'pye-fruto' ? 'fruto' : 'planta'];
+        if(!ms.some(x => x.id === S.pye.metrica)) S.pye.metrica = ms[0].id;
+        if(S.pye.plaga && !S.pye.plaga.startsWith('*') && PYE && !pyeAgente(S.pye.plaga))
+            S.pye.plaga = null;
+        S.pye.periodo = null;
+    }
     if(modo === 'foliares' || modo === 'suelo'){
         NUTRI_SUBMODE = modo;
         const grupo = modo === 'foliares' ? 'foliar' : 'suelo';
@@ -8311,8 +9854,11 @@ function switchMode(modo){
     document.body.classList.toggle('soil-active', modo === 'suelo');
     document.body.classList.toggle('riego-active', modo === 'riego');
     document.body.classList.toggle('cosecha-active', modo === 'cosecha');
+    const enPye = modo === 'pye-planta' || modo === 'pye-fruto';
+    document.body.classList.toggle('pye-active', enPye);
     if(modo !== 'riego') closeRiegoModal();
     if(modo !== 'cosecha'){ closeCosModal(); closeCosTemporadaModal(); }
+    if(!enPye){ closePyeModal(); closePyePanorama(); }
     ocultarTooltipYa();
     document.body.classList.toggle('ceres-active', modo === 'ceres');
     // El comparador es de Ceres: salir de la pestaña lo apaga en vez de dejar
@@ -8321,6 +9867,7 @@ function switchMode(modo){
     if(modo !== 'ceres' && celdasOn){ celdasOn = false; celFirma = null; }
     document.getElementById('ctrlGeneral').classList.toggle('visible', modo === 'general');
     document.getElementById('ctrlCosecha').classList.toggle('visible', modo === 'cosecha');
+    document.getElementById('ctrlPye').classList.toggle('visible', enPye);
     document.getElementById('ctrlRiego').classList.toggle('visible', modo === 'riego');
     document.getElementById('ctrlCeres').classList.toggle('visible', modo === 'ceres');
     document.getElementById('ctrlNutricion').classList.toggle('visible',
@@ -8330,6 +9877,17 @@ function switchMode(modo){
     // no en el load inicial, y se cachea en memoria hasta que se pida
     // "Actualizar". El mapa dibuja mientras tanto con el estado "cargando".
     if(modo === 'riego'){ renderRiegoCalendario(); cargarRiego(false); }
+    // pye_data.json son ~280 KB: mismo criterio que Cosecha y Ceres.
+    if(enPye){
+        renderPyeControles();
+        cargarPye().then(() => {
+            if(currentMode !== 'pye-planta' && currentMode !== 'pye-fruto') return;
+            const ms = pyeMetricas();
+            if(!ms.some(x => x.id === S.pye.metrica)) S.pye.metrica = ms[0].id;
+            renderPyeControles(); repintar(); renderPanel(); renderStamp();
+            renderLegend(); renderStats();
+        });
+    }
     // cosecha_data.json son ~190 KB: mismo criterio que Ceres, se pide al
     // entrar a la pestaña y no en el arranque.
     if(modo === 'cosecha'){
@@ -8414,7 +9972,8 @@ function setProf(v){ S.nut.prof = v || null; repintar(); renderPanel(); }
 function setCapa(capa, on){
     S.capas[capa] = on;
     if(capa === 'etiquetas'){
-        ['chkEtiquetas','chkEtiquetasNut','chkEtiquetasRiego','chkEtiquetasCeres','chkEtiquetasCos'].forEach(id => {
+        ['chkEtiquetas','chkEtiquetasNut','chkEtiquetasRiego','chkEtiquetasCeres',
+         'chkEtiquetasCos','chkEtiquetasPye'].forEach(id => {
             const el = document.getElementById(id); if(el) el.checked = on;
         });
     }
@@ -8486,6 +10045,7 @@ function poblarSelectores(soloDependientes){
     }
 
     if(COS) renderCosControles();
+    if(PYE) renderPyeControles();
 
     const selM = document.getElementById('selMetricaRiego');
     if(selM) selM.innerHTML = METRICAS_RIEGO.map(m =>

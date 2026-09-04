@@ -69,6 +69,7 @@ index.html                  ← TODO el mapa: HTML + CSS + JS en un archivo
 geo_data.json               ← geometría (generado)
 nutricion_data.json         ← análisis de suelo y foliares (generado)
 cosecha_data.json           ← cosecha por cuartel y semana (generado)
+pye_data.json               ← monitoreo de plagas y enfermedades (generado)
 ceres_data.json             ← vuelos de Ceres Imaging (generado)
 umbrales_nutricion.json     ← umbrales agronómicos — SE EDITA A MANO
 ceres_predio.json           ← identificadores de Ketcal en Ceres (descubierto)
@@ -77,6 +78,7 @@ data-version.json           ← cache-busting por dataset
 tools/kmz_to_geojson.py     ← Ketcal KMZ.kmz  → geo_data.json
 tools/build_nutricion.py    ← Excel + umbrales → nutricion_data.json
 tools/build_cosecha.py      ← planillas + KMZ  → cosecha_data.json
+tools/build_pye.py          ← monitoreos + KMZ  → pye_data.json
 tools/fetch_ceres.py        ← API de Ceres    → ceres_data.json
 .github/workflows/ceres.yml ← refresco semanal de Ceres
 
@@ -86,6 +88,8 @@ Ketcal KMZ.kmz                                       ← insumo
 Base_Datos_Suelos_Foliares_Ketcal_SEMBRADOR_v2.xlsx  ← insumo
 AGQ Labs …/  Laboquim …/  Analisis Suelos AgroLab/   ← informes de origen (PDF)
 datos_fuente/Base de datos Cosecha Ketcal_20xx.xlsx  ← insumo, NO versionado
+datos_fuente/Registro Monitoreo Fruto Ketcal 2026.xlsx  ← insumo, NO versionado
+datos_fuente/Ketcal - Registro Monitoreo Planta.xlsx    ← insumo, NO versionado
 ```
 
 `datos_fuente/` está en `.gitignore` a propósito. Las planillas de cosecha
@@ -101,7 +105,8 @@ viven en la carpeta compartida del portal; para regenerar hay que copiarlas a
 ```bash
 python tools/kmz_to_geojson.py
 python tools/build_nutricion.py
-python tools/build_cosecha.py "datos_fuente/*.xlsx"
+python tools/build_cosecha.py "datos_fuente/Base de datos Cosecha*.xlsx"
+python tools/build_pye.py
 python tools/fetch_ceres.py            # incremental; --full para rehacer todo
 ```
 
@@ -138,6 +143,127 @@ foliares. Cambiarlos es editar el JSON y volver a correr
 
 La escala relativa es deliberadamente morada, no verde/rojo: un umbral inventado
 se lee igual que uno validado y hace tomar decisiones equivocadas.
+
+---
+
+## Control de PyE: dos monitoreos que no se mezclan
+
+Son dos registros distintos, con distinta unidad de medida, distinta cadencia y
+distinta cobertura. Meterlos en un solo número habría sido cómodo y falso, así
+que la pestaña los separa como Nutrición separa foliar de suelo.
+
+| | Planta | Fruto |
+|---|---|---|
+| Archivo | `Ketcal - Registro Monitoreo Planta.xlsx` | `Registro Monitoreo Fruto Ketcal 2026.xlsx` |
+| Qué mide | **incidencia**: % de árboles revisados con la plaga | **% de frutos** con cada defecto |
+| Cadencia | mensual | semanal, en cosecha |
+| Periodos | 6 (ene → jul 2026, sin junio) | 8 (semanas 24–33) |
+| Cobertura | 30 cuarteles, 455 lecturas | 24 cuarteles, 178 muestras, 8.900 frutos |
+| Agentes | 14 grupos de plaga | 38 defectos, sólo 11 de plaga o enfermedad |
+
+### El cruce con la geometría
+
+Planta nombra los cuarteles por centro de costo — `L2-C1`, `L1-C8`,
+`Naranjos N1-C3`, `Tango M1-C2` — y Fruto por especie más número, como las
+planillas de cosecha. Los dos cruzan 1 a 1 con `LIM-C#` / `NAR-C#` / `MAN-C#`, y
+la partición por centro de costo calza con el cuadro de plantación: Limones 1
+son los cuarteles 7–11 y Limones 2 los 1–6 y 12–14, sin solapamiento.
+
+### La escala del mapa es la del informe, no una inventada
+
+El monitoreo entrega un `nivel_alerta` por lectura. Resultó ser una **función
+determinista de la incidencia**, comprobada sobre las 455 filas sin un solo
+solapamiento:
+
+| Nivel | Incidencia | n | mín – máx observado |
+|---|---|---|---|
+| Normal | < 6 % | 111 | 0,0 – 5,9 |
+| Bajo | 6 – 10 % | 63 | 6,0 – 9,8 |
+| Medio | 10 – 20 % | 78 | 10,0 – 19,4 |
+| Alto | ≥ 20 % | 203 | 20,0 – 100,0 |
+
+Esos cortes van en el JSON y son los que pinta el mapa. La leyenda lo dice:
+*"cortes del informe de campo, no del mapa"*. Si alguna vez el nivel declarado
+dejara de coincidir con el derivado, el build lo lista en `issues` en vez de
+elegir uno en silencio.
+
+### Cuatro decisiones sobre los datos
+
+1. **Fruto es un registro de calidad, no de plagas.** De sus 38 defectos, 27 son
+   fisiológicos o de manejo (golpe de sol, russet, bajo calibre, daño de tijera).
+   Se clasifican en plaga / enfermedad / otro y el selector **agrega sólo PyE por
+   defecto**. Contar un golpe de sol como presión de plaga sería un error de
+   lectura. El russet queda como `otro` a propósito: en cítricos puede ser
+   fisiológico o de ácaro y el registro no lo distingue.
+
+2. **La muestra son 50 frutos**, verificado: los 175 grupos donde el tamaño se
+   puede derivar de `frutos / %` dan 50 exacto. El denominador de cualquier
+   agregado es 50 × número de muestras, no el número de filas.
+
+3. **Los frutos no son enteros.** 768 de las 3.427 filas traen medios frutos
+   (0,5 · 3,5 · 6,5) porque la fila promedia dos submuestras. Truncar a entero
+   perdía 64 frutos repartidos por todos los defectos.
+
+4. **Se usa `BASE DE DATOS`, no `BD Ketcal `.** Esta última es una copia parcial
+   y vieja: 2.113 filas contra 3.427, semanas 24–27 contra 24–33, y 130 filas con
+   el mes 9 sobre fechas de junio y julio.
+
+Las incidencias que el build reporta: 25 filas de Fruto sin cuartel legible (48
+frutos afectados que quedan fuera del mapa) y 4 muestras sin ningún defecto con
+porcentaje, a las que se les asigna el tamaño estándar.
+
+### La pestaña
+
+Nivel **cuartel**, como Cosecha: ninguno de los dos monitoreos baja a sector.
+Un cuartel sin registro en la ventana **no tiene presión cero: no se monitoreó**,
+y se pinta con el beige de ausencia.
+
+La **franja de periodos** es el control central, como en Cosecha: una barra por
+mes o por semana, apilada por nivel de alerta (Planta) o por clase de defecto
+(Fruto), clicable para llevar el mapa ahí.
+
+**Métricas de Planta:**
+
+| Métrica | Qué pinta |
+|---|---|
+| Nivel de alerta | la peor lectura del periodo, cortada por los umbrales del informe |
+| Plagas en alerta | cuántas plagas distintas llegaron a Medio o Alto |
+| Persistencia de la alerta | en qué proporción de los meses monitoreados el cuartel estuvo en alerta |
+| Nivel de abundancia | el índice de densidad, que es una medida aparte de la incidencia |
+
+La **persistencia** existe por una razón concreta: sobre seis meses y con las 14
+plagas juntas, "la peor lectura" satura —29 de 30 cuarteles tocan Alto alguna
+vez— y deja de discriminar. Eso es cierto y la pestaña lo muestra, pero para
+decidir hace falta separar el cuartel que estuvo en alerta una vez del que
+estuvo siempre. Con una plaga concreta seleccionada, la persistencia se abre
+bien: Conchuela va de 25 % a 100 % entre sus 18 cuarteles.
+
+**Métricas de Fruto:** % de frutos afectados, frutos afectados y defectos
+distintos.
+
+### Los gráficos
+
+El botón **Panorama** abre los tres que el mapa no puede dar:
+
+1. **Evolución de la presión por plaga** — una línea por agente sobre el eje de
+   periodos, con las cuatro **franjas de alerta de fondo** en Planta: es lo que
+   convierte una curva en una decisión. Los huecos cortan la línea en vez de
+   unirla, porque un mes sin monitoreo no es un cero y unirlo dibujaría una
+   caída que no ocurrió. Clic en un periodo lleva el mapa ahí.
+2. **Ranking de plagas** — barra apilada por nivel de alerta, ordenada por
+   cuántas lecturas en Alto. Clic en una fila pinta el mapa con ese agente.
+3. **Mapa de calor cuartel × plaga** — 30 × 14 celdas con el nivel de alerta de
+   cada cruce. El gris es *no se monitoreó ese cruce*, que no es lo mismo que
+   *sin presencia*. Clic en una celda va al cuartel.
+
+Cada cuartel tiene además su modal: KPI, la lista de sus plagas con incidencia y
+pastilla de alerta, la evolución de cada una **en ese cuartel**, y el registro
+crudo — mes, plaga, especie observada, árboles con presencia sobre revisados,
+incidencia, abundancia y alerta.
+
+En la tabla de Fruto la columna "Afectados" muestra **los frutos de la selección
+activa en negrita sobre el total de la muestra**: los KPI cuentan sólo PyE y la
+tabla es el registro completo, y sin marcarlo se leían como una contradicción.
 
 ---
 
@@ -434,6 +560,10 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   ventana de temporada / acumulado / semana suelta, siete métricas, filtro por
   destino de la fruta, comparación entre temporadas y detalle semanal por
   cuartel. Ver la sección de abajo.
+- **Control de PyE** — dos monitoreos por cuartel: **planta** (mensual, 30
+  cuarteles, 14 plagas, con el nivel de alerta del informe de campo) y **fruto**
+  (semanal en cosecha, 178 muestras de 50 frutos, 38 defectos). Con evolución de
+  la presión por plaga, ranking y mapa de calor cuartel × plaga. Ver abajo.
 - **Nutrición** — subpestañas foliares / suelo, **6 programas de muestreo**
   (matriz × laboratorio), selector de profundidad para los que la tienen,
   filtro "sólo con evolución", pintado por banda de umbral, leyenda encabezada
