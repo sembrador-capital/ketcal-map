@@ -1306,6 +1306,7 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
 }
 .riego-modal-content { width:min(820px,calc(100vw - 40px)); }
 .cos-modal-content   { width:min(980px,calc(100vw - 36px)); }
+.cos-modal-content.ancho { width:min(1240px,calc(100vw - 36px)); }
 .agro-modal-content  { width:min(1120px,calc(100vw - 36px)); }
 .fin-modal-content   { width:min(940px,calc(100vw - 36px)); }
 .pest-modal-content  { width:min(980px,calc(100vw - 36px)); }
@@ -1351,6 +1352,10 @@ body.pest-active.dz-active .pest-legend { display:none !important; }
     border:var(--sem-border-hair); border-radius:var(--sem-radius); overflow:auto;
 }
 .cos-events { max-height:300px; }
+.cos-events-table tbody tr:hover { background:var(--sem-beige-wash); }
+.cos-events-table tbody tr.activa { background:var(--sem-navy-wash); }
+.cos-events-table tbody tr.activa td:first-child { color:var(--sem-navy); }
+.cos-events-table tbody tr.fuera { opacity:0.5; }
 .rm-events { max-height:220px; }
 .agro-events { max-height:52vh; }
 .rm-events-table, .cos-events-table, .agro-events-table, .fin-detail-table { width:100%; border-collapse:collapse; font-size:12.5px; }
@@ -2470,6 +2475,55 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 .cos-hint { font-size:10.5px; line-height:1.45; color:var(--sem-text-3);
     margin-top:6px; }
 
+/* ── Tooltip de gráfico ──────────────────────────────────────────────────
+   Separado del tooltip del mapa: aquel se posiciona contra el canvas de
+   Mapbox y estos viven en el panel lateral y dentro de modales, donde esas
+   coordenadas no significan nada. Va `fixed` sobre coordenadas de ventana y
+   por encima del modal, que es lo único que puede taparlo. */
+.ch-tip {
+    position:fixed; z-index:calc(var(--z-modal) + 1); pointer-events:none;
+    opacity:0; transition:opacity 0.12s;
+    background:var(--sem-surface); color:var(--sem-ink);
+    border:var(--sem-border-hair); border-radius:var(--sem-radius);
+    box-shadow:var(--sem-shadow-md); padding:9px 11px;
+    font-size:11.5px; line-height:1.45; max-width:270px;
+}
+.ch-tip.visible { opacity:1; }
+.ch-tip-t { font-size:12.5px; font-weight:600; color:var(--sem-navy); }
+.ch-tip-s { font-size:10.5px; color:var(--sem-text-2); margin-top:1px; }
+.ch-tip-hr { height:1px; background:var(--sem-line-soft); margin:7px 0 6px; }
+.ch-tip-big { font-size:15px; font-weight:500; font-variant-numeric:tabular-nums; }
+.ch-tip-row { display:flex; align-items:center; gap:7px; padding:1.5px 0;
+    font-variant-numeric:tabular-nums; }
+.ch-tip-row i { width:9px; height:9px; border-radius:2px; flex:0 0 9px; }
+.ch-tip-row .n { flex:1 1 auto; color:var(--sem-text-2); }
+.ch-tip-row .v { color:var(--sem-ink); font-weight:500; }
+.ch-tip-row .p { color:var(--sem-text-3); min-width:40px; text-align:right; }
+.ch-tip-foot { font-size:10.5px; color:var(--sem-text-3); margin-top:6px; }
+
+/* Zonas de captura del hover: cubren la columna entera, no sólo la barra, para
+   no obligar a acertarle a un rectángulo de tres píxeles. */
+.ch-hit { fill:transparent; cursor:pointer; }
+.ch-hit:hover { fill:var(--sem-hover-a); }
+
+/* Cabecera de la franja de semanas, con el botón de agrandar. */
+.cos-weeks-head {
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    margin-bottom:1px;
+}
+.cos-weeks-head .fc-label { margin:0; }
+.cos-expand {
+    width:24px; height:24px; flex:0 0 24px; padding:0; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--sem-surface); color:var(--sem-text-2);
+    border:var(--sem-border-hair); border-radius:var(--sem-radius);
+}
+.cos-expand:hover { background:var(--sem-beige-wash); color:var(--sem-navy);
+    border:var(--sem-border-strong); }
+.cos-expand svg { width:13px; height:13px; fill:none; stroke:currentColor;
+    stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.cos-expand:focus-visible { outline:none; box-shadow:var(--sem-focus-ring); }
+
 /* ── Cabecera de programa en la leyenda ─────────────────────────────────
    Un programa es matriz x laboratorio. Lo que cambia entre uno y otro no es
    solo el nombre del lab: cambian la cadencia, las unidades muestreadas y los
@@ -2865,6 +2919,16 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
             <button type="button" class="riego-mode-tab" data-v="semana" onclick="setCosVentana('semana')" data-i18n="Semana">Semana</button>
         </div>
 
+        <div class="cos-weeks-head">
+            <span class="fc-label" data-i18n="Evolución de la temporada">Evolución de la temporada</span>
+            <button type="button" class="cos-expand" onclick="abrirCosTemporadaModal()"
+                    title="Agrandar el gráfico de la temporada"
+                    data-i18n-title="Agrandar el gráfico de la temporada"
+                    aria-label="Agrandar el gráfico de la temporada"
+                    data-i18n-aria="Agrandar el gráfico de la temporada">
+                <svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg>
+            </button>
+        </div>
         <div class="cos-weeks" id="cosWeeks"></div>
         <div class="riego-nav">
             <button type="button" onclick="pasoCosSemana(-1)" aria-label="Semana anterior" data-i18n-aria="Semana anterior">‹</button>
@@ -2894,6 +2958,21 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
         </div>
         <button class="riego-load-btn" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
         <div class="riego-status" id="cosStatus"></div>
+    </div>
+</div>
+
+<!-- Evolución de la temporada, en grande. La franja del panel mide 312 px para
+     36 semanas: sirve para ver la forma de la curva y elegir, no para leerla. -->
+<div class="cos-modal" id="cosTempModal" onclick="if(event.target===this)closeCosTemporadaModal()">
+    <div class="cos-modal-content ancho">
+        <div class="cos-modal-head">
+            <div>
+                <h2 id="cosTempTitle" data-i18n="Evolución de la temporada">Evolución de la temporada</h2>
+                <div class="rm-sub" id="cosTempSub"></div>
+            </div>
+            <button class="riego-modal-close" onclick="closeCosTemporadaModal()" aria-label="Cerrar" data-i18n-aria="Cerrar"><svg viewBox="0 0 18 18"><use href="#ic-cerrar"/></svg></button>
+        </div>
+        <div id="cosTempBody"></div>
     </div>
 </div>
 
@@ -2956,6 +3035,7 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     <div class="cv-rows" id="varLeyenda"></div>
 </div>
 <div class="hover-tooltip" id="tooltip"></div>
+<div class="ch-tip" id="chartTip" role="tooltip" aria-hidden="true"></div>
 
 <aside id="pvSide" aria-live="polite">
     <div class="pv-side-head">
@@ -3095,6 +3175,13 @@ const I18N = {
 'Variación relativa contra':'Relative change against',
 'misma ventana de semanas.':'same week window.',
 'Incluye':'Includes',
+'Evolución de la temporada':'Season evolution',
+'Agrandar el gráfico de la temporada':'Enlarge the season chart',
+'Sin cosecha esta semana.':'No harvest this week.',
+'de la temporada':'of the season', 'camote':'misshapen fruit',
+'respecto del anterior':'vs the previous one', 'muestra':'sample',
+'bins':'bins', 'Cuarteles':'Blocks', 'cuartel':'block', 'cuarteles':'blocks',
+'Fechas':'Dates', 'Destino':'Destination',
 'Clic en una columna para llevar el mapa a esa semana.':'Click a column to take the map to that week.',
 'Las columnas atenuadas quedan fuera de la ventana que el mapa está pintando. Clic en una columna para llevar el mapa a esa semana.':'Dimmed columns fall outside the window the map is painting. Click a column to take the map to that week.',
 'de camote, que es mercado interno de menor calibre y se contabiliza dentro de él.':'of misshapen fruit, which is lower-grade domestic-market fruit and is counted within it.',
@@ -3729,6 +3816,60 @@ function tt(titulo, badge, filas, pie){
         + `</div>`
         + (pie ? `<div class="ket-note">${pie}</div>` : '');
 }
+
+/* ── Tooltip de gráficos ────────────────────────────────────────────────
+   Un solo elemento para las tres familias de gráficos evolutivos: la franja de
+   semanas de Cosecha, las columnas semanales de sus modales y las series de
+   Nutrición y de Ceres. El contenido viaja en `data-tip` del propio elemento
+   —ya armado y escapado— y un único par de escuchas delegadas lo muestra, así
+   no hay que registrar handlers por cada una de las 36 barras cada vez que se
+   redibuja la franja.
+
+   `title` nativo no servía: tarda un segundo largo en aparecer, no admite los
+   cuadraditos de color del reparto por destino y desaparece solo. */
+function tipAttr(html){
+    return String(html).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+}
+let chartTipOn = false;
+function posicionarChartTip(ev){
+    const el = document.getElementById('chartTip');
+    const w = el.offsetWidth, h = el.offsetHeight;
+    let x = ev.clientX + 14, y = ev.clientY + 14;
+    if(x + w > innerWidth - 8) x = ev.clientX - w - 14;
+    if(y + h > innerHeight - 8) y = ev.clientY - h - 14;
+    // Volcar al otro lado no alcanza: en un panel pegado al borde el tooltip
+    // se salía por la izquierda. Se acota a la ventana en los dos ejes.
+    x = Math.max(8, Math.min(x, innerWidth - w - 8));
+    y = Math.max(8, Math.min(y, innerHeight - h - 8));
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+}
+function mostrarChartTip(html, ev){
+    const el = document.getElementById('chartTip');
+    el.innerHTML = html;
+    el.classList.add('visible');
+    el.setAttribute('aria-hidden', 'false');
+    chartTipOn = true;
+    posicionarChartTip(ev);
+}
+function ocultarChartTip(){
+    if(!chartTipOn) return;
+    chartTipOn = false;
+    const el = document.getElementById('chartTip');
+    el.classList.remove('visible');
+    el.setAttribute('aria-hidden', 'true');
+}
+document.addEventListener('mouseover', ev => {
+    const el = ev.target.closest && ev.target.closest('[data-tip]');
+    if(el) mostrarChartTip(el.getAttribute('data-tip'), ev);
+});
+document.addEventListener('mouseout', ev => {
+    const el = ev.target.closest && ev.target.closest('[data-tip]');
+    if(el) ocultarChartTip();
+});
+document.addEventListener('mousemove', ev => { if(chartTipOn) posicionarChartTip(ev); });
+// Un scroll con el tooltip abierto lo deja flotando sobre el sitio equivocado.
+window.addEventListener('scroll', ocultarChartTip, true);
 
 /* El tooltip tiene que seguir vivo mientras el cursor esté ENCIMA de él, o el
    botón "Ver detalle" no se puede clickear nunca: al salir del polígono se
@@ -5924,9 +6065,10 @@ function serieCeres(id, par){
 function sparkCeres(id, par){
     const serie = serieCeres(id, par);
     if(serie.length < 2) return `<div class="nut-evo-empty">${t('Se necesitan al menos dos muestreos.')}</div>`;
-    const bandas = ceresBandas(par, ceresVuelo()).map(b => ({
-        min: b.min, max: b.max,
-        color: ceresColor(b.severity, ceresBandas(par, ceresVuelo()).length)
+    const orig = ceresBandas(par, ceresVuelo());
+    const bandas = orig.map(b => ({
+        min: b.min, max: b.max, label: ceresEtiquetaBanda(b),
+        color: ceresColor(b.severity, orig.length)
     }));
     return sparklineBandas(serie, bandas, v => fmtDec(v, 2), {w:340, h:140});
 }
@@ -5968,6 +6110,7 @@ function renderEvoCeres(){
         const bandas = ceresBandas(par, ceresVuelo());
         const b = ceresBandaDe(ultimo.v, bandas);
         const franjas = bandas.map(x => ({min:x.min, max:x.max,
+            label: ceresEtiquetaBanda(x),
             color: ceresColor(x.severity, bandas.length)}));
         const chart = serie.length >= 2
             ? sparklineBandas(serie, franjas, v => fmtDec(v, 2),
@@ -6926,7 +7069,8 @@ function serieDe(id, nivel, par){
 /* Eje X categórico: los muestreos no son equidistantes en el tiempo y un eje
    lineal deja el gráfico medio vacío. */
 function sparkline(serie, par, opts){
-    return sparklineBandas(serie, bandasDe(par), v => fmtP(v, par), opts);
+    return sparklineBandas(serie, bandasDe(par), v => fmtP(v, par),
+                           Object.assign({unidad: par && par.unidad}, opts || {}));
 }
 
 /* `bandas` son [{min, max, color}] y `fmtFn` formatea el valor. Las dos cosas
@@ -6963,7 +7107,29 @@ function sparklineBandas(serie, bandas, fmtFn, opts){
 
     const linea = serie.map((s,i) => `${i?'L':'M'}${x(i).toFixed(1)},${y(s.v).toFixed(1)}`).join(' ');
     const dots = serie.map((s,i) =>
-        `<circle class="${i===serie.length-1?'nc-dot-last':'nc-dot'}" cx="${x(i).toFixed(1)}" cy="${y(s.v).toFixed(1)}" r="${i===serie.length-1?3.5:2.5}"><title>${esc(fmtFecha(s.f))} · ${fmtFn(s.v)}</title></circle>`).join('');
+        `<circle class="${i===serie.length-1?'nc-dot-last':'nc-dot'}" cx="${x(i).toFixed(1)}" cy="${y(s.v).toFixed(1)}" r="${i===serie.length-1?3.5:2.5}"/>`).join('');
+
+    // Zona de captura por punto, de alto completo y ancho medio paso: acertarle
+    // a un círculo de 2,5 px con el mouse no es razonable, y en el múltiple
+    // pequeño las series miden 320 px de ancho. La banda de fondo en la que
+    // cae el valor va en el tooltip: es la lectura, no el número suelto.
+    const paso = serie.length > 1 ? (W - ML - MR) / (serie.length - 1) : (W - ML - MR);
+    const hits = serie.map((s,i) => {
+        const b = bandas.find(z => (z.min == null || s.v >= z.min) && (z.max == null || s.v < z.max));
+        const prev = i ? serie[i-1].v : null;
+        const dif = prev != null && prev !== 0 ? (s.v - prev) / Math.abs(prev) * 100 : null;
+        const tip = `<div class="ch-tip-t">${esc(fmtFecha(s.f))}</div>`
+            + `<div class="ch-tip-hr"></div>`
+            + `<div class="ch-tip-big">${fmtFn(s.v)}${opts.unidad ? ` <span class="ch-tip-s">${esc(opts.unidad)}</span>` : ''}</div>`
+            + (b && b.label ? `<div class="ch-tip-row"><i style="background:${b.color}"></i>`
+                + `<span class="n">${esc(b.label)}</span></div>` : '')
+            + (dif != null ? `<div class="ch-tip-foot">${dif > 0 ? '+' : ''}${fmtDec(dif, 1)} % `
+                + `${t('respecto del anterior')}</div>` : '')
+            + (s.n > 1 ? `<div class="ch-tip-foot">${plural(s.n, 'muestra', 'muestras')}</div>` : '');
+        return `<rect class="ch-hit" x="${Math.max(ML, x(i) - paso/2).toFixed(1)}" y="${MT}" `
+            + `width="${Math.min(paso, W - MR - Math.max(ML, x(i) - paso/2)).toFixed(1)}" `
+            + `height="${(H - MT - MB).toFixed(1)}" data-tip="${tipAttr(tip)}"/>`;
+    }).join('');
 
     const ticks = [lo + pad, hi - pad].map(v =>
         `<text class="nc-tick" x="${ML-5}" y="${(y(v)+4).toFixed(1)}" text-anchor="end">${fmtFn(v)}</text>`).join('');
@@ -6977,7 +7143,7 @@ function sparklineBandas(serie, bandas, fmtFn, opts){
         + rects
         + `<line class="nc-axis" x1="${ML}" y1="${H-MB}" x2="${W-MR}" y2="${H-MB}"/>`
         + `<line class="nc-axis" x1="${ML}" y1="${MT}" x2="${ML}" y2="${H-MB}"/>`
-        + `<path class="nc-line" d="${linea}"/>${dots}${ticks}${xlabs}`
+        + `<path class="nc-line" d="${linea}"/>${dots}${ticks}${xlabs}${hits}`
         + `</svg></div>`;
 }
 
@@ -7373,6 +7539,38 @@ function cosSplitBar(pct, opts){
     return html;
 }
 
+/* Tooltip de una semana. Lo comparten la franja del panel, el gráfico grande de
+   la temporada y el del cuartel: es la misma lectura en los tres. */
+function cosTipSemana(w, opts){
+    opts = opts || {};
+    const kg = w.kg || 0;
+    let html = `<div class="ch-tip-t">${t('Semana')} ${w.n}</div>`;
+    if(w.desde) html += `<div class="ch-tip-s">${esc(fmtCorta(w.desde))}`
+        + (w.hasta && w.hasta !== w.desde ? ` – ${esc(fmtCorta(w.hasta))}` : '')
+        + `</div>`;
+    html += `<div class="ch-tip-hr"></div>`;
+    if(!kg) return html + `<div class="ch-tip-s">${t('Sin cosecha esta semana.')}</div>`;
+
+    html += `<div class="ch-tip-big">${fmtDec(kg/1000, 2)} t</div>`;
+    html += COS_DEST.map(d => {
+        const k = (w.dest && w.dest[d]) || 0;
+        return `<div class="ch-tip-row"><i style="background:${SEM(COS_DEST_TOKEN[d])}"></i>`
+            + `<span class="n">${esc(t(COS_DEST_ES[d]))}</span>`
+            + `<span class="v">${fmtDec(k/1000, 2)} t</span>`
+            + `<span class="p">${fmtDec(k/kg*100, 1)} %</span></div>`;
+    }).join('');
+    const pie = [
+        w.bins ? `${fmt(w.bins, 0)} ${t('bins')}` : null,
+        w.cuarteles != null ? plural(w.cuarteles, 'cuartel', 'cuarteles') : null,
+        opts.ha ? `${fmt(kg/opts.ha, 0)} kg/ha` : null,
+        opts.total ? `${fmtDec(kg/opts.total*100, 1)} % ${t('de la temporada')}` : null,
+        opts.acum != null ? `${t('Avance')} ${fmtDec(opts.acum*100, 0)} %` : null
+    ].filter(Boolean);
+    if(w.camote) pie.push(`${fmtDec(w.camote/1000, 2)} t ${t('camote')}`);
+    if(pie.length) html += `<div class="ch-tip-foot">${pie.join(' · ')}</div>`;
+    return html;
+}
+
 /* ── Panel de control ────────────────────────────────────────────────────── */
 
 function renderCosControles(){
@@ -7472,10 +7670,9 @@ function renderCosSemanas(){
         if(!dentro.has(w.n)) clases.push('fuera');
         if(S.cos.ventana !== 'temporada' && w.n === activa) clases.push('activa');
         if(!w.kg) clases.push('vacia');
-        const tit = `${t('Semana')} ${w.n} · ${fmtDec(w.kg/1000,1)} t · `
-                  + `${plural(w.cuarteles, 'cuartel', 'cuarteles')}`
-                  + (w.desde ? ` · ${fmtCorta(w.desde)}` : '');
-        return `<button type="button" class="${clases.join(' ')}" title="${esc(tit)}" `
+        return `<button type="button" class="${clases.join(' ')}" `
+             + `data-tip="${tipAttr(cosTipSemana(w, {total: t0.total.kg}))}" `
+             + `aria-label="${esc(t('Semana') + ' ' + w.n)}" `
              + `onclick="setCosSemana(${w.n})">`
              + `<div class="cos-wk-bar">${segs}</div>`
              + `<span class="cos-wk-n">${i % cada === 0 || w.n === activa ? w.n : ''}</span>`
@@ -7527,6 +7724,8 @@ function cosRefrescar(){
     const mod = document.getElementById('cosModal');
     if(mod && mod.classList.contains('visible') && cosModalCuartel)
         abrirCosModal(cosModalCuartel);
+    const modT = document.getElementById('cosTempModal');
+    if(modT && modT.classList.contains('visible')) abrirCosTemporadaModal();
 }
 
 /* ── Leyenda, metricas, tooltip y ficha de Cosecha ──────────────────────── */
@@ -7835,7 +8034,7 @@ function cosModalHTML(cid, c, t0, meta){
              + `${t('de camote, que es mercado interno de menor calibre y se contabiliza dentro de él.')}</div>` : '');
 
     html += `<div class="cos-section-title">${t('Evolución semanal')}</div>`
-         + cosChartSemanal(c, t0, cb);
+         + cosChartSemanal(c, t0, cb, {ha: meta.ha_plantada, total: c.kg});
 
     html += `<div class="cos-section-title">${t('Semanas')}</div>`
          + cosTablaSemanas(c, t0, meta);
@@ -7853,45 +8052,72 @@ function cosModalHTML(cid, c, t0, meta){
 /* Columnas apiladas por destino + curva de avance acumulado. Eje X categorico
    sobre TODAS las semanas de la temporada, no solo las que tienen fruta: los
    huecos son informacion (una semana sin cosecha en medio del peak importa). */
-function cosChartSemanal(c, t0, cb){
+/* Serie semanal del predio con la misma forma que la de un cuartel, para que el
+   gráfico sea uno solo: `{kg, semanas:{n:{...}}}`. En el JSON la temporada trae
+   sus semanas como arreglo y el cuartel como objeto; adaptarlo acá evita tener
+   dos gráficos que hay que mantener a la par. */
+function cosSerieTemporada(t0){
+    const semanas = {};
+    t0.semanas.forEach(w => { semanas[w.n] = w; });
+    return {kg: t0.total.kg, semanas};
+}
+
+/* Columnas apiladas por destino + curva de avance acumulado.
+
+   `opts.w/h` cambian el tamaño (el modal grande lo usa al doble), `opts.ha`
+   añade el rendimiento al tooltip y `opts.total` el peso de la semana sobre la
+   temporada. El eje X es categórico sobre TODAS las semanas de la temporada, no
+   sólo las que tienen fruta: los huecos son información. */
+function cosChartSemanal(c, t0, cb, opts){
+    opts = opts || {};
     const sems = t0.semanas.map(w => w.n);
     if(!sems.length) return `<div class="nut-evo-empty">${t('Sin semanas registradas.')}</div>`;
 
-    const W = 900, H = 250, ML = 54, MR = 48, MT = 14, MB = 34;
+    const W = opts.w || 900, H = opts.h || 250;
+    const ML = 54, MR = 48, MT = 14, MB = 34;
     const kgDe = (obj, n) => (obj && obj.semanas[n] ? obj.semanas[n].kg : 0);
     const pico = Math.max(...sems.map(n => kgDe(c, n)), 1);
     const total = c.kg || 1;
 
-    const bw = Math.max(2, (W - ML - MR) / sems.length - 2);
-    const x = i => ML + (W - ML - MR) * (i + 0.5) / sems.length;
+    const paso = (W - ML - MR) / sems.length;
+    const bw = Math.max(2, paso - 2);
+    const x = i => ML + paso * (i + 0.5);
     const y = v => MT + (H - MT - MB) * (1 - v / pico);
     const yPct = q => MT + (H - MT - MB) * (1 - q);
 
-    // Columnas apiladas: exportacion abajo, desecho arriba. Las semanas fuera
-    // de la ventana que el mapa esta pintando se atenuan, para que el grafico y
-    // el mapa se lean como la misma seleccion y no como dos vistas sueltas.
+    // Las semanas fuera de la ventana que el mapa está pintando se atenúan,
+    // para que el gráfico y el mapa se lean como la misma selección.
     const dentro = new Set(cosVentanaSemanas());
-    let cols = '';
+    let cols = '', hits = '';
+    let acum = 0;
     sems.forEach((n, i) => {
         const w = c.semanas[n];
-        if(!w || !w.kg) return;
+        acum += (w && w.kg) || 0;
         const op = dentro.has(n) ? 1 : 0.3;
-        let base = y(0);
-        COS_DEST.forEach(d => {
-            const k = (w.dest && w.dest[d]) || 0;
-            if(!k) return;
-            const h = (H - MT - MB) * k / pico;
-            base -= h;
-            cols += `<rect class="cc-col" x="${(x(i) - bw/2).toFixed(1)}" y="${base.toFixed(1)}" `
-                 + `width="${bw.toFixed(1)}" height="${h.toFixed(1)}" `
-                 + `fill="${SEM(COS_DEST_TOKEN[d])}" opacity="${op}" `
-                 + `onclick="setCosSemana(${n})" style="cursor:pointer">`
-                 + `<title>${t('Semana')} ${n} · ${esc(t(COS_DEST_ES[d]))} · ${fmtDec(k/1000, 2)} t</title>`
-                 + `</rect>`;
-        });
+        if(w && w.kg){
+            let base = y(0);
+            COS_DEST.forEach(d => {
+                const k = (w.dest && w.dest[d]) || 0;
+                if(!k) return;
+                const h = (H - MT - MB) * k / pico;
+                base -= h;
+                cols += `<rect class="cc-col" x="${(x(i) - bw/2).toFixed(1)}" y="${base.toFixed(1)}" `
+                     + `width="${bw.toFixed(1)}" height="${h.toFixed(1)}" `
+                     + `fill="${SEM(COS_DEST_TOKEN[d])}" opacity="${op}"/>`;
+            });
+        }
+        // Una zona de captura por semana, de alto completo: el hover no depende
+        // de acertarle a una barra de tres píxeles, y el tooltip trae la semana
+        // entera en vez del segmento suelto que hubiera tocado el cursor.
+        const info = Object.assign({n}, w || {kg:0});
+        hits += `<rect class="ch-hit" x="${(ML + paso*i).toFixed(1)}" y="${MT}" `
+             + `width="${paso.toFixed(1)}" height="${(H-MT-MB).toFixed(1)}" `
+             + `onclick="setCosSemana(${n})" `
+             + `data-tip="${tipAttr(cosTipSemana(info, {ha: opts.ha, total: opts.total,
+                    acum: (w && w.kg) ? acum/total : null}))}"/>`;
     });
 
-    // Curva de avance acumulado, en % del total del cuartel.
+    // Curva de avance acumulado, en % del total de la unidad.
     const curva = (obj, tot) => {
         let a = 0;
         return sems.map((n, i) => {
@@ -7902,7 +8128,6 @@ function cosChartSemanal(c, t0, cb){
     const linea = `<path class="cc-acum" d="${curva(c, total)}"/>`;
     const lineaB = cb ? `<path class="cc-acum-b" d="${curva(cb, cb.kg || 1)}"/>` : '';
 
-    // Ejes.
     let grid = '', ticks = '', ticksR = '';
     for(let q = 0; q <= 1.0001; q += 0.25){
         const yy = yPct(q);
@@ -7914,7 +8139,7 @@ function cosChartSemanal(c, t0, cb){
         ticks += `<text class="cc-tick" x="${ML-6}" y="${(yy+3.5).toFixed(1)}" text-anchor="end">`
               + `${fmtDec(pico*q/1000, 1)}</text>`;
     });
-    const cada = Math.max(1, Math.ceil(sems.length / 14));
+    const cada = Math.max(1, Math.ceil(sems.length / (opts.w ? 26 : 14)));
     const xlabs = sems.map((n, i) => i % cada === 0
         ? `<text class="cc-tick" x="${x(i).toFixed(1)}" y="${H-14}" text-anchor="middle">${n}</text>` : '').join('');
 
@@ -7923,7 +8148,7 @@ function cosChartSemanal(c, t0, cb){
         + grid
         + `<line class="cc-axis" x1="${ML}" y1="${H-MB}" x2="${W-MR}" y2="${H-MB}"/>`
         + `<line class="cc-axis" x1="${ML}" y1="${MT}" x2="${ML}" y2="${H-MB}"/>`
-        + cols + lineaB + linea + ticks + ticksR + xlabs
+        + cols + lineaB + linea + ticks + ticksR + xlabs + hits
         + `<text class="cc-tick" x="${ML-6}" y="${H-14}" text-anchor="end">t</text>`
         + `<text class="cc-tick" x="${(ML+(W-ML-MR)/2).toFixed(0)}" y="${H-2}" text-anchor="middle">`
         + `${esc(t('Semana'))}</text>`
@@ -7937,6 +8162,95 @@ function cosChartSemanal(c, t0, cb){
         + (S.cos.ventana !== 'temporada'
             ? `<div class="cos-hint">${t('Las columnas atenuadas quedan fuera de la ventana que el mapa está pintando. Clic en una columna para llevar el mapa a esa semana.')}</div>`
             : `<div class="cos-hint">${t('Clic en una columna para llevar el mapa a esa semana.')}</div>`)
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODAL DE LA TEMPORADA · la misma curva de la franja, pero legible
+
+   La franja del panel mide 312 px para hasta 36 semanas: sirve para ver la
+   forma y para elegir, no para leer. Acá va el mismo gráfico al triple de
+   ancho, con la tabla de semanas del predio entero al lado.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function abrirCosTemporadaModal(){
+    if(!COS) return;
+    ocultarTooltipYa();
+    const t0 = cosTemporada();
+    if(!t0) return;
+    document.getElementById('cosTempTitle').textContent =
+        `${t('Evolución de la temporada')} · ${t0.label}`;
+    document.getElementById('cosTempSub').textContent =
+        `${plural(t0.total.cuarteles, 'cuartel', 'cuarteles')} · `
+        + `${plural(t0.semanas.length, 'semana', 'semanas')} · `
+        + `${fmtCorta(t0.total.desde)} – ${fmtCorta(t0.total.hasta)}`;
+    document.getElementById('cosTempBody').innerHTML = cosTemporadaModalHTML(t0);
+    document.getElementById('cosTempModal').classList.add('visible');
+}
+function closeCosTemporadaModal(){
+    ocultarChartTip();
+    document.getElementById('cosTempModal').classList.remove('visible');
+}
+
+function cosTemporadaModalHTML(t0){
+    const serie = cosSerieTemporada(t0);
+    const cb = S.cos.comparar
+        ? cosSerieTemporada(cosTemporada(S.cos.comparar) || {semanas:[], total:{kg:0}})
+        : null;
+    const pico = t0.semanas.slice().sort((a, b) => b.kg - a.kg)[0];
+    const tt = t0.total;
+
+    const kpis = [
+        [t('Cosechado'), fmtDec(tt.kg/1000, 1), 't'],
+        [t('Rendimiento'), tt.kg_ha != null ? fmt(tt.kg_ha, 0) : '—', 'kg/ha'],
+        [t('Bins'), fmt(tt.bins, 0), ''],
+        [t('Exportación'), fmtDec((tt.pct.exportacion || 0)*100, 1), '%'],
+        // El tonelaje va en el rótulo y no como unidad: "32" con "495,8 t"
+        // pegado al lado se leía como un solo número.
+        [pico ? `${t('Semana peak')} · ${fmtDec(pico.kg/1000, 1)} t` : t('Semana peak'),
+         pico ? String(pico.n) : '—', '']
+    ].map(([k, v, u]) =>
+        `<div class="cos-kpi"><div class="k">${esc(k)}</div>`
+        + `<div class="v">${v}${u ? `<span class="u">${esc(u)}</span>` : ''}</div></div>`).join('');
+
+    return `<div class="cos-modal-kpis">${kpis}</div>`
+        + `<div class="cos-section-title">${t('Reparto por destino')}</div>`
+        + cosSplitBar(tt.pct, {tall:true, leyenda:true})
+        + `<div class="cos-section-title">${t('Evolución semanal')}</div>`
+        + cosChartSemanal(serie, t0, cb, {w:1180, h:340, total: tt.kg})
+        + `<div class="cos-section-title">${t('Semanas')}</div>`
+        + cosTablaSemanasPredio(t0);
+}
+
+/* Tabla de semanas del predio. Es la del cuartel más la columna de cuánto del
+   campo se tocó esa semana, que a nivel de predio es la pregunta logística. */
+function cosTablaSemanasPredio(t0){
+    if(!t0.semanas.length) return `<div class="nut-evo-empty">${t('Sin semanas registradas.')}</div>`;
+    const activa = cosSemanaActiva();
+    const dentro = new Set(cosVentanaSemanas());
+    let acum = 0;
+    const filas = t0.semanas.map(w => {
+        acum += w.kg;
+        const pd = w.kg ? COS_DEST.map(d => ((w.dest[d] || 0) / w.kg)) : [0, 0, 0];
+        return `<tr class="${w.n === activa ? 'activa' : ''}${dentro.has(w.n) ? '' : ' fuera'}" `
+            + `style="cursor:pointer" onclick="setCosSemana(${w.n})">`
+            + `<td><strong>${w.n}</strong></td>`
+            + `<td>${w.desde ? esc(fmtCorta(w.desde) + (w.hasta && w.hasta !== w.desde ? ' – ' + fmtCorta(w.hasta) : '')) : '—'}</td>`
+            + `<td style="text-align:right">${w.cuarteles}</td>`
+            + `<td style="text-align:right">${fmt(w.bins, 0)}</td>`
+            + `<td style="text-align:right">${fmtDec(w.kg/1000, 2)}</td>`
+            + `<td style="text-align:right">${fmtDec(acum/(t0.total.kg||1)*100, 0)} %</td>`
+            + `<td style="min-width:120px">${cosSplitBar({exportacion:pd[0], mercado_interno:pd[1], desecho:pd[2]})}</td>`
+            + `</tr>`;
+    }).join('');
+
+    return `<div class="cos-events"><table class="cos-events-table">`
+        + `<thead><tr><th>${t('Sem.')}</th><th>${t('Fechas')}</th>`
+        + `<th style="text-align:right">${t('Cuarteles')}</th>`
+        + `<th style="text-align:right">${t('Bins')}</th>`
+        + `<th style="text-align:right">t</th>`
+        + `<th style="text-align:right">${t('Avance')}</th>`
+        + `<th>${t('Destino')}</th></tr></thead>`
+        + `<tbody>${filas}</tbody></table></div>`;
 }
 
 function cosTablaSemanas(c, t0, meta){
@@ -7998,7 +8312,7 @@ function switchMode(modo){
     document.body.classList.toggle('riego-active', modo === 'riego');
     document.body.classList.toggle('cosecha-active', modo === 'cosecha');
     if(modo !== 'riego') closeRiegoModal();
-    if(modo !== 'cosecha') closeCosModal();
+    if(modo !== 'cosecha'){ closeCosModal(); closeCosTemporadaModal(); }
     ocultarTooltipYa();
     document.body.classList.toggle('ceres-active', modo === 'ceres');
     // El comparador es de Ceres: salir de la pestaña lo apaga en vez de dejar

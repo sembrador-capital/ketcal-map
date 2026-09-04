@@ -213,6 +213,12 @@ semana de la temporada, apilada por destino y a escala del pico, y se puede
 clickear para llevar el mapa ahí. Un stepper solo obligaba a adivinar dónde
 estaba el peak (2026: semana 32, 495,8 t).
 
+Mide 312 px para hasta 36 semanas: sirve para ver la forma de la curva y para
+elegir, no para leerla. El botón de la esquina la abre **en grande** —el mismo
+gráfico a 1.180 px, con los KPI de la temporada, el reparto por destino y la
+tabla de las semanas del predio entero—, y ahí también se puede clickear una
+columna o una fila para llevar el mapa a esa semana.
+
 Tres **ventanas**, calculadas siempre sumando semanas —el build garantiza que
 las semanas particionan el total, así que hay una sola ruta de código:
 
@@ -246,6 +252,32 @@ El mismo color identifica al destino en todas partes —barra del tooltip, franj
 de semanas, columnas del modal, leyenda—, y la rampa del "% a exportación"
 termina en el mismo teal que el segmento de exportación, para no tener que
 explicar dos códigos de color distintos.
+
+### Los tooltips de los gráficos
+
+`title` nativo no servía en ninguno de los gráficos evolutivos: tarda un segundo
+largo en aparecer, no admite los cuadraditos de color del reparto por destino, y
+desaparece solo mientras se lo está leyendo. Hay un tooltip propio, `#chartTip`,
+separado del tooltip del mapa —aquel se posiciona contra el canvas de Mapbox, y
+estos viven en el panel lateral y dentro de modales, donde esas coordenadas no
+significan nada—, acotado a la ventana en los dos ejes.
+
+El contenido viaja armado y escapado en el `data-tip` del propio elemento, y una
+sola pareja de escuchas delegadas lo muestra: registrar handlers por cada una de
+las 36 barras cada vez que se redibuja la franja no tenía sentido.
+
+Cada punto o columna lleva una **zona de captura de alto completo**: acertarle
+con el mouse a un círculo de 2,5 px o a una barra de 3 px no es razonable, y el
+tooltip trae la semana o el muestreo entero en vez del segmento suelto que
+hubiera tocado el cursor.
+
+Cubre las tres familias:
+
+| Gráfico | Qué muestra el tooltip |
+|---|---|
+| Franja de semanas y columnas de Cosecha | semana, fechas, toneladas, reparto por destino con sus tres colores y porcentajes, bins, cuarteles, peso sobre la temporada, avance acumulado y —en el modal de un cuartel— kg/ha |
+| Series de Nutrición | fecha, valor con su unidad, banda de umbral en la que cae, variación respecto del muestreo anterior y número de muestras |
+| Series de Ceres | fecha del vuelo, valor, clase del indicador y variación respecto del vuelo anterior |
 
 ### El detalle semanal
 
