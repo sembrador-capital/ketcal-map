@@ -2493,6 +2493,11 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 .ket-seg button:disabled { opacity:0.42; cursor:not-allowed; }
 .ket-seg button:disabled:hover { color:var(--sem-text-2); }
 .ket-toggle input:disabled { cursor:not-allowed; }
+/* La capa por árbol tarda ~4 s en pintarse: mientras tanto el botón late, para
+   que la espera se lea como trabajo en curso y no como un clic perdido. */
+.ceres-tree-btn.cargando { opacity:0.8; animation:cos-latido 1.1s ease-in-out infinite; }
+@keyframes cos-latido { 0%,100% { opacity:0.55; } 50% { opacity:1; } }
+@media (prefers-reduced-motion: reduce) { .ceres-tree-btn.cargando { animation:none; } }
 .ket-toggle.off { color:var(--sem-text-3); cursor:not-allowed; }
 .fc-compare-btn:disabled { opacity:0.45; cursor:not-allowed; }
 .nut-serie-flag { font-size:9.5px; font-weight:600; color:var(--sem-navy);
@@ -3093,6 +3098,7 @@ const I18N = {
 'Clic en una columna para llevar el mapa a esa semana.':'Click a column to take the map to that week.',
 'Las columnas atenuadas quedan fuera de la ventana que el mapa está pintando. Clic en una columna para llevar el mapa a esa semana.':'Dimmed columns fall outside the window the map is painting. Click a column to take the map to that week.',
 'de camote, que es mercado interno de menor calibre y se contabiliza dentro de él.':'of misshapen fruit, which is lower-grade domestic-market fruit and is counted within it.',
+'Cargando árboles…':'Loading trees…',
 'Programa':'Programme', 'Programa de muestreo':'Sampling programme',
 'Laboratorio':'Laboratory', 'Filtro':'Filter',
 'Sólo con evolución':'Series only',
@@ -4663,7 +4669,84 @@ let variedadesOn = false;    // capa por variedad, en General
    verdes esos no se ven. Filtrarlos deja el mapa que sirve para ir a revisar. */
 let arbolesSoloMalos = false;
 
+/* La capa por árbol tarda. Medido en frío sobre los 230.000 puntos de Ketcal,
+   a z15 y con los cinco overlays del vuelo:
+
+       clic  →  0 ms
+       tiles en mano  →  ~2.000 ms   (cinco fuentes vectoriales)
+       primer pintado →  ~4.300 ms   (parseo y subida a GPU)
+       mapa quieto    →  ~6.000 ms
+
+   Cuatro segundos y medio de espera es lo que hay: son 230.000 círculos y
+   Mapbox no los sube más rápido. Lo que NO puede pasar —y pasaba— es que
+   durante esos cuatro segundos el mapa se vea vacío y sin explicación, ni que
+   cualquier cambio de estilo vuelva a pagar el costo entero. */
+let arbCargando = false;
+
 function arbModo(){ return currentMode === 'general' ? 'variedad' : 'indicador'; }
+
+/* Extensión de cada equipo, para acotar la fuente vectorial que lo cubre.
+
+   Ceres publica un overlay por equipo, así que la capa por árbol son CINCO
+   fuentes vectoriales. Sin `bounds`, Mapbox le pide tiles a las cinco en toda
+   la ventana: mirando de cerca un solo equipo, cuatro de cada cinco peticiones
+   vuelven vacías y aun así hay que esperarlas. Los cinco equipos de Ketcal no
+   se solapan, así que declarar la extensión de cada uno le deja a Mapbox saltar
+   esas peticiones sin salir a la red.
+
+   Se calcula del propio geo_data.json y se cachea: son cinco polígonos. */
+let ARB_BBOX = null;
+function arbBBox(eq){
+    if(!ARB_BBOX){
+        ARB_BBOX = {};
+        ((GEO && GEO.equipos && GEO.equipos.features) || []).forEach(f => {
+            let w = 180, so = 90, e = -180, n = -90;
+            const rec = c => Array.isArray(c[0])
+                ? c.forEach(rec)
+                : (w = Math.min(w, c[0]), e = Math.max(e, c[0]),
+                   so = Math.min(so, c[1]), n = Math.max(n, c[1]));
+            rec(f.geometry.coordinates);
+            // Un margen mínimo: el árbol del borde cae justo sobre la línea del
+            // polígono y un bounds al ras lo dejaría fuera del tile pedido.
+            const m = 0.0006;                       // ~65 m
+            ARB_BBOX[f.properties.id] = [w-m, so-m, e+m, n+m];
+        });
+    }
+    return ARB_BBOX[eq] || null;
+}
+
+/* ¿La capa de detalle ya DIBUJÓ algo? Es la condición para bajar el relleno del
+   polígono: si se baja antes, el usuario mira cuatro segundos de satelital
+   pelado sin saber por qué.
+
+   No se usa `map.isSourceLoaded()`. Medido sobre este mapa: devuelve `false`
+   para fuentes que están pintando miles de features —las cinco de celdas con
+   153 a 450 celdas en pantalla cada una, y la de árboles de E1 con 2.954
+   puntos—, porque con `bounds` y `maxzoom` sigue habiendo tiles especulativos
+   pendientes indefinidamente. Gatear con eso dejaba el velo sin levantarse
+   nunca y las celdas debajo del polígono.
+
+   La comprobación real es `queryRenderedFeatures`, que es cara, así que se hace
+   UNA vez por activación desde el `idle` del mapa y el resultado se pega: una
+   vez que la capa dibujó, panear a una zona vacía no devuelve el relleno. */
+let arbPintado = false;
+let celPintado = false;
+
+function arbListo(){ return arbPintado && capasArboles().length > 0; }
+function celdasListas(){ return celPintado && capasCeldas().length > 0; }
+
+function comprobarPintado(){
+    if(!arbPintado){
+        const capas = capasArboles();
+        arbPintado = capas.length > 0 &&
+            capas.some(id => map.queryRenderedFeatures({layers:[id]}).length > 0);
+    }
+    if(!celPintado){
+        const capas = capasCeldas();
+        celPintado = capas.length > 0 &&
+            capas.some(id => map.queryRenderedFeatures({layers:[id]}).length > 0);
+    }
+}
 
 /* Ids de las capas vivas. Se mantiene acá y NO se deduce de getStyle(): esa
    devuelve una serialización que no refleja los addLayer/removeLayer del mismo
@@ -4761,6 +4844,16 @@ function quitarArboles(){
         if(k.indexOf(ARB_PREFIJO) === 0 && map.getSource(k)) map.removeSource(k);
     });
     ARB_CAPAS = [];
+    arbPintado = false;
+}
+
+/* Radio por zoom. Filtrados quedan pocos puntos sueltos, así que se agrandan
+   para encontrarlos; sin filtro la rampa arranca fina porque a z13 son 230.000
+   puntos y cualquier radio mayor los funde. Son los valores de San Gerardo. */
+function arbExprRadio(){
+    return arbolesSoloMalos
+        ? ['interpolate',['linear'],['zoom'],13,1.6,14,2.2,15,3,16,4.5,17,6.5,18,9]
+        : ['interpolate',['linear'],['zoom'],13,0.5,14,1,15,1.8,16,2.8,17,4.2,18,6.5];
 }
 
 function pintarArboles(){
@@ -4771,25 +4864,23 @@ function pintarArboles(){
     const color = arbExprColor();
     const filtro = arbFiltro();
     const tpl = CERES.trees.tile_template;
+    arbCargando = true;
+    arbPintado = false;
 
     Object.keys(cat).forEach(eq => {
         const id = ARB_PREFIJO + eq;
-        map.addSource(id, {
+        const bb = arbBBox(eq);
+        map.addSource(id, Object.assign({
             type: 'vector',
             tiles: [tpl.replace('{id}', cat[eq])],
             minzoom: ARB_MINZOOM, maxzoom: 18
-        });
+        }, bb ? {bounds: bb} : {}));
         map.addLayer(Object.assign({
             id: id, type: 'circle', source: id,
             'source-layer': CERES.trees.source_layer || 'trees',
             minzoom: ARB_MINZOOM,
             paint: {
-                // Filtrados quedan pocos puntos sueltos, así que se agrandan
-                // para encontrarlos. Sin filtro la rampa arranca fina: a z13
-                // son 230.000 puntos y cualquier radio mayor los funde.
-                'circle-radius': arbolesSoloMalos
-                    ? ['interpolate',['linear'],['zoom'],13,1.6,14,2.2,15,3,16,4.5,17,6.5,18,9]
-                    : ['interpolate',['linear'],['zoom'],13,0.5,14,1,15,1.8,16,2.8,17,4.2,18,6.5],
+                'circle-radius': arbExprRadio(),
                 'circle-color': color,
                 'circle-opacity': 0.92,
                 'circle-stroke-width': ['interpolate',['linear'],['zoom'],16,0,18,0.4],
@@ -4866,23 +4957,34 @@ function arbClick(e){
    guardia, encenderlas desde lejos apagaba el relleno y no ponía nada en su
    lugar: el predio quedaba en puros contornos. Por eso también se reevalúa en
    cada `zoomend`. */
+/* Se exige `arbListo()` / `celdasListas()`, no sólo que la capa exista: montar
+   la fuente es instantáneo pero pintarla tarda cuatro segundos, y apagar el
+   relleno en el instante del clic dejaba el predio en blanco todo ese rato. Con
+   esto los polígonos aguantan hasta que los árboles están, y recién ahí ceden.
+   El disparador de la reevaluación es el `idle` del mapa, más abajo. */
 function veloMinzoom(){
     if(currentMode === 'general')
-        return (variedadesOn && capasArboles().length) ? ARB_MINZOOM : null;
+        return (variedadesOn && arbListo()) ? ARB_MINZOOM : null;
     if(currentMode === 'ceres'){
-        if(celdasOn && capasCeldas().length){
+        if(celdasOn && celdasListas()){
             const g = celdasGrid();
             return (g && g.min_zoom) || 10;
         }
-        if(arbolesOn && capasArboles().length) return ARB_MINZOOM;
+        if(arbolesOn && arbListo()) return ARB_MINZOOM;
     }
     return null;
 }
+let veloFirma = null;
 function aplicarVelos(){
     if(!mapaListo()) return;
     const mz = veloMinzoom();
     const tapar = mz != null && map.getZoom() >= mz;
     const nivel = nivelActivo();
+    // Memo: `idle` dispara esto después de cada paneo y cada zoom, y escribir
+    // la misma visibilidad tres veces por interacción es trabajo regalado.
+    const firma = `${nivel}|${tapar}|${S.capas.etiquetas}`;
+    if(firma === veloFirma) return;
+    veloFirma = firma;
     ['fill','line','label'].forEach(sfx => {
         const id = `${nivel}-${sfx}`;
         if(!map.getLayer(id)) return;
@@ -4898,24 +5000,62 @@ function aplicarVelos(){
    rehace cuando cambia algo que la afecta: llamarlo desde repintar() sin este
    guardia volvía a pedir todos los tiles ante cualquier cambio de la vista. */
 let arbFirma = null;
+/* La firma de las FUENTES es lo único que obliga a rehacer la capa: qué tiles
+   hay que pedir. El color, el filtro y el radio son estilo y se aplican encima
+   de las fuentes que ya están, sin volver a la red.
+
+   Antes la firma incluía `S.ceres.nivel` y `arbolesSoloMalos`, que son estilo
+   puro: cambiar de nivel o apretar "sólo los que no están en la mejor clase"
+   tiraba las cinco fuentes y volvía a pagar los cuatro segundos completos. Son
+   justo las dos cosas que uno hace mientras mira los árboles. */
+function arbFirmaFuentes(encendida){
+    const v = ceresVuelo('A');
+    const cat = encendida ? arbCatalogo() : null;
+    return [arbModo(), encendida, v ? v.week_key : '',
+            cat ? Object.keys(cat).sort().join(',') + '|' + Object.values(cat).join(',') : '']
+           .join('|');
+}
+
 function refrescarArboles(forzar){
     if(!CERES || !mapaListo()) return;
     const encendida = (currentMode === 'ceres' && arbolesOn)
                    || (currentMode === 'general' && variedadesOn);
-    const v = ceresVuelo('A');
-    const firma = [currentMode, encendida, arbModo(), arbolesSoloMalos,
-                   v ? v.week_key : '', S.ceres.param, S.ceres.nivel].join('|');
+    const firma = arbFirmaFuentes(encendida);
 
     if(forzar || firma !== arbFirma){
         arbFirma = firma;
         if(encendida && !pintarArboles()){
             if(currentMode === 'ceres') arbolesOn = false; else variedadesOn = false;
             arbFirma = null;
+            arbCargando = false;
         }
-        if(!encendida) quitarArboles();
+        if(!encendida){ quitarArboles(); arbCargando = false; }
     }
+    // El estilo se reaplica siempre: es barato y cubre los cambios que ya no
+    // reconstruyen nada (nivel, filtro, banda relativa del vuelo).
+    if(encendida) arbAplicarEstilo();
     renderBotonArboles();
     renderBotonVariedades();
+}
+
+/* Color, filtro y radio sobre las capas vivas. Sin red y sin reparseo.
+   Con memo: repintar() pasa por acá en cada repintado y no tiene sentido
+   reescribir tres propiedades por capa cuando ninguna cambió. */
+let arbEstiloFirma = null;
+function arbAplicarEstilo(forzar){
+    const capas = capasArboles();
+    if(!capas.length){ arbEstiloFirma = null; return; }
+    const color = arbExprColor();
+    const filtro = arbFiltro();
+    const radio = arbExprRadio();
+    const firma = capas.join(',') + '|' + JSON.stringify([color, filtro, radio]);
+    if(!forzar && firma === arbEstiloFirma) return;
+    arbEstiloFirma = firma;
+    capas.forEach(id => {
+        map.setPaintProperty(id, 'circle-color', color);
+        map.setPaintProperty(id, 'circle-radius', radio);
+        map.setFilter(id, filtro || null);
+    });
 }
 
 function renderBotonArboles(){
@@ -4926,8 +5066,11 @@ function renderBotonArboles(){
         btn.title = compareMode ? t('No disponible mientras se comparan dos vuelos.')
                   : hay ? '' : t('Este vuelo no tiene imagen por árbol para el indicador elegido.');
         btn.classList.toggle('active', arbolesOn && hay);
+        btn.classList.toggle('cargando', arbolesOn && hay && arbCargando);
+        // Cuatro segundos sin una palabra se leen como "no funciona".
         document.getElementById('btnArbolesLabel').textContent =
-            t(arbolesOn && hay ? 'Ocultar árboles' : 'Ver por árbol');
+            arbolesOn && hay && arbCargando ? t('Cargando árboles…')
+            : t(arbolesOn && hay ? 'Ocultar árboles' : 'Ver por árbol');
     }
     const bad = document.getElementById('btnArbolesMalos');
     if(bad){
@@ -4966,16 +5109,22 @@ function toggleArboles(){
     // Simétrico del de toggleCeldas, y con la misma nota: hoy los indicadores
     // con árboles y el de la grilla no se cruzan, así que es defensivo.
     if(arbolesOn && celdasOn){ celdasOn = false; refrescarCeldas(true); }
+    // Primero la cámara y después los tiles: encender desde z13 y dejar que la
+    // animación cruce z14 hacía pedir dos pirámides de tiles, y la de z13 se
+    // descartaba a los 600 ms. El salto es instantáneo, no animado, por lo
+    // mismo: cada zoom intermedio es una tanda de tiles que no se va a usar.
+    if(arbolesOn && map.getZoom() < ARB_ZOOM_UTIL)
+        map.jumpTo({zoom: ARB_ZOOM_UTIL});
     refrescarArboles(true);
     aplicarVelos();
-    if(arbolesOn && map.getZoom() < ARB_ZOOM_UTIL)
-        map.easeTo({zoom: ARB_ZOOM_UTIL, duration: 600});
     renderLegend();
 }
+/* Sólo cambia el filtro y el radio: no toca las fuentes. Antes esto costaba
+   los cuatro segundos completos de recarga. */
 function toggleArbolesMalos(){
     arbolesSoloMalos = !arbolesSoloMalos;
-    refrescarArboles(true);
-    aplicarVelos();
+    arbAplicarEstilo();
+    renderBotonArboles();
     renderLegend();
 }
 function toggleVariedades(){
@@ -5028,6 +5177,7 @@ function quitarCeldas(){
         if(k.indexOf(CEL_PREFIJO) === 0 && map.getSource(k)) map.removeSource(k);
     });
     CEL_CAPAS = [];
+    celPintado = false;
 }
 
 function pintarCeldas(){
@@ -5035,13 +5185,15 @@ function pintarCeldas(){
     quitarCeldas();
     const g = celdasGrid(), cat = celdasCatalogo();
     if(!g || !cat) return false;
+    celPintado = false;
     const minz = g.min_zoom || 10;
     Object.keys(cat).forEach(eq => {
         const id = CEL_PREFIJO + eq;
-        map.addSource(id, {
+        const bb = arbBBox(eq);
+        map.addSource(id, Object.assign({
             type:'vector', tiles:[g.tile_template.replace('{id}', cat[eq])],
             minzoom:minz, maxzoom:18
-        });
+        }, bb ? {bounds: bb} : {}));
         map.addLayer({
             id, type:'fill', source:id, 'source-layer':g.source_layer || 'grid',
             minzoom:minz,
@@ -5098,8 +5250,11 @@ function refrescarCeldas(forzar){
     if(!CERES || !mapaListo()) return;
     const encendida = currentMode === 'ceres' && celdasOn && celdasDisponible();
     const v = ceresVuelo('A');
-    const firma = [currentMode, encendida, v ? v.week_key : '', S.ceres.param,
-                   S.ceres.nivel].join('|');
+    // Sin `S.ceres.nivel`: el color de la celda viene DENTRO del tile, así que
+    // el nivel del mapa no la afecta en nada. Incluirlo hacía que cambiar de
+    // equipo a cuartel tirara las cinco fuentes y volviera a pedir las 1.766
+    // celdas, y de paso devolvía el relleno del polígono encima.
+    const firma = [currentMode, encendida, v ? v.week_key : '', S.ceres.param].join('|');
     if(forzar || firma !== celFirma){
         celFirma = firma;
         if(encendida && !pintarCeldas()){ celdasOn = false; celFirma = null; }
@@ -5412,6 +5567,7 @@ function repintar(){
 
     // La capa por árbol se refresca en un solo lugar para las dos pestañas que
     // la usan, y va ANTES de la leyenda porque puede apagarse sola.
+    veloFirma = null;              // repintar() ya tocó la visibilidad a mano
     if(CERES){ refrescarArboles(); refrescarCeldas(); }
     // Los velos van DESPUÉS de las dos capas: la visibilidad del nivel depende
     // del estado de ambas, y decidirla dentro de cada una hacía que la segunda
@@ -8159,9 +8315,39 @@ async function boot(){
    había pasado el mapa se quedaba sin capas: pasaba una vez de cada tres.) */
 let estiloListo = false;
 map.on('load', () => { estiloListo = true; inicializarMapa(); });
-// El velo depende del zoom: cruzar el mínimo de la capa de detalle cambia quién
-// tiene que verse. Sin esto había que tocar un control para que se enterara.
+// El velo depende del zoom Y de si la capa de detalle ya terminó de pintarse.
+// `zoomend` cubre lo primero; `idle` —que Mapbox emite cuando no queda nada por
+// cargar ni dibujar— cubre lo segundo, y es también donde se apaga el rótulo de
+// "Cargando árboles…". Sin el `idle` había que tocar un control para que el
+// mapa se enterara de que los árboles ya estaban.
 map.on('zoomend', () => aplicarVelos());
+function revisarCapasDetalle(){
+    comprobarPintado();
+    if(arbCargando && (arbPintado || !capasArboles().length)){
+        arbCargando = false;
+        renderBotonArboles();
+        renderLegend();
+    }
+    aplicarVelos();
+}
+map.on('idle', revisarCapasDetalle);
+
+// `idle` puede tardar: con los tiles entrando en tandas, Mapbox emitió UNA sola
+// vez en diez segundos. Si fuera el único disparador, el botón se quedaba en
+// "Cargando árboles…" y el relleno sin bajar aunque la capa ya estuviera
+// dibujando. `sourcedata` avisa mucho antes; se estrangula a una revisión cada
+// 400 ms y sólo mientras queda algo por confirmar, porque la comprobación es
+// un queryRenderedFeatures y no es gratis.
+let revisionPend = 0;
+map.on('sourcedata', e => {
+    const id = String(e.sourceId || '');
+    if(id.indexOf(ARB_PREFIJO) !== 0 && id.indexOf(CEL_PREFIJO) !== 0) return;
+    if(arbPintado && celPintado) return;
+    const ahora = performance.now();
+    if(ahora - revisionPend < 400) return;
+    revisionPend = ahora;
+    revisarCapasDetalle();
+});
 
 function encuadrarPredio(duracion){
     map.fitBounds([[GEO.bbox[0], GEO.bbox[1]], [GEO.bbox[2], GEO.bbox[3]]],

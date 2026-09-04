@@ -803,6 +803,60 @@ Dos detalles que hubo que resolver y conviene no volver a romper:
   pestaña + vuelo + indicador + nivel + filtro). Sin ese guardia, cada repintado
   volvía a crear cinco sources vectoriales y a pedir todos los tiles.
 
+### Los cuatro segundos de la capa por árbol
+
+Medido en frío, predio completo a z15, los cinco overlays del vuelo:
+
+```
+clic            →     0 ms
+tiles en mano   → ~2.000 ms   cinco fuentes vectoriales
+primer pintado  → ~4.300 ms   parseo y subida a GPU de 230.000 círculos
+```
+
+Ese costo es real y no se puede negociar: son 230.000 puntos. Lo que sí era
+arreglable —y era lo que se veía como "no renderiza"— es todo lo demás:
+
+**Uno. El mapa quedaba en blanco los cuatro segundos.** El velo bajaba el
+relleno del polígono en el instante del clic, y los árboles llegaban cuatro
+segundos después: en el medio, satelital pelado y ninguna explicación. Ahora el
+velo espera a que la capa haya dibujado. Medido: **0 ms de mapa vacío**, contra
+los ~4.300 ms de antes. Los polígonos ceden recién cuando los árboles están.
+
+**Dos. Cualquier cambio de estilo pagaba la recarga entera.** La firma que
+decidía si reconstruir incluía `S.ceres.nivel` y `arbolesSoloMalos`, que son
+estilo puro. Cambiar de nivel o apretar "sólo los que no están en la mejor
+clase" —las dos cosas que uno hace *mientras* mira los árboles— tiraba las cinco
+fuentes y volvía a la red. Ahora la firma cubre sólo lo que determina qué tiles
+pedir (modo, vuelo, catálogo de overlays) y el resto se aplica encima con
+`setPaintProperty` / `setFilter`. Las dos operaciones pasaron de ~4 s a
+instantáneas, con **cero peticiones**. Lo mismo en la capa de celdas, donde
+`S.ceres.nivel` tampoco pintaba nada: el color de la celda viene dentro del tile.
+
+**Tres. Se pedían tiles de equipos que no estaban en pantalla.** Ceres publica
+un overlay por equipo, así que son cinco fuentes, y sin `bounds` Mapbox le pide
+tiles a las cinco en toda la ventana. Los cinco equipos de Ketcal no se solapan,
+así que cada fuente declara su extensión (calculada del propio `geo_data.json`,
+con 65 m de margen para el árbol del borde) y mirando de cerca un equipo las
+otras cuatro no salen a la red.
+
+**Cuatro. Encender desde lejos pedía dos pirámides de tiles.** `toggleArboles`
+animaba el zoom hasta 14.2 *mientras* montaba la capa, y la animación cruzaba
+z14: se pedían los tiles de z13 y se descartaban a los 600 ms. Ahora la cámara
+salta primero y la capa se monta después.
+
+**Cinco. Cuatro segundos sin una palabra se leen como "no funciona".** El botón
+dice "Cargando árboles…" y late mientras tanto.
+
+Una trampa que conviene no reintroducir: **`map.isSourceLoaded()` no sirve como
+señal de "ya está"**. Verificado en este mapa: devuelve `false` para fuentes que
+están pintando miles de features —las cinco de celdas con 153 a 450 celdas en
+pantalla, la de árboles de E1 con 2.954 puntos—, porque con `bounds` y `maxzoom`
+quedan tiles especulativos pendientes indefinidamente. La comprobación buena es
+`queryRenderedFeatures`, que es cara: se hace una sola vez por activación y el
+resultado se pega. El disparador es `sourcedata` estrangulado a 400 ms, no
+`idle`: con los tiles entrando en tandas, `idle` llegó a emitir **una sola vez
+en diez segundos** y el botón se quedaba colgado en "Cargando…".
+
 ### El velo, una sola autoridad
 
 Era el bug de "a veces la vista por árbol queda bugeada o queda por debajo de
