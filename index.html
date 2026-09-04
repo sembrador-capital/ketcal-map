@@ -510,6 +510,8 @@ body.prod-active.compare-mode .mapboxgl-ctrl-bottom-right { bottom:118px; }
     transition:border-color 0.15s, box-shadow 0.15s;
 }
 .fc-select { min-width:156px; }
+/* El selector de programa carga lab + cadencia + cobertura en una linea. */
+#selPrograma { min-width:268px; }
 .fc-select:hover, .agro-select:hover, .fin-select:hover, .pest-select:hover { border:var(--sem-border-strong); }
 .fc-select:focus, .agro-select:focus, .fin-select:focus, .pest-select:focus {
     border:var(--sem-border-accent); box-shadow:var(--sem-focus-ring);
@@ -2350,6 +2352,35 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 .ket-lg-src.ref { background:var(--sem-navy-a12); color:var(--sem-navy); }
 .ket-lg-src.rel { background:var(--dat-rel-1); color:var(--dat-rel-4); }
 
+/* ── Cabecera de programa en la leyenda ─────────────────────────────────
+   Un programa es matriz x laboratorio. Lo que cambia entre uno y otro no es
+   solo el nombre del lab: cambian la cadencia, las unidades muestreadas y los
+   parametros. La cabecera lo dice antes de que el usuario lea un solo color. */
+.nut-prog { margin:-2px 0 9px; padding-bottom:8px; border-bottom:var(--sem-border-soft); }
+.nut-prog-top { display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:4px; }
+.nut-lab { display:inline-block; padding:2px 8px; border-radius:var(--sem-radius-pill);
+    background:var(--sem-navy); color:var(--sem-surface);
+    font-size:10px; font-weight:600; letter-spacing:0.02em; white-space:nowrap; }
+.nut-prog-mat { font-size:11.5px; font-weight:500; color:var(--sem-ink); }
+.nut-prog-meta { font-size:10.5px; line-height:1.5; color:var(--sem-text-2);
+    font-variant-numeric:tabular-nums; }
+.nut-prog-meta b { font-weight:600; color:var(--sem-ink); }
+.nut-prog-warn { margin-top:4px; font-size:10px; line-height:1.45; color:var(--sem-text-3); }
+
+/* Contador de unidades por nivel: el segmentado deja de ser una apuesta a
+   ciegas cuando dice cuantas unidades tiene dato en cada nivel. */
+.ket-seg button[data-n]::after { content:attr(data-n); margin-left:5px; font-size:9.5px;
+    font-weight:600; color:var(--sem-text-3); font-variant-numeric:tabular-nums; }
+.ket-seg button.active[data-n]::after { color:var(--sem-navy); }
+.ket-seg button:disabled { opacity:0.42; cursor:not-allowed; }
+.ket-seg button:disabled:hover { color:var(--sem-text-2); }
+.ket-toggle input:disabled { cursor:not-allowed; }
+.ket-toggle.off { color:var(--sem-text-3); cursor:not-allowed; }
+.fc-compare-btn:disabled { opacity:0.45; cursor:not-allowed; }
+.nut-serie-flag { font-size:9.5px; font-weight:600; color:var(--sem-navy);
+    background:var(--sem-navy-wash); border-radius:var(--sem-radius-pill);
+    padding:1px 5px; margin-left:5px; }
+
 /* ── Tooltip: filas de detalle ── */
 .ket-tt-rows { display:flex; flex-direction:column; gap:3px; }
 .ket-tt-row { display:flex; justify-content:space-between; gap:14px; font-size:11px; }
@@ -2498,9 +2529,11 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
         <button type="button" class="nut-subtab" role="tab" aria-selected="false" onclick="switchMode('suelo')" data-i18n="Análisis de suelo">Análisis de suelo</button>
     </div>
     <div class="nut-sep"></div>
-    <div class="fc-group" id="grpMatriz">
-        <label class="fc-label" for="selMatriz" data-i18n="Análisis">Análisis</label>
-        <select class="fc-select" id="selMatriz" onchange="setMatriz(this.value)"></select>
+    <div class="fc-group" id="grpPrograma">
+        <label class="fc-label" for="selPrograma" data-i18n="Programa">Programa</label>
+        <select class="fc-select" id="selPrograma" onchange="setPrograma(this.value)"
+                title="Un programa es la combinación de matriz y laboratorio: cada uno tiene su propia cadencia, cobertura y set de parámetros."
+                data-i18n-title="Un programa es la combinación de matriz y laboratorio: cada uno tiene su propia cadencia, cobertura y set de parámetros."></select>
     </div>
     <div class="fc-group">
         <label class="fc-label" for="selParam" data-i18n="Parámetro">Parámetro</label>
@@ -2523,8 +2556,18 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
             <button type="button" data-v="equipos"     onclick="setNivelNut('equipos')"     data-i18n="Equipo">Equipo</button>
         </div>
     </div>
+    <div class="fc-group">
+        <label class="fc-label" data-i18n="Filtro">Filtro</label>
+        <div class="ket-toggles">
+            <label class="ket-toggle" id="lblSoloEvo"
+                   title="Restringe el mapa a las unidades con dos o más muestreos en este programa."
+                   data-i18n-title="Restringe el mapa a las unidades con dos o más muestreos en este programa.">
+                <input type="checkbox" id="chkSoloEvo" onchange="setSoloEvo(this.checked)">
+                <span data-i18n="Sólo con evolución">Sólo con evolución</span></label>
+        </div>
+    </div>
     <div class="fc-divider" aria-hidden="true"></div>
-    <button class="fc-compare-btn nut-evo-btn" onclick="openEvo()" title="Series de tiempo por parámetro con sus umbrales" data-i18n-title="Series de tiempo por parámetro con sus umbrales"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
+    <button class="fc-compare-btn nut-evo-btn" id="btnEvo" onclick="openEvo()" title="Series de tiempo por parámetro con sus umbrales" data-i18n-title="Series de tiempo por parámetro con sus umbrales"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
     <div class="fc-group">
         <label class="fc-label" data-i18n="Capas">Capas</label>
         <div class="ket-toggles">
@@ -2823,6 +2866,24 @@ const I18N = {
 'Análisis foliares':'Leaf analyses', 'Análisis de suelo':'Soil analyses',
 'Vista de nutrición':'Nutrition view', 'Análisis':'Analysis', 'Parámetro':'Parameter',
 'Muestreo':'Sampling', 'Profundidad':'Depth', 'Evolución':'Trend', 'Unidad':'Unit',
+'Programa':'Programme', 'Programa de muestreo':'Sampling programme',
+'Laboratorio':'Laboratory', 'Filtro':'Filter',
+'Sólo con evolución':'Series only',
+'Restringe el mapa a las unidades con dos o más muestreos en este programa.':'Restricts the map to units with two or more samplings in this programme.',
+'Este programa no tiene ninguna unidad con dos muestreos.':'This programme has no unit with two samplings.',
+'muestreo':'sampling', 'muestreos':'samplings', 'unid.':'units', 'con dato':'with data',
+'Esta unidad tiene un solo muestreo en este programa.':'This unit has a single sampling in this programme.',
+'semanal':'weekly', 'quincenal':'fortnightly', 'mensual':'monthly',
+'trimestral':'quarterly', 'semestral':'half-yearly', 'anual':'annual',
+'una sola fecha':'single date', 'cada':'every', 'entre':'between',
+'con evolución':'with a series', 'sin evolución':'no series',
+'No disponible mientras se comparan dos vuelos.':'Not available while comparing two flights.',
+'Muestreos de la unidad':'Samplings for this unit',
+'ubicaciones muestreadas':'locations sampled',
+'Sin unidades con dos o más muestreos en este programa.':'No unit has two or more samplings in this programme.',
+'Programa sin serie temporal':'Programme without a time series',
+'Sólo se muestran unidades con dos o más muestreos.':'Only units with two or more samplings are shown.',
+'Un programa es la combinación de matriz y laboratorio: cada uno tiene su propia cadencia, cobertura y set de parámetros.':'A programme is a matrix–laboratory pair: each has its own cadence, coverage and parameter set.',
 // ── Riego (DropControl) ──
 'Métrica':'Metric', 'Actualizar':'Refresh',
 'Consumo por sector · DropControl':'Consumption by sector · DropControl',
@@ -3053,6 +3114,12 @@ function fmtVal(v){
 function fmtP(v, par){
     return par ? fmtDec(v, decDe(par.min, par.max)) : fmtVal(v);
 }
+/* Mes y año: en las series de nutricion el dia no aporta y alarga la ficha. */
+function fmtMes(iso){
+    if(!iso) return '—';
+    const [y,m] = iso.split('-').map(Number);
+    return new Date(y, m-1, 1).toLocaleDateString(LOC(), {month:'short', year:'numeric'});
+}
 function fmtFecha(iso){
     if(!iso) return '—';
     const [y,m,d] = iso.split('-').map(Number);
@@ -3114,7 +3181,7 @@ let NUTRI_SUBMODE = 'foliares';
 
 const S = {
     gen: { nivel:'sectores', color:'equipo' },
-    nut: { matriz:'Foliar', param:null, fecha:null, prof:null, nivel:'ubicaciones' },
+    nut: { prog:null, param:null, fecha:null, prof:null, nivel:'ubicaciones', soloEvo:false },
     riego: { metrica:'total_m3', nivel:'sectores', modo:'dias', desplazamiento:0 },
     ceres: { param:'water_stress', nivel:'sectores', vuelo:null, vueloB:null },
     capas: { etiquetas:true, valvulas:false, pozos:true, calicatas:false },
@@ -3179,10 +3246,15 @@ function renderStamp(){
             : riegoEstado === 'cargando' ? t('Consultando DropControl…')
             : riegoEstado === 'error' ? t('No se pudo consultar DropControl.') : '';
     }else{
+        // El laboratorio va en el sello: en Ketcal la misma matriz la miden dos
+        // labs distintos y el valor no se lee igual según cuál sea.
+        const g = programaActual();
         iso = S.nut.fecha;
-        el.textContent = iso
-            ? `${t('Muestreo')} ${fmtFecha(iso)} · ${antiguedad(iso)}`
-            : (NUT ? t('Sin dato para este parámetro y muestreo.') : '');
+        el.textContent = !NUT ? ''
+            : iso ? `${t('Muestreo')} ${fmtFecha(iso)}${campanaAprox() ? ' *' : ''}`
+                    + (g ? ` · ${g.lab}` : '') + ` · ${antiguedad(iso)}`
+            : g ? `${plural(g.fechas.length, 'muestreo', 'muestreos')} · ${g.lab}`
+            : t('Sin dato para este parámetro y muestreo.');
     }
     el.style.display = el.textContent ? 'block' : 'none';
 }
@@ -3603,48 +3675,165 @@ function colorGen(escala, v){
    NUTRICIÓN
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Sólo las matrices que se pueden pintar por polígono. Las dos de línea base
-   2018 se miden en calicatas georreferenciadas, no en ubicaciones E-S-C: viven
-   en la capa de puntos "Calicatas 2018", no en el selector. */
-function matricesDeGrupo(grupo){
-    if(!NUT) return [];
-    return NUT.matrices.filter(m => m.grupo === grupo && m.mapeable !== false);
+/* ── PROGRAMA = matriz x laboratorio ────────────────────────────────────────
+   Una matriz NO es un programa de monitoreo. "Foliar" en Ketcal son dos
+   programas que conviven: Laboquim Terra recorre 28 ubicaciones cerca de una
+   vez al año, y AGQ Labs sigue 5 ubicaciones fijas cada mes con dos parámetros
+   más (S y Mo). Mezclarlos en un solo selector de fechas hacía que, al avanzar
+   un muestreo, cambiaran a la vez el laboratorio, las unidades muestreadas y
+   los parámetros disponibles: el mapa se repintaba entero y no había forma de
+   saber por qué. Por eso se elige primero el programa y todo lo demás —
+   parámetros, fechas, profundidades, series— cuelga de él.
+
+   Las dos matrices de línea base 2018 no son programas: se miden en calicatas
+   georreferenciadas, no en ubicaciones E-S-C, y viven en su capa de puntos.
+   El build ya las deja fuera de `programas`. */
+
+const NIVELES_NUT = ['ubicaciones','sectores','cuarteles','equipos'];
+
+function programasDeGrupo(grupo){
+    if(!NUT || !NUT.programas) return [];
+    const orden = NUT.matrices.map(m => m.id);
+    // Dentro de la matriz, primero el programa de mayor cobertura espacial:
+    // es el que pinta más mapa al entrar.
+    return NUT.programas.filter(g => g.grupo === grupo).slice().sort((a,b) =>
+        (orden.indexOf(a.matriz) - orden.indexOf(b.matriz))
+        || (b.ubicaciones.length - a.ubicaciones.length)
+        || (b.fechas.length - a.fechas.length));
+}
+/* Por defecto, el primer programa que tenga al menos una unidad con serie: la
+   pestaña se abre mostrando algo que se puede leer en el tiempo. */
+function progDefault(grupo){
+    const gs = programasDeGrupo(grupo);
+    if(!gs.length) return null;
+    return (gs.find(g => g.con_serie.length) || gs[0]).id;
+}
+function progNombre(g){ return g ? (LANG === 'en' ? g.en : g.es) : ''; }
+function programaActual(){
+    return NUT && NUT.programas ? NUT.programas.find(g => g.id === S.nut.prog) || null : null;
 }
 function matrizActual(){
-    return NUT ? NUT.matrices.find(m => m.id === S.nut.matriz) : null;
+    const g = programaActual();
+    return g && NUT ? NUT.matrices.find(m => m.id === g.matriz) || null : null;
 }
+
+/* Palabra para la cadencia. El número de días crudo no dice nada; "mensual" y
+   "anual" es exactamente la distinción que separa a los dos programas foliares. */
+function cadenciaTexto(dias){
+    if(dias == null) return t('una sola fecha');
+    if(dias <= 10) return t('semanal');
+    if(dias <= 20) return t('quincenal');
+    if(dias <= 45) return t('mensual');
+    if(dias <= 120) return t('trimestral');
+    if(dias <= 240) return t('semestral');
+    return t('anual');
+}
+
+/* Índice por programa: sus lecturas, sus muestreos, y para cada nivel del mapa
+   qué unidades tienen dos o más muestreos DENTRO de ese programa. Esa última
+   pieza es la que permite ofrecer sólo lo que tiene evolución, en vez de las 53
+   ubicaciones del predio. Se calcula una vez sobre las ~2.100 lecturas. */
+let NUT_IDX = null;
+function nutIdx(){
+    if(NUT_IDX) return NUT_IDX;
+    NUT_IDX = new Map();
+    if(!NUT || !NUT.programas || !IDX) return NUT_IDX;
+    NUT.programas.forEach(g => {
+        const e = {ls:[], fechas:new Map(), porNivel:{}, series:{}};
+        NIVELES_NUT.forEach(n => { e.porNivel[n] = new Map(); e.series[n] = new Set(); });
+        NUT_IDX.set(g.id, e);
+    });
+    NUT.lecturas.forEach(l => {
+        const e = NUT_IDX.get(`${l.m}|${l.lab || ''}`);
+        if(!e) return;                       // línea base 2018: no es programa
+        e.ls.push(l);
+        if(!l.f) return;
+        if(!e.fechas.has(l.f))
+            e.fechas.set(l.f, {fecha:l.f, n:0, ubis:new Set(), aprox:!!l.fa});
+        const c = e.fechas.get(l.f);
+        c.n++;
+        const u = l.u ? IDX.ubicaciones.get(l.u) : null;
+        if(!u) return;
+        c.ubis.add(l.u);
+        NIVELES_NUT.forEach(n => {
+            const id = n === 'ubicaciones' ? l.u
+                     : n === 'sectores'    ? u.sector_id
+                     : n === 'cuarteles'   ? u.cuartel_id : u.equipo_id;
+            if(!e.porNivel[n].has(id)) e.porNivel[n].set(id, new Set());
+            e.porNivel[n].get(id).add(l.f);
+        });
+    });
+    NUT_IDX.forEach(e => {
+        e.campanas = [...e.fechas.values()]
+            .map(c => ({fecha:c.fecha, n:c.n, ubicaciones:c.ubis.size, aprox:c.aprox}))
+            .sort((a,b) => a.fecha < b.fecha ? 1 : -1);
+        NIVELES_NUT.forEach(n => e.porNivel[n].forEach((fs,id) => {
+            if(fs.size >= 2) e.series[n].add(id);
+        }));
+    });
+    return NUT_IDX;
+}
+function progEntry(){
+    const g = programaActual();
+    return g ? nutIdx().get(g.id) || null : null;
+}
+function unidadesConSerie(nivel){
+    const e = progEntry();
+    return e ? e.series[nivel] : new Set();
+}
+/* Nivel más fino que tenga alguna unidad con serie, o null si el programa es de
+   una sola fecha. Se usa para el modal de evolución y para desactivar el filtro. */
+function nivelConSerie(){
+    const e = progEntry();
+    if(!e) return null;
+    return NIVELES_NUT.find(n => e.series[n].size) || null;
+}
+/* El filtro "sólo con evolución" sólo manda si el programa tiene algo que
+   filtrar. En un programa de una sola fecha el checkbox queda apagado y
+   deshabilitado, en vez de vaciar el mapa sin explicación. */
+function soloEvoActivo(){
+    return !!(S.nut.soloEvo && nivelConSerie());
+}
+
 function paramsActuales(){
-    return (NUT && NUT.params[S.nut.matriz]) || [];
+    const g = programaActual();
+    if(!NUT || !g) return [];
+    const dentro = new Set(g.parametros);
+    return (NUT.params[g.matriz] || []).filter(p => dentro.has(p.id));
 }
 function paramActual(){
     return paramsActuales().find(p => p.id === S.nut.param) || null;
 }
 function campanasActuales(){
-    return (NUT && NUT.campanas[S.nut.matriz]) || [];
+    const e = progEntry();
+    return e ? e.campanas : [];
 }
 
-/* Campanas que tienen dato del parametro elegido. No todas las matrices se
-   midieron completas en cada fecha: S, Mo, Na y Cl foliares solo estan en las
-   muestras de AGQ. Ofrecer fechas sin dato deja el mapa en gris sin explicar
-   que el dato existe, pero en otro muestreo. */
+/* Campanas que tienen dato del parametro elegido. Dentro de un programa el set
+   de parametros es estable, pero no siempre completo: Cl y Na foliares no
+   vienen en todos los informes de Laboquim. Ofrecer fechas sin dato deja el
+   mapa en gris sin explicar que el dato existe, pero en otro muestreo. */
 function campanasDelParam(){
-    if(!NUT || !S.nut.param) return campanasActuales();
+    const e = progEntry();
+    if(!e) return [];
+    if(!S.nut.param) return e.campanas;
     const conDato = new Set();
-    NUT.lecturas.forEach(l => {
-        if(l.m !== S.nut.matriz || !l.f) return;
+    e.ls.forEach(l => {
+        if(!l.f) return;
         if(`${l.p} [${l.un || '-'}]` !== S.nut.param) return;
         if(S.nut.prof != null && l.d !== S.nut.prof) return;
         conDato.add(l.f);
     });
-    return campanasActuales().filter(c => conDato.has(c.fecha));
+    return e.campanas.filter(c => conDato.has(c.fecha));
 }
 
-/* Lecturas que pasan los filtros vigentes. */
+/* Lecturas del programa activo que pasan los filtros vigentes. */
 function lecturas(){
-    if(!NUT) return [];
-    const {matriz, param, fecha, prof} = S.nut;
-    return NUT.lecturas.filter(l =>
-        l.m === matriz && l.u &&
+    const e = progEntry();
+    if(!e) return [];
+    const {param, fecha, prof} = S.nut;
+    return e.ls.filter(l =>
+        l.u &&
         (param == null || `${l.p} [${l.un || '-'}]` === param) &&
         (fecha == null || l.f === fecha) &&
         (prof == null || l.d === prof));
@@ -3673,10 +3862,19 @@ function valoresNut(nivel){
     });
 
     const p = paramActual();
+    // "Sólo con evolución": deja fuera las unidades con un único muestreo en
+    // este programa. Filtra el mapa, la leyenda, las métricas y el ranking de
+    // una sola vez, porque todos leen de aquí.
+    const serie = soloEvoActivo() ? unidadesConSerie(nivel) : null;
+    const eProg = progEntry();
+    const porUnidad = eProg ? eProg.porNivel[nivel] : new Map();
     acum.forEach((arr, clave) => {
+        if(serie && !serie.has(clave)) return;
+        const fp = porUnidad.get(clave);
+        const fechasProg = fp ? [...fp].sort().reverse() : [];
         const v = arr.reduce((a,l) => a + l.v, 0) / arr.length;
         out.set(clave, {
-            v, n:arr.length,
+            v, n:arr.length, fechasProg, serie:fechasProg.length >= 2,
             e: p ? estadoDe(v, p) : null,
             fechas:[...new Set(arr.map(l => l.f))].sort().reverse(),
             labs:[...new Set(arr.map(l => l.lab).filter(Boolean))],
@@ -4399,15 +4597,56 @@ function arbClick(e){
         </div>`).addTo(map);
 }
 
-/* Con las variedades encendidas se ocultan los polígonos completos: son
-   230.000 círculos de 2 px y cualquier capa encima compite con ellos. Se
-   restauran al apagar o al salir de General. */
-function arbVelo(ocultar){
+/* ── Velos: UNA sola autoridad sobre la visibilidad del nivel ────────────
+   Antes esto lo decidían tres lugares —repintar(), el velo de los árboles y el
+   de las celdas— y ganaba el último en correr. Como repintar() llama primero a
+   refrescarArboles() y después a refrescarCeldas(), el velo de las celdas (que
+   con las celdas apagadas dice "mostrar") deshacía el de las variedades:
+   bastaba mover cualquier control para que el polígono volviera y enterrara los
+   230.000 árboles bajo un relleno con 62 % de opacidad. Ése era el "queda por
+   debajo de los polígonos".
+
+   Ahora se mira TODO el estado y se decide una vez, con una regla única:
+   si hay una capa de detalle montada Y el zoom alcanza para que dibuje, el
+   RELLENO del nivel se apaga. Vale para las tres capas de detalle —variedades
+   en General, celdas y árboles por indicador en Ceres—: las tres se miran
+   contra el satelital, y un relleno al 62 % encima las apaga. San Gerardo sólo
+   lo hacía con variedades porque su capa por árbol convive con un solo nivel
+   de polígono; acá son cuatro y el efecto se nota mucho más.
+
+   El contorno se conserva siempre: es la única referencia de qué unidad se
+   está mirando cuando el relleno desaparece. Las etiquetas siguen al
+   interruptor "Etiquetas" y nada más: apagarlas por cuenta propia dejaba el
+   interruptor marcado y el mapa sin nombres.
+
+   La condición de zoom es la otra mitad del arreglo. La capa por árbol no
+   dibuja bajo z13 y la grilla bajo el min_zoom que declara Ceres; sin este
+   guardia, encenderlas desde lejos apagaba el relleno y no ponía nada en su
+   lugar: el predio quedaba en puros contornos. Por eso también se reevalúa en
+   cada `zoomend`. */
+function veloMinzoom(){
+    if(currentMode === 'general')
+        return (variedadesOn && capasArboles().length) ? ARB_MINZOOM : null;
+    if(currentMode === 'ceres'){
+        if(celdasOn && capasCeldas().length){
+            const g = celdasGrid();
+            return (g && g.min_zoom) || 10;
+        }
+        if(arbolesOn && capasArboles().length) return ARB_MINZOOM;
+    }
+    return null;
+}
+function aplicarVelos(){
+    if(!mapaListo()) return;
+    const mz = veloMinzoom();
+    const tapar = mz != null && map.getZoom() >= mz;
     const nivel = nivelActivo();
     ['fill','line','label'].forEach(sfx => {
         const id = `${nivel}-${sfx}`;
         if(!map.getLayer(id)) return;
-        const visible = !ocultar && (sfx !== 'label' || S.capas.etiquetas);
+        const visible = sfx === 'fill'  ? !tapar
+                      : sfx === 'label' ? S.capas.etiquetas
+                      : true;
         map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
     });
 }
@@ -4433,7 +4672,6 @@ function refrescarArboles(forzar){
         }
         if(!encendida) quitarArboles();
     }
-    arbVelo(currentMode === 'general' && variedadesOn);
     renderBotonArboles();
     renderBotonVariedades();
 }
@@ -4441,9 +4679,10 @@ function refrescarArboles(forzar){
 function renderBotonArboles(){
     const btn = document.getElementById('btnArboles');
     if(btn){
-        const hay = arbDisponible() && arbModo() === 'indicador';
+        const hay = arbDisponible() && arbModo() === 'indicador' && !compareMode;
         btn.disabled = !hay;
-        btn.title = hay ? '' : t('Este vuelo no tiene imagen por árbol para el indicador elegido.');
+        btn.title = compareMode ? t('No disponible mientras se comparan dos vuelos.')
+                  : hay ? '' : t('Este vuelo no tiene imagen por árbol para el indicador elegido.');
         btn.classList.toggle('active', arbolesOn && hay);
         document.getElementById('btnArbolesLabel').textContent =
             t(arbolesOn && hay ? 'Ocultar árboles' : 'Ver por árbol');
@@ -4486,6 +4725,7 @@ function toggleArboles(){
     // con árboles y el de la grilla no se cruzan, así que es defensivo.
     if(arbolesOn && celdasOn){ celdasOn = false; refrescarCeldas(true); }
     refrescarArboles(true);
+    aplicarVelos();
     if(arbolesOn && map.getZoom() < ARB_ZOOM_UTIL)
         map.easeTo({zoom: ARB_ZOOM_UTIL, duration: 600});
     renderLegend();
@@ -4493,12 +4733,14 @@ function toggleArboles(){
 function toggleArbolesMalos(){
     arbolesSoloMalos = !arbolesSoloMalos;
     refrescarArboles(true);
+    aplicarVelos();
     renderLegend();
 }
 function toggleVariedades(){
     if(!arbVariedadesDisponibles()) return;
     variedadesOn = !variedadesOn;
     refrescarArboles(true);
+    aplicarVelos();
     if(variedadesOn && map.getZoom() < ARB_ZOOM_UTIL)
         map.easeTo({zoom: ARB_ZOOM_UTIL, duration: 600});
     renderLegend();
@@ -4579,18 +4821,6 @@ function pintarCeldas(){
     return true;
 }
 
-/* Dos rellenos superpuestos dan un color que no es ninguno de los dos, así que
-   con celdas se ocultan relleno y etiquetas del nivel, pero se conserva el
-   contorno: es la única referencia de qué unidad se está mirando. */
-function celdasVelo(ocultar){
-    const n = nivelActivo();
-    if(map.getLayer(`${n}-fill`))
-        map.setLayoutProperty(`${n}-fill`, 'visibility', ocultar ? 'none' : 'visible');
-    if(map.getLayer(`${n}-label`))
-        map.setLayoutProperty(`${n}-label`, 'visibility',
-            (!ocultar && S.capas.etiquetas) ? 'visible' : 'none');
-}
-
 function fmtBanda(v){ return fmtDec(v, 1); }
 function fmtHaCel(ha){
     // Una banda con celdas redondeada a "0,0 ha" se lee como vacía, y al lado
@@ -4633,7 +4863,6 @@ function refrescarCeldas(forzar){
         if(encendida && !pintarCeldas()){ celdasOn = false; celFirma = null; }
         if(!encendida) quitarCeldas();
     }
-    celdasVelo(encendida);
     renderBotonCeldas();
     renderCeldasHist();
 }
@@ -4642,12 +4871,13 @@ function renderBotonCeldas(){
     const btn = document.getElementById('btnCeldas');
     if(!btn) return;
     const g = celdasGrid();
-    const hay = celdasDisponible();
+    const hay = celdasDisponible() && !compareMode;
     btn.disabled = !hay;
     btn.classList.toggle('active', celdasOn && hay);
     document.getElementById('btnCeldasLabel').textContent =
         t(celdasOn && hay ? 'Ocultar celdas' : 'Ver por celda');
-    if(!hay && g){
+    if(compareMode){ btn.title = t('No disponible mientras se comparan dos vuelos.'); }
+    else if(!hay && g){
         const donante = ceresParams().find(x => x.id === g.param);
         btn.title = S.ceres.param !== g.param
             ? `${t('Sólo está disponible para')} ${ceresEtiquetaParam(donante) || g.param}`
@@ -4710,6 +4940,7 @@ function toggleCeldas(){
     // el mapa no tiene por qué encender las dos capas encimadas.
     if(celdasOn && arbolesOn){ arbolesOn = false; refrescarArboles(true); }
     refrescarCeldas(true);
+    aplicarVelos();
     const minz = (celdasGrid() || {}).min_zoom || 10;
     if(celdasOn && map.getZoom() < minz) map.easeTo({zoom:minz + 0.5, duration:600});
     renderLegend();
@@ -4919,6 +5150,10 @@ function repintar(){
     // La capa por árbol se refresca en un solo lugar para las dos pestañas que
     // la usan, y va ANTES de la leyenda porque puede apagarse sola.
     if(CERES){ refrescarArboles(); refrescarCeldas(); }
+    // Los velos van DESPUÉS de las dos capas: la visibilidad del nivel depende
+    // del estado de ambas, y decidirla dentro de cada una hacía que la segunda
+    // deshiciera a la primera.
+    aplicarVelos();
 
     renderLegend();
     renderStats();
@@ -5028,7 +5263,8 @@ function renderLegend(){
     if(currentMode === 'ceres'){ el.innerHTML = legendCeres(activo); return; }
 
     const p = paramActual();
-    if(!p){ el.innerHTML = `<div class="legend-label">${t('Sin dato')}</div>`; return; }
+    if(!p){ el.innerHTML = cabeceraPrograma()
+        + `<div class="legend-label">${t('Sin dato')}</div>`; return; }
     const vals = window._valsNut || valoresNut(activo);
     const bandas = bandasDe(p);
 
@@ -5064,15 +5300,45 @@ function renderLegend(){
         : fuente === 'relativa' ? t('Sin umbral agronómico definido: los cortes son los cuartiles del propio predio. Indica alto o bajo respecto del resto de Ketcal, no cumplimiento.')
         : t('Valor de referencia general para cítricos, pendiente de validación por agronomía. Se edita en umbrales_nutricion.json.');
 
-    el.innerHTML = `<div class="legend-label">${esc(t(p.es === p.parametro ? p.parametro : p[LANG] || p.parametro))}`
+    el.innerHTML = cabeceraPrograma()
+        + `<div class="legend-label">${esc(t(p.es === p.parametro ? p.parametro : p[LANG] || p.parametro))}`
         + (p.unidad ? ` <span class="sem-muted-xs">${esc(p.unidad)}</span>` : '') + `</div>`
         + filas
         + (sinDato ? `<div class="ket-lg-row"><span class="sw" style="background:${SEM('--sem-grey')}"></span>`
             + `<span class="lb">${t('sin muestrear')}</span><span class="ct">${sinDato}</span></div>` : '')
         + `<div class="ket-lg-foot">${chip}<br>${esc(nota)}`
         + (campanaAprox() ? `<br>${esc(t('* Fecha del informe: el laboratorio no registró fecha de muestreo.'))}` : '')
+        + (soloEvoActivo() ? `<br>${esc(t('Sólo se muestran unidades con dos o más muestreos.'))}` : '')
         + (activo !== 'ubicaciones' ? `<br>${esc(t('Promedio de las muestras de cada unidad. No es un agregado nativo del laboratorio.'))}` : '')
         + `<br>${fmtVal(haTotal)} ha ${t('con dato').toLowerCase()} ${t('de')} ${fmtVal(feats(activo).reduce((a,f)=>a+f.properties.ha,0))} ha</div>`;
+}
+
+/* Cabecera de la leyenda: quién tomó la muestra, con qué cadencia y sobre
+   cuántas unidades. Es la primera respuesta a "¿qué estoy mirando?" y va antes
+   que cualquier color, porque en Ketcal dos programas del mismo tipo de
+   análisis no son comparables entre sí. */
+function cabeceraPrograma(){
+    const g = programaActual();
+    if(!g) return '';
+    const desde = g.fechas[0], hasta = g.fechas[g.fechas.length - 1];
+    const rango = g.fechas.length > 1
+        ? `${t('entre')} ${fmtFecha(desde)} ${LANG === 'en' ? 'and' : 'y'} ${fmtFecha(hasta)}`
+        : fmtFecha(hasta);
+
+    return `<div class="nut-prog">`
+        + `<div class="nut-prog-top"><span class="nut-lab">${esc(g.lab)}</span>`
+        + `<span class="nut-prog-mat">${esc(progNombre(g))}</span></div>`
+        + `<div class="nut-prog-meta"><b>${plural(g.fechas.length, 'muestreo', 'muestreos')}</b>`
+        + ` · ${esc(rango)}` + (g.cadencia_dias != null
+            ? ` · ${esc(cadenciaTexto(g.cadencia_dias))} (${t('cada')} ~${g.cadencia_dias} ${LANG === 'en' ? 'days' : 'días'})`
+            : '') + `</div>`
+        + `<div class="nut-prog-meta"><b>${g.ubicaciones.length}</b> ${esc(t('ubicaciones muestreadas'))}`
+        + ` · <b>${g.con_serie.length}</b> ${esc(t('con evolución'))}</div>`
+        + (g.fechas_aprox.length
+            ? `<div class="nut-prog-warn">${esc(t('* Fecha del informe: el laboratorio no registró fecha de muestreo.'))}`
+              + ` (${g.fechas_aprox.length}/${g.fechas.length})</div>`
+            : '')
+        + `</div>`;
 }
 
 /* El '*' del selector de muestreo marca las campañas cuya fecha viene del
@@ -5318,6 +5584,13 @@ function toggleCompare(){
 function encenderCompare(){
     if(currentMode !== 'ceres' || !CERES) return;
     if(!mapaListo()){ setTimeout(encenderCompare, 200); return; }
+    // Las capas de detalle sólo existen en el lado A: dejarlas encendidas
+    // comparaba árboles contra polígonos, y el velo apagaba el relleno de A
+    // mientras B conservaba el suyo. El comparador es de polígono contra
+    // polígono, así que se apagan al entrar.
+    if(arbolesOn){ arbolesOn = false; refrescarArboles(true); }
+    if(celdasOn){ celdasOn = false; refrescarCeldas(true); }
+    aplicarVelos();
     compareMode = true;
     document.body.classList.add('compare-mode');
     if(S.ceres.vueloB == null) S.ceres.vueloB = Math.max(0, ceresVuelos().length - 2);
@@ -5371,6 +5644,10 @@ function actualizarUICompare(){
     }
     const b = document.getElementById('ceresLadoB');
     if(b) b.style.display = compareMode ? '' : 'none';
+    // Los botones de capa de detalle dependen de compareMode, y entrar o salir
+    // del comparador es la única cosa que lo cambia.
+    renderBotonArboles();
+    renderBotonCeldas();
     renderCeresStepper();
 }
 
@@ -5978,6 +6255,13 @@ function renderStats(){
     if(peor) items.push(stat(`<span style="font-size:12.5px">${esc(peor[0])}</span>`,
         `${t('Peor unidad')} · ${fmtP(peor[1].v, p)}`));
     items.push(stat(String(nMuestras), t('Muestras')));
+    // Cuántas de las unidades pintadas se pueden leer en el tiempo. Sin esto,
+    // "Evolución" es una promesa que la mitad de las unidades no cumple.
+    if(!soloEvoActivo()){
+        const nSerie = [...vals.keys()].filter(id => vals.get(id).serie).length;
+        items.push(stat(`${nSerie}<span class="sem-muted-xs"> / ${vals.size}</span>`,
+            t('con evolución')));
+    }
 
     el.innerHTML = items.join(div);
     bar.classList.remove('hidden');
@@ -6139,17 +6423,28 @@ function fichaNutricion(p){
             + `<div class="sem-muted-xs">${esc(par.unidad||'')}</div>`
             + (banda ? `<div class="ket-chip" style="margin-left:auto;background:${banda.color};color:var(--sem-surface);border:none">${esc(banda.label)}</div>` : '')
             + `</div>`;
+        const gp = programaActual();
         html += kv([
-            [t('Muestras'), d.n],
-            [t('Muestreo'), d.fechas.map(fmtFecha).join(' · ')],
             [t('Laboratorio'), d.labs.join(' · ')],
+            [t('Programa'), gp
+                ? `${progNombre(gp)}${gp.cadencia_dias != null ? ' · ' + cadenciaTexto(gp.cadencia_dias) : ''}`
+                : null],
+            [t('Muestreo'), d.fechas.map(fmtFecha).join(' · ')],
+            [t('Muestras'), d.n],
+            [t('Muestreos de la unidad'), d.fechasProg.length
+                ? `${d.fechasProg.length}${d.fechasProg.length > 1
+                    ? ` · ${fmtMes(d.fechasProg[d.fechasProg.length-1])} – ${fmtMes(d.fechasProg[0])}` : ''}`
+                : null],
             [t('Clasificación lab.'), d.clasif.join(' · ')],
             [t('Rango óptimo'), par.escala === 'umbral'
                 ? `${par.umbral.optimo[0] != null ? fmtP(par.umbral.optimo[0], par) : '≤'} – ${par.umbral.optimo[1] != null ? fmtP(par.umbral.optimo[1], par) : '∞'}`
                 : null],
             [t('Superficie'), `${fmtVal(p.ha)} ha`]
         ]);
-        html += sect(t('Evolución temporal'), sparkUnidad(p.id, activo, par));
+        html += sect(t('Evolución temporal'), d.serie
+            ? sparkUnidad(p.id, activo, par)
+            : `<div class="nut-evo-empty">${t('Se necesitan al menos dos muestreos.')}<br>`
+              + `<span class="sem-muted-xs">${esc(t('Esta unidad tiene un solo muestreo en este programa.'))}</span></div>`);
     }else{
         html += `<div class="ket-empty">${t('Sin dato para este parámetro y muestreo.')}</div>`;
         html += kv([[t('Superficie'), `${fmtVal(p.ha)} ha`],
@@ -6159,13 +6454,18 @@ function fichaNutricion(p){
     // Ranking del muestreo activo: qué mirar primero.
     const arr = [...vals.entries()].sort((a,b) => severidad(b[1].v,par) - severidad(a[1].v,par));
     if(arr.length > 1){
-        const max = Math.max(...arr.map(([,x]) => x.v));
-        html += sect(`${t('Ranking')} · ${t(NIVELES[activo].titulo)}`,
+        // La marca "n×" dice cuántos muestreos tiene la unidad: es lo que
+        // separa un valor con historia de una foto suelta.
+        html += sect(`${t('Ranking')} · ${t(NIVELES[activo].titulo)}`
+            + (soloEvoActivo() ? ` · ${t('con evolución')}` : ''),
             `<div class="ket-rank">` + arr.map(([id,x]) => {
                 const col = colorNut(x.v, par);
                 return `<div class="ket-row${id===p.id?' active':''}" onclick="seleccionar('${activo}','${esc(id)}',true)">`
                     + `<span class="sw" style="background:${col}"></span>`
                     + `<span class="nm">${esc(id)}</span>`
+                    + (x.serie && !soloEvoActivo()
+                        ? `<span class="nut-serie-flag" title="${esc(t('Muestreos de la unidad'))}">`
+                          + `${x.fechasProg.length}×</span>` : '')
                     + `<span class="vl">${fmtP(x.v, par)}</span></div>`;
             }).join('') + `</div>`);
     }
@@ -6174,11 +6474,14 @@ function fichaNutricion(p){
 
 /* Serie temporal de una unidad para el parámetro activo, como SVG inline. */
 function serieDe(id, nivel, par){
-    if(!NUT || !par) return [];
+    const e = progEntry();
+    if(!e || !par) return [];
     const [nombre, unidad] = [par.parametro, par.unidad];
     const porFecha = new Map();
-    NUT.lecturas.forEach(l => {
-        if(l.m !== S.nut.matriz || l.p !== nombre || (l.un||null) !== (unidad||null) || !l.u || !l.f) return;
+    // Sólo lecturas del programa activo: encadenar un valor de Laboquim con uno
+    // de AGQ dibuja un salto que es de método, no de la planta.
+    e.ls.forEach(l => {
+        if(l.p !== nombre || (l.un||null) !== (unidad||null) || !l.u || !l.f) return;
         if(S.nut.prof != null && l.d !== S.nut.prof) return;
         const u = IDX.ubicaciones.get(l.u);
         if(!u) return;
@@ -6264,20 +6567,18 @@ function sparkUnidad(id, nivel, par){
 
 function openEvo(){
     const sel = document.getElementById('selEvoUnidad');
-    const activo = nivelActivo();
-    const conDato = new Set();
-    NUT.lecturas.forEach(l => {
-        if(l.m !== S.nut.matriz || !l.u) return;
-        const u = IDX.ubicaciones.get(l.u);
-        if(!u) return;
-        conDato.add(activo === 'ubicaciones' ? l.u
-            : activo === 'sectores' ? u.sector_id
-            : activo === 'cuarteles' ? u.cuartel_id : u.equipo_id);
-    });
-    const ids = [...conDato].sort();
-    sel.innerHTML = ids.map(id =>
-        `<option value="${esc(id)}"${id === S.sel ? ' selected' : ''}>${esc(id)}</option>`).join('');
-    if(!ids.length){ sel.innerHTML = `<option value="">—</option>`; }
+    const e = progEntry();
+    // El modal sólo ofrece unidades con dos o más muestreos: una unidad con un
+    // punto no tiene evolución que mostrar, y listarla obligaba a descubrirlo
+    // abriéndola. Si el nivel activo no tiene ninguna, cae al nivel más fino
+    // que sí las tenga y lo dice en el subtítulo.
+    const activo = (e && e.series[nivelActivo()].size) ? nivelActivo() : (nivelConSerie() || nivelActivo());
+    S.evoNivel = activo;
+    const ids = e ? [...e.series[activo]].sort() : [];
+    sel.innerHTML = ids.length
+        ? ids.map(id => `<option value="${esc(id)}"${id === S.sel ? ' selected' : ''}>${esc(id)}</option>`).join('')
+        : `<option value="">—</option>`;
+    sel.disabled = !ids.length;
     S.evoFocus = null;
     const over = document.getElementById('evoOver');
     over.classList.add('visible');
@@ -6298,10 +6599,13 @@ function renderEvo(){
     if(document.getElementById('evoOver').dataset.modo === 'ceres')
         return renderEvoCeres();
     const id = document.getElementById('selEvoUnidad').value;
-    const activo = nivelActivo();
-    const m = matrizActual();
+    const activo = S.evoNivel || nivelActivo();
+    const g = programaActual();
     document.getElementById('evoTitle').textContent = `${t('Evolución temporal')} · ${id || '—'}`;
-    document.getElementById('evoSub').textContent = m ? t(m.es) : '';
+    document.getElementById('evoSub').textContent = g
+        ? `${progNombre(g)} · ${g.lab} · ${plural(g.fechas.length, 'muestreo', 'muestreos')}`
+          + ` · ${t(NIVELES[activo].titulo)}`
+        : '';
 
     document.getElementById('evoLegend').innerHTML = paramActual()
         ? bandasDe(paramActual()).map(b =>
@@ -6309,7 +6613,11 @@ function renderEvo(){
         : '';
 
     const body = document.getElementById('evoBody');
-    if(!id){ body.innerHTML = `<div class="nut-evo-empty">${t('Sin serie temporal para esta unidad.')}</div>`; return; }
+    if(!id){
+        body.innerHTML = `<div class="nut-evo-empty">`
+            + `${t('Sin unidades con dos o más muestreos en este programa.')}</div>`;
+        return;
+    }
 
     const lista = S.evoFocus ? paramsActuales().filter(p => p.id === S.evoFocus) : paramsActuales();
     const cards = lista.map(par => {
@@ -6345,9 +6653,8 @@ function switchMode(modo){
     if(modo === 'foliares' || modo === 'suelo'){
         NUTRI_SUBMODE = modo;
         const grupo = modo === 'foliares' ? 'foliar' : 'suelo';
-        const disponibles = matricesDeGrupo(grupo);
-        if(!disponibles.some(m => m.id === S.nut.matriz)){
-            S.nut.matriz = disponibles.length ? disponibles[0].id : null;
+        if(!programasDeGrupo(grupo).some(g => g.id === S.nut.prog)){
+            S.nut.prog = progDefault(grupo);
             S.nut.param = null; S.nut.fecha = null; S.nut.prof = null;
         }
     }
@@ -6439,8 +6746,14 @@ function limpiarSeleccionSiCambiaNivel(v){
     }
 }
 
-function setMatriz(v){
-    S.nut.matriz = v; S.nut.param = null; S.nut.fecha = null; S.nut.prof = null;
+/* Cambiar de programa reinicia parámetro, fecha y profundidad: son coordenadas
+   del programa anterior y arrastrarlas dejaba el mapa en gris. */
+function setPrograma(v){
+    S.nut.prog = v; S.nut.param = null; S.nut.fecha = null; S.nut.prof = null;
+    poblarSelectores(); repintar(); renderPanel();
+}
+function setSoloEvo(on){
+    S.nut.soloEvo = !!on;
     poblarSelectores(); repintar(); renderPanel();
 }
 function setParam(v){ S.nut.param = v; poblarSelectores(); repintar(); renderPanel(); }
@@ -6531,17 +6844,48 @@ function poblarSelectores(soloDependientes){
     if(!NUT) return;
 
     const grupo = NUTRI_SUBMODE === 'foliares' ? 'foliar' : 'suelo';
-    const mats = matricesDeGrupo(grupo);
-    document.getElementById('grpMatriz').style.display = mats.length > 1 ? '' : 'none';
-    document.getElementById('selMatriz').innerHTML = mats.map(m =>
-        `<option value="${esc(m.id)}"${m.id===S.nut.matriz?' selected':''}>${esc(t(m.es))} (${m.n})</option>`).join('');
+    const progs = programasDeGrupo(grupo);
+    if(!progs.some(g => g.id === S.nut.prog)){
+        S.nut.prog = progDefault(grupo);
+        S.nut.param = null; S.nut.fecha = null; S.nut.prof = null;
+    }
+    // Un <optgroup> por matriz: así se ve de un vistazo que "Análisis foliar"
+    // son dos programas de laboratorios distintos, y no una sola serie.
+    const porMatriz = [];
+    progs.forEach(g => {
+        let b = porMatriz.find(x => x[0] === g.matriz);
+        if(!b){ b = [g.matriz, progNombre(g), []]; porMatriz.push(b); }
+        b[2].push(g);
+    });
+    document.getElementById('selPrograma').innerHTML = porMatriz.map(([,et, gs]) => {
+        const ops = gs.map(g =>
+            `<option value="${esc(g.id)}"${g.id===S.nut.prog?' selected':''}>`
+            + `${esc(g.lab)}`
+            + (g.cadencia_dias != null ? ` · ${esc(cadenciaTexto(g.cadencia_dias))}` : '')
+            + ` · ${esc(plural(g.fechas.length, 'muestreo', 'muestreos'))}`
+            + ` · ${g.ubicaciones.length} ${esc(t('unid.'))}`
+            + (g.con_serie.length ? '' : ` · ${esc(t('sin evolución'))}`)
+            + `</option>`).join('');
+        return porMatriz.length > 1 ? `<optgroup label="${esc(et)}">${ops}</optgroup>` : ops;
+    }).join('');
 
+    // Los parámetros se agrupan por CÓMO se leen sus colores. Un valor con
+    // umbral impreso por el laboratorio y uno en escala relativa se pintan
+    // igual pero no significan lo mismo; separarlos en el selector evita
+    // leer un cuartil del predio como si fuera un diagnóstico.
     const ps = paramsActuales();
     if(!S.nut.param || !ps.some(p => p.id === S.nut.param)) S.nut.param = ps.length ? ps[0].id : null;
-    document.getElementById('selParam').innerHTML = ps.map(p => {
-        const src = p.escala === 'umbral' ? (p.umbral.fuente === 'laboquim' ? '·lab' : '·ref') : '·rel';
-        return `<option value="${esc(p.id)}"${p.id===S.nut.param?' selected':''}>`
-             + `${esc(p[LANG] || p.parametro)}${p.unidad?' ('+esc(p.unidad)+')':''} ${src}</option>`;
+    const SRC = [
+        ['laboquim', t('Umbral de laboratorio')],
+        ['referencia', t('Umbral de referencia')],
+        ['relativa', t('Escala relativa')]
+    ];
+    document.getElementById('selParam').innerHTML = SRC.map(([clave, et]) => {
+        const ops = ps.filter(p =>
+            (p.escala === 'umbral' ? p.umbral.fuente : 'relativa') === clave
+        ).map(p => `<option value="${esc(p.id)}"${p.id===S.nut.param?' selected':''}>`
+             + `${esc(p[LANG] || p.parametro)}${p.unidad?' ('+esc(p.unidad)+')':''}</option>`).join('');
+        return ops ? `<optgroup label="${esc(et)}">${ops}</optgroup>` : '';
     }).join('');
 
     // Solo las fechas con dato del parametro, y si la elegida se queda sin
@@ -6554,18 +6898,48 @@ function poblarSelectores(soloDependientes){
         + cs.map(c => `<option value="${esc(c.fecha)}"${c.fecha===S.nut.fecha?' selected':''}>`
             + `${esc(fmtFecha(c.fecha))}${c.aprox?' *':''} · ${plural(c.ubicaciones,'unidad','unidades')}</option>`).join('');
 
-    const m = matrizActual();
-    const profs = m ? m.profundidades : [];
+    const gAct = programaActual();
+    const profs = gAct ? gAct.profundidades : [];
     document.getElementById('grpProf').style.display = profs.length ? '' : 'none';
     if(S.nut.prof && !profs.includes(S.nut.prof)) S.nut.prof = null;
     document.getElementById('selProf').innerHTML =
         `<option value=""${!S.nut.prof?' selected':''}>${LANG==='en'?'All depths':'Todas'}</option>`
         + profs.map(d => `<option value="${esc(d)}"${d===S.nut.prof?' selected':''}>${esc(d)}${/^\d+$/.test(d)?' cm':''}</option>`).join('');
 
+    // Filtro "sólo con evolución": vale sólo si el programa tiene alguna serie.
+    const hayEvo = !!nivelConSerie();
+    const chkEvo = document.getElementById('chkSoloEvo');
+    const lblEvo = document.getElementById('lblSoloEvo');
+    chkEvo.disabled = !hayEvo;
+    chkEvo.checked = soloEvoActivo();
+    lblEvo.classList.toggle('off', !hayEvo);
+    lblEvo.title = hayEvo
+        ? t('Restringe el mapa a las unidades con dos o más muestreos en este programa.')
+        : t('Este programa no tiene ninguna unidad con dos muestreos.');
+    const btnEvo = document.getElementById('btnEvo');
+    btnEvo.disabled = !hayEvo;
+    btnEvo.title = hayEvo
+        ? t('Series de tiempo por parámetro con sus umbrales')
+        : t('Este programa no tiene ninguna unidad con dos muestreos.');
+
+    // El segmentado de nivel lleva su conteo de unidades y se apaga donde el
+    // programa no muestreó nada: cambiar a un nivel vacío no es una opción que
+    // valga la pena ofrecer.
+    const eProg = progEntry();
+    const cuenta = n => !eProg ? 0
+        : (soloEvoActivo() ? eProg.series[n].size : eProg.porNivel[n].size);
+    if(!cuenta(S.nut.nivel)){
+        const alt = NIVELES_NUT.find(n => cuenta(n));
+        if(alt) S.nut.nivel = alt;
+    }
     document.querySelectorAll('#segNivelGen button').forEach(b =>
         b.classList.toggle('active', b.dataset.v === S.gen.nivel));
-    document.querySelectorAll('#segNivelNut button').forEach(b =>
-        b.classList.toggle('active', b.dataset.v === S.nut.nivel));
+    document.querySelectorAll('#segNivelNut button').forEach(b => {
+        const n = cuenta(b.dataset.v);
+        b.dataset.n = n;
+        b.disabled = !n;
+        b.classList.toggle('active', b.dataset.v === S.nut.nivel);
+    });
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -6602,6 +6976,9 @@ async function boot(){
    había pasado el mapa se quedaba sin capas: pasaba una vez de cada tres.) */
 let estiloListo = false;
 map.on('load', () => { estiloListo = true; inicializarMapa(); });
+// El velo depende del zoom: cruzar el mínimo de la capa de detalle cambia quién
+// tiene que verse. Sin esto había que tocar un control para que se enterara.
+map.on('zoomend', () => aplicarVelos());
 
 function encuadrarPredio(duracion){
     map.fitBounds([[GEO.bbox[0], GEO.bbox[1]], [GEO.bbox[2], GEO.bbox[3]]],

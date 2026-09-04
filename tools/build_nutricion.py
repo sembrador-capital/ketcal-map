@@ -32,7 +32,7 @@ import math
 import re
 import sys
 import unicodedata
-from collections import Counter, defaultdict
+from collections import Counter, OrderedDict, defaultdict
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -46,13 +46,13 @@ import openpyxl
 # asignacion. Van a la capa de puntos "Calicatas 2018", donde cada punto lleva
 # su perfil completo.
 MATRICES = [
-    ("Foliar", "foliar", "Analisis foliar", "Leaf analysis", True),
-    ("Suelo_Fertilidad", "suelo", "Suelo - fertilidad", "Soil - fertility", True),
-    ("Suelo_Salinidad", "suelo", "Suelo - salinidad", "Soil - salinity", True),
-    ("Solucion_Suelo", "suelo", "Solucion de suelo", "Soil solution", True),
-    ("Suelo_Quimico_LineaBase", "suelo", "Linea base 2018 - quimico",
+    ("Foliar", "foliar", "Análisis foliar", "Leaf analysis", True),
+    ("Suelo_Fertilidad", "suelo", "Suelo · fertilidad", "Soil - fertility", True),
+    ("Suelo_Salinidad", "suelo", "Suelo · salinidad", "Soil - salinity", True),
+    ("Solucion_Suelo", "suelo", "Solución de suelo", "Soil solution", True),
+    ("Suelo_Quimico_LineaBase", "suelo", "Línea base 2018 · químico",
      "2018 baseline - chemical", False),
-    ("Suelo_Fisico_LineaBase", "suelo", "Linea base 2018 - fisico",
+    ("Suelo_Fisico_LineaBase", "suelo", "Línea base 2018 · físico",
      "2018 baseline - physical", False),
 ]
 
@@ -560,6 +560,75 @@ def main():
     fuentes = [{norm(k): norm(v) or None for k, v in r.items() if k}
                for r in sh.get("Fuentes", []) if norm(r.get("Archivo"))]
 
+    # ── Programas: matriz x laboratorio ─────────────────────────────────────
+    # Una matriz NO es un programa de monitoreo. "Foliar" son dos: el muestreo
+    # anual extensivo de Laboquim y el seguimiento mensual de AGQ, con distinta
+    # cadencia, cobertura y set de parametros. Separarlos es lo que hace que la
+    # pestana se entienda, asi que el catalogo se arma aca y no en el navegador.
+    programas = []
+    combos = OrderedDict()
+    for l in lecturas:
+        if not l["lab"]:
+            continue
+        combos.setdefault((l["m"], l["lab"]), []).append(l)
+
+    for (matriz, lab), ls in combos.items():
+        meta = next((m for m in MATRICES if m[0] == matriz), None)
+        if not meta or not meta[4]:      # solo las matrices mapeables
+            continue
+        fechas = sorted({l["f"] for l in ls if l["f"]})
+        ubis = sorted({l["u"] for l in ls if l["u"]})
+        params = sorted({clave_param(l["p"], l["un"]) for l in ls})
+        profs = sorted({l["d"] for l in ls if l["d"]})
+
+        # Ubicaciones con SERIE: dos o mas muestreos DENTRO de este programa.
+        # Es lo que permite ofrecer solo lo que tiene evolucion en vez de las 53
+        # unidades del predio.
+        por_ubi = defaultdict(set)
+        for l in ls:
+            if l["u"] and l["f"]:
+                por_ubi[l["u"]].add(l["f"])
+        con_serie = sorted(u for u, fs in por_ubi.items() if len(fs) >= 2)
+
+        # Cadencia: mediana de dias entre muestreos consecutivos. Es lo que
+        # distingue "seguimiento mensual" de "muestreo anual" sin adjetivar.
+        cadencia = None
+        if len(fechas) > 1:
+            ds = []
+            for a, b in zip(fechas, fechas[1:]):
+                ds.append((date.fromisoformat(b) - date.fromisoformat(a)).days)
+            ds.sort()
+            cadencia = ds[len(ds) // 2]
+
+        programas.append(OrderedDict([
+            ("id", "%s|%s" % (matriz, lab)),
+            ("matriz", matriz),
+            ("lab", lab),
+            ("grupo", meta[1]),
+            ("es", meta[2]), ("en", meta[3]),
+            ("n", len(ls)),
+            ("fechas", fechas),
+            ("fechas_aprox", sorted({l["f"] for l in ls if l["f"] and l["fa"]})),
+            ("ubicaciones", ubis),
+            ("con_serie", con_serie),
+            ("parametros", params),
+            ("profundidades", profs),
+            ("cadencia_dias", cadencia),
+        ]))
+
+    # Orden: primero el grupo, y dentro de el los de cadencia mas corta, que son
+    # los que tienen algo que contar en el tiempo.
+    programas.sort(key=lambda x: (0 if x["grupo"] == "foliar" else 1,
+                                  x["cadencia_dias"] or 9999, x["lab"]))
+
+    sin_serie = [p2["id"] for p2 in programas if not p2["con_serie"]]
+    if sin_serie:
+        issues.append({"nivel": "info", "tipo": "programa_sin_serie",
+                       "detalle": "%d programa(s) no tienen ninguna ubicacion con "
+                                  "dos o mas muestreos: no ofrecen evolucion"
+                                  % len(sin_serie),
+                       "items": sin_serie})
+
     # ── Cobertura por ubicacion ─────────────────────────────────────────────
     cobertura = {}
     for uid in sorted({l["u"] for l in lecturas if l["u"]}):
@@ -592,6 +661,7 @@ def main():
             if any(l["m"] == mid for l in lecturas)
         ],
         "params": catalogo,
+        "programas": programas,
         "campanas": campanas,
         "lecturas": lecturas,
         "cobertura": cobertura,
@@ -627,6 +697,12 @@ def main():
     for m in salida["matrices"]:
         print("      %-26s n=%-5d ubic=%-3d fechas=%d"
               % (m["id"], m["n"], m["ubicaciones"], len(campanas.get(m["id"], []))))
+    print("    Programas (matriz x laboratorio):")
+    for pr in programas:
+        cad = ("cada ~%d d" % pr["cadencia_dias"]) if pr["cadencia_dias"] else "una sola fecha"
+        print("      %-22s %-16s %d fechas - %2d ubic (%d con serie) - %2d params - %s"
+              % (pr["matriz"], pr["lab"], len(pr["fechas"]), len(pr["ubicaciones"]),
+                 len(pr["con_serie"]), len(pr["parametros"]), cad))
     if issues:
         print("    ISSUES (%d):" % len(issues))
         for i in issues:

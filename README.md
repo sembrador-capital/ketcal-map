@@ -129,6 +129,77 @@ se lee igual que uno validado y hace tomar decisiones equivocadas.
 
 ---
 
+## Nutrición se organiza por PROGRAMA, no por matriz
+
+Éste es el cambio que hace que la pestaña se entienda. **Una matriz no es un
+programa de monitoreo.** "Foliar" en Ketcal son dos programas que conviven, con
+laboratorios, cadencias, coberturas y sets de parámetros distintos:
+
+| | Laboquim Terra | AGQ Labs |
+|---|---|---|
+| Muestreos | 4 (abr-24, may-24, jun-25, abr-26) | 6 (nov-25 → mar-26) |
+| Fechas | **todas aproximadas** (fecha del informe) | reales |
+| Cadencia | ~320 días (anual) | ~28 días (mensual) |
+| Ubicaciones | 28, variables entre fechas | 5 fijas |
+| Con serie (≥2 muestreos) | 12 | 5 |
+| Parámetros | 12 | 14 (agrega S y Mo) |
+
+Lo mismo en suelo: `Suelo_Fertilidad` son **dos campañas de una fecha cada una**
+(AGQ, 5 ubicaciones, oct-2025, 24 parámetros; AgroLab, 6 ubicaciones, nov-2025,
+21 parámetros), y sólo `Solucion_Suelo` (AGQ, mensual) tiene serie.
+
+Con el diseño anterior, el selector de "Muestreo" listaba las 10 fechas foliares
+seguidas. Al avanzar una fecha cambiaban **a la vez** el laboratorio, las
+unidades muestreadas y los parámetros disponibles: el mapa se repintaba entero y
+no había forma de saber por qué. Ése era el "no se comprende bien".
+
+Ahora se elige primero el **programa** y todo lo demás cuelga de él:
+
+- El selector agrupa los programas por matriz con `<optgroup>`, y cada opción
+  dice el laboratorio, la cadencia, cuántos muestreos y cuántas unidades:
+  `Laboquim Terra · anual · 4 muestreos · 28 unid.`
+- La **leyenda va encabezada por la procedencia**: chip con el laboratorio,
+  nombre del análisis, cuántos muestreos y entre qué fechas, la cadencia en días,
+  cuántas ubicaciones muestreadas y cuántas con evolución, y el aviso de fechas
+  aproximadas con su proporción. Es la primera respuesta a "¿qué estoy mirando?"
+  y va antes que cualquier color, porque dos programas del mismo análisis no son
+  comparables entre sí.
+- El **sello superior** lleva el laboratorio junto a la fecha del muestreo.
+- Las **series de tiempo nunca cruzan programas**: encadenar un valor de Laboquim
+  con uno de AGQ dibuja un salto que es de método, no de la planta.
+- Los **parámetros se agrupan por cómo se leen sus colores** (umbral de
+  laboratorio / de referencia / escala relativa), no por orden agronómico: un
+  cuartil del predio y un diagnóstico se pintan igual y no significan lo mismo.
+- El **catálogo de programas se arma en el build** (`programas` en
+  `nutricion_data.json`), no en el navegador.
+
+### "Sólo con evolución"
+
+El filtro que pedía el encargo: restringe mapa, leyenda, métricas, ranking y
+selector del modal a las unidades con **dos o más muestreos dentro del programa
+elegido**. Se calcula por nivel, porque una unidad sin serie a nivel de ubicación
+puede tenerla al agregar por sector:
+
+| Programa | Ubicaciones | Sectores | Cuarteles | Equipos |
+|---|---|---|---|---|
+| Foliar · Laboquim Terra | 12 | 13 | 12 | 5 |
+| Foliar · AGQ Labs | 5 | 5 | 3 | 3 |
+| Solución de suelo · AGQ | 5 | 5 | 3 | 3 |
+| Los tres de una sola fecha | 0 | 0 | 0 | 0 |
+
+En un programa sin ninguna serie el checkbox queda apagado y deshabilitado, y el
+botón "Evolución" también, en vez de vaciar el mapa sin explicación.
+
+El **segmentado de nivel lleva su conteo** de unidades con dato (o con serie, si
+el filtro está puesto) y se deshabilita donde el programa no muestreó nada.
+El **ranking marca `n×`** los muestreos que tiene cada unidad en el programa —no
+en el muestreo seleccionado, que siempre daría 1.
+
+El modal de Evolución sólo ofrece unidades con serie; si el nivel activo no tiene
+ninguna, cae al nivel más fino que sí las tenga y lo dice en el subtítulo.
+
+---
+
 ## El layout, igual que San Gerardo
 
 El reparto de controles se copia del mapa de San Gerardo, verificado contra el
@@ -190,12 +261,12 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   de plantación, portainjerto, análisis disponibles), capas de válvulas (150),
   pozos (3) y etiquetas, buscador, tooltip, ficha lateral con el cruce
   sector↔cuartel navegable.
-- **Nutrición** — subpestañas foliares / suelo, 4 matrices mapeables, 84
-  parámetros, 10 campañas de muestreo, selector de profundidad para las matrices
-  que la tienen, pintado por banda de umbral, leyenda con rangos y conteos,
-  ranking de peor a mejor, series de tiempo por parámetro con las bandas de
-  fondo, y las 13 calicatas del estudio 2018 como capa de puntos con su perfil
-  físico y químico.
+- **Nutrición** — subpestañas foliares / suelo, **6 programas de muestreo**
+  (matriz × laboratorio), selector de profundidad para los que la tienen,
+  filtro "sólo con evolución", pintado por banda de umbral, leyenda encabezada
+  por la procedencia, ranking de peor a mejor, series de tiempo por parámetro
+  con las bandas de fondo, y las 13 calicatas del estudio 2018 como capa de
+  puntos con su perfil físico y químico. Ver la sección de abajo.
 - **Riego** — consumo por sector con calendario de días / meses / temporadas,
   en vivo desde DropControl. Ver la sección de abajo.
 - **Ceres Imaging** — 28 vuelos aéreos entre dic-2022 y abr-2026, 5 indicadores,
@@ -215,7 +286,8 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   eventos en todo periodo probado, incluidas dos temporadas completas. Ver abajo.
 - **Comparador A/B para la capa de celdas y la de árboles.** Hoy el comparador
   pinta los polígonos de los dos lados; las capas vectoriales viven sólo en el
-  lado A.
+  lado A, y por eso al entrar al comparador se apagan y sus botones quedan
+  deshabilitados: comparar árboles contra polígonos no compara nada.
 
 ---
 
@@ -555,8 +627,10 @@ estado global, así ninguna puede dejar a la otra pintando lo que no corresponde
   lo declara: las clases propias del árbol requieren la estadística que sólo
   calcula `--extras`.
 - **Vista general** la pinta por variedad, con los tokens categóricos de equipo.
-  Con las variedades encendidas se ocultan los polígonos: son 230.000 círculos
-  de 2 px y cualquier capa encima compite con ellos.
+
+Con cualquier capa de detalle encendida se apaga el **relleno** del nivel: son
+círculos de 2 px o celdas semitransparentes, y un relleno al 62 % encima los
+apaga. Ver "El velo, una sola autoridad" más abajo.
 
 Parámetros calibrados, tomados de San Gerardo tal cual:
 
@@ -587,6 +661,39 @@ Dos detalles que hubo que resolver y conviene no volver a romper:
 - La capa se reconstruye sólo cuando cambia algo que la afecta (una firma de
   pestaña + vuelo + indicador + nivel + filtro). Sin ese guardia, cada repintado
   volvía a crear cinco sources vectoriales y a pedir todos los tiles.
+
+### El velo, una sola autoridad
+
+Era el bug de "a veces la vista por árbol queda bugeada o queda por debajo de
+los polígonos". Tenía dos causas y las dos están arregladas.
+
+**Una.** Tres lugares escribían la misma propiedad de visibilidad —`repintar()`,
+el velo de los árboles y el de las celdas— y ganaba el último en correr. Como
+`repintar()` llama primero a `refrescarArboles()` y después a
+`refrescarCeldas()`, el velo de las celdas (que con las celdas apagadas dice
+"mostrar") deshacía el de las variedades. Reproducido: tras `toggleVariedades()`
+el relleno quedaba en `none`, y tras un `repintar()` volvía a `visible`; bastaba
+mover cualquier control para enterrar los 230.000 árboles bajo un relleno al
+62 %. Ahora hay **una sola función**, `aplicarVelos()`, que mira todo el estado y
+decide una vez.
+
+**Dos.** El velo no miraba el zoom. La capa por árbol no dibuja bajo z13 y la
+grilla bajo el `min_zoom` que declara Ceres: encenderlas desde lejos apagaba el
+relleno y no ponía nada en su lugar, y el predio quedaba en puros contornos. Ese
+era el "queda bugeada".
+
+La regla, ahora una sola para las tres capas de detalle:
+
+```
+si hay capa de detalle montada Y el zoom alcanza para que dibuje
+    → relleno del nivel: oculto
+contorno  → siempre visible (es la referencia de qué unidad se mira)
+etiquetas → siguen al interruptor "Etiquetas", y nada más
+```
+
+Se reevalúa en cada `zoomend`. San Gerardo aplicaba el velo sólo a variedades
+porque su capa por árbol convive con un único nivel de polígono; acá son cuatro
+y el efecto se nota mucho más, así que también cubre la capa por indicador.
 
 
 ---
