@@ -304,6 +304,7 @@ def main():
     ap.add_argument("xlsx", nargs="+", help="planillas de cosecha (una por temporada)")
     ap.add_argument("--geo", default="geo_data.json")
     ap.add_argument("--out", default="cosecha_data.json")
+    ap.add_argument("--out-plantacion", default="plantacion_data.json")
     args = ap.parse_args()
 
     rutas = []
@@ -608,9 +609,42 @@ def main():
     Path(args.out).write_text(
         json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
 
+    # ── El cuadro de plantacion, aparte ────────────────────────────────────
+    # El anio de plantacion es un dato estructural del cuartel, no de la
+    # cosecha: el mapa lo muestra en el tooltip de CUALQUIER pestana. Pero
+    # cosecha_data.json pesa 228 KB y solo se descarga al abrir Cosecha, asi
+    # que el cuadro de plantacion sale ademas en un archivo de 4 KB que viaja
+    # con la geometria en el arranque.
+    #
+    # La otra fuente posible —el campo Anio_Plantacion de la base de
+    # nutricion— viene copiado en cada muestra y redondeado: difiere en 12 de
+    # los 30 cuarteles y llega a errar el anio entero (los limones C8, C9 y C10
+    # se plantaron el 2021 y ahi figuran como 2022). Manda el cuadro.
+    plantacion_payload = OrderedDict([
+        ("generated_at", datetime.now(timezone.utc).isoformat(timespec="seconds")),
+        ("source", [{"archivo": r.name, "cuadro": "plantacion"} for r in rutas]),
+        ("nota", "Cuadro de plantacion de la planilla de cosecha. El anio puede "
+                 "venir como rango ('2023/2024') cuando el cuartel se planto en "
+                 "dos temporadas: se guarda tal cual, sin elegir uno."),
+        ("cuarteles", OrderedDict(
+            (cid, OrderedDict([
+                ("anio_plantacion", v["anio_plantacion"]),
+                ("ha_plantada", v["ha_plantada"]),
+                ("centro_costo", v["centro_costo"]),
+                ("variedades", v["variedades"]),
+            ])) for cid, v in cuarteles.items())),
+    ])
+    Path(args.out_plantacion).write_text(
+        json.dumps(plantacion_payload, ensure_ascii=False, indent=1),
+        encoding="utf-8")
+
     # ── Resumen en consola ─────────────────────────────────────────────────
     kb = Path(args.out).stat().st_size / 1024
     print("OK  %s  (%.0f KB)" % (args.out, kb))
+    print("OK  %s  (%.0f KB)  %d cuarteles con anio de plantacion"
+          % (args.out_plantacion,
+             Path(args.out_plantacion).stat().st_size / 1024,
+             sum(1 for v in cuarteles.values() if v["anio_plantacion"])))
     print("    %d cuarteles en el catalogo, %d con cosecha"
           % (len(cuarteles), sum(1 for v in cuarteles.values() if v["cosechado"])))
     for t in temporadas:

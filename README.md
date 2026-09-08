@@ -60,6 +60,37 @@ contar bordes de digitalización como si fueran riego real.
 > no registra. Las hectáreas calculadas por geometría coinciden con las
 > declaradas en el KMZ dentro del 1 % en los 30 cuarteles.
 
+### El año de plantación sale del cuadro de plantación
+
+Aparece en el tooltip y en la ficha de **todas** las pestañas, en los cuatro
+niveles, porque la edad del huerto es el contexto que hace legible cualquier
+otro número: 49 t/ha en un cuartel de 2021 y en uno de 2024 no significan lo
+mismo, y una plaga en formación tampoco.
+
+Hay dos fuentes posibles y **no coinciden**:
+
+| Fuente | Qué trae |
+|---|---|
+| `Anio_Plantacion` de la base de suelos y foliares | un año por muestra, copiado |
+| Cuadro de plantación de la planilla de cosecha | un año por cuartel, del predio |
+
+Manda el cuadro. La base de laboratorio difiere en **12 de los 30 cuarteles**:
+redondea a un solo año los cuarteles plantados en dos temporadas (los naranjos
+C7 a C12 son `2023/2024`, no `2023`) y en los limones C8, C9 y C10 se equivoca
+por un año entero — 2021, no 2022. Además deja 3 ubicaciones sin dato, y el
+cuadro cubre los 30 cuarteles.
+
+Ese `2023/2024` se muestra **tal cual**: es el dato, no un error de captura. Sólo
+al agregar varios cuarteles —un sector de riego, un equipo— se colapsa a un
+rango (`2022–2023`). El criterio *Año de plantación* de Vista general tiene por
+eso seis clases, no cinco.
+
+El dato viaja en `plantacion_data.json`, 5 KB que cargan junto con la geometría
+en el arranque. No se lee de `cosecha_data.json` —que es donde también está—
+porque ése pesa 228 KB y sólo se descarga al abrir la pestaña Cosecha: el año de
+plantación tiene que estar disponible en las ocho pestañas desde el primer
+segundo. Los emite el mismo build, del mismo cuadro, en la misma corrida.
+
 ---
 
 ## Los archivos
@@ -70,6 +101,7 @@ assets/exportadoras/        ← logos de las exportadoras (ver su README)
 geo_data.json               ← geometría (generado)
 nutricion_data.json         ← análisis de suelo y foliares (generado)
 cosecha_data.json           ← cosecha por cuartel y semana (generado)
+plantacion_data.json        ← cuadro de plantación por cuartel (generado)
 pye_data.json               ← monitoreo de plagas y enfermedades (generado)
 ceres_data.json             ← vuelos de Ceres Imaging (generado)
 umbrales_nutricion.json     ← umbrales agronómicos — SE EDITA A MANO
@@ -79,6 +111,7 @@ data-version.json           ← cache-busting por dataset
 tools/kmz_to_geojson.py     ← Ketcal KMZ.kmz  → geo_data.json
 tools/build_nutricion.py    ← Excel + umbrales → nutricion_data.json
 tools/build_cosecha.py      ← planillas + KMZ  → cosecha_data.json
+                              + plantacion_data.json
 tools/build_pye.py          ← monitoreos + KMZ  → pye_data.json
 tools/trim_logos.py         ← recorta el margen de los logos de exportadora
 tools/fetch_ceres.py        ← API de Ceres    → ceres_data.json
@@ -589,6 +622,55 @@ desplegable: con 28 vuelos, avanzar a la fecha siguiente —el gesto frecuente a
 comparar— costaba tres acciones con un `<select>`. Para saltar a un vuelo lejano
 hay un modal con los 28 agrupados por temporada.
 
+### La barra de filtros y el popover "Vista"
+
+La barra superior envolvía en tres filas y tapaba 176 px del mapa. Eran dos
+problemas encimados.
+
+**El primero era un bug de layout.** `.foliar-controls` es un `absolute` con
+`left:50%` y sin `right`, así que el ancho disponible que le calcula el
+navegador es la **mitad** del viewport: 720 px en una pantalla de 1440, y el
+`max-width:calc(100vw - 32px)` de la regla siguiente no se alcanzaba nunca. La
+barra envolvía por falta de un espacio que sí existía. Se arregla con
+`width:max-content`, y con eso sola Vista general pasó de dos filas a una.
+
+**El segundo era de contenido:** diez grupos de controles no caben en una fila
+por mucho sitio que haya. La regla que quedó es *lo que se cambia todo el tiempo
+queda a la vista, lo que se ajusta una vez se guarda*:
+
+| A la vista | En el popover **Vista** |
+|---|---|
+| subpestaña, programa, parámetro, muestreo, profundidad, nivel, Evolución | capas, filtro "sólo con evolución", Encuadrar |
+
+El botón lleva un **punto** cuando algo quedó distinto de lo normal —una capa
+apagada, una encendida, el filtro puesto—. Guardar los controles no puede
+significar esconder el estado: sin ese punto, un mapa filtrado se vería igual
+que uno completo.
+
+El popover se cierra con `Escape`, con un clic fuera y al cambiar de pestaña
+(un panel flotante que sobrevive al cambio de modo queda huérfano sobre el mapa,
+apuntando a un botón que ya no está). En móvil se ancla por la izquierda: con la
+barra envuelta el botón queda pegado al borde y `right:0` lo sacaba de pantalla.
+
+Con las dos cosas, y bajando la densidad (controles de 31 a 29 px, etiquetas de
+10 a 9,5), la barra queda así:
+
+| | antes | 1440 px | 1280 px |
+|---|---|---|---|
+| Vista general | 120 px | **62 px** | 62 px |
+| Nutrición · Foliar | 176 px | **62 px** | 62 px |
+| Nutrición · Suelo | 176 px | **62 px** | 98 px |
+
+Suelo lleva un control más —Profundidad— y por eso es el único que todavía
+envuelve en 1280.
+
+Dos recortes que lo hicieron posible y conviene no revertir sin medir: la opción
+del selector de programa dice *laboratorio · cadencia · cobertura* y ya no
+cuenta los muestreos (el selector de al lado los lista uno por uno y la cabecera
+del panel los cuenta), y las subpestañas dicen *Foliar* / *Suelo* en vez de
+*Análisis foliares* / *Análisis de suelo*, que repetía la palabra dentro de una
+pestaña ya llamada Nutrición y costaba 94 px.
+
 ---
 
 ## Convenciones (heredadas de San Gerardo, no negociables)
@@ -623,6 +705,8 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   de plantación, portainjerto, análisis disponibles), capas de válvulas (150),
   pozos (3) y etiquetas, buscador, tooltip, ficha lateral con el cruce
   sector↔cuartel navegable.
+- **Año de plantación** en el tooltip y en la ficha de las ocho pestañas, en los
+  cuatro niveles, desde el cuadro de plantación. Ver arriba.
 - **Cosecha** — dos temporadas (2025 y 2026) por cuartel y **por semana**, con
   ventana de temporada / acumulado / semana suelta, siete métricas, filtro por
   destino de la fruta, comparación entre temporadas y detalle semanal por

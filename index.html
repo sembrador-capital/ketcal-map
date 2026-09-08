@@ -470,7 +470,7 @@ body.prod-active.compare-mode .mapboxgl-ctrl-bottom-right { bottom:118px; }
 /* ── COMPONENTE 5 · Controles (barra de filtros superior) ───────────────── */
 .foliar-controls {
     position:absolute; top:60px; left:50%; transform:translateX(-50%); z-index:var(--z-controls);
-    padding:9px 12px; display:flex; gap:10px; align-items:center;
+    padding:7px 11px; display:flex; gap:8px; align-items:center;
     background:var(--sem-surface); border:var(--sem-border-hair);
     border-radius:var(--sem-radius-lg); box-shadow:var(--sem-shadow-md);
     opacity:0; pointer-events:none; transition:opacity 0.25s;
@@ -498,13 +498,13 @@ body.prod-active.compare-mode .mapboxgl-ctrl-bottom-right { bottom:118px; }
 .nut-subtab:focus-visible { outline:none; box-shadow:var(--sem-focus-ring); }
 .nut-sep { width:1px; align-self:stretch; background:var(--sem-line); flex:0 0 1px; }
 
-.fc-group { display:flex; flex-direction:column; gap:4px; }
+.fc-group { display:flex; flex-direction:column; gap:3px; }
 .fc-label {
-    font-size:10px; font-weight:500; letter-spacing:0.04em;
+    font-size:9.5px; line-height:1.2; font-weight:500; letter-spacing:0.04em;
     text-transform:uppercase; color:var(--sem-text-2);
 }
 .fc-select, .agro-select, .fin-select, .pest-select {
-    height:31px; padding:0 27px 0 10px;
+    height:29px; padding:0 27px 0 10px;
     background:var(--sem-surface); border:var(--sem-border-hair);
     border-radius:var(--sem-radius); color:var(--sem-ink);
     font-size:11.5px; font-weight:400;
@@ -514,8 +514,11 @@ body.prod-active.compare-mode .mapboxgl-ctrl-bottom-right { bottom:118px; }
     transition:border-color 0.15s, box-shadow 0.15s;
 }
 .fc-select { min-width:156px; }
-/* El selector de programa carga lab + cadencia + cobertura en una linea. */
-#selPrograma { min-width:268px; }
+/* El selector de programa carga lab + cadencia + cobertura en una línea. El
+   min-width es el de la opción más ancha de las seis —en inglés, que es donde
+   más miden— para que no cambie de tamaño al saltar de programa. */
+#selPrograma { min-width:216px; }
+#selProf { min-width:92px; }
 .fc-select:hover, .agro-select:hover, .fin-select:hover, .pest-select:hover { border:var(--sem-border-strong); }
 .fc-select:focus, .agro-select:focus, .fin-select:focus, .pest-select:focus {
     border:var(--sem-border-accent); box-shadow:var(--sem-focus-ring);
@@ -537,7 +540,7 @@ body.prod-active.compare-mode .mapboxgl-ctrl-bottom-right { bottom:118px; }
 
 /* COMPONENTE 6 · Botón secundario */
 .fc-compare-btn {
-    align-self:flex-end; height:31px; padding:0 11px;
+    align-self:flex-end; height:29px; padding:0 11px;
     background:transparent; border:var(--sem-border-hair); color:var(--sem-ink);
     font-size:11.5px; font-weight:500; border-radius:var(--sem-radius);
     cursor:pointer; display:flex; align-items:center; gap:6px; white-space:nowrap;
@@ -548,6 +551,42 @@ body.prod-active.compare-mode .mapboxgl-ctrl-bottom-right { bottom:118px; }
 .fc-compare-btn:hover { background:var(--sem-beige-wash); border:var(--sem-border-strong); }
 .fc-compare-btn.active { background:var(--sem-navy); border-color:var(--sem-navy); color:var(--sem-surface); }
 .fc-compare-btn:active { transform:scale(0.98); }
+/* ── Popover "Vista": capas, filtros y encuadre ──────────────────────────
+   La barra de Nutrición llevaba diez grupos: en 1440 px envolvía en tres filas
+   y tapaba el tercio superior del mapa. Lo que se cambia todo el tiempo
+   —programa, parámetro, muestreo, nivel— sigue a la vista; lo que se ajusta
+   una vez —qué capas se dibujan, el filtro de series, el encuadre— se guarda
+   acá. El punto del botón avisa cuando algo quedó distinto de lo normal: los
+   controles se guardan, el estado no se esconde. */
+.fc-pop-wrap { position:relative; display:flex; align-self:flex-end; }
+.fc-pop-dot { width:6px; height:6px; border-radius:50%; background:var(--sem-navy); }
+.fc-compare-btn.abierto .fc-pop-dot { background:var(--sem-surface); }
+.fc-pop {
+    position:absolute; top:calc(100% + 13px); right:0; z-index:var(--z-popup);
+    min-width:190px; padding:11px 13px 12px;
+    background:var(--sem-surface); border:var(--sem-border-hair);
+    border-radius:var(--sem-radius); box-shadow:var(--sem-shadow-md);
+    display:flex; flex-direction:column; gap:10px;
+}
+.fc-pop[hidden] { display:none; }
+.fc-pop-sect { display:flex; flex-direction:column; gap:5px; }
+.fc-pop-title {
+    font-size:9.5px; font-weight:600; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--sem-text-3);
+}
+.fc-pop-action {
+    height:29px; padding:0 10px; width:100%;
+    background:transparent; border:var(--sem-border-hair); color:var(--sem-ink);
+    font-family:inherit; font-size:11.5px; font-weight:500;
+    border-radius:var(--sem-radius); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:background 0.15s, border-color 0.15s;
+}
+.fc-pop-action:hover { background:var(--sem-beige-wash); border:var(--sem-border-strong); }
+.fc-pop-action:focus-visible { outline:none; box-shadow:var(--sem-focus-ring); }
+.fc-pop-action .ic { display:inline-flex; width:15px; height:15px; }
+.fc-pop-action .ic svg { width:15px; height:15px; }
+
 .foliar-controls-B { display:none; padding-left:14px; margin-left:4px; border-left:1px solid var(--sem-line); }
 body.compare-mode .foliar-controls-B { display:flex; gap:14px; align-items:center; }
 
@@ -2108,7 +2147,9 @@ body.pest-active #dataStamp { top:56px; }
        en fila no caben, y translateX(-50%) las sacaba de pantalla. */
     .foliar-controls, .prod-controls, .soil-controls {
         top:106px; left:8px; right:8px; transform:none;
-        flex-wrap:wrap; gap:8px; max-height:34vh; overflow:auto;
+        /* `width:auto` deshace el max-content de escritorio: acá la barra la
+           definen los dos bordes, y con un ancho intrínseco se desbordaba. */
+        width:auto; flex-wrap:wrap; gap:8px; max-height:34vh; overflow:auto;
     }
     .soil-controls { min-width:0; }
     .foliar-controls .fc-select, .prod-controls .fc-select, .soil-controls .fc-select,
@@ -2117,6 +2158,9 @@ body.pest-active #dataStamp { top:56px; }
     }
     .fc-group { flex:1 1 100%; }
     .nut-subtabs { flex:1 1 100%; }
+    /* El popover cuelga por la izquierda: con la barra envuelta el botón queda
+       pegado al borde izquierdo y anclarlo por la derecha lo sacaba de pantalla. */
+    .fc-pop { left:0; right:auto; max-width:calc(100vw - 34px); }
 
     /* Plagas es la única pestaña con columna lateral: en escritorio el mapa cede
        ancho en vez de recibir capas encima. En 375px esa columna es min(392,46%)
@@ -2196,7 +2240,7 @@ body.pest-active #dataStamp { top:56px; }
 
     /* Año de plantación (ordinal, pocas clases). */
     --dat-anio-1: #E7E2D3; --dat-anio-2: #C6C89F; --dat-anio-3: #91AE79;
-    --dat-anio-4: #5C8F5E; --dat-anio-5: #2F6B45;
+    --dat-anio-4: #5C8F5E; --dat-anio-5: #2F6B45; --dat-anio-6: #1D4E36;
 
     /* Escala relativa: cuartiles del propio predio para parámetros SIN umbral
        agronómico. Deliberadamente morada y no verde/rojo: no es cumplimiento,
@@ -2332,19 +2376,25 @@ body.ket-panel .foliar-controls { left:calc((100% - min(392px, 46%)) / 2); }
 body.ket-panel .stats-bar { right:calc(min(392px, 46%) + 16px);
     max-width:calc(100vw - min(392px, 46%) - 420px); }
 
-/* ── Barra de filtros: nunca se corta ────────────────────────────────────
-   Nutrición lleva subpestañas + 4 selectores + segmentado de nivel + 2 botones
-   + capas. En una pantalla de 1280px eso no entra en una fila, y en San Gerardo
-   la barra no envuelve: los extremos quedaban cortados sin aviso. Acá envuelve
-   en dos filas y tiene techo de ancho. */
-.foliar-controls { flex-wrap:wrap; max-width:calc(100vw - 32px); row-gap:8px; }
+/* ── Barra de filtros: nunca se corta, y casi nunca envuelve ─────────────
+   Envolver es el último recurso —cada fila extra son 41 px de mapa tapado—
+   pero es mejor que cortarse por los extremos sin aviso, que es lo que hacía
+   la barra de San Gerardo.
+
+   `width:max-content` no es cosmético. La barra es un `absolute` con
+   `left:50%` y sin `right`, así que el ancho disponible que le calcula el
+   navegador es la MITAD del viewport: 720 px en una pantalla de 1440, y el
+   `max-width` de esta misma regla no se alcanzaba nunca. Nutrición envolvía
+   en tres filas y Vista general en dos aunque sobrara sitio a los lados. */
+.foliar-controls { flex-wrap:wrap; width:max-content;
+    max-width:calc(100vw - 32px); row-gap:7px; }
 body.ket-panel .foliar-controls { max-width:calc(100vw - min(392px, 46%) - 32px); }
 
 /* ── Control segmentado de nivel. Reusa la forma de .nut-subtabs, pero vive
       dentro de la barra de filtros junto a los selects, no como pestaña. ── */
 .ket-seg { display:flex; gap:2px; padding:3px; background:var(--sem-beige-wash);
     border:var(--sem-border-hair); border-radius:var(--sem-radius); flex:0 0 auto; }
-.ket-seg button { padding:5px 10px; border:none; background:transparent; cursor:pointer;
+.ket-seg button { padding:5px 8px; border:none; background:transparent; cursor:pointer;
     font-family:inherit; font-size:11.5px; font-weight:500; color:var(--sem-text-2);
     border-radius:calc(var(--sem-radius) - 2px); white-space:nowrap; }
 .ket-seg button:hover { color:var(--sem-navy); }
@@ -2359,7 +2409,7 @@ body.ket-panel .foliar-controls { max-width:calc(100vw - min(392px, 46%) - 32px)
 .ket-toggle input { accent-color:var(--sem-navy); width:13px; height:13px; cursor:pointer; }
 
 /* ── Buscador de unidad ── */
-.ket-search { height:31px; min-width:150px; padding:0 10px; font-family:inherit;
+.ket-search { height:29px; min-width:150px; padding:0 10px; font-family:inherit;
     font-size:11.5px; color:var(--sem-ink); background:var(--sem-surface);
     border:var(--sem-border-hair); border-radius:var(--sem-radius); outline:none; }
 .ket-search:focus { border:var(--sem-border-accent); box-shadow:var(--sem-focus-ring); }
@@ -2818,6 +2868,9 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
         <path d="M3.5 9h11"/><path d="M10.5 5l4 4-4 4"/></g>
     <g id="ic-ampliar" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
         <path d="M7.5 3.5h-4v4"/><path d="M10.5 14.5h4v-4"/><path d="M3.5 3.5l4.5 4.5M14.5 14.5L10 10"/></g>
+    <g id="ic-capas" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+        <path d="M9 2.5 2.5 6 9 9.5 15.5 6 9 2.5Z"/><path d="M2.5 9.6 9 13.1l6.5-3.5"/>
+        <path d="M2.5 13.1 9 16.6l6.5-3.5"/></g>
 </defs></svg>
 
 <!-- Selector de idioma. Vive fuera de .tabs para que la barra de pestañas
@@ -2867,22 +2920,28 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
         <datalist id="dlUnidades"></datalist>
     </div>
     <div class="fc-divider" aria-hidden="true"></div>
-    <div class="fc-group">
-        <label class="fc-label" data-i18n="Capas">Capas</label>
-        <div class="ket-toggles">
-            <label class="ket-toggle"><input type="checkbox" id="chkEtiquetas" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
-            <label class="ket-toggle"><input type="checkbox" id="chkValvulas" onchange="setCapa('valvulas',this.checked)"><span data-i18n="Válvulas">Válvulas</span></label>
-            <label class="ket-toggle"><input type="checkbox" id="chkPozos" checked onchange="setCapa('pozos',this.checked)"><span data-i18n="Pozos">Pozos</span></label>
+    <div class="fc-pop-wrap">
+        <button type="button" class="fc-compare-btn" id="btnVistaGen" aria-haspopup="true" aria-expanded="false" aria-controls="popGen"
+                onclick="togglePop('popGen')" title="Capas y encuadre" data-i18n-title="Capas y encuadre"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-capas"/></svg></span><span data-i18n="Vista">Vista</span><i class="fc-pop-dot" id="dotVistaGen" hidden></i></button>
+        <div class="fc-pop" id="popGen" hidden>
+            <div class="fc-pop-sect">
+                <div class="fc-pop-title" data-i18n="Capas">Capas</div>
+                <div class="ket-toggles">
+                    <label class="ket-toggle"><input type="checkbox" id="chkEtiquetas" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+                    <label class="ket-toggle"><input type="checkbox" id="chkValvulas" onchange="setCapa('valvulas',this.checked)"><span data-i18n="Válvulas">Válvulas</span></label>
+                    <label class="ket-toggle"><input type="checkbox" id="chkPozos" checked onchange="setCapa('pozos',this.checked)"><span data-i18n="Pozos">Pozos</span></label>
+                </div>
+            </div>
+            <button type="button" class="fc-pop-action" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
         </div>
     </div>
-    <button class="fc-compare-btn" onclick="encuadrarPredio()" title="Encuadrar el predio" data-i18n-title="Encuadrar el predio"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
 </div>
 
 <!-- ── Controles · Nutrición ────────────────────────────────────────────── -->
 <div class="foliar-controls glass" id="ctrlNutricion">
     <div class="nut-subtabs" role="tablist" aria-label="Vista de nutrición" data-i18n-aria="Vista de nutrición">
-        <button type="button" class="nut-subtab active" role="tab" aria-selected="true" onclick="switchMode('foliares')" data-i18n="Análisis foliares">Análisis foliares</button>
-        <button type="button" class="nut-subtab" role="tab" aria-selected="false" onclick="switchMode('suelo')" data-i18n="Análisis de suelo">Análisis de suelo</button>
+        <button type="button" class="nut-subtab active" role="tab" aria-selected="true" onclick="switchMode('foliares')" title="Análisis foliares" data-i18n-title="Análisis foliares" data-i18n="Foliar">Foliar</button>
+        <button type="button" class="nut-subtab" role="tab" aria-selected="false" onclick="switchMode('suelo')" title="Análisis de suelo" data-i18n-title="Análisis de suelo" data-i18n="Suelo">Suelo</button>
     </div>
     <div class="nut-sep"></div>
     <div class="fc-group" id="grpPrograma">
@@ -2912,26 +2971,32 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
             <button type="button" data-v="equipos"     onclick="setNivelNut('equipos')"     data-i18n="Equipo">Equipo</button>
         </div>
     </div>
-    <div class="fc-group">
-        <label class="fc-label" data-i18n="Filtro">Filtro</label>
-        <div class="ket-toggles">
-            <label class="ket-toggle" id="lblSoloEvo"
-                   title="Restringe el mapa a las unidades con dos o más muestreos en este programa."
-                   data-i18n-title="Restringe el mapa a las unidades con dos o más muestreos en este programa.">
-                <input type="checkbox" id="chkSoloEvo" onchange="setSoloEvo(this.checked)">
-                <span data-i18n="Sólo con evolución">Sólo con evolución</span></label>
-        </div>
-    </div>
     <div class="fc-divider" aria-hidden="true"></div>
     <button class="fc-compare-btn nut-evo-btn" id="btnEvo" onclick="openEvo()" title="Series de tiempo por parámetro con sus umbrales" data-i18n-title="Series de tiempo por parámetro con sus umbrales"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-barras"/></svg></span><span data-i18n="Evolución">Evolución</span></button>
-    <div class="fc-group">
-        <label class="fc-label" data-i18n="Capas">Capas</label>
-        <div class="ket-toggles">
-            <label class="ket-toggle"><input type="checkbox" id="chkCalicatas" onchange="setCapa('calicatas',this.checked)"><span data-i18n="Calicatas 2018">Calicatas 2018</span></label>
-            <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasNut" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+    <div class="fc-pop-wrap">
+        <button type="button" class="fc-compare-btn" id="btnVistaNut" aria-haspopup="true" aria-expanded="false" aria-controls="popNut"
+                onclick="togglePop('popNut')" title="Capas, filtro y encuadre" data-i18n-title="Capas, filtro y encuadre"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-capas"/></svg></span><span data-i18n="Vista">Vista</span><i class="fc-pop-dot" id="dotVistaNut" hidden></i></button>
+        <div class="fc-pop" id="popNut" hidden>
+            <div class="fc-pop-sect">
+                <div class="fc-pop-title" data-i18n="Filtro">Filtro</div>
+                <div class="ket-toggles">
+                    <label class="ket-toggle" id="lblSoloEvo"
+                           title="Restringe el mapa a las unidades con dos o más muestreos en este programa."
+                           data-i18n-title="Restringe el mapa a las unidades con dos o más muestreos en este programa.">
+                        <input type="checkbox" id="chkSoloEvo" onchange="setSoloEvo(this.checked)">
+                        <span data-i18n="Sólo con evolución">Sólo con evolución</span></label>
+                </div>
+            </div>
+            <div class="fc-pop-sect">
+                <div class="fc-pop-title" data-i18n="Capas">Capas</div>
+                <div class="ket-toggles">
+                    <label class="ket-toggle"><input type="checkbox" id="chkCalicatas" onchange="setCapa('calicatas',this.checked)"><span data-i18n="Calicatas 2018">Calicatas 2018</span></label>
+                    <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasNut" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+                </div>
+            </div>
+            <button type="button" class="fc-pop-action" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
         </div>
     </div>
-    <button class="fc-compare-btn" onclick="encuadrarPredio()" title="Encuadrar el predio" data-i18n-title="Encuadrar el predio"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
 </div>
 
 <!-- ── Panel · Riego ─────────────────────────────────────────────────────
@@ -3394,10 +3459,13 @@ const I18N = {
 // ── Controles ──
 'Nivel':'Level', 'Nivel del mapa':'Map level', 'Colorear por':'Colour by',
 'Buscar unidad':'Find unit', 'Capas':'Layers', 'Etiquetas':'Labels',
+'Vista':'View', 'Capas y encuadre':'Layers and framing',
+'Capas, filtro y encuadre':'Layers, filter and framing', 'Plantación':'Planted',
 'Válvulas':'Valves', 'Pozos':'Wells', 'Calicatas 2018':'2018 soil pits',
 'Equipos':'Units', 'Sectores':'Sectors', 'Cuarteles':'Blocks',
 'Equipo':'Unit', 'Sector':'Sector', 'Cuartel':'Block', 'Ubicación':'Location',
 'Análisis foliares':'Leaf analyses', 'Análisis de suelo':'Soil analyses',
+'Foliar':'Leaf', 'Suelo':'Soil',
 'Vista de nutrición':'Nutrition view', 'Análisis':'Analysis', 'Parámetro':'Parameter',
 'Muestreo':'Sampling', 'Profundidad':'Depth', 'Evolución':'Trend', 'Unidad':'Unit',
 // ── Cosecha ──
@@ -3838,7 +3906,7 @@ const ESTADO_ES = {deficiente:'Deficiente', bajo:'Bajo', optimo:'Óptimo',
                    alto:'Alto', excesivo:'Excesivo'};
 
 /* ── Estado global ──────────────────────────────────────────────────────── */
-let GEO = null, NUT = null;
+let GEO = null, NUT = null, PLA = null;
 const DATA_ERRORS = [];
 let DATA_VERSION = {};
 
@@ -4098,6 +4166,7 @@ function tooltipUnidad(nivel, id){
             [t('Caudal'), p.caudal_m3h != null ? `${fmt(p.caudal_m3h,1)} m³/h` : null],
             [t('Válvulas'), p.n_valvulas || null],
             [t('Variedad'), p.variedad || (p.variedades||[]).join(' / ') || null],
+            [t('Año de plantación'), anioDe(p)],
             [t('Cuarteles regados'), (p.cuarteles||[]).length || null],
             [t('Sectores que lo riegan'), (p.sectores||[]).length || null],
             [t('Muestras'), nMuestrasDe(p) || null]
@@ -4112,7 +4181,7 @@ function tooltipUnidad(nivel, id){
         const cob = window._cobCeres || ceresCobertura();
         if(!d){
             const noExistia = ((cob && cob.no_existia) || []).includes(id);
-            return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`]],
+            return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`], [t('Año de plantación'), anioDe(p)]],
                       t(noExistia ? 'No plantado en esta fecha' : 'Sin dato en este vuelo'));
         }
         const b = ceresBandaDe(d.v, bandas);
@@ -4125,6 +4194,7 @@ function tooltipUnidad(nivel, id){
                 [t('Plantas'), m.plants ? fmt(m.plants,0) : null],
                 [t('Plantas por hectárea'), m.plants_per_ha ? fmtDec(m.plants_per_ha,0) : null],
                 [t('Superficie'), `${fmtVal(p.ha)} ha`],
+                [t('Año de plantación'), anioDe(p)],
                 [t('Vuelo'), vuelo ? fmtFecha(vuelo.date) : null]
             ]);
     }
@@ -4140,14 +4210,14 @@ function tooltipUnidad(nivel, id){
 
     if(currentMode === 'riego'){
         const d = (window._valsRiego || new Map()).get(id);
-        if(!d) return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`]],
+        if(!d) return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`], [t('Año de plantación'), anioDe(p)]],
                          t(riegoEstado === 'listo' ? 'Sin respuesta de la caseta' : 'Consultando DropControl…'));
         return tooltipRiegoHTML(p, d);
     }
 
     const par = paramActual();
     const d = (window._valsNut || new Map()).get(id);
-    if(!d) return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`]],
+    if(!d) return tt(esc(p.name || p.id), '', [[t('Superficie'), `${fmtVal(p.ha)} ha`], [t('Año de plantación'), anioDe(p)]],
                      t('Sin dato para este parámetro y muestreo.'));
     const banda = bandasDe(par).find(b => b.clave === estadoDe(d.v, par));
     return tt(
@@ -4160,7 +4230,8 @@ function tooltipUnidad(nivel, id){
             [t('Muestras'), d.n],
             [t('Muestreo'), d.fechas.map(fmtFecha).join(' · ')],
             [t('Clasificación lab.'), d.clasif.join(' · ') || null],
-            [t('Superficie'), `${fmtVal(p.ha)} ha`]
+            [t('Superficie'), `${fmtVal(p.ha)} ha`],
+            [t('Año de plantación'), anioDe(p)]
         ]);
 }
 
@@ -4299,7 +4370,8 @@ const CRITERIOS = {
 const COL_EQUIPO = {E1:'--dat-eq-1', E2:'--dat-eq-2', E3:'--dat-eq-3', E4:'--dat-eq-4', E5:'--dat-eq-5'};
 const COL_ESPECIE = {Lim:'--dat-esp-lim', Nar:'--dat-esp-nar', Man:'--dat-esp-man'};
 const RAMPA_HA = ['--dat-ha-1','--dat-ha-2','--dat-ha-3','--dat-ha-4','--dat-ha-5'];
-const RAMPA_ANIO = ['--dat-anio-1','--dat-anio-2','--dat-anio-3','--dat-anio-4','--dat-anio-5'];
+const RAMPA_ANIO = ['--dat-anio-1','--dat-anio-2','--dat-anio-3','--dat-anio-4',
+                    '--dat-anio-5','--dat-anio-6'];
 const RAMPA_REL = ['--dat-rel-1','--dat-rel-2','--dat-rel-3','--dat-rel-4'];
 
 /* Paleta categórica para variedades y portainjertos: se asigna por orden
@@ -4316,14 +4388,38 @@ function especieDe(p){
     if(p.especies && p.especies.length === 1) return p.especies[0];
     return null;
 }
+/* Cuarteles que componen una unidad de cualquier nivel. Un cuartel es él
+   mismo; una ubicación E-S-C es el trozo de UN cuartel; un sector de riego y un
+   equipo traen su lista calculada por intersección en `geo_data.json`. */
+function cuartelesDe(p){
+    if(!p || !GEO) return [];
+    if(IDX.cuarteles && IDX.cuarteles.has(p.id)) return [p.id];
+    const u = IDX.ubicaciones && IDX.ubicaciones.get(p.id);
+    if(u) return u.cuartel_id ? [u.cuartel_id] : [];
+    if(p.cuarteles && p.cuarteles.length)
+        return [...new Set(p.cuarteles.map(c => typeof c === 'string' ? c : c.id))];
+    return [...new Set(ubisDe(p)
+        .map(id => (IDX.ubicaciones.get(id) || {}).cuartel_id).filter(Boolean))];
+}
+
+/* El año de plantación NO sale de la base de nutrición. Ahí viene copiado en
+   cada muestra y redondeado a un año: difiere en 12 de los 30 cuarteles, y en
+   los limones C8, C9 y C10 se equivoca por un año entero (2021, no 2022). La
+   fuente es el cuadro de plantación de la planilla de cosecha, que además
+   declara los cuarteles plantados en dos temporadas.
+
+   Ese "2023/2024" se muestra tal cual: es el dato, no un error. Sólo al juntar
+   varios cuarteles —un sector de riego, un equipo— se colapsa a un rango. */
 function anioDe(p){
-    const c = NUT && NUT.cobertura;
-    if(!c) return null;
-    if(c[p.id] && c[p.id].anio_plantacion) return c[p.id].anio_plantacion;
-    // Para niveles agregados: el año de las ubicaciones que lo componen.
-    const ubis = ubisDe(p);
-    const anios = [...new Set(ubis.map(u => c[u] && c[u].anio_plantacion).filter(Boolean))];
-    return anios.length === 1 ? anios[0] : null;
+    if(!PLA || !PLA.cuarteles) return null;
+    const vs = [...new Set(cuartelesDe(p)
+        .map(c => (PLA.cuarteles[c] || {}).anio_plantacion).filter(Boolean))];
+    if(!vs.length) return null;
+    if(vs.length === 1) return vs[0];
+    const ns = vs.join('/').split('/').map(Number).filter(n => n > 1900);
+    if(!ns.length) return vs.sort().join(' · ');
+    const a = Math.min(...ns), b = Math.max(...ns);
+    return a === b ? String(a) : `${a}–${b}`;
 }
 function portainjertoDe(p){
     const c = NUT && NUT.cobertura;
@@ -6399,7 +6495,7 @@ function fichaCeres(p){
     if(!d){
         const noExistia = ((cob && cob.no_existia) || []).includes(p.id);
         return `<div class="ket-empty">${t(noExistia ? 'No plantado en esta fecha' : 'Sin dato en este vuelo')}</div>`
-            + kv([[t('Superficie'), `${fmtVal(p.ha)} ha`]]);
+            + kv([[t('Superficie'), `${fmtVal(p.ha)} ha`], [t('Año de plantación'), anioDe(p)]]);
     }
     const b = ceresBandaDe(d.v, bandas);
     const m = d.meta || {};
@@ -6415,7 +6511,8 @@ function fichaCeres(p){
         [t('Cambio vs. vuelo anterior'), ceresDeltaTexto(d.delta, par)],
         [t('Superficie'), m.area_m2 ? `${fmtDec(m.area_m2/10000, 2)} ha` : `${fmtVal(p.ha)} ha`],
         [t('Plantas'), m.plants ? fmt(m.plants,0) : null],
-        [t('Plantas por hectárea'), m.plants_per_ha ? fmtDec(m.plants_per_ha,0) : null]
+        [t('Plantas por hectárea'), m.plants_per_ha ? fmtDec(m.plants_per_ha,0) : null],
+        [t('Año de plantación'), anioDe(p)]
     ]);
 
     html += sect(t('Evolución temporal'), sparkCeres(p.id, par));
@@ -6855,6 +6952,7 @@ function tooltipRiegoHTML(p, d){
     const periodo = (RIEGO && RIEGO.consulta) ? RIEGO.consulta : '';
     const freq = x.frecuencia_dias > 0 ? `${t('cada')} ${fmtDec(x.frecuencia_dias,1)} d` : '—';
     const dur = x.duracion_promedio_hrs > 0 ? `${fmtDec(x.duracion_promedio_hrs,1)} hrs` : '—';
+    const anioPl = anioDe(p);
 
     // El contenido va envuelto en #ttRiegoBlock porque las reglas .rt-* del CSS
     // copiado de San Gerardo están scoped por ese ancestro. Reusar el id es lo
@@ -6872,6 +6970,7 @@ function tooltipRiegoHTML(p, d){
         + `<div class="rt-detail"><div class="k">${t('Vol. total')}</div><div class="v">${x.total_m3 != null ? fmt(x.total_m3,0) : '—'} m³</div></div>`
         + `<div class="rt-detail"><div class="k">${t('Frec. riego')}</div><div class="v">${esc(freq)}</div></div>`
         + `<div class="rt-detail"><div class="k">${t('Duración prom.')}</div><div class="v">${esc(dur)}</div></div>`
+        + (anioPl ? `<div class="rt-detail"><div class="k">${t('Plantación')}</div><div class="v">${esc(anioPl)}</div></div>` : '')
         + `</div>`
         + `<button class="rt-cta" onclick="abrirRiegoModal('${esc(p.id)}')">${t('Ver detalle')}</button>`
         + `<div class="rt-source">DropControl · ${esc(periodo)}</div>`
@@ -7072,7 +7171,8 @@ function fichaRiego(p){
         [t('Días sin riego'), x.dias_sin_riego != null ? fmt(x.dias_sin_riego,0) : null],
         [t('Superficie'), `${fmtVal(p.ha)} ha`],
         [t('Caudal de diseño'), p.caudal_m3h != null ? `${fmt(p.caudal_m3h,1)} m³/h` : null],
-        [t('Válvulas'), p.n_valvulas || null]
+        [t('Válvulas'), p.n_valvulas || null],
+        [t('Año de plantación'), anioDe(p)]
     ]);
 
     // Eventos individuales, del más reciente al más antiguo. El `status` va
@@ -7389,7 +7489,8 @@ function fichaNutricion(p){
             [t('Rango óptimo'), par.escala === 'umbral'
                 ? `${par.umbral.optimo[0] != null ? fmtP(par.umbral.optimo[0], par) : '≤'} – ${par.umbral.optimo[1] != null ? fmtP(par.umbral.optimo[1], par) : '∞'}`
                 : null],
-            [t('Superficie'), `${fmtVal(p.ha)} ha`]
+            [t('Superficie'), `${fmtVal(p.ha)} ha`],
+            [t('Año de plantación'), anioDe(p)]
         ]);
         html += sect(t('Evolución temporal'), d.serie
             ? sparkUnidad(p.id, activo, par)
@@ -7398,6 +7499,7 @@ function fichaNutricion(p){
     }else{
         html += `<div class="ket-empty">${t('Sin dato para este parámetro y muestreo.')}</div>`;
         html += kv([[t('Superficie'), `${fmtVal(p.ha)} ha`],
+                    [t('Año de plantación'), anioDe(p)],
                     [t('Especie'), (p.especies||[p.especie_corta]).filter(Boolean).map(nombreClase).join(' · ')]]);
     }
 
@@ -8317,7 +8419,8 @@ function tooltipCosechaHTML(p, d, b){
     const meta = cosMeta(p.id) || {};
     const sub = [meta.variedades, meta.centro_costo].filter(Boolean).join(' · ');
     if(!d) return tt(esc(p.name || p.id), esc(sub),
-        [[t('Superficie plantada'), meta.ha_plantada ? `${fmtVal(meta.ha_plantada)} ha` : null]],
+        [[t('Superficie plantada'), meta.ha_plantada ? `${fmtVal(meta.ha_plantada)} ha` : null],
+         [t('Año de plantación'), anioDe(p)]],
         t(meta.cosechado ? 'Sin cosecha en la ventana elegida.'
                          : 'Sin registro de cosecha en ninguna temporada.'));
 
@@ -8329,7 +8432,8 @@ function tooltipCosechaHTML(p, d, b){
         [t('Bins'), fmt(d.bins, 0)],
         [t('Kilos por bin'), d.kg_bin ? fmt(d.kg_bin, 0) : null],
         [t('Semanas con cosecha'), d.nSem],
-        [t('Superficie plantada'), d.ha ? `${fmtVal(d.ha)} ha` : null]
+        [t('Superficie plantada'), d.ha ? `${fmtVal(d.ha)} ha` : null],
+        [t('Año de plantación'), anioDe(p)]
     ];
     if(b){
         const vb = cosValor(b, m);
@@ -9577,11 +9681,13 @@ function tooltipPyeHTML(p, d){
         ? [[t('Plagas en alerta'), `${d.nAlertas} ${t('de')} ${d.agentes.size}`],
            [t('Meses en alerta'), d.meses > 1 ? `${d.mesesAlerta} ${t('de')} ${d.meses}` : null],
            [t('Lecturas'), d.n],
-           [t('Superficie'), `${fmtVal(p.ha)} ha`]]
+           [t('Superficie'), `${fmtVal(p.ha)} ha`],
+           [t('Año de plantación'), anioDe(p)]]
         : [[t('Frutos afectados'), `${fmtDec(d.af, d.af % 1 ? 1 : 0)} ${t('de')} ${fmt(d.ev,0)}`],
            [t('Muestras'), d.nm],
            [t('Defectos distintos'), d.nDefectos],
-           [t('Superficie'), `${fmtVal(p.ha)} ha`]];
+           [t('Superficie'), `${fmtVal(p.ha)} ha`],
+           [t('Año de plantación'), anioDe(p)]];
 
     return `<div id="ttPyeBlock">`
         + cabeza
@@ -9615,7 +9721,8 @@ function fichaPye(p){
             ? 'Sin monitoreo en la ventana elegida.'
             : 'Este cuartel no aparece en este monitoreo.')}</div>`
             + kv([[t('Variedades'), meta.variedades],
-                  [t('Superficie'), `${fmtVal(p.ha)} ha`]]);
+                  [t('Superficie'), `${fmtVal(p.ha)} ha`],
+                  [t('Año de plantación'), anioDe(p)]]);
     }
 
     let html = `<div class="pv-chart-card" style="display:flex;align-items:baseline;gap:10px">`
@@ -9634,13 +9741,15 @@ function fichaPye(p){
            [t('Meses en alerta'), d.meses > 1 ? `${d.mesesAlerta} ${t('de')} ${d.meses}` : null],
            [t('Lecturas'), d.n],
            [t('Variedades'), meta.variedades],
-           [t('Superficie'), `${fmtVal(p.ha)} ha`]]
+           [t('Superficie'), `${fmtVal(p.ha)} ha`],
+           [t('Año de plantación'), anioDe(p)]]
         : [[t('Periodo'), pyeVentanaTexto()],
            [t('Muestras'), `${d.nm} · ${fmt(d.ev,0)} ${t('frutos')}`],
            [t('Peor defecto'), pyeNombre(pyeAgente(d.peor))],
            [t('Defectos distintos'), d.nDefectos],
            [t('Variedades'), meta.variedades],
-           [t('Superficie'), `${fmtVal(p.ha)} ha`]]);
+           [t('Superficie'), `${fmtVal(p.ha)} ha`],
+           [t('Año de plantación'), anioDe(p)]]);
 
     html += sect(t(planta ? 'Plagas del cuartel' : 'Defectos del cuartel'),
                  pyeListaAgentes(d));
@@ -10158,6 +10267,7 @@ function switchMode(modo){
     document.getElementById('ctrlCeres').classList.toggle('visible', modo === 'ceres');
     document.getElementById('ctrlNutricion').classList.toggle('visible',
         modo === 'foliares' || modo === 'suelo');
+    cerrarPop();
 
     // La consulta a DropControl tarda ~2 s: se dispara al entrar a la pestaña,
     // no en el load inicial, y se cachea en memoria hasta que se pida
@@ -10255,6 +10365,46 @@ function setParam(v){ S.nut.param = v; poblarSelectores(); repintar(); renderPan
 function setFecha(v){ S.nut.fecha = v || null; repintar(); renderPanel(); }
 function setProf(v){ S.nut.prof = v || null; repintar(); renderPanel(); }
 
+/* Un solo popover abierto a la vez. Se cierra con Escape, con un clic fuera
+   y al cambiar de pestaña: un panel flotante que sobrevive al cambio de modo
+   queda huérfano sobre el mapa, apuntando a un botón que ya no está. */
+let popAbierto = null;
+function togglePop(id){
+    const abrir = popAbierto !== id;
+    cerrarPop();
+    const pop = abrir ? document.getElementById(id) : null;
+    if(!pop) return;
+    pop.hidden = false;
+    popAbierto = id;
+    const btn = document.querySelector(`[aria-controls="${id}"]`);
+    if(btn){ btn.classList.add('abierto'); btn.setAttribute('aria-expanded', 'true'); }
+}
+function cerrarPop(){
+    if(!popAbierto) return;
+    const pop = document.getElementById(popAbierto);
+    if(pop) pop.hidden = true;
+    const btn = document.querySelector(`[aria-controls="${popAbierto}"]`);
+    if(btn){ btn.classList.remove('abierto'); btn.setAttribute('aria-expanded', 'false'); }
+    popAbierto = null;
+}
+document.addEventListener('mousedown', ev => {
+    if(!popAbierto || !ev.target.closest) return;
+    if(ev.target.closest(`#${popAbierto}, [aria-controls="${popAbierto}"]`)) return;
+    cerrarPop();
+});
+document.addEventListener('keydown', ev => { if(ev.key === 'Escape') cerrarPop(); });
+
+/* El punto del botón "Vista". Guardar los controles no puede significar
+   esconder el estado: si una capa quedó apagada —o encendida— o el filtro de
+   series está puesto, el botón lo dice sin abrirlo. */
+function marcarVista(){
+    const c = S.capas;
+    const gen = document.getElementById('dotVistaGen');
+    const nut = document.getElementById('dotVistaNut');
+    if(gen) gen.hidden = !(!c.etiquetas || !c.pozos || c.valvulas);
+    if(nut) nut.hidden = !(!c.etiquetas || c.calicatas || soloEvoActivo());
+}
+
 function setCapa(capa, on){
     S.capas[capa] = on;
     if(capa === 'etiquetas'){
@@ -10268,6 +10418,7 @@ function setCapa(capa, on){
             const el = document.getElementById(id); if(el) el.checked = on;
         });
     }
+    marcarVista();
     repintar();
 }
 
@@ -10361,7 +10512,10 @@ function poblarSelectores(soloDependientes){
             `<option value="${esc(g.id)}"${g.id===S.nut.prog?' selected':''}>`
             + `${esc(g.lab)}`
             + (g.cadencia_dias != null ? ` · ${esc(cadenciaTexto(g.cadencia_dias))}` : '')
-            + ` · ${esc(plural(g.fechas.length, 'muestreo', 'muestreos'))}`
+            // El número de muestreos no va acá: el selector de al lado los lista
+            // uno por uno y la cabecera del panel los cuenta. Lo que la opción
+            // tiene que separar es laboratorio, cadencia y cobertura, que es lo
+            // que hace distintos a los dos programas foliares.
             + ` · ${g.ubicaciones.length} ${esc(t('unid.'))}`
             + (g.con_serie.length ? '' : ` · ${esc(t('sin evolución'))}`)
             + `</option>`).join('');
@@ -10411,6 +10565,7 @@ function poblarSelectores(soloDependientes){
     const lblEvo = document.getElementById('lblSoloEvo');
     chkEvo.disabled = !hayEvo;
     chkEvo.checked = soloEvoActivo();
+    marcarVista();
     lblEvo.classList.toggle('off', !hayEvo);
     lblEvo.title = hayEvo
         ? t('Restringe el mapa a las unidades con dos o más muestreos en este programa.')
@@ -10448,11 +10603,14 @@ function poblarSelectores(soloDependientes){
 async function boot(){
     applyI18n();
     DATA_VERSION = (await loadDataset('version', './data-version.json')) || {};
-    const [geo, nut] = await Promise.all([
+    // `plantacion_data.json` son 5 KB y viaja acá, no con Cosecha, porque el
+    // año de plantación aparece en el tooltip de todas las pestañas.
+    const [geo, nut, pla] = await Promise.all([
         loadDataset('geo', './geo_data.json'),
-        loadDataset('nutricion', './nutricion_data.json')
+        loadDataset('nutricion', './nutricion_data.json'),
+        loadDataset('plantacion', './plantacion_data.json')
     ]);
-    GEO = geo; NUT = nut;
+    GEO = geo; NUT = nut; PLA = pla;
     renderNotice();
     if(!GEO){
         document.getElementById('legend').innerHTML =

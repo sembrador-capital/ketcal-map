@@ -1,0 +1,196 @@
+{
+ "generated_at": "2026-09-08T02:47:00+00:00",
+ "source": [
+  {
+   "archivo": "Base de datos Cosecha Ketcal_2025.xlsx",
+   "cuadro": "plantacion"
+  },
+  {
+   "archivo": "Base de datos Cosecha Ketcal_2026.xlsx",
+   "cuadro": "plantacion"
+  }
+ ],
+ "nota": "Cuadro de plantacion de la planilla de cosecha. El anio puede venir como rango ('2023/2024') cuando el cuartel se planto en dos temporadas: se guarda tal cual, sin elegir uno.",
+ "cuarteles": {
+  "LIM-C1": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 6.03,
+   "centro_costo": "Limones 2",
+   "variedades": "Eureka y Messina"
+  },
+  "LIM-C2": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 5.92,
+   "centro_costo": "Limones 2",
+   "variedades": "Eureka y Messina"
+  },
+  "LIM-C3": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 8.35,
+   "centro_costo": "Limones 2",
+   "variedades": "Eureka y Fino 49"
+  },
+  "LIM-C4": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 6.412,
+   "centro_costo": "Limones 2",
+   "variedades": "Fino 49"
+  },
+  "LIM-C5": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 10.11,
+   "centro_costo": "Limones 2",
+   "variedades": "Eureka, Messina y Fino 49"
+  },
+  "LIM-C6": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 7.44,
+   "centro_costo": "Limones 2",
+   "variedades": "Fino 49"
+  },
+  "LIM-C7": {
+   "anio_plantacion": "2021/2022",
+   "ha_plantada": 7.511,
+   "centro_costo": "Limones 1",
+   "variedades": "Fino 49"
+  },
+  "LIM-C8": {
+   "anio_plantacion": "2021",
+   "ha_plantada": 7.19,
+   "centro_costo": "Limones 1",
+   "variedades": "Eureka y Fino 49"
+  },
+  "LIM-C9": {
+   "anio_plantacion": "2021",
+   "ha_plantada": 8.423,
+   "centro_costo": "Limones 1",
+   "variedades": "Eureka"
+  },
+  "LIM-C10": {
+   "anio_plantacion": "2021",
+   "ha_plantada": 3.498,
+   "centro_costo": "Limones 1",
+   "variedades": "Fino 49"
+  },
+  "LIM-C11": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 5.558,
+   "centro_costo": "Limones 1",
+   "variedades": "Eureka"
+  },
+  "LIM-C12": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.604,
+   "centro_costo": "Limones 2",
+   "variedades": "Messina"
+  },
+  "LIM-C13": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.808,
+   "centro_costo": "Limones 2",
+   "variedades": "Eureka"
+  },
+  "LIM-C14": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 8.984,
+   "centro_costo": "Limones 2",
+   "variedades": "Eureka"
+  },
+  "MAN-C1": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 4.46,
+   "centro_costo": "Mandarinos 1",
+   "variedades": "Tango"
+  },
+  "MAN-C2": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.56,
+   "centro_costo": "Mandarinos 1",
+   "variedades": "Tango"
+  },
+  "MAN-C3": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 3.08,
+   "centro_costo": "Mandarinos 1",
+   "variedades": "Tango"
+  },
+  "MAN-C4": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 4.02,
+   "centro_costo": "Mandarinos 1",
+   "variedades": "Tango"
+  },
+  "NAR-C1": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 7.02,
+   "centro_costo": "Naranjas 1",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C2": {
+   "anio_plantacion": "2022",
+   "ha_plantada": 7.93,
+   "centro_costo": "Naranjas 1",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C3": {
+   "anio_plantacion": "2022/2023",
+   "ha_plantada": 5.69,
+   "centro_costo": "Naranjas 1",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C4": {
+   "anio_plantacion": "2022/2023",
+   "ha_plantada": 6.95,
+   "centro_costo": "Naranjas 1",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C5": {
+   "anio_plantacion": "2023",
+   "ha_plantada": 7.39,
+   "centro_costo": "Naranjas 1",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C6": {
+   "anio_plantacion": "2023",
+   "ha_plantada": 7.48,
+   "centro_costo": "Naranjas 1",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C7": {
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 5.83,
+   "centro_costo": "Naranjas 2",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C8": {
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 7.87,
+   "centro_costo": "Naranjas 2",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C9": {
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 7.64,
+   "centro_costo": "Naranjas 2",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C10": {
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 7.56,
+   "centro_costo": "Naranjas 2",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C11": {
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 5.69,
+   "centro_costo": "Naranjas 2",
+   "variedades": "Cara Cara"
+  },
+  "NAR-C12": {
+   "anio_plantacion": "2023/2024",
+   "ha_plantada": 8.05,
+   "centro_costo": "Naranjas 2",
+   "variedades": "Cara Cara"
+  }
+ }
+}
