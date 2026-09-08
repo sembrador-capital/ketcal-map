@@ -2311,6 +2311,25 @@ body.pest-active #dataStamp { top:56px; }
        dato de riego y no como "regó poquito". */
     --dat-sin-riego: #D2CEC5;
 
+    /* ── Aforos: coeficiente de uniformidad ─────────────────────────────
+       Paleta de cinco escalones, no cinco clases: las clases de
+       funcionamiento son cuatro y viven en `escala_cu` de aforos_data.json,
+       que elige su token. Los cinco escalones existen porque la grilla del
+       modal usa los tres últimos para su propia escala de caída.
+
+       Verde en el extremo bueno —al revés que en PyE, donde el rojo es lo que
+       hay que ir a ver— porque acá lo alto ES lo bueno, y esa inversión tiene
+       que leerse sin mirar la leyenda. */
+    --dat-cu-1: #2F6B45;   /* excelente   ≥ 90 % */
+    --dat-cu-2: #7FA65C;   /* buena       80–90  */
+    --dat-cu-3: #E0B341;   /* regular     70–80  */
+    --dat-cu-4: #D97B2A;   /* sólo grilla: caída 80–90 % del QA */
+    --dat-cu-5: #A8261F;   /* inaceptable < 70 % */
+
+    /* "Sin aforo": la válvula existe pero no se midió. Mismo beige de ausencia
+       que el resto del mapa. */
+    --dat-sin-aforo: #D2CEC5;
+
     /* Puntos de infraestructura y muestreo. */
     --dat-valvula:  #F2C66D;
     --dat-pozo:     #3A8FB7;
@@ -2751,6 +2770,49 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
 .cos-expand:focus-visible { outline:none; box-shadow:var(--sem-focus-ring); }
 
+/* ── Grilla del aforo ────────────────────────────────────────────────────
+   Las 16 lecturas de una válvula no son una lista: son una grilla de 4 x 4
+   —cuatro posiciones a lo largo del lateral por cuatro dentro de cada lateral—
+   y esa forma es el diagnóstico. Si los caudales bajos se alinean en la última
+   columna, es presión; si están desparramados, es obturación. Una tabla
+   ordenada por número de emisor esconde exactamente eso.
+
+   Los promedios de fila y de columna van en el margen, que es donde se lee la
+   tendencia sin tener que sumar de a ojo. */
+.af-grid { display:grid; gap:3px; max-width:520px;
+    font-variant-numeric:tabular-nums; }
+.af-cell {
+    display:flex; align-items:center; justify-content:center;
+    height:34px; border-radius:calc(var(--sem-radius) - 3px);
+    font-size:12px; font-weight:600; color:var(--sem-ink);
+    background:var(--sem-beige-wash);
+}
+.af-cell.baja { color:var(--sem-surface); }
+.af-head, .af-marg {
+    display:flex; align-items:center; justify-content:center;
+    font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--sem-text-3); text-align:center; line-height:1.15;
+}
+.af-marg { font-size:11px; font-weight:600; color:var(--sem-text-2);
+    text-transform:none; letter-spacing:0; }
+.af-corner { }
+.af-rowlab {
+    display:flex; align-items:center; justify-content:flex-end;
+    font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--sem-text-3); padding-right:7px; text-align:right; line-height:1.15;
+}
+.af-leyenda { display:flex; align-items:center; gap:9px; margin-top:9px;
+    font-size:10.5px; color:var(--sem-text-3); flex-wrap:wrap; }
+.af-leyenda .esc { display:flex; align-items:center; gap:0; }
+.af-leyenda .esc i { width:20px; height:9px; display:block; }
+.af-leyenda .esc i:first-child { border-radius:3px 0 0 3px; }
+.af-leyenda .esc i:last-child { border-radius:0 3px 3px 0; }
+
+/* Pastilla de clase de uniformidad. Se usa en el tooltip, en la ficha y en el
+   modal, así que el color entra por `style` y la forma vive acá. */
+.af-chip { display:inline-block; padding:2px 8px; border-radius:var(--sem-radius-pill);
+    font-size:10px; font-weight:600; color:var(--sem-surface); white-space:nowrap; }
+
 /* ── Cabecera de programa en la leyenda ─────────────────────────────────
    Un programa es matriz x laboratorio. Lo que cambia entre uno y otro no es
    solo el nombre del lab: cambian la cadencia, las unidades muestreadas y los
@@ -2891,7 +2953,7 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
     <!-- Pendientes. Se muestran deshabilitadas a propósito: la hoja de ruta es
          parte de la información, y una pestaña que aparece de la nada más
          adelante desorienta más que una que se anuncia. -->
-    <button class="tab-btn" data-mode="riego" onclick="switchMode('riego')" title="Consumo por sector · DropControl" data-i18n-title="Consumo por sector · DropControl"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-gota"/></svg></span><span data-i18n="Riego">Riego</span></button>
+    <button class="tab-btn" data-mode="riego" data-modes="riego aforos" onclick="switchMode(RIEGO_SUBMODE)" title="Consumo por sector y aforo de goteros" data-i18n-title="Consumo por sector y aforo de goteros"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-gota"/></svg></span><span data-i18n="Riego">Riego</span></button>
     <button class="tab-btn" data-mode="ceres" onclick="switchMode('ceres')" title="Imágenes aéreas · Ceres Imaging" data-i18n-title="Imágenes aéreas · Ceres Imaging"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-satelite"/></svg></span><span data-i18n="Ceres">Ceres</span></button>
 </div>
 
@@ -3004,10 +3066,14 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
      controles apilados en el cuerpo. -->
 <div class="riego-controls" id="ctrlRiego">
     <div class="riego-controls-header">
-        <div class="riego-controls-title"><span class="rc-dot"></span><span data-i18n="Temporalidad de riego">Temporalidad de riego</span></div>
+        <div class="riego-controls-title"><span class="rc-dot"></span><span id="riegoTitulo" data-i18n="Temporalidad de riego">Temporalidad de riego</span></div>
         <div class="riego-controls-subtitle" id="riegoSubtitulo" data-i18n="Datos en vivo desde DropControl">Datos en vivo desde DropControl</div>
+        <div class="nut-subtabs" style="margin-top:9px" role="tablist" aria-label="Vista de riego" data-i18n-aria="Vista de riego">
+            <button type="button" class="riego-subtab nut-subtab active" role="tab" aria-selected="true" onclick="switchMode('riego')" data-i18n="Consumo">Consumo</button>
+            <button type="button" class="riego-subtab nut-subtab" role="tab" aria-selected="false" onclick="switchMode('aforos')" data-i18n="Aforos">Aforos</button>
+        </div>
     </div>
-    <div class="riego-controls-body">
+    <div class="riego-controls-body" id="bodyRiegoConsumo">
         <!-- Calendario. Ver el aviso de #riegoAvisoRango: hoy el endpoint
              devuelve siempre la última semana. -->
         <div class="riego-mode-tabs" id="riegoModos" role="group" aria-label="Agrupación temporal" data-i18n-aria="Agrupación temporal">
@@ -3053,6 +3119,50 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
                 <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
             </button>
             <div class="ceres-section-body" id="riegoRank"></div>
+        </div>
+    </div>
+
+    <!-- Cuerpo de Aforos. Mismo panel, mismas clases: es la misma pestaña
+         mirando otra cosa, no otra pestaña. -->
+    <div class="riego-controls-body" id="bodyRiegoAforos" style="display:none">
+        <div class="dz-controls">
+            <div class="fc-group">
+                <label class="fc-label" for="selMetricaAforo" data-i18n="Métrica">Métrica</label>
+                <select class="fc-select" id="selMetricaAforo" onchange="setMetricaAforo(this.value)"></select>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Nivel">Nivel</label>
+                <div class="ceres-level-tabs" id="segNivelAforo" role="group" aria-label="Nivel del mapa" data-i18n-aria="Nivel del mapa">
+                    <button type="button" class="ceres-level-tab active" data-v="sectores" onclick="setNivelAforo('sectores')" data-i18n="Sector">Sector</button>
+                    <button type="button" class="ceres-level-tab" data-v="equipos" onclick="setNivelAforo('equipos')" data-i18n="Equipo">Equipo</button>
+                </div>
+            </div>
+            <div class="fc-group">
+                <label class="fc-label" data-i18n="Capas">Capas</label>
+                <div class="ket-toggles">
+                    <label class="ket-toggle"
+                           title="Las 57 válvulas aforadas, pintadas por su coeficiente de uniformidad."
+                           data-i18n-title="Las 57 válvulas aforadas, pintadas por su coeficiente de uniformidad.">
+                        <input type="checkbox" id="chkPuntosAforo" checked onchange="setPuntosAforo(this.checked)">
+                        <span data-i18n="Válvulas aforadas">Válvulas aforadas</span></label>
+                    <label class="ket-toggle"><input type="checkbox" id="chkEtiquetasAforo" checked onchange="setCapa('etiquetas',this.checked)"><span data-i18n="Etiquetas">Etiquetas</span></label>
+                </div>
+            </div>
+            <button class="ceres-tree-btn" onclick="encuadrarPredio()"><span class="ic"><svg viewBox="0 0 18 18"><use href="#ic-ampliar"/></svg></span><span data-i18n="Encuadrar">Encuadrar</span></button>
+        </div>
+        <div class="ceres-chart-block" id="afoRepartoBlock">
+            <button type="button" class="ceres-chart-title" onclick="toggleBloque('afoRepartoBlock')">
+                <span data-i18n="Uniformidad del predio">Uniformidad del predio</span>
+                <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
+            </button>
+            <div class="ceres-section-body" id="afoReparto"></div>
+        </div>
+        <div class="ceres-chart-block" id="afoRankBlock">
+            <button type="button" class="ceres-chart-title" onclick="toggleBloque('afoRankBlock')">
+                <span data-i18n="Válvulas de peor a mejor">Válvulas de peor a mejor</span>
+                <span class="cs-chev"><svg viewBox="0 0 18 18" style="width:13px;height:13px"><use href="#ic-ir"/></svg></span>
+            </button>
+            <div class="ceres-section-body" id="afoRank"></div>
         </div>
     </div>
 </div>
@@ -3320,6 +3430,20 @@ body.ket-panel .legend-panel { max-width:min(360px, calc(100vw - min(392px, 46%)
 </div>
 
 <!-- Detalle de riego de una unidad -->
+<!-- El aforo de una válvula, en su grilla. -->
+<div class="riego-modal" id="afoModal" onclick="if(event.target===this)closeAfoModal()">
+    <div class="riego-modal-content">
+        <div class="riego-modal-head">
+            <div>
+                <h2 id="afoModalTitle" data-i18n="Aforo de goteros">Aforo de goteros</h2>
+                <div class="rm-sub" id="afoModalSub"></div>
+            </div>
+            <button class="riego-modal-close" onclick="closeAfoModal()" aria-label="Cerrar" data-i18n-aria="Cerrar"><svg viewBox="0 0 18 18"><use href="#ic-cerrar"/></svg></button>
+        </div>
+        <div id="afoModalBody"></div>
+    </div>
+</div>
+
 <div class="riego-modal" id="riegoModal" onclick="if(event.target===this)closeRiegoModal()">
     <div class="riego-modal-content">
         <div class="riego-modal-head">
@@ -3459,6 +3583,47 @@ const I18N = {
 // ── Controles ──
 'Nivel':'Level', 'Nivel del mapa':'Map level', 'Colorear por':'Colour by',
 'Buscar unidad':'Find unit', 'Capas':'Layers', 'Etiquetas':'Labels',
+/* Aforos de goteros. */
+'Aforos':'Flow tests',
+'Consumo':'Water use',
+'Aforo de goteros':'Emitter discharge test',
+'Consumo por sector y aforo de goteros':'Use by sector and emitter discharge test',
+'Vista de riego':'Irrigation view',
+'Aforo':'Tested',
+'Sin aforo':'Not tested',
+'Sin aforo en esta unidad.':'No discharge test in this unit.',
+'Ver el aforo':'See the test',
+'Cifras del aforo':'Test figures',
+'Uniformidad del predio':'Farm uniformity',
+'CU = Q25 / QA. Clases de funcionamiento de Ketcal.':'CU = Q25 / QA. Ketcal performance classes.',
+'CU agrupado':'Pooled CU',
+'uniformidad':'uniformity',
+'caudal medio':'mean discharge',
+'cuarto más bajo':'lowest quarter',
+'Caudal nominal':'Nominal discharge',
+'Rango de caudal':'Discharge range',
+'Coef. de variación':'Coeff. of variation',
+'Mínimo y máximo':'Minimum and maximum',
+'Emisores':'Emitters',
+'emisores':'emitters',
+'Emisores medidos':'Emitters measured',
+'emisores medidos':'emitters measured',
+'Media':'Mean',
+'medido':'measured',
+'del QA':'of QA',
+'del nominal':'of nominal',
+'del predio':'farm-wide',
+'sectores':'sectors',
+'válvulas':'valves',
+'Válvulas aforadas':'Valves tested',
+'válvulas aforadas':'valves tested',
+'Válvulas de la unidad':'Valves in this unit',
+'Válvulas del sector':'Valves in sector',
+'Válvulas de peor a mejor':'Valves, worst to best',
+'Peor válvula':'Worst valve',
+'Color: caída respecto del QA de la válvula':'Colour: drop against the valve QA',
+'Las 57 válvulas aforadas, pintadas por su coeficiente de uniformidad.':'The 57 tested valves, coloured by their uniformity coefficient.',
+'Ficha origen':'Source sheet',
 'Vista':'View', 'Capas y encuadre':'Layers and framing',
 'Capas, filtro y encuadre':'Layers, filter and framing', 'Plantación':'Planted',
 'Válvulas':'Valves', 'Pozos':'Wells', 'Calicatas 2018':'2018 soil pits',
@@ -3912,6 +4077,7 @@ let DATA_VERSION = {};
 
 let currentMode = 'general';
 let NUTRI_SUBMODE = 'foliares';
+let RIEGO_SUBMODE = 'riego';
 
 const S = {
     gen: { nivel:'sectores', color:'equipo' },
@@ -3921,6 +4087,7 @@ const S = {
     pye: { periodo:null, ventana:'temporada', plaga:null, metrica:null },
     riego: { metrica:'total_m3', nivel:'sectores', modo:'dias', desplazamiento:0 },
     ceres: { param:'water_stress', nivel:'sectores', vuelo:null, vueloB:null },
+    aforos: { nivel:'sectores', metrica:'cu', puntos:true },
     capas: { etiquetas:true, valvulas:false, pozos:true, calicatas:false },
     sel: null,          // id de la unidad seleccionada
     selNivel: null,     // nivel al que pertenece la selección
@@ -3991,6 +4158,10 @@ function renderStamp(){
             : !t0 ? t('Sin cosecha')
             : `${cosVentanaTexto()} · ${fmtDec(kg/1000, 1)} t`
               + (S.cos.destino ? ` ${t('a')} ${t(COS_DEST_ES[S.cos.destino]).toLowerCase()}` : '');
+    }else if(currentMode === 'aforos'){
+        el.textContent = !AFO
+            ? t(afoEstado === 'error' ? 'No se pudo cargar' : 'Cargando datos del predio…')
+            : `${t('Aforo de goteros')} · ${afoVentanaTexto()} · ${AFO.source.archivo}`;
     }else if(currentMode === 'riego'){
         el.textContent = riegoEstado === 'listo'
             ? `${t('Datos en vivo desde DropControl')} · ${ventanaRiego()}`
@@ -4206,6 +4377,10 @@ function tooltipUnidad(nivel, id){
 
     if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
         return tooltipPyeHTML(p, (window._valsPye || new Map()).get(id));
+    }
+
+    if(currentMode === 'aforos'){
+        return tooltipAforoHTML(p, (window._valsAfo || new Map()).get(id));
     }
 
     if(currentMode === 'riego'){
@@ -6046,6 +6221,7 @@ function renderCeresTemporadas(){
 function nivelActivo(){
     if(currentMode === 'general') return S.gen.nivel;
     if(currentMode === 'riego')   return S.riego.nivel;
+    if(currentMode === 'aforos')  return S.aforos.nivel;
     if(currentMode === 'ceres')   return S.ceres.nivel;
     // La cosecha se registra por cuartel y no hay forma honesta de bajarla a
     // sector: un cuartel lo riegan hasta tres sectores y repartir sus kilos
@@ -6097,6 +6273,20 @@ function repintar(){
                 : nombreCorto(f.properties));
         });
         window._valsRiego = vals; window._escalaRiego = escala;
+    }else if(currentMode === 'aforos'){
+        const m = afoMetrica();
+        const vals = afoValores(activo);
+        const escala = afoEscala(vals);
+        feats(activo).forEach(f => {
+            const id = f.properties.id;
+            const d = vals.get(id);
+            const v = afoValor(d, m);
+            exprColor.push(id, afoColor(d, escala));
+            exprLabel.push(id, d && v != null
+                ? `${nombreCorto(f.properties)}\n${afoFmt(v, m)}`
+                : nombreCorto(f.properties));
+        });
+        window._valsAfo = vals; window._escalaAfo = escala;
     }else if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
         const m = pyeMetrica();
         const vals = pyeValores();
@@ -6169,6 +6359,9 @@ function repintar(){
 
     ['valvulas-pt'].forEach(id => map.getLayer(id) &&
         map.setLayoutProperty(id, 'visibility', S.capas.valvulas ? 'visible' : 'none'));
+    if(map.getLayer('aforos-pt'))
+        map.setLayoutProperty('aforos-pt', 'visibility',
+            currentMode === 'aforos' && S.aforos.puntos ? 'visible' : 'none');
     ['pozos-pt','pozos-label'].forEach(id => map.getLayer(id) &&
         map.setLayoutProperty(id, 'visibility', S.capas.pozos ? 'visible' : 'none'));
     if(map.getLayer('calicatas-pt'))
@@ -6195,6 +6388,7 @@ function repintar(){
         renderCeresTemporadas();
     }
     if(currentMode === 'riego'){ renderRiegoRank(); renderRiegoSubtitulo(); }
+    if(currentMode === 'aforos'){ renderAfoPanel(); }
 }
 
 function nombreCorto(p){
@@ -6289,6 +6483,7 @@ function renderLegend(){
     }
 
     if(currentMode === 'riego'){ el.innerHTML = legendRiego(activo); return; }
+    if(currentMode === 'aforos'){ el.innerHTML = legendAforo(activo); return; }
     if(currentMode === 'ceres'){ el.innerHTML = legendCeres(activo); return; }
     if(currentMode === 'cosecha'){ el.innerHTML = legendCosecha(activo); return; }
     if(currentMode === 'pye-planta' || currentMode === 'pye-fruto'){
@@ -7260,6 +7455,11 @@ function renderStats(){
         bar.classList.remove('hidden');
         return;
     }
+    if(currentMode === 'aforos'){
+        el.innerHTML = statsAforo();
+        bar.classList.remove('hidden');
+        return;
+    }
     if(currentMode === 'ceres'){
         el.innerHTML = statsCeres(activo);
         bar.classList.remove('hidden');
@@ -7358,6 +7558,7 @@ function renderPanel(){
     bodyEl.innerHTML = currentMode === 'general' ? fichaGeneral(p)
                      : currentMode === 'cosecha' ? fichaCosecha(p)
                      : (currentMode === 'pye-planta' || currentMode === 'pye-fruto') ? fichaPye(p)
+                     : currentMode === 'aforos'  ? fichaAforo(p)
                      : currentMode === 'riego'   ? fichaRiego(p)
                      : currentMode === 'ceres'   ? fichaCeres(p)
                      : fichaNutricion(p);
@@ -9778,6 +9979,509 @@ function fichaPye(p){
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   AFOROS DE GOTEROS
+
+   Un aforo mide el caudal de 16 emisores de una válvula en una grilla de 4 x 4
+   —cuatro posiciones a lo largo del lateral por cuatro dentro de cada uno— y de
+   ahí salen tres cifras:
+
+       QA   caudal medio de los 16 emisores, L/h
+       Q25  caudal medio del 25 % de MENOR emisión (los 4 más bajos)
+       CU   coeficiente de uniformidad = Q25 / QA × 100
+
+   CU es la unidad principal. Dice cuánto le falta al cuarto peor regado
+   respecto del promedio: con CU 75 %, dejar satisfecha la parte castigada
+   obliga a pasarse un tercio en el resto. Por eso la escala del mapa son las
+   cinco clases del estándar de riego localizado y no cuantiles del propio
+   predio: 95 % es bueno en términos absolutos, aunque sea el peor del campo.
+
+   Lo que distingue esta pestaña de las demás es que el dato está medido en un
+   PUNTO —la válvula— y no en un polígono. Las 57 zonas aforadas cruzan 1 a 1
+   con las válvulas del KMZ, así que se pintan las dos cosas: el sector como
+   promedio de sus válvulas y cada válvula en su lugar. El promedio de un sector
+   con una válvula mala y tres buenas no lleva a ningún lado; el punto sí.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+let AFO = null;
+let afoPromesa = null;
+let afoEstado = 'inicial';           // inicial | cargando | listo | error
+
+const METRICAS_AFO = [
+    {id:'cu',  es:'Uniformidad (CU)',      en:'Uniformity (CU)',      unidad:'%',   dec:1, mejorAlto:true,  clase:true},
+    {id:'q25', es:'Q25 · cuarto más bajo', en:'Q25 · lowest quarter', unidad:'L/h', dec:2, mejorAlto:true},
+    {id:'qa',  es:'QA · caudal medio',     en:'QA · mean discharge',  unidad:'L/h', dec:2, mejorAlto:true},
+    {id:'pct_nominal', es:'% del caudal nominal', en:'% of nominal discharge', unidad:'%', dec:1, mejorAlto:true},
+    {id:'cv',  es:'Coef. de variación',    en:'Coeff. of variation',  unidad:'%',   dec:1, mejorAlto:false}
+];
+
+async function cargarAforos(){
+    if(AFO) return AFO;
+    if(!afoPromesa){
+        afoEstado = 'cargando';
+        afoPromesa = loadDataset('aforos', './aforos_data.json').then(j => {
+            AFO = j;
+            afoEstado = j ? 'listo' : 'error';
+            if(j) afoInicializar();
+            return j;
+        });
+    }
+    return afoPromesa;
+}
+
+/* La capa de puntos se arma una sola vez, cuando llega el JSON: las 57
+   válvulas aforadas, con su CU metido en las properties para que el color lo
+   resuelva Mapbox y no un bucle por feature en cada repintado. */
+function afoInicializar(){
+    if(!AFO || !GEO || !map || !map.getSource) return;
+    if(map.getSource('aforos')) return;
+    const feats = GEO.valvulas.features.filter(f => AFO.zonas[f.properties.id]);
+    const fc = {type:'FeatureCollection', features: feats.map(f => {
+        const z = AFO.zonas[f.properties.id];
+        return {type:'Feature', geometry:f.geometry, properties:{
+            id:z.id, name:z.name, cu:z.cu, clase:z.clase
+        }};
+    })};
+    map.addSource('aforos', {type:'geojson', data:fc, promoteId:'id'});
+    map.addLayer({id:'aforos-pt', type:'circle', source:'aforos',
+        layout:{visibility:'none'}, paint:{
+            'circle-radius':['interpolate',['linear'],['zoom'],13,4,15,6.5,17,10],
+            'circle-color':['match',['get','clase']]
+                .concat(...AFO.escala_cu.map(b => [b.clave, SEM(b.token)]))
+                .concat([SEM('--dat-sin-aforo')]),
+            'circle-stroke-color':SEM('--sem-surface'), 'circle-stroke-width':1.6
+        }});
+    map.on('mouseenter', 'aforos-pt', () => map.getCanvas().style.cursor = 'pointer');
+    map.on('mouseleave', 'aforos-pt', () => { map.getCanvas().style.cursor=''; ocultarTooltip(); });
+    map.on('mousemove', 'aforos-pt', e => {
+        if(e.features.length) mostrarTooltip(tooltipAforoZona(e.features[0].properties.id), e.point);
+    });
+    map.on('click', 'aforos-pt', e => {
+        if(e.features.length) abrirAfoModal(e.features[0].properties.id);
+    });
+}
+
+function afoBanda(clave){
+    return AFO ? (AFO.escala_cu || []).find(b => b.clave === clave) || null : null;
+}
+function afoClase(cu){
+    if(cu == null || !AFO) return null;
+    return (AFO.escala_cu.find(b => b.min == null || cu >= b.min) || {}).clave || null;
+}
+function afoColorClase(clave){
+    const b = afoBanda(clave);
+    return b ? SEM(b.token) : SEM('--dat-sin-aforo');
+}
+function afoNombreBanda(b){ return b ? (LANG === 'en' ? b.en : b.es) : ''; }
+function afoMetrica(){
+    return METRICAS_AFO.find(m => m.id === S.aforos.metrica) || METRICAS_AFO[0];
+}
+function afoNombreMetrica(m){ return LANG === 'en' ? m.en : m.es; }
+function afoFmt(v, m){
+    if(v == null) return '—';
+    return `${fmtDec(v, m.dec)}${m.unidad === '%' ? ' %' : ' ' + m.unidad}`;
+}
+function afoChip(clave){
+    const b = afoBanda(clave);
+    if(!b) return '';
+    return `<span class="af-chip" style="background:${SEM(b.token)}">${esc(afoNombreBanda(b))}</span>`;
+}
+
+function afoInicializarEstado(){
+    if(!METRICAS_AFO.some(m => m.id === S.aforos.metrica)) S.aforos.metrica = 'cu';
+}
+
+/* Valores del nivel activo. Los agregados por sector y equipo vienen ya
+   calculados del build: el CU de un sector es el promedio de los CU de sus
+   válvulas, no el CU del montón de emisores juntos. Ver el build. */
+function afoValores(nivel){
+    const out = new Map();
+    if(!AFO) return out;
+    const src = nivel === 'equipos' ? AFO.equipos : AFO.sectores;
+    Object.values(src || {}).forEach(d => out.set(d.id, d));
+    return out;
+}
+function afoValor(d, m){ return d ? d[m.id] : null; }
+
+/* El color del mapa. Para CU son las clases del estándar; para las otras
+   métricas, cuantiles del predio, porque un caudal de 3,05 L/h no tiene
+   "clases" agronómicas y fingirlas sería inventar un umbral. */
+function afoEscala(vals){
+    const m = afoMetrica();
+    if(m.clase){
+        return {tipo:'clase', bandas:AFO ? AFO.escala_cu : []};
+    }
+    const num = [...vals.values()].map(d => afoValor(d, m))
+        .filter(v => v != null && !Number.isNaN(v)).sort((a,b) => a - b);
+    const rampa = m.mejorAlto
+        ? ['--dat-cu-5','--dat-cu-4','--dat-cu-3','--dat-cu-2','--dat-cu-1']
+        : ['--dat-cu-1','--dat-cu-2','--dat-cu-3','--dat-cu-4','--dat-cu-5'];
+    if(!num.length) return {tipo:'mag', cortes:[], colores:rampa.map(SEM), etiquetas:[]};
+    return Object.assign({tipo:'mag'}, cuantiles(num, rampa, v => afoFmt(v, m)));
+}
+function afoColor(d, escala){
+    if(!d) return SEM('--dat-sin-aforo');
+    const m = afoMetrica();
+    if(escala.tipo === 'clase') return afoColorClase(d.clase);
+    const v = afoValor(d, m);
+    if(v == null) return SEM('--dat-sin-aforo');
+    let i = 0;
+    while(i < escala.cortes.length && v >= escala.cortes[i]) i++;
+    return escala.colores[i];
+}
+
+/* ── Tooltips ────────────────────────────────────────────────────────────── */
+function tooltipAforoZona(zid){
+    const z = AFO && AFO.zonas ? AFO.zonas[zid] : null;
+    if(!z) return tt(esc(zid), '', []);
+    return `<div id="ttRiegoBlock">`
+        + `<div class="ht-head"><div class="ht-title-wrap">`
+        + `<div class="ht-name">${t('Válvula')} ${esc(z.name)}</div></div>`
+        + `<div class="ht-badge">${esc(z.sector_id)}</div></div>`
+        + `<div class="rt-metric"><span class="rt-value">${fmtDec(z.cu, 1)}</span>`
+        + `<span class="rt-unit">% CU</span>`
+        + `<span style="margin-left:auto">${afoChip(z.clase)}</span></div>`
+        + `<div class="rt-details">`
+        + `<div class="rt-detail"><div class="k">QA</div><div class="v">${fmtDec(z.qa,2)} L/h</div></div>`
+        + `<div class="rt-detail"><div class="k">Q25</div><div class="v">${fmtDec(z.q25,2)} L/h</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Emisores')}</div><div class="v">${z.n}</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Aforo')}</div><div class="v">${z.fecha ? fmtCorta(z.fecha) : '—'}</div></div>`
+        + `</div>`
+        + `<button class="rt-cta" onclick="abrirAfoModal('${esc(z.id)}')">${t('Ver el aforo')}</button>`
+        + `</div>`;
+}
+
+function tooltipAforoHTML(p, d){
+    const cabeza = `<div class="ht-head"><div class="ht-title-wrap">`
+        + `<div class="ht-name">${esc(p.name || p.id)}</div></div>`
+        + `<div class="ht-badge">${esc(t('Aforo de goteros'))}</div></div>`;
+    if(!d) return `<div id="ttRiegoBlock">${cabeza}`
+        + `<div class="ket-note">${t('Sin aforo en esta unidad.')}</div></div>`;
+    const m = afoMetrica();
+    const peor = AFO.zonas[d.peor_zona];
+    return `<div id="ttRiegoBlock">`
+        + cabeza
+        + `<div class="rt-metric"><span class="rt-value">${fmtDec(d.cu, 1)}</span>`
+        + `<span class="rt-unit">% CU</span>`
+        + `<span style="margin-left:auto">${afoChip(d.clase)}</span></div>`
+        + `<div class="rt-details">`
+        + (m.id !== 'cu' ? `<div class="rt-detail"><div class="k">${esc(afoNombreMetrica(m))}</div><div class="v">${afoFmt(afoValor(d, m), m)}</div></div>` : '')
+        + `<div class="rt-detail"><div class="k">QA</div><div class="v">${fmtDec(d.qa,2)} L/h</div></div>`
+        + `<div class="rt-detail"><div class="k">Q25</div><div class="v">${fmtDec(d.q25,2)} L/h</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Válvulas aforadas')}</div><div class="v">${d.n_zonas}</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Peor válvula')}</div><div class="v">${esc(peor ? peor.name : '—')} · ${fmtDec(d.cu_min,1)} %</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Aforo')}</div><div class="v">${d.fecha ? fmtCorta(d.fecha) : '—'}</div></div>`
+        + `<div class="rt-detail"><div class="k">${t('Año de plantación')}</div><div class="v">${esc(anioDe(p) || '—')}</div></div>`
+        + `</div></div>`;
+}
+
+/* ── La grilla de 16 emisores ────────────────────────────────────────────── */
+/* El color de cada celda es su desvío respecto del QA de la propia válvula, no
+   un valor absoluto: lo que el aforo busca es el emisor que se sale de SU
+   grupo. Un 2,9 L/h es normal en una válvula que promedia 3,0 y es el peor de
+   una que promedia 3,3. */
+function afoCeldaColor(lh, qa){
+    if(lh == null || !qa) return null;
+    const r = lh / qa;
+    if(r >= 0.95) return null;                    // dentro de lo normal
+    const b = r >= 0.90 ? '--dat-cu-3'
+            : r >= 0.80 ? '--dat-cu-4' : '--dat-cu-5';
+    return {color:SEM(b), fuerte: r < 0.90};
+}
+
+function afoGrilla(z){
+    // Los rotulos de la grilla son dato, no interfaz: viven en el JSON con su
+    // par en ingles, igual que los nombres de las metricas.
+    const G0 = AFO.grilla;
+    const G = {lateral: (LANG === 'en' && G0.lateral_en) || G0.lateral,
+               gotero:  (LANG === 'en' && G0.gotero_en)  || G0.gotero};
+    const nl = G.lateral.length, ng = G.gotero.length;
+    const celda = new Map();
+    z.lecturas.forEach(([i, j, lh]) => celda.set(`${i}|${j}`, lh));
+
+    const mediaFila = i => {
+        const v = z.lecturas.filter(l => l[0] === i).map(l => l[2]).filter(x => x != null);
+        return v.length ? v.reduce((a,b)=>a+b,0) / v.length : null;
+    };
+    const mediaCol = j => {
+        const v = z.lecturas.filter(l => l[1] === j).map(l => l[2]).filter(x => x != null);
+        return v.length ? v.reduce((a,b)=>a+b,0) / v.length : null;
+    };
+
+    let html = `<div class="af-grid" style="grid-template-columns:64px repeat(${ng}, 1fr) 54px">`;
+    html += `<div class="af-corner"></div>`;
+    G.gotero.forEach(g => { html += `<div class="af-head">${esc(g)}</div>`; });
+    html += `<div class="af-head">${t('Media')}</div>`;
+
+    for(let i = 0; i < nl; i++){
+        html += `<div class="af-rowlab">${esc(G.lateral[i])}</div>`;
+        for(let j = 0; j < ng; j++){
+            const lh = celda.get(`${i}|${j}`);
+            const c = afoCeldaColor(lh, z.qa);
+            const estilo = c ? ` style="background:${c.color}"` : '';
+            html += `<div class="af-cell${c && c.fuerte ? ' baja' : ''}"${estilo}`
+                 + ` data-tip="${tipAttr(`<b>${esc(G.lateral[i])} · ${esc(G.gotero[j])}</b><br>`
+                     + `${fmtDec(lh, 2)} L/h · ${fmtDec(100*lh/z.qa, 0)} % ${t('del QA')}`)}">`
+                 + `${lh == null ? '—' : fmtDec(lh, 2)}</div>`;
+        }
+        html += `<div class="af-marg">${fmtDec(mediaFila(i), 2)}</div>`;
+    }
+    html += `<div class="af-rowlab">${t('Media')}</div>`;
+    for(let j = 0; j < ng; j++) html += `<div class="af-marg">${fmtDec(mediaCol(j), 2)}</div>`;
+    html += `<div class="af-marg"><b>${fmtDec(z.qa, 2)}</b></div>`;
+    html += `</div>`;
+
+    html += `<div class="af-leyenda"><span>${t('Color: caída respecto del QA de la válvula')}</span>`
+        + `<span class="esc">`
+        + `<i style="background:${SEM('--dat-cu-5')}"></i>`
+        + `<i style="background:${SEM('--dat-cu-4')}"></i>`
+        + `<i style="background:${SEM('--dat-cu-3')}"></i>`
+        + `<i style="background:${SEM('--sem-beige-wash')}"></i></span>`
+        + `<span>&lt; 80 % · 80–90 % · 90–95 % · ≥ 95 %</span></div>`;
+    return html;
+}
+
+/* ── Modal ───────────────────────────────────────────────────────────────── */
+function abrirAfoModal(zid){
+    const z = AFO && AFO.zonas ? AFO.zonas[zid] : null;
+    if(!z) return;
+    ocultarTooltipYa();
+    const sec = props('sectores', z.sector_id) || {};
+    document.getElementById('afoModalTitle').textContent = `${t('Válvula')} ${z.name}`;
+    document.getElementById('afoModalSub').textContent =
+        [`${t('Sector')} ${z.sector_id}`, sec.name ? null : null,
+         z.fecha ? `${t('Aforo')} ${fmtFecha(z.fecha)}` : null,
+         z.cultivo, z.responsable].filter(Boolean).join(' · ');
+
+    let html = `<div class="pv-chart-card" style="display:flex;align-items:baseline;gap:10px">`
+        + `<div style="font-size:26px;font-weight:300;color:var(--sem-ink)">${fmtDec(z.cu,1)}</div>`
+        + `<div class="sem-muted-xs">% CU</div>`
+        + `<div style="margin-left:auto">${afoChip(z.clase)}</div></div>`;
+
+    html += `<div style="margin-top:12px">${afoGrilla(z)}</div>`;
+
+    html += sect(t('Cifras del aforo'), kv([
+        ['QA · ' + t('caudal medio'), `${fmtDec(z.qa,2)} L/h`],
+        ['Q25 · ' + t('cuarto más bajo'), `${fmtDec(z.q25,2)} L/h`],
+        ['CU · ' + t('uniformidad'), `${fmtDec(z.cu,1)} %`],
+        [t('Caudal nominal'), `${fmtDec(AFO.caudal_nominal_lh,1)} L/h · ${fmtDec(z.pct_nominal,0)} % ${t('medido')}`],
+        [t('Coef. de variación'), `${fmtDec(z.cv,1)} %`],
+        [t('Mínimo y máximo'), `${fmtDec(z.qmin,2)} – ${fmtDec(z.qmax,2)} L/h`],
+        [t('Emisores medidos'), z.n],
+        [t('Ficha origen'), esc(z.archivo || '—')]
+    ]));
+
+    // Las otras válvulas del mismo sector: un CU malo aislado y uno que se
+    // repite en las cuatro válvulas no se arreglan en el mismo lugar.
+    const hermanas = (AFO.sectores[z.sector_id] || {}).zonas || [];
+    if(hermanas.length > 1){
+        html += sect(`${t('Válvulas del sector')} ${z.sector_id}`,
+            `<div class="ket-rank">` + hermanas.map(id => {
+                const o = AFO.zonas[id];
+                return `<div class="ket-row${id === z.id ? ' active' : ''}" onclick="abrirAfoModal('${esc(id)}')">`
+                    + `<span class="sw" style="background:${afoColorClase(o.clase)}"></span>`
+                    + `<span class="nm">${esc(o.name)}</span>`
+                    + `<span class="vl">${fmtDec(o.cu,1)} %</span></div>`;
+            }).join('') + `</div>`);
+    }
+
+    document.getElementById('afoModalBody').innerHTML = html;
+    document.getElementById('afoModal').classList.add('visible');
+}
+function closeAfoModal(){
+    const m = document.getElementById('afoModal');
+    if(m) m.classList.remove('visible');
+}
+
+/* ── Ficha lateral ───────────────────────────────────────────────────────── */
+function fichaAforo(p){
+    if(!AFO) return `<div class="ket-empty">${t(afoEstado === 'error'
+        ? 'No se pudo cargar' : 'Cargando datos del predio…')}</div>`;
+    const vals = window._valsAfo || afoValores(nivelActivo());
+    const d = vals.get(p.id);
+    if(!d) return `<div class="ket-empty">${t('Sin aforo en esta unidad.')}</div>`
+        + kv([[t('Superficie'), `${fmtVal(p.ha)} ha`],
+              [t('Válvulas'), p.n_valvulas || null],
+              [t('Año de plantación'), anioDe(p)]]);
+
+    const m = afoMetrica();
+    let html = `<div class="pv-chart-card" style="display:flex;align-items:baseline;gap:10px">`
+        + `<div style="font-size:26px;font-weight:300;color:var(--sem-ink)">${fmtDec(d.cu,1)}</div>`
+        + `<div class="sem-muted-xs">% CU</div>`
+        + `<div style="margin-left:auto">${afoChip(d.clase)}</div></div>`;
+
+    html += kv([
+        [t('Aforo'), d.fecha ? fmtFecha(d.fecha) : null],
+        ['QA · ' + t('caudal medio'), `${fmtDec(d.qa,2)} L/h`],
+        ['Q25 · ' + t('cuarto más bajo'), `${fmtDec(d.q25,2)} L/h`],
+        [t('Caudal nominal'), `${fmtDec(d.pct_nominal,0)} % ${t('de')} ${fmtDec(AFO.caudal_nominal_lh,1)} L/h`],
+        [t('Coef. de variación'), `${fmtDec(d.cv,1)} %`],
+        [t('Válvulas aforadas'), `${d.n_zonas} · ${d.n} ${t('emisores')}`],
+        [t('CU agrupado'), `${fmtDec(d.cu_pool,1)} %`],
+        [t('Superficie'), `${fmtVal(p.ha)} ha`],
+        [t('Año de plantación'), anioDe(p)]
+    ]);
+
+    html += sect(t('Válvulas de la unidad'),
+        `<div class="ket-rank">` + d.zonas.slice()
+            .sort((a,b) => (AFO.zonas[a].cu || 0) - (AFO.zonas[b].cu || 0))
+            .map(id => {
+                const o = AFO.zonas[id];
+                return `<div class="ket-row" onclick="abrirAfoModal('${esc(id)}')">`
+                    + `<span class="sw" style="background:${afoColorClase(o.clase)}"></span>`
+                    + `<span class="nm">${esc(o.name)}</span>`
+                    + `<span class="vl">${fmtDec(o.cu,1)} %</span></div>`;
+            }).join('') + `</div>`);
+
+    // Ranking de la unidad dentro del predio, con la métrica activa.
+    const arr = [...vals.entries()].map(([id, x]) => [id, x, afoValor(x, m)])
+        .filter(x => x[2] != null)
+        .sort((a,b) => m.mejorAlto ? a[2] - b[2] : b[2] - a[2]);
+    if(arr.length > 1){
+        const escala = window._escalaAfo || afoEscala(vals);
+        html += sect(`${t('Ranking')} · ${esc(afoNombreMetrica(m))}`,
+            `<div class="ket-rank">` + arr.map(([id, x, v]) =>
+                `<div class="ket-row${id === p.id ? ' active' : ''}" `
+                + `onclick="seleccionar('${nivelActivo()}','${esc(id)}',true)">`
+                + `<span class="sw" style="background:${afoColor(x, escala)}"></span>`
+                + `<span class="nm">${esc(x.name || id)}</span>`
+                + `<span class="vl">${afoFmt(v, m)}</span></div>`).join('')
+            + `</div>`);
+    }
+    return html;
+}
+
+/* ── Panel, leyenda y métricas ───────────────────────────────────────────── */
+function legendAforo(activo){
+    if(!AFO) return `<div class="legend-label">${t('Aforo de goteros')}</div>`
+        + `<div class="sem-muted-xs">${t(afoEstado === 'error'
+            ? 'No se pudo cargar' : 'Cargando datos del predio…')}</div>`;
+    const m = afoMetrica();
+    const vals = window._valsAfo || afoValores(activo);
+    const escala = window._escalaAfo || afoEscala(vals);
+    const sinDato = feats(activo).length - vals.size;
+
+    const cab = `<div class="nut-prog">`
+        + `<div class="nut-prog-top"><span class="nut-lab">CU</span>`
+        + `<span class="nut-prog-mat">${esc(afoNombreMetrica(m))}</span></div>`
+        + `<div class="nut-prog-meta"><b>${AFO.predio.n_zonas}</b> ${t('válvulas aforadas')}`
+        + ` ${t('de')} ${AFO.predio.n_valvulas} · <b>${AFO.predio.n_sectores}</b> ${t('de')}`
+        + ` ${AFO.predio.n_sectores_geo} ${t('sectores')}</div>`
+        + `<div class="nut-prog-meta">${esc(afoVentanaTexto())} · ${AFO.predio.n} ${t('emisores medidos')}</div>`
+        + `</div>`;
+
+    let filas;
+    if(escala.tipo === 'clase'){
+        const conteo = new Map();
+        vals.forEach(d => conteo.set(d.clase, (conteo.get(d.clase) || 0) + 1));
+        filas = escala.bandas.map((b, i) => {
+            const arriba = i === 0 ? null : escala.bandas[i-1].min;
+            const rango = b.min == null ? `&lt; ${arriba} %`
+                        : arriba == null ? `≥ ${b.min} %`
+                        : `${b.min} – ${arriba} %`;
+            return `<div class="ket-lg-row"><span class="sw" style="background:${SEM(b.token)}"></span>`
+                + `<span class="lb">${esc(afoNombreBanda(b))} <span class="sem-muted-xs">`
+                + `${rango}</span></span>`
+                + `<span class="ct">${conteo.get(b.clave) || 0}</span></div>`;
+        }).join('');
+    }else{
+        const conteo = new Map();
+        vals.forEach(d => {
+            const v = afoValor(d, m);
+            if(v == null) return;
+            let i = 0;
+            while(i < escala.cortes.length && v >= escala.cortes[i]) i++;
+            conteo.set(i, (conteo.get(i) || 0) + 1);
+        });
+        filas = escala.colores.map((col, i) =>
+            `<div class="ket-lg-row"><span class="sw" style="background:${col}"></span>`
+            + `<span class="lb">${esc(escala.etiquetas[i] || '')}</span>`
+            + `<span class="ct">${conteo.get(i) || 0}</span></div>`).join('');
+    }
+
+    return cab
+        + `<div class="legend-label">${esc(afoNombreMetrica(m))}</div>`
+        + filas
+        + (sinDato ? `<div class="ket-lg-row"><span class="sw" style="background:${SEM('--dat-sin-aforo')}"></span>`
+            + `<span class="lb">${t('Sin aforo')}</span><span class="ct">${sinDato}</span></div>` : '')
+        + `<div class="ket-note">${t('CU = Q25 / QA. Clases de funcionamiento de Ketcal.')}</div>`;
+}
+
+function afoVentanaTexto(){
+    if(!AFO || !AFO.campana || !AFO.campana.desde) return '';
+    const a = AFO.campana.desde, b = AFO.campana.hasta;
+    return a === b ? fmtFecha(a) : `${fmtCorta(a)} – ${fmtCorta(b)}`;
+}
+
+function statsAforo(){
+    if(!AFO) return `<div class="stat"><div class="num">—</div><div class="unit">${t('Sin dato')}</div></div>`;
+    const p = AFO.predio;
+    const div = `<div class="stat-div"></div>`;
+    return [
+        stat(`${fmtDec(p.cu_zonas,1)} %`, 'CU ' + t('del predio')),
+        stat(`${fmtDec(p.q25,2)}`, 'Q25 (L/h)'),
+        stat(`${fmtDec(p.qa,2)}`, 'QA (L/h)'),
+        stat(`${fmtDec(p.pct_nominal,0)} %`, t('del nominal')),
+        stat(p.n_zonas, t('válvulas aforadas'))
+    ].join(div);
+}
+
+function renderAfoPanel(){
+    if(!AFO) return;
+    const sel = document.getElementById('selMetricaAforo');
+    if(sel) sel.innerHTML = METRICAS_AFO.map(m =>
+        `<option value="${m.id}"${m.id === S.aforos.metrica ? ' selected' : ''}>`
+        + `${esc(afoNombreMetrica(m))}</option>`).join('');
+    document.querySelectorAll('#segNivelAforo button').forEach(b =>
+        b.classList.toggle('active', b.dataset.v === S.aforos.nivel));
+
+    // Reparto por clase: cuántas válvulas hay en cada escalón.
+    const rep = document.getElementById('afoReparto');
+    if(rep){
+        const tot = AFO.predio.n_zonas || 1;
+        rep.innerHTML = `<div class="cos-split" style="margin-bottom:9px">`
+            + AFO.escala_cu.map(b => {
+                const n = AFO.predio.reparto[b.clave] || 0;
+                if(!n) return '';
+                return `<i style="width:${100*n/tot}%;background:${SEM(b.token)}" `
+                    + `data-tip="${tipAttr(`<b>${esc(afoNombreBanda(b))}</b><br>${n} ${t('válvulas')} · ${fmtDec(100*n/tot,0)} %`)}"></i>`;
+            }).join('')
+            + `</div>`
+            + kv([
+                ['CU ' + t('del predio'), `${fmtDec(AFO.predio.cu_zonas,1)} %`],
+                [t('Peor válvula'), (() => {
+                    const z = Object.values(AFO.zonas).reduce((a,b) => (b.cu < a.cu ? b : a));
+                    return `${esc(z.name)} · ${fmtDec(z.cu,1)} %`;
+                })()],
+                [t('Rango de caudal'), `${fmtDec(AFO.predio.qmin,2)} – ${fmtDec(AFO.predio.qmax,2)} L/h`],
+                [t('Emisores medidos'), fmt(AFO.predio.n, 0)]
+            ]);
+    }
+
+    // Las 57 válvulas de peor a mejor: la lista con la que se sale a terreno.
+    const rk = document.getElementById('afoRank');
+    if(rk){
+        const zs = Object.values(AFO.zonas).filter(z => z.cu != null)
+            .sort((a,b) => a.cu - b.cu);
+        rk.innerHTML = `<div class="ket-rank">` + zs.map(z =>
+            `<div class="ket-row" onclick="abrirAfoModal('${esc(z.id)}')">`
+            + `<span class="sw" style="background:${afoColorClase(z.clase)}"></span>`
+            + `<span class="nm">${esc(z.name)}</span>`
+            + `<span class="vl">${fmtDec(z.cu,1)} %</span></div>`).join('')
+            + `</div>`;
+    }
+}
+
+function setMetricaAforo(v){ S.aforos.metrica = v; repintar(); renderPanel(); }
+function setNivelAforo(v){
+    S.aforos.nivel = v;
+    document.querySelectorAll('#segNivelAforo button').forEach(b =>
+        b.classList.toggle('active', b.dataset.v === v));
+    limpiarSeleccionSiCambiaNivel(v);
+    repintar(); renderPanel();
+}
+function setPuntosAforo(on){ S.aforos.puntos = !!on; repintar(); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
    GRÁFICOS DE PyE
 
    Dos que el mapa no puede dar: la EVOLUCIÓN de cada plaga a lo largo del
@@ -10226,6 +10930,16 @@ function switchMode(modo){
             S.pye.plaga = null;
         S.pye.periodo = null;
     }
+    if(modo === 'riego' || modo === 'aforos'){
+        RIEGO_SUBMODE = modo;
+        // El nivel es de la fuente: los aforos no bajan a cuartel y el consumo
+        // tampoco, pero cada uno recuerda el suyo.
+        const cons = modo === 'riego';
+        document.getElementById('bodyRiegoConsumo').style.display = cons ? '' : 'none';
+        document.getElementById('bodyRiegoAforos').style.display = cons ? 'none' : '';
+        document.getElementById('riegoTitulo').textContent =
+            t(cons ? 'Temporalidad de riego' : 'Aforo de goteros');
+    }
     if(modo === 'foliares' || modo === 'suelo'){
         NUTRI_SUBMODE = modo;
         const grupo = modo === 'foliares' ? 'foliar' : 'suelo';
@@ -10239,19 +10953,25 @@ function switchMode(modo){
         const modos = (b.dataset.modes || b.dataset.mode || '').split(' ');
         b.classList.toggle('active', modos.includes(modo));
     });
-    document.querySelectorAll('.nut-subtab').forEach((b,i) => {
+    document.querySelectorAll('.nut-subtab:not(.riego-subtab)').forEach((b,i) => {
         const on = (i === 0 && modo === 'foliares') || (i === 1 && modo === 'suelo');
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.riego-subtab').forEach((b,i) => {
+        const on = (i === 0 && modo === 'riego') || (i === 1 && modo === 'aforos');
         b.classList.toggle('active', on);
         b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
 
     document.body.classList.toggle('foliar-active', modo === 'foliares');
     document.body.classList.toggle('soil-active', modo === 'suelo');
-    document.body.classList.toggle('riego-active', modo === 'riego');
+    document.body.classList.toggle('riego-active', modo === 'riego' || modo === 'aforos');
     document.body.classList.toggle('cosecha-active', modo === 'cosecha');
     const enPye = modo === 'pye-planta' || modo === 'pye-fruto';
     document.body.classList.toggle('pye-active', enPye);
     if(modo !== 'riego') closeRiegoModal();
+    if(modo !== 'aforos') closeAfoModal();
     if(modo !== 'cosecha'){ closeCosModal(); closeCosTemporadaModal(); }
     if(!enPye){ closePyeModal(); closePyePanorama(); }
     ocultarTooltipYa();
@@ -10263,7 +10983,8 @@ function switchMode(modo){
     document.getElementById('ctrlGeneral').classList.toggle('visible', modo === 'general');
     document.getElementById('ctrlCosecha').classList.toggle('visible', modo === 'cosecha');
     document.getElementById('ctrlPye').classList.toggle('visible', enPye);
-    document.getElementById('ctrlRiego').classList.toggle('visible', modo === 'riego');
+    document.getElementById('ctrlRiego').classList.toggle('visible',
+        modo === 'riego' || modo === 'aforos');
     document.getElementById('ctrlCeres').classList.toggle('visible', modo === 'ceres');
     document.getElementById('ctrlNutricion').classList.toggle('visible',
         modo === 'foliares' || modo === 'suelo');
@@ -10273,6 +10994,14 @@ function switchMode(modo){
     // no en el load inicial, y se cachea en memoria hasta que se pida
     // "Actualizar". El mapa dibuja mientras tanto con el estado "cargando".
     if(modo === 'riego'){ renderRiegoCalendario(); cargarRiego(false); }
+    if(modo === 'aforos'){
+        afoInicializarEstado();
+        if(!AFO) cargarAforos().then(() => {
+            if(currentMode !== 'aforos') return;
+            afoInicializar(); repintar(); renderPanel();
+        });
+        else afoInicializar();
+    }
     // pye_data.json son ~280 KB: mismo criterio que Cosecha y Ceres.
     if(enPye){
         renderPyeControles();

@@ -103,6 +103,7 @@ nutricion_data.json         ← análisis de suelo y foliares (generado)
 cosecha_data.json           ← cosecha por cuartel y semana (generado)
 plantacion_data.json        ← cuadro de plantación por cuartel (generado)
 pye_data.json               ← monitoreo de plagas y enfermedades (generado)
+aforos_data.json            ← aforo de goteros por válvula (generado)
 ceres_data.json             ← vuelos de Ceres Imaging (generado)
 umbrales_nutricion.json     ← umbrales agronómicos — SE EDITA A MANO
 ceres_predio.json           ← identificadores de Ketcal en Ceres (descubierto)
@@ -113,6 +114,7 @@ tools/build_nutricion.py    ← Excel + umbrales → nutricion_data.json
 tools/build_cosecha.py      ← planillas + KMZ  → cosecha_data.json
                               + plantacion_data.json
 tools/build_pye.py          ← monitoreos + KMZ  → pye_data.json
+tools/build_aforos.py       ← base de aforos + KMZ → aforos_data.json
 tools/trim_logos.py         ← recorta el margen de los logos de exportadora
 tools/fetch_ceres.py        ← API de Ceres    → ceres_data.json
 .github/workflows/ceres.yml ← refresco semanal de Ceres
@@ -125,6 +127,7 @@ AGQ Labs …/  Laboquim …/  Analisis Suelos AgroLab/   ← informes de origen 
 datos_fuente/Base de datos Cosecha Ketcal_20xx.xlsx  ← insumo, NO versionado
 datos_fuente/Registro Monitoreo Fruto Ketcal 2026.xlsx  ← insumo, NO versionado
 datos_fuente/Ketcal - Registro Monitoreo Planta.xlsx    ← insumo, NO versionado
+datos_fuente/Ketcal_Base_Aforos_Goteros_vFinal.xlsx     ← insumo, NO versionado
 ```
 
 `datos_fuente/` está en `.gitignore` a propósito. Las planillas de cosecha
@@ -142,6 +145,7 @@ python tools/kmz_to_geojson.py
 python tools/build_nutricion.py
 python tools/build_cosecha.py "datos_fuente/Base de datos Cosecha*.xlsx"
 python tools/build_pye.py
+python tools/build_aforos.py
 python tools/fetch_ceres.py            # incremental; --full para rehacer todo
 ```
 
@@ -721,8 +725,10 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   por la procedencia, ranking de peor a mejor, series de tiempo por parámetro
   con las bandas de fondo, y las 13 calicatas del estudio 2018 como capa de
   puntos con su perfil físico y químico. Ver la sección de abajo.
-- **Riego** — consumo por sector con calendario de días / meses / temporadas,
-  en vivo desde DropControl. Ver la sección de abajo.
+- **Riego** — dos subpestañas. **Consumo**: por sector, con calendario de días
+  / meses / temporadas, en vivo desde DropControl. **Aforos**: uniformidad de
+  emisión (CU), Q25 y QA de 57 válvulas aforadas, con la grilla de 16 emisores
+  de cada una. Ver las secciones de abajo.
 - **Ceres Imaging** — 28 vuelos aéreos entre dic-2022 y abr-2026, 5 indicadores,
   en los tres niveles nativos, más la capa por árbol. Ver la sección de abajo.
 
@@ -742,6 +748,135 @@ diseño copiado de San Gerardo. **No lo leas completo**: ubicá la sección con
   pinta los polígonos de los dos lados; las capas vectoriales viven sólo en el
   lado A, y por eso al entrar al comparador se apagan y sus botones quedan
   deshabilitados: comparar árboles contra polígonos no compara nada.
+
+---
+
+## Aforos: la uniformidad se mide en la válvula
+
+Subpestaña de Riego. Riego tiene dos vistas que no se mezclan: **Consumo**
+—cuánta agua se aplicó, en vivo desde DropControl— y **Aforos** —cómo se
+reparte esa agua entre los emisores, medido a mano en terreno—. Un sector puede
+recibir todos sus metros cúbicos y regar pésimo.
+
+### Las tres cifras
+
+Un aforo mide el caudal de 16 emisores de una válvula en una grilla de 4 × 4:
+cuatro posiciones a lo largo del lateral (inicial, 1/3, 2/3, último) por cuatro
+dentro de cada lateral. De ahí salen:
+
+| | |
+|---|---|
+| **QA** | caudal medio de los 16 emisores, L/h |
+| **Q25** | caudal medio del 25 % de MENOR emisión, o sea los 4 más bajos |
+| **CU** | coeficiente de uniformidad = Q25 / QA × 100 |
+
+CU es la unidad principal y la que pinta el mapa. Dice cuánto le falta al cuarto
+peor regado respecto del promedio: con CU 75 %, dejar satisfecha la parte
+castigada obliga a pasarse un tercio de agua en el resto.
+
+Es la definición de Merriam & Keller, y es exactamente la que trae la columna
+`CUC calculado` de la planilla fuente pese al nombre —el CUC de Christiansen es
+otra fórmula—. Verificado: el cálculo del build reproduce esa columna en las 57
+zonas, al decimal.
+
+### El cruce con la geometría
+
+Las 57 zonas aforadas cruzan **1 a 1 con las válvulas del KMZ**, que ya se
+llaman igual: la hoja `Z14-S2-E1` de la planilla es la válvula `E1-S2-Z14` de
+`geo_data.json`. No hubo que inventar ninguna equivalencia.
+
+Por eso la pestaña pinta **dos cosas a la vez**: el polígono del sector con el
+promedio de sus válvulas, y cada válvula aforada como punto en su lugar. El
+promedio de un sector con una válvula mala y tres buenas no lleva a ningún
+lado; el punto sí. Clic en el punto abre la grilla de 16 emisores.
+
+Cobertura: 57 de 150 válvulas, 14 de 28 sectores, los 5 equipos. Lo que no se
+aforó se dibuja en gris y la leyenda lo cuenta.
+
+### La escala es absoluta y es la de Ketcal
+
+Cuatro clases de funcionamiento, definidas por el predio:
+
+| Funcionamiento | CU |
+|---|---|
+| Excelente | ≥ 90 % |
+| Buena | 80 % – < 90 % |
+| Regular | 70 % – < 80 % |
+| Inaceptable | < 70 % |
+
+Se evalúan en orden, y en 70 exacto manda *Regular*, que es como está escrito el
+corte. Hoy la distinción no toca nada: la peor válvula del predio da 75,0 %.
+
+Viven en `ESCALA_CU` (`tools/build_aforos.py`), salen al JSON y de ahí las leen
+el mapa, la leyenda, las fichas y el modal. Cambiar los cortes es cambiar esa
+lista y reconstruir; no hay un solo umbral escrito en `index.html`.
+
+Deliberadamente NO son cuantiles del predio, a diferencia de las otras métricas
+de la pestaña: 95 % es bueno en términos absolutos aunque sea el peor del campo,
+y una escala relativa haría parecer un problema a un equipo que está bien. Las
+otras cuatro métricas (Q25, QA, % del nominal, CV) sí usan cuantiles, porque un
+caudal de 3,05 L/h no tiene clases agronómicas y fingirlas sería inventar un
+umbral.
+
+Reparto actual: 53 válvulas excelentes, 1 buena, 3 regulares, ninguna
+inaceptable. Las tres regulares están todas en `E1-S3`.
+
+El verde está en el extremo BUENO, al revés que en PyE. Es la única escala del
+mapa donde lo alto es lo deseable y esa inversión tiene que leerse sin consultar
+la leyenda.
+
+### El CU de un sector es el promedio de sus válvulas
+
+No el CU del montón de emisores juntos. Cada válvula se opera por separado y su
+uniformidad es un problema propio; juntar 64 emisores de cuatro válvulas en una
+sola población mezcla la variación *entre* válvulas con la de *dentro* de cada
+una, que es lo que el aforo quiere medir. El agrupado se guarda igual como
+`cu_pool` y la ficha lo muestra; en E1-S3 dan 82,0 % y 81,0 %.
+
+La ficha muestra además la **peor válvula** de la unidad, que es por donde se
+parte, y lista las válvulas de peor a mejor.
+
+### La grilla de 16 emisores dice qué tipo de problema es
+
+El modal no muestra una tabla ordenada por número de emisor: muestra la grilla
+física, con el promedio de cada fila y de cada columna en el margen. Esa forma
+es el diagnóstico. Si los caudales bajos se alinean en la última columna es
+**presión**; si están desparramados es **obturación**.
+
+En `Z23-S3-E1` —el peor CU del predio, 75 %— el lateral inicial promedia 3,17
+L/h y los otros tres 2,63, 2,85 y 2,96, con caídas sueltas de 1,80 y 2,10 en
+posiciones distintas: desparramado, no un gradiente.
+
+El color de cada celda es su caída respecto del **QA de su propia válvula**, no
+un valor absoluto: 2,9 L/h es normal en una válvula que promedia 3,0 y es el
+peor de una que promedia 3,3.
+
+### Caudal nominal
+
+3,0 L/h en todo el predio (base de nutrición, 50 de 53 ubicaciones, sin un solo
+valor distinto). Con eso el QA medido se lee como porcentaje del nominal, que es
+lo que dice si el equipo entrega lo que se diseñó. El predio da 101 %.
+
+### Dos guardas de fecha que hoy no saltan
+
+La primera versión de la planilla traía dos fechas rotas, corregidas ya en el
+origen. Las comprobaciones se quedan en el build, porque el error es de los que
+vuelven:
+
+1. **Fecha arrastrada.** Un aforo es de un día; si una ficha trae varias fechas
+   es un arrastre de Excel, no dos campañas. `Sector 4 - E1.xlsx` llegó con 96
+   filas donde el año avanzaba de uno en uno —19/01/2026, 19/01/2027 …
+   19/01/2105—. El build toma la fecha mínima de la ficha, que es la única que
+   sobrevive al arrastre, y lo anota. El `Control_Calidad` de la propia planilla
+   no lo había detectado.
+
+2. **Fecha futura.** `Sector 1 - E4.xlsx` llegó con 06/10/2026 cuando el resto
+   de la campaña es del 6 al 19 de enero. El build no adivina: conserva el valor
+   y lo anota en `issues[]` para que se corrija en la ficha, que es donde
+   corresponde.
+
+Con la planilla corregida, la única incidencia que queda es informativa: 14 de
+los 28 sectores no tienen aforo.
 
 ---
 
