@@ -1019,6 +1019,30 @@ python tools/fetch_ceres.py --check-token
 Describe la *forma* del token (largo, espacios, prefijo) sin imprimir su valor,
 que es lo que sirve para depurar un secret mal pegado.
 
+### Rotar la credencial
+
+```bash
+python tools/set_ceres_token.py
+```
+
+Pide la clave sin mostrarla en pantalla, la escribe en `.ceres_token` y la
+valida. Existe porque las formas obvias de hacerlo dejan la credencial grabada
+donde después nadie la limpia: `echo CLAVE > .ceres_token` queda en el historial
+del shell, pasarla como argumento queda en la lista de procesos, y pegarla en un
+chat o un ticket queda en ese historial. Acá el comando que se tipea no contiene
+la clave.
+
+Corrige los tres errores de pegado típicos —comillas de sobra, el prefijo
+`Token ` del header, espacios alrededor— avisando de cada uno, y **aborta** si
+la terminal no deja ocultar lo que se escribe, en vez de mostrarla: una clave
+visible en pantalla es justo lo que se estaba evitando. Lo único que imprime es
+el largo y una huella `sha256` truncada, que sirve para confirmar que el archivo
+cambió sin revelar el contenido.
+
+En CI no aplica: ahí la credencial es `secrets.CERES_TOKEN` y se cambia en la
+configuración del repositorio. Para estrenarla sin esperar al lunes, el workflow
+tiene un `workflow_dispatch` con la opción *"Solo verificar el token"*.
+
 ### Los identificadores
 
 `ceres_predio.json` los guarda y `--discover` los encuentra. Cómo se llegó a
